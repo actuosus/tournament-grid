@@ -1,0 +1,41 @@
+{
+    "name":"tournament-grid",
+    "version":"0.0.1",
+    "description":"Tournament grid visualization for computer gaming.",
+    "main":"server.js",
+    "private":true,
+    "scripts":{
+        "start":"node server",
+        "test":"make test"
+    },
+    "keywords":[
+        "tournament",
+        "grid",
+        "visualization",
+        "express",
+        "node"
+    ],
+    "author":"Arthur Chafonov <actuosus@gmail.com>",
+    "maintainers":[
+        {
+            "name":"Arthur Chafonov",
+            "email":"actuosus@gmail.com",
+            "web":"http://actuosus.com"
+        }
+    ],
+    "dependencies":{
+        "express":"latest",
+        "jade":"latest",
+        "iced-coffee-script":"latest",
+        "mongoose":"latest"
+    },
+    "devDependencies":{
+        "superagent":"latest",
+        "mocha":"latest",
+        "should":"latest"
+    },
+    "engines":{
+        "node":">= 0.8.16",
+        "npm":">= 1.1.0"
+    }
+}
