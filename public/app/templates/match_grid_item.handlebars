@@ -8,7 +8,7 @@
 
 <div class="match-extra-label"></div>
 
-<div class="match-start-date">{{moment view.content.date format=DD.MM.YY}}</div>
+<div class="match-start-date" {{bindAttr title="view.content.longDateString"}}>{{moment view.content.date format=DD.MM.YY}}</div>
 {{#if view.content.games.length}}
 <div class="match-info-bar">
     {{view App.GamesInfoBarView contentBinding=view.content.games showInfoLabel=true}}

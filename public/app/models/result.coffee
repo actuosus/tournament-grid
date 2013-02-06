@@ -12,6 +12,4 @@ define ->
     name: DS.attr 'string'
     matches: DS.hasMany 'App.Match'
 
-    rounds: DS.belongsTo 'App.Championship'
-
   App.Result.toString = -> 'Result'

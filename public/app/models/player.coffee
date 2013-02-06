@@ -9,7 +9,8 @@
 define ->
   App.Player = DS.Model.extend
     primaryKey: '_id'
-    name: DS.attr 'string'
+    nickname: DS.attr 'string'
+    realname: DS.attr 'string'
     country: DS.belongsTo 'App.Country'
     team: DS.belongsTo 'App.Team'
     matches: DS.hasMany 'App.Match'

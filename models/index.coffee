@@ -13,7 +13,10 @@ exports.CountrySchema = require './country'
 exports.GameSchema = require './game'
 exports.MatchSchema = require './match'
 exports.PlayerSchema = require './player'
+exports.ReportSchema = require './report'
+exports.ResultSchema = require './result'
 exports.RoundSchema = require './round'
+exports.StageSchema = require './stage'
 exports.TeamSchema = require './team'
 
 console.log 'Registering models…'
@@ -23,5 +26,8 @@ exports.Country = mongoose.model 'Country', exports.CountrySchema
 exports.Game = mongoose.model 'Game', exports.GameSchema
 exports.Match = mongoose.model 'Match', exports.MatchSchema
 exports.Player = mongoose.model 'Player', exports.PlayerSchema
+exports.Report = mongoose.model 'Report', exports.ReportSchema
+exports.Result = mongoose.model 'Result', exports.ResultSchema
 exports.Round = mongoose.model 'Round', exports.RoundSchema
+exports.Stage = mongoose.model 'Stage', exports.StageSchema
 exports.Team = mongoose.model 'Team', exports.TeamSchema

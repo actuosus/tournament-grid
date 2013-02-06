@@ -12,6 +12,9 @@ require [
   'cs!models/game'
   'cs!models/match'
   'cs!models/player'
+  'cs!models/report'
+  'cs!models/result'
   'cs!models/round'
+  'cs!models/stage'
   'cs!models/team'
 ]

@@ -59,18 +59,27 @@ app.get '/api/championships', routes.api.championships.list
 app.get '/api/countries', routes.api.countries.list
 app.get '/api/countries/:_id', routes.api.countries.item
 
+app.get '/api/games', routes.api.games.list
+app.get '/api/games/:_id', routes.api.games.item
+
 app.get '/api/matches', routes.api.matches.list
 
 app.get '/api/players', routes.api.players.list
 
+app.get '/api/reports', routes.api.reports.list
+app.get '/api/reports/:_id', routes.api.reports.item
+
+app.get '/api/results', routes.api.results.list
+app.get '/api/results/:_id', routes.api.results.item
+
 app.get '/api/rounds', routes.api.rounds.list
 app.get '/api/rounds/:_id', routes.api.rounds.item
 
+app.get '/api/stages', routes.api.stages.list
+app.get '/api/stages/:_id', routes.api.stages.item
+
 app.get '/api/teams', routes.api.teams.list
 app.get '/api/teams/:_id', routes.api.teams.item
-
-app.get '/api/games', routes.api.games.list
-app.get '/api/games/:_id', routes.api.games.item
 
 app.get '*', (req, res)-> res.status 404; res.render '404'
 

@@ -36,4 +36,6 @@ define ->
         return @get 'team2'
     ).property('team1', 'team2')
 
+    longDateString: (-> moment(@get 'date').format('LLLL')).property 'date'
+
   App.Match.toString = -> 'Match'

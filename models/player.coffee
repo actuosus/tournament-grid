@@ -11,7 +11,8 @@ Schema = mongoose.Schema
 ObjectId = Schema.ObjectId
 
 PlayerSchema = new Schema
-  name: type: String
+  nickname: type: String
+  realname: type: String
   country_id: type: ObjectId, ref: 'Country'
   team_id: type: ObjectId, ref: 'Team'
 

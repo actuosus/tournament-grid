@@ -11,6 +11,7 @@ define ->
     classNames: ['block-container', 'named-container']
     childViews: ['titleView', 'contentView'],
     collapsed: no
+    classNameBindings: ['collapsed']
     titleView: Em.View.extend
       tagName: 'h2'
       classNames: ['named-container-title']

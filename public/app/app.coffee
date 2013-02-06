@@ -25,6 +25,8 @@ require [
     # Preloading countries
     App.countries = App.Country.find()
 
+    App.report = App.Report.find('511211b49709aab1ae000002')
+
     matchGridView = App.MatchGridView.create content: App.Round.find()
 
 #    matchesTableContainerView = App.MatchesTableContainerView.create
@@ -59,6 +61,36 @@ require [
       title: 'Таблица результатов турнира'
       contentView: matchGridView
     championshipTableContainer.appendTo '#content'
+
+    lineupView = App.GridView.create
+      content: App.Team.find()
+      itemViewClass: Em.View.extend
+        tagName: 'table'
+        classNames: ['table', 'lineup-grid-item']
+        template: Em.Handlebars.compile(
+          '<thead><tr><th colspan="2"><span class="lineup-grid-item-name"><i {{bindAttr class=":country-flag-icon :team-country-flag-icon view.content.countryFlagClassName"}}></i>{{view.content.name}}</span></th></tr></thead><tbody>{{#each view.content.players}}<tr><td><i {{bindAttr class=":country-flag-icon :team-country-flag-icon countryFlagClassName"}}></i>{{nickname}}</td><td><span class="realname">({{realname}})</span></td></tr>{{/each}}</tbody>'
+        )
+
+    lineupContainerView = App.NamedContainerView.create
+      title: 'Состав команд'
+      contentView: lineupView
+
+    lineupContainerView.appendTo '#content'
+
+    groupContainerView = App.NamedContainerView.create
+      title: 'Групповой этап'
+      contentView: App.GridView.create
+        content: App.Stage.find()
+        itemViewClass: Em.View.extend
+          tagName: 'table'
+          classNames: ['table', 'lineup-grid-item']
+          template: Em.Handlebars.compile(
+            '<thead><tr><th colspan="2"><span class="lineup-grid-item-name"><i {{bindAttr class=":country-flag-icon :team-country-flag-icon view.content.countryFlagClassName"}}></i>{{view.content.name}}</span></th></tr></thead><tbody>{{#each view.content.players}}<tr><td><i {{bindAttr class=":country-flag-icon :team-country-flag-icon countryFlagClassName"}}></i>{{nickname}}</td><td><span class="realname">({{realname}})</span></td></tr>{{/each}}</tbody>'
+          )
+        emptyViewClass: Em.View.extend
+          template: Em.Handlebars.compile('Пока что ни одного этапа')
+
+    groupContainerView.appendTo '#content'
 
     window.teamsController = teamsController
 

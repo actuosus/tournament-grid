@@ -42,14 +42,14 @@ body {
 }
 
 #footer .container {
-    padding-top: 32px;
+    padding-top: 20px;
 }
 
 #footer .nav {
     text-transform: uppercase;
     font-weight: bold;
     font-size: 14px;
-    font-family: 'HelveticaNeue-CondensedBold', 'Helvetica';
+    font-family: 'HelveticaNeue-CondensedBold', 'PT Sans Narrow', 'Helvetica', sans-serif;
     -webkit-font-smoothing: antialiased;
 }
 
@@ -57,7 +57,18 @@ body {
     color: #737373;
 }
 
+#footer .nav-pills > li {
+    margin-right: 30px;
+}
+
+
+#copyright {
+    font-size: 12px;
+    margin-top: 8px;
+}
+
 #disclaimer {
     font-size: 9px;
     line-height: 12px;
+    margin-top: 8px;
 }

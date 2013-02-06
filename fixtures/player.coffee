@@ -8,27 +8,32 @@
 
 module.exports.Player = [
   _id: '5107d4cd351fb19719000002'
-  name: 'LeX'
+  nickname: 'LeX'
+  realname: 'Алексей Колесников'
   country_id: '50fcdaf969f206c106000001'
   team_id: '5107cac6c97716ba1800001d'
 ,
   _id: '5107d4cd351fb19719000003'
-  name: 'evil'
+  nickname: 'evil'
+  realname: 'evil'
   country_id: '50fcdaf969f206c106000009'
   team_id: '5107cac6c97716ba1800001d'
 ,
   _id: '5107d4cd351fb19719000004'
-  name: 'kucher'
+  nickname: 'kucher'
+  realname: 'Эмиль Ахундов'
   country_id: '50fcdaf969f206c106000009'
   team_id: '5107cac6c97716ba1800001d'
 ,
   _id: '5107d4cd351fb19719000005'
-  name: 'hooch'
+  nickname: 'hooch'
+  realname: 'hooch'
   country_id: '50fcdaf969f206c106000001'
   team_id: '5107cac6c97716ba1800001d'
 ,
   _id: '5107d4cd351fb19719000006'
-  name: 'xaoc'
+  nickname: 'xaoc'
+  realname: 'xaoc'
   country_id: '50fcdaf969f206c106000009'
   team_id: '5107cac6c97716ba1800001d'
 ]

@@ -12,7 +12,7 @@ ObjectId = Schema.ObjectId
 
 ReportSchema = new Schema
   name: type: String
-  matches: [type: ObjectId, ref: 'Match']
-  visualType: type: String
+  start_date: type: Date
+  stages: [type: ObjectId, ref: 'Stage']
 
 module.exports = ReportSchema

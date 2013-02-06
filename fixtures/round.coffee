@@ -18,4 +18,16 @@ module.exports.Round = [
   _id: '50fd4a58cbbf53a72a000004'
   name: 'Финал'
   matches: ['50fd102c3612183b15000007']
+,
+  name: 'Группа A'
+,
+  name: 'Группа B'
+,
+  name: 'Группа C'
+,
+  name: 'Группа D'
+,
+  name: 'Группа E'
+,
+  name: 'Группа F'
 ]
