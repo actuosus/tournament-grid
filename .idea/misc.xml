@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="FrameworkDetectionExcludesConfiguration">
+    <type id="JRUBY" />
+  </component>
   <component name="IdProvider" IDEtalkID="F3E97AFE5944B93484BA6C9B3A5A9BD6" />
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">

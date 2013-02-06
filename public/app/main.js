@@ -14,6 +14,7 @@ require({
     'jquery.fileupload': '/vendor/javascripts/jquery.fileupload',
     Faker: '/vendor/javascripts/Faker',
     raphael: '/vendor/javascripts/raphael',
+    spin: '/vendor/javascripts/spin',
     cs: '/vendor/javascripts/cs',
     text: '/vendor/javascripts/text',
     'coffee-script': '/vendor/javascripts/coffee-script',

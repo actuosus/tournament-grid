@@ -6,5 +6,21 @@
  * Time: 07:49
 -->
 
-<h1 class="title">Таблица результатов турнира</h1>
+<div class="filter">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#">Отборочный</a></li>
+        <li><a href="#">1/32</a></li>
+        <li><a href="#">1/16</a></li>
+        <li><a href="#">1/8</a></li>
+        <li><a href="#">1/4</a></li>
+        <li><a href="#">1/2</a></li>
+        <li><a href="#">Финал</a></li>
+        <li><a href="#">Турнирная сетка</a></li>
+    </ul>
+</div>
 
+<div class="grid-container">
+    {{#each view.content}}
+        {{view App.RoundGridItemView contentBinding=this}}
+    {{/each}}
+</div>

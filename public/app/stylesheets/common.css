@@ -1,0 +1,63 @@
+/**
+ * common
+ * @author: actuosus
+ * Date: 06/02/2013
+ * Time: 07:19
+ */
+
+html, body {
+    height: 100%;
+}
+
+body {
+    /*font-family: 'Tahoma';*/
+    background: black;
+    background-size: 1200px;
+}
+
+#wrap {
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    margin: 40px auto -104px;
+}
+
+#wrap > .container {
+    background: url(http://www.cemilzade.com.tr/nota_kitap/kitap/notakitap_arkakapak.jpg) center;
+    padding: 20px;
+}
+
+#content {
+    max-width: 1024px;
+    margin: 0 auto;
+}
+
+#push, #footer {
+    height: 104px;
+}
+
+#footer {
+    background-color: #0a0a0a;
+    color: #737373;
+}
+
+#footer .container {
+    padding-top: 32px;
+}
+
+#footer .nav {
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 14px;
+    font-family: 'HelveticaNeue-CondensedBold', 'Helvetica';
+    -webkit-font-smoothing: antialiased;
+}
+
+#footer .nav a {
+    color: #737373;
+}
+
+#disclaimer {
+    font-size: 9px;
+    line-height: 12px;
+}

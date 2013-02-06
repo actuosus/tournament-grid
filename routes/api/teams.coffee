@@ -6,7 +6,10 @@
  * Time: 07:18
 ###
 
-models = require '../../models'
-Team = mongoose.model 'Team', models.TeamSchema
+Team = require('../../models').Team
 
-exports.list = (req, res)-> Team.find({}).exec (err, docs)-> res.send docs
+exports.list = (req, res)-> Team.find({}).exec (err, docs)-> res.send teams: docs
+
+exports.item = (req, res)->
+  Team.where('_id', req.params._id).findOne().exec (err, doc)->
+    res.send team: doc

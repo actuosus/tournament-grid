@@ -30,6 +30,9 @@
         "mongoose":"latest"
     },
     "devDependencies":{
+        "async": "latest",
+        "openifyit-commons": "latest",
+        "openifyit-mongoose-fixtures": "latest",
         "superagent":"latest",
         "mocha":"latest",
         "should":"latest"

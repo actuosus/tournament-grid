@@ -8,6 +8,7 @@
 
 require 'iced-coffee-script'
 
+path = require 'path'
 http = require 'http'
 express = require 'express'
 mongoose = require 'mongoose'
@@ -52,10 +53,29 @@ app.configure ->
 
   app.use cors
 
-  app.get '*', (req, res)-> res.status 404; res.render '404'
+
+app.get '/api/championships', routes.api.championships.list
+
+app.get '/api/countries', routes.api.countries.list
+app.get '/api/countries/:_id', routes.api.countries.item
+
+app.get '/api/matches', routes.api.matches.list
+
+app.get '/api/players', routes.api.players.list
+
+app.get '/api/rounds', routes.api.rounds.list
+app.get '/api/rounds/:_id', routes.api.rounds.item
+
+app.get '/api/teams', routes.api.teams.list
+app.get '/api/teams/:_id', routes.api.teams.item
+
+app.get '/api/games', routes.api.games.list
+app.get '/api/games/:_id', routes.api.games.item
+
+app.get '*', (req, res)-> res.status 404; res.render '404'
 
 # Initialization
-adname.init = ->
+grid.init = ->
   #mongoose.set 'debug', yes
   mongoose.connect conf.mongo, {}, (err, db)->
     unless err
@@ -65,3 +85,17 @@ adname.init = ->
   http.createServer(app).listen app.get('port'), ->
     console.log "Express server listening on port #{app.get 'port'}"
 
+
+# 1/32, 1/16 могут быть таблицей
+# Инфо 1 2 3
+
+# Сортировка
+
+# Игры
+# Выйграно
+# Ничья
+# Проиграно
+# Очки (редактируются)
+# Разница (редактируются)
+
+# Возможен фиктивный матч

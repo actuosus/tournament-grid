@@ -1,0 +1,23 @@
+<!--
+ * team_standings_table
+ * @author: actuosus
+ * @fileOverview 
+ * Date: 28/01/2013
+ * Time: 22:11
+-->
+
+<thead>
+    <tr>
+        <th class="header-item header-item-number" title="Номер">#</th>
+        <th class="header-item header-item-name">Название команды</th>
+        <th class="header-item header-item-games-played" title="Количество игр">И</th>
+        <th class="header-item header-item-wins"  title="Выйграно">В</th>
+        <th class="header-item header-item-draws"  title="Ничья">Н</th>
+        <th class="header-item header-item-loses"  title="Проиграно">П</th>
+        <th class="header-item header-item-points"  title="Очки">О</th>
+        <th class="header-item header-item-diff"  title="Разница">Р</th>
+    </tr>
+</thead>
+{{#each view.content}}
+    {{view App.TeamStandingsTableItemView contentBinding=this}}
+{{/each}}

@@ -10,6 +10,8 @@ require [
   'cs!models/championship'
   'cs!models/country'
   'cs!models/game'
+  'cs!models/match'
   'cs!models/player'
+  'cs!models/round'
   'cs!models/team'
 ]

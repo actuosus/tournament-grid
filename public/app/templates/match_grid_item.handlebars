@@ -1,0 +1,24 @@
+<!--
+ * match_grid_item
+ * @author: actuosus
+ * @fileOverview 
+ * Date: 21/01/2013
+ * Time: 07:56
+-->
+
+<div class="match-extra-label"></div>
+
+<div class="match-start-date">{{moment view.content.date format=DD.MM.YY}}</div>
+{{#if view.content.games.length}}
+<div class="match-info-bar">
+    {{view App.GamesInfoBarView contentBinding=view.content.games showInfoLabel=true}}
+</div>
+{{/if}}
+<div class="teams-container">
+    {{view App.TeamGridItemView contentBinding=view.content.team1 pointsBinding=view.content.team1_points}}
+    {{view App.TeamGridItemView contentBinding=view.content.team2 pointsBinding=view.content.team2_points}}
+
+    <div class="connector" style="height: 7px; width: 20px; right: -22px; top: 27px; border-bottom-style: none;">
+        <div class="connector" style="width: 20px; right: -20px; bottom: 0px;"></div>
+    </div>
+</div>

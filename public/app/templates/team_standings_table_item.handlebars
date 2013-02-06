@@ -1,0 +1,22 @@
+<!--
+ * team_standings_table_item
+ * @author: actuosus
+ * @fileOverview 
+ * Date: 29/01/2013
+ * Time: 17:58
+-->
+
+<td></td>
+<td class="name">
+    <a>
+        <i {{bindAttr class=":country-flag-icon :team-country-flag-icon countryFlagClassName"}}></i><span class="team-name">{{name}}</span>
+    </a>
+    {{view App.TeamInfoTooltipView contentBinding=this}}
+    {{view App.TeamMatchesTooltipView contentBinding=this}}
+</td>
+<td>{{gamesPlayed}}</td>
+<td>{{wins}}</td>
+<td>{{draws}}</td>
+<td class="team-losses">{{loses}}</td>
+<td></td>
+<td></td>

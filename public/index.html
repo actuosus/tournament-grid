@@ -1,5 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-        "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
     <title>Tournament Grid</title>
@@ -27,11 +26,110 @@
 <body>
     <script type="text/javascript">window.jQuery || document.write('<script src="/vendor/javascripts/jquery-1.8.2.min.js"><\/script>')</script>
 
-    <script src="/vendor/javascripts/handlebars-1.0.rc.1.js" type="text/javascript"></script>
+    <script src="/vendor/javascripts/moment.js" type="text/javascript"></script>
+    <script src="/vendor/javascripts/handlebars.js" type="text/javascript"></script>
     <script src="/vendor/javascripts/ember.js" type="text/javascript"></script>
     <script src="/vendor/javascripts/ember-data.js" type="text/javascript"></script>
     <script src="/vendor/javascripts/bootstrap.js" type="text/javascript"></script>
     <script src="/app/main.js" type="text/javascript"></script>
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container">
+                <form class="navbar-search pull-left">
+                    <input type="text" class="search-query" placeholder="Поиск по сайту">
+                </form>
+                <ul class="nav pull-right">
+                    <li class="active"><a href="#">RU</a></li>
+                    <li><a href="#">EN</a></li>
+                    <li><a href="#">DE</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="wrap">
+        <div class="container">
+            <div class="row">
+                <div class="span3">
+                    <ul class="block-container nav nav-list">
+                        <li class="nav-header">Контент</li>
+                        <li><a href="#">Новости</a></li>
+                        <li><a href="#">Видео</a></li>
+                        <li class="active"><a href="#">Репортажи</a></li>
+                        <li><a href="#">Загрузки</a></li>
+                        <li><a href="#">Фото</a></li>
+                        <li><a href="#">VP Рубрики</a></li>
+
+                        <li class="nav-header">Учавствуй</li>
+                        <li><a href="#">Блогосфера</a></li>
+                        <li><a href="#">Турниры</a></li>
+                        <li><a href="#">Форум</a></li>
+                        <li><a href="#">Поиск команды</a></li>
+                        <li><a href="#">Комьюнити</a></li>
+                        <li><a href="#">Конурсы</a></li>
+
+                        <li class="nav-header">Обучение</li>
+                        <li><a href="#">Counter Strike</a></li>
+                        <li><a href="#">Starcraft</a></li>
+                        <li><a href="#">World of Tanks</a></li>
+                        <li><a href="#">Dota 2</a></li>
+                        <li><a href="#">Counter Strike: GO</a></li>
+
+                        <li class="nav-header">База</li>
+                        <li><a href="#">Игроки</a></li>
+                        <li><a href="#">Команды</a></li>
+                        <li><a href="#">События</a></li>
+                        <li><a href="#">Матчи</a></li>
+                    </ul>
+
+                    <ul class="block-container nav nav-list">
+                        <li class="nav-header">virtus.tv</li>
+                        <li><a href="#">All Streams</a></li>
+                        <li><a href="#">Записи трансляции</a></li>
+                    </ul>
+
+                    <ul class="nav nav-pills social-links">
+                        <li class="social-link social-link-fb"></li>
+                        <li class="social-link social-link-tw"></li>
+                        <li class="social-link social-link-youtube"></li>
+                        <li class="social-link social-link-vk"></li>
+                        <li class="social-link social-link-steam"></li>
+                    </ul>
+                </div>
+                <div class="span9">
+                    <div id="content"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="push"></div>
+    </div>
+
+    <div id="footer">
+        <div class="container">
+            <div class="row">
+                <div class="span2">
+                    <div id="copyright">&copy; 2010-2013 VIRTUS.PRO</div>
+                    <ul class="nav nav-pills social-links">
+                        <li class="social-link social-link-vk"></li>
+                        <li class="social-link social-link-fb"></li>
+                        <li class="social-link social-link-tw"></li>
+                    </ul>
+                </div>
+                <div class="span3" id="disclaimer">При копировании материалов активная ссылка на сайт обязательна.</div>
+
+                <div class="span6">
+                    <ul class="nav nav-pills">
+                        <li><a href="#">Команда</a></li>
+                        <li><a href="#">Матчи</a></li>
+                        <li><a href="#">О нас</a></li>
+                        <li><a href="#">Партнеры</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script type="text/x-handlebars" data-template-name="application"></script>
 </body>

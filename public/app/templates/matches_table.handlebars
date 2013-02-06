@@ -1,0 +1,23 @@
+<!--
+ * matches_table
+ * @author: actuosus
+ * @fileOverview 
+ * Date: 28/01/2013
+ * Time: 22:17
+-->
+
+{{#each view.content}}
+    <tr class="matches-table-item">
+        <td class="matches-table-date" title="Дата">{{moment date format=DD.MM.YY}}</td>
+        <td class="matches-table-team1">{{team1.name}}<i {{bindAttr class=":country-flag-icon :team-country-flag-icon team1.countryFlagClassName"}}></i></td>
+        <td title="Счёт">[{{team1_points}}</td>
+        <td>:</td>
+        <td>{{team2_points}}]</td>
+        <td class="matches-table-team2"><i {{bindAttr class=":country-flag-icon :team-country-flag-icon team2.countryFlagClassName"}}></i>{{team2.name}}</td>
+        <td class="matches-table-map-type" title="Карта"><span class="matches-table-map-type-marker">@</span>{{map_type}}</td>
+        <td class="matches-table-description" title="Описание"><a href="#">{{description}}</a></td>
+        <td>
+            {{view App.GamesInfoBarView contentBinding=games}}
+        </td>
+    </tr>
+{{/each}}

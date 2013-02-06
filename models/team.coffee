@@ -14,7 +14,7 @@ ObjectId = Schema.ObjectId
 
 TeamSchema = new Schema
   name: type: String
-  country: type: ObjectId, ref: 'Country'
+  country_id: type: ObjectId, ref: 'Country'
   profile_url: type: String
   players: [type: ObjectId, ref: 'Player']
 

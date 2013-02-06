@@ -1,0 +1,14 @@
+<!--
+ * team_info_tooltip
+ * @author: actuosus
+ * @fileOverview 
+ * Date: 29/01/2013
+ * Time: 18:05
+-->
+
+<div class="tooltip-name">{{view.content.name}}</div>
+<ul class="team-info-tooltip-items">
+{{#each view.content.players}}
+    {{view App.TeamInfoItemView contentBinding=this}}
+{{/each}}
+</ul>

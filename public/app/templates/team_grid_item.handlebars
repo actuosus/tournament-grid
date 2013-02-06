@@ -6,6 +6,6 @@
  * Time: 07:56
 -->
 
-<i class="country-flag-icon"></i>
-<div class="team-name"></div>
-<div class="team-points"></div>
+<i {{bindAttr class=":country-flag-icon :team-country-flag-icon view.countryFlagClassName"}}></i>
+<div class="team-name">{{view.content.name}}</div>
+<div class="team-points">{{view.points}}</div>

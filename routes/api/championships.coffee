@@ -6,7 +6,7 @@
  * Time: 07:17
 ###
 
-models = require '../../models'
-Championship = mongoose.model 'Championship', models.ChampionshipSchema
+Country = require('../../models').Championship
 
 exports.list = (req, res)-> Championship.find({}).exec (err, docs)-> res.send docs
+

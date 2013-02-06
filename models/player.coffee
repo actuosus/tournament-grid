@@ -6,14 +6,13 @@
  * Time: 02:59
 ###
 
-Config = require '../conf'
-conf = new Config
 mongoose = require 'mongoose'
 Schema = mongoose.Schema
 ObjectId = Schema.ObjectId
 
 PlayerSchema = new Schema
   name: type: String
-  country: type: ObjectId, ref: 'Country'
+  country_id: type: ObjectId, ref: 'Country'
+  team_id: type: ObjectId, ref: 'Team'
 
 module.exports = PlayerSchema
