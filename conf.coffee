@@ -10,7 +10,7 @@ module.exports = ->
   switch process.env.NODE_ENV
     when 'production'
       return {
-      hostname: 'http://tournament-grid.herokuapps.com/'
+      hostname: 'http://virtus-pro.herokuapps.com/'
       mongo: process.env.MONGOLAB_URI
       memcache:
         host: process.env.MEMCACHIER_SERVERS
