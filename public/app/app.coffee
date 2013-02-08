@@ -37,6 +37,57 @@ require [
       teams: App.Team.find()
       matches: App.Match.find()
 
+    stageView = Em.ContainerView.create
+      classNames: ['stage-view']
+      childViews: ['tabBarView', 'contentView']
+
+      currentTabView: null
+
+      setCurrentTabView: (@currentTabView)->
+        console.log @currentTabView.get('content')
+        @currentStage = @currentTabView.get 'content'
+        console.log @currentStage.get 'rounds'
+        switch @currentStage.get 'visual_type'
+          when 'grid'
+            contentView = App.MatchGridView.create content: @currentStage.get 'rounds'
+            console.log contentView
+          when 'matrix'
+            contentView = App.GridView.create
+              itemViewClass: App.MatchGridItemView
+              stages: App.Stage.find()
+              content: @currentStage.get('rounds.firstObject.matches')
+            console.log contentView
+#        @get('childViews').pushObject contentView
+        @set 'currentView', contentView
+
+      tabBarView: Em.View.extend
+        classNames: ['i-listsTabs', 'i-listsTabs_bd']
+        template: Em.Handlebars.compile '<ul class="b-listsTabs">{{#each view.content}}{{view view.itemViewClass contentBinding=this}}{{/each}}</ul>'
+
+        selectChildView: (childView)->
+          @get('childViews').forEach (child)=>
+            properChild = child.get('childViews').objectAt 0
+            if Em.isEqual(properChild , childView)
+              @get('parentView').setCurrentTabView properChild
+              properChild.$().addClass('active')
+            else
+              properChild .$().removeClass('active')
+        itemViewClass: Em.View.extend
+          tagName: 'li'
+          classNames: ['item']
+          template: Em.Handlebars.compile '{{name}}'
+          click: ->
+            @get('parentView').selectChildView(@)
+        content: App.Stage.find()
+      contentView: Em.View.extend()
+
+    stageSelectorContainerView = App.NamedContainerView.create
+      title: 'Таблица результатов турнира'
+      contentView: stageView
+    stageSelectorContainerView.appendTo '#content'
+
+    window.stageView = stageView
+
     teamStandingsContainerView = App.NamedContainerView.create
       title: 'Командный зачёт'
       contentView: stangingTableView
@@ -48,6 +99,7 @@ require [
 
     gridView = App.GridView.create
       itemViewClass: App.MatchGridItemView
+      stages: App.Stage.find()
       content: App.Match.find()
 
     selectionStageContainerView = App.NamedContainerView.create
@@ -124,8 +176,6 @@ require [
         else
           match.get('team2')?.set('wins', (match.get('team2').wins + 1) || 1)
           match.get('team1')?.set('loses', (match.get('team1').loses + 1) || 1)
-        console.log 'team1', match.get 'team1'
-        console.log 'team2', match.get 'team2'
 #    matches.addObserver '@each.isLoaded', (matches)-> console.log(matches.isLoaded)
 
 

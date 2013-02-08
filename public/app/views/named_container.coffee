@@ -13,8 +13,9 @@ define ->
     collapsed: no
     classNameBindings: ['collapsed']
     titleView: Em.View.extend
-      tagName: 'h2'
-      classNames: ['named-container-title']
+      tagName: 'p'
+      classNames: ['b-profileBlock__title']
+      classNameBindings: ['collapsed:close']
       titleBinding: 'parentView.title'
       collapsedBinding: 'parentView.collapsed'
       actionButtonLabel: (->
@@ -24,10 +25,12 @@ define ->
           'Свернуть'
       ).property 'collapsed'
 
-      template: Em.Handlebars.compile('{{view.title}} <button type="button" class="toggle-btn toggle-btn-expand pull-right" {{bindAttr title="view.actionButtonLabel"}}><i {{bindAttr class="view.collapsed:icon-chevron-down:icon-chevron-up"}}></i></button>')
-      didInsertElement: ->
-        @.$('.toggle-btn').click =>
-          @get('parentView').toggle()
+      template: Em.Handlebars.compile('{{view.title}}')
+      #  <button type="button" class="toggle-btn toggle-btn-expand pull-right" {{bindAttr title="view.actionButtonLabel"}}><i {{bindAttr class="view.collapsed:icon-chevron-down:icon-chevron-up"}}></i></button>
+#      didInsertElement: ->
+#        @.$('.toggle-btn').click =>
+#          @get('parentView').toggle()
+      click: -> @get('parentView').toggle()
 
     contentView: Em.View.extend()
 

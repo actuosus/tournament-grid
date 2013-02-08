@@ -1,0 +1,46 @@
+@import "_base.scss";
+
+/*******************************************************************************
+ * ico
+ *******************************************************************************/
+.ico-date {
+    display: inline-block;
+    width: 18px;
+    height: 20px;
+    margin-left: 5px;
+    background: sprite($spriteIco, date_18x20) no-repeat;
+    cursor: pointer;
+}
+
+/*******************************************************************************
+ global rules
+ *******************************************************************************/
+.g-hidden {
+	display: none;
+	}
+.g-invisible {
+	display: block;
+	position: absolute;
+	left: -9999px;
+	top: -9999px;
+	visibility: hidden;
+	}
+
+/* clearfix */
+/* http://css-live.ru/tricks/novaya-alternativa-clearfix-u-i-overflowhidden.html */
+.cf  {
+	position: relative;
+	display: table;
+	}
+
+.cf:after {
+	content: '. .';
+	display: block;
+	word-spacing: 99in;
+	height: 0;
+	overflow: hidden;
+
+/* Opera bugfix*/
+	font-size: 0.13em;
+	line-height: 0;
+	}

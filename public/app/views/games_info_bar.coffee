@@ -11,4 +11,4 @@ define ->
     tagName: 'ul'
     classNames: ['games-info-bar']
     showInfoLabel: no
-    template: Em.Handlebars.compile '{{#if view.showInfoLabel}}<li class="games-info-bar-label">Инфо</li>{{/if}}{{#each view.content}}<li><a {{bindAttr href="link"}}>1</a></li>{{/each}}'
+    template: Em.Handlebars.compile '{{#if view.showInfoLabel}}<li class="games-info-bar-label">Инфо</li>{{/if}}{{#each view.content}}<li><a {{bindAttr href="link" title="name"}}>1</a></li>{{/each}}'

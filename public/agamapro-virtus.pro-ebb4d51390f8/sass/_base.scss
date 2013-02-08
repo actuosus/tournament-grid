@@ -1,0 +1,121 @@
+@import "compass";
+@import "_blocks.scss";
+
+//dimensions
+$containerWidth: 100%;
+$contentWidth: 1200px;
+$headerHeight: 39px;
+$asideWidth: 248px;
+$footerHeight: 104px;
+
+//colors
+$colorBackground: #000;
+$colorForeground: #383838;
+$colorGrey: #868686;
+$colorGrey2: #717171;
+$colorBorder: #c8c8c8;
+$colorBorder2: #afafaf;
+$colorBorder3: #a8a8a8;
+$colorBorder4: #bcbcbc;
+$colorOrange: #ff6c00;
+$colorNav: #5b5b5b;
+$colorBlue: #81cef9;
+$colorBlue2: #43b0ec;
+$colorDarkGrey: #3b3b3b;
+
+// fonts
+//$fontBody : Tahoma, Helvetica, sans-serif;
+$fontBody: Arial, Helvetica, sans-serif;
+$fontOpenSans: 'Open Sans', Arial, Helvetica, sans-serif;
+$fontOpenSansCond: 'Open Sans Condensed', Arial, Helvetica, sans-serif;
+$fontRoboto: Roboto, Arial, Helvetica, sans-serif;
+$fontRobotoCond: RobotoCond, Arial, Helvetica, sans-serif;
+
+// sprites
+// $height: icon-sprite-height(some_icon);
+// $width: icon-sprite-width(some_icon);
+$spriteMisc : sprite-map('css/sprites/misc/*.png', $position: 0%, $spacing: 30px, $repeat: no-repeat);
+$spriteIco : sprite-map('css/sprites/ico/*.png', $position: 0%, $spacing: 50px, $repeat: no-repeat);
+$spriteTeamsIco : sprite-map('css/sprites/teamsIco/*.png');
+$spriteTitleIco : sprite-map('css/sprites/titleIco/*.png', $position: 0%, $spacing: 30px, $repeat: no-repeat);
+$spriteRanks : sprite-map('css/sprites/ranks/*.png', $position: 0%, $spacing: 20px, $repeat: no-repeat);
+$spriteSocial : sprite-map('css/sprites/social/*.png', $position: 0%, $spacing: 20px, $repeat: no-repeat);
+$spriteFlags16x11 : sprite-map('css/sprites/flags_16x11/*.png', $position: 0%, $spacing: 40px, $repeat: no-repeat);
+$spriteForms : sprite-map('css/sprites/forms/*.png', $position: 0%, $repeat: no-repeat);
+
+// mixins
+@mixin ieOpacity($var) {
+	filter: alpha(opacity =#{$var});
+	}
+
+@mixin ieInline {
+	*display: inline;
+	zoom: 1;
+	}
+
+@mixin iePie($position: 1) {
+	@if $position == 1 {
+		position: relative;
+		}
+	behavior: url(/PIE.htc);
+	}
+
+@mixin iePieLinearGradient($color1, $color2) {
+// until ie9
+	-pie-background: linear-gradient($color2, $color1);
+	@include iePie;
+	}
+
+@mixin ie7justify {
+	text-justify: newspaper;
+	}
+
+@mixin linear-gradient($color1, $color2) {
+	@include background-image(linear-gradient($color1, $color2));
+	}
+
+@mixin resetList {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+//******************************************************************************
+// functions / mixins: images
+//******************************************************************************
+
+//*** inline images (base64)
+
+@mixin inlineImage($filename, $params: no-repeat, $color: transparent) {
+    @if ($isInlineImages == true) {
+        background: $color inline-image('css/base64/#{$filename}') $params;
+    } @else {
+        background-image: url('../img/css/base64/#{$filename}');
+    }
+}
+
+@function getBase64Width($fileName) {
+    @return image-width('../img/css/base64/#{$fileName}');
+}
+
+@function getBase64Height($fileName) {
+    @return image-height('../img/css/base64/#{$fileName}');
+}
+
+//*** sprites
+
+@mixin getSpriteBgWithDimensions($sprite, $item, $x: 0, $y: 0, $options: no-repeat) {
+    width: image-width(sprite-file($sprite, $item));
+    height: image-height(sprite-file($sprite, $item));
+    background: sprite($sprite, $item, $x, $y) $options;
+}
+
+@function getSpriteItemWidth($sprite, $item) {
+    @return image-width(sprite-file($sprite, $item));
+}
+
+@function getSpriteItemHeight($sprite, $item) {
+    @return image-height(sprite-file($sprite, $item));
+}
+
+

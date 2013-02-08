@@ -10,7 +10,8 @@ module.exports.Stage = [
   _id: '51121246b54802daae000008'
   name: 'Отборочный'
   report_id: '511211b49709aab1ae000002'
-  visual_type: 'grid'
+  visual_type: 'matrix'
+  rounds: ['51142b464242d3110c000002']
 ,
   _id: '51121246b54802daae000009'
   name: '1/32'
@@ -20,6 +21,8 @@ module.exports.Stage = [
   _id: '51121246b54802daae00000a'
   name: '1/16'
   report_id: '511211b49709aab1ae000002'
+  visual_type: 'grid'
+  rounds: ['50fd4a58cbbf53a72a000002', '50fd4a58cbbf53a72a000003', '50fd4a58cbbf53a72a000004']
 ,
   _id: '51121246b54802daae00000b'
   name: '1/8'

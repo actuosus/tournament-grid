@@ -1,0 +1,218 @@
+/* arrows */
+.extDown15x9, .b-aside__title.open {
+  background-image: url("../img/css/base64/arrow_down_15x9.png");
+}
+
+.extUp15x9, .b-profileBlock__title {
+  background-image: url("../img/css/base64/arrow_up_15x9.png");
+}
+
+.extRight9x15 {
+  background-image: url("../img/css/base64/arrow_right_9x15.png");
+}
+
+.extArrowDown8x6, .b-myGallery .more__link, .b-profileBlock .more__link {
+  background-image: url("../img/css/base64/arrow_down_8x6.png");
+}
+
+/* border */
+.extBump6, .i-stream, .b-team__item {
+  background-image: url("../img/css/base64/bump_1x6.png");
+}
+
+.extBump6_2 {
+  background-image: url("../img/css/base64/bump_1x6_2.png");
+}
+
+/* gragients */
+.extGradientIn40 {
+  background-image: url("../img/css/base64/gradient_in_1x40.png");
+}
+
+.extGradientOut49, .b-comments__form .browse {
+  background-image: url("../img/css/base64/gradient_out_1x49.png");
+}
+
+.extGradientOutDark23 {
+  background-image: url("../img/css/base64/gradient_out_dark_1x23.png");
+}
+
+.extProfileTopActive48, .b-profile__top .item.active {
+  background-image: url("../img/css/base64/profile_top_1x48_active.png");
+}
+
+/* icons */
+.extLive {
+  background-image: url("../img/css/base64/live_37x14.png");
+}
+
+.extOnline37x14 {
+  background-image: url("../img/css/base64/online_37x14.png");
+}
+
+.extOffline37x14 {
+  background-image: url("../img/css/base64/offline_37x14.png");
+}
+
+.extMan11x12, .b-aside__news .author {
+  background-image: url("../img/css/base64/man_11x12.png");
+}
+
+.extMan12x11_grey, .b-article__hgroup1 .author {
+  background-image: url("../img/css/base64/man_12x11_grey.png");
+}
+
+.extMale10x11, .b-profileUser__content .male, .b-teamList .item__male {
+  background-image: url("../img/css/base64/male_10x11.png");
+}
+
+.extFemale7x10, .b-teamList .item__female {
+  background-image: url("../img/css/base64/female_7x10.png");
+}
+
+.extMsg14x12, .b-profileStreams__list .item__view {
+  background-image: url("../img/css/base64/msg_14x12.png");
+}
+
+.i-container {
+  height: auto;
+}
+
+/*******************************************************************************
+ article
+ *******************************************************************************/
+/*******************************************************************************
+ aside
+ *******************************************************************************/
+.b-aside__nav .link.live,
+.b-aside__nav2 .link.live {
+  background-image: url("../img/css/base64/live_37x14.png");
+}
+
+.b-aside__nav2__item {
+  background-image: url("../img/css/base64/bullet_3x5.png");
+}
+
+.b-aside__social {
+  text-justify: newspaper;
+}
+
+/* aside__news */
+/* aside__news */
+/*******************************************************************************
+ aside1
+ *******************************************************************************/
+/*******************************************************************************
+ comments
+ *******************************************************************************/
+.b-comments .answer {
+  background-image: url("../img/css/base64/msg_11x11.png");
+}
+.b-comments .answer:hover {
+  background-image: url("../img/css/base64/msg_11x11_hover.png");
+}
+.b-comments .cite {
+  background-image: url("../img/css/base64/quotes_10x8.png");
+}
+.b-comments .cite:hover {
+  background-image: url("../img/css/base64/quotes_10x8_hover.png");
+}
+
+.b-comments__form .browse {
+  vertical-align: bottom;
+}
+
+/*******************************************************************************
+ content
+ *******************************************************************************/
+/*******************************************************************************
+ filter
+ *******************************************************************************/
+.b-filter input {
+  background: #fff;
+}
+.b-filter .search {
+  position: absolute;
+}
+
+/*******************************************************************************
+ myGallery
+ *******************************************************************************/
+.b-myGallery .more__link {
+  margin-top: 22px;
+}
+
+.b-myGallery__list .item__view {
+  background-image: url("../img/css/base64/msg_14x12.png");
+}
+
+/*******************************************************************************
+ profile
+ *******************************************************************************/
+/*******************************************************************************
+ profile
+ *******************************************************************************/
+.b-profile {
+  padding-bottom: 30px;
+}
+
+/* profile__top */
+/* profile__content */
+/*******************************************************************************
+ profileUser
+ *******************************************************************************/
+.gamerInfo .empty {
+  background-image: url("../img/css/base64/dash_18.png");
+}
+
+/*******************************************************************************
+ profileFriends
+ *******************************************************************************/
+.b-profileFriends__list .item__offline,
+.b-profileFriends__list .item__online {
+  background-image: url("../img/css/base64/offline_37x14.png");
+}
+.b-profileFriends__list .item__online {
+  background-image: url("../img/css/base64/online_37x14.png");
+}
+.b-profileFriends__list .item__mailto {
+  background-image: url("../img/css/base64/mail_20x12.png");
+}
+.b-profileFriends__list .item__mailto:hover {
+  background-image: url("../img/css/base64/mail_20x12_hover.png");
+}
+
+/*******************************************************************************
+ profileAchievements
+ *******************************************************************************/
+.b-profileAchievements .title {
+  margin-bottom: 20px;
+}
+
+/*******************************************************************************
+ profileStreams
+ *******************************************************************************/
+.b-profileStreams__list .item__view {
+  /* ie7 speicific at ie7.css */
+}
+
+/*******************************************************************************
+ stream
+ *******************************************************************************/
+/*******************************************************************************
+ team
+ *******************************************************************************/
+.b-team__bottom {
+  background-image: url("../img/css/base64/team_bg_1x46.png");
+}
+
+/*******************************************************************************
+ teamlist
+ *******************************************************************************/
+/*******************************************************************************
+ title
+ *******************************************************************************/
+/* Clearfix for IE 6/7 (trigger hasLayout) */
+.cf {
+  zoom: 1;
+}

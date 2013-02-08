@@ -10,7 +10,10 @@ define ->
   App.Stage = DS.Model.extend
     primaryKey: '_id'
     name: DS.attr 'string'
+    visual_type: DS.attr 'string'
+    sort_index: DS.attr 'number'
+    entrants_count: DS.attr 'number'
 
-    rounds: DS.belongsTo 'App.Championship'
+    rounds: DS.hasMany 'App.Round'
 
   App.Stage.toString = -> 'Stage'

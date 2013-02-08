@@ -84,4 +84,82 @@ module.exports.Match = [
   round_id: '50fd4a58cbbf53a72a000004'
   map_type: 'Комарин'
   description: 'Короткое описание основного текста, для того'
+,
+  _id: '51142bdc323f4b360c000002',
+  name: 'Umitara vs Wikipediots',
+  team1_id: '50fcdf189c68d90f07000001',
+  team2_id: '50fcdf189c68d90f07000002',
+  team1_points: 6,
+  team2_points: 3,
+  date: new Date '08.22.2012'
+  round_id: '51142b464242d3110c000002'
+  map_type: 'Хумельсдорф'
+  description: 'Дополнительно описание, которе вбивается'
+,
+  _id: '51142bdc323f4b360c000003',
+  name: 'Stephano vs Bly',
+  team1_id: '50fcdf189c68d90f07000003',
+  team2_id: '50fcdf189c68d90f07000004',
+  team1_points: 0,
+  team2_points: 10,
+  date: new Date '08.22.2012'
+  round_id: '51142b464242d3110c000002'
+  map_type: 'Хумельсдорф'
+  description: 'Еще какое-то описание, дополняющее текст'
+  games: ['5111afa9c3a093c8a1000002', '5111afa9c3a093c8a1000003', '5111afa9c3a093c8a1000004']
+,
+  _id: '51142bdc323f4b360c000004',
+  name: 'Umitara vs Bly',
+  team1_id: '50fcdf189c68d90f07000001',
+  team2_id: '50fcdf189c68d90f07000004',
+  team1_points: 6,
+  team2_points: 8,
+  date: new Date '08.22.2012'
+  round_id: '51142b464242d3110c000002'
+  map_type: 'Хумельсдорф'
+  description: 'Короткое описание основного текста, для того'
+,
+  _id: '51142bdc323f4b360c000005',
+  name: 'Umitara vs Wikipediots',
+  team1_id: '50fcdf189c68d90f07000001',
+  team2_id: '50fcdf189c68d90f07000002',
+  team1_points: 6,
+  team2_points: 3,
+  date: new Date '08.22.2012'
+  round_id: '51142b464242d3110c000002'
+  map_type: 'Хумельсдорф'
+  description: 'Очень красивый и хороший матч, советую'
+,
+  _id: '51142bdc323f4b360c000006',
+  name: 'Stephano vs Bly',
+  team1_id: '50fcdf189c68d90f07000003',
+  team2_id: '50fcdf189c68d90f07000004',
+  team1_points: 0,
+  team2_points: 10,
+  date: new Date '08.22.2012'
+  round_id: '51142b464242d3110c000002'
+  map_type: 'Вестфилд'
+  description: 'Дополнительно описание, которе вбивается'
+,
+  _id: '51142bdc323f4b360c000007',
+  name: 'Stephano vs Wikipediots',
+  team1_id: '50fcdf189c68d90f07000003',
+  team2_id: '50fcdf189c68d90f07000002',
+  team1_points: 2,
+  team2_points: 7,
+  date: new Date '08.23.2012'
+  round_id: '51142b464242d3110c000002'
+  map_type: 'Вестфилд'
+  description: 'Еще какое-то описание, дополняющее текст'
+,
+  _id: '51142bdc323f4b360c000008',
+  name: 'Bly vs Wikipediots',
+  team1_id: '50fcdf189c68d90f07000004',
+  team2_id: '50fcdf189c68d90f07000002',
+  team1_points: 1,
+  team2_points: 4,
+  date: new Date '08.24.2012'
+  round_id: '51142b464242d3110c000002'
+  map_type: 'Комарин'
+  description: 'Короткое описание основного текста, для того'
 ]

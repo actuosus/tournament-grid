@@ -1,0 +1,9 @@
+/*******************************************************************************
+ profile
+ *******************************************************************************/
+/* profile__top */
+.b-profile__top {
+  -pie-background: linear-gradient(#d0d0d0, #ebebeb);
+  position: relative;
+  behavior: url(/PIE.htc);
+}

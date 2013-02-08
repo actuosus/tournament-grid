@@ -9,7 +9,7 @@
 define ->
   App.Game = DS.Model.extend
     primaryKey: '_id'
-    name: DS.attr 'string'
+    title: DS.attr 'string'
     link: DS.attr 'string'
 
   App.Game.toString = -> 'Game'

@@ -6,34 +6,27 @@
  * Time: 07:49
 -->
 
-<form class="selector row" xmlns="http://www.w3.org/1999/html">
-    <div class="span1">
-        <label>Матчи</label>
-    </div>
-    <div class="chooser span2">
-        <label for="match-type-selector">Тип:</label>
-        {{view App.SelectView promt="Все"}}
-        <!--<select id="match-type-selector">-->
-            <!--<option>Все</option>-->
-        <!--</select>-->
-    </div>
-    <div class="chooser span2">
-        <label for="match-team-selector">Команда:</label>
-        {{view App.SelectView contentBinding=view.controller.teams promt="Все"}}
-        <!--<select id="match-team-selector">-->
-            <!--<option>Все</option>-->
-        <!--</select>-->
-    </div>
-    <div class="chooser span2">
-        <label for="match-period-selector">За время:</label>
-        {{view App.SelectView}}
-        <!--<select id="match-period-selector">-->
-            <!--<option>Период</option>-->
-        <!--</select>-->
-        <!--<input type="text" id="match-period-input"/>-->
-    </div>
-    <div class="span5">
-        <button type="button" class="btn btn-large search-btn" title="Отфильтровать" {{action filter}}><i class="icon-search icon-white"></i></button>
-        <button type="button" class="btn toggle-btn toggle-btn-expand"></button>
+<form class="selector row b-filter" xmlns="http://www.w3.org/1999/html">
+    <div class="cf">
+        <div class="span1">
+            <label>Матчи</label>
+        </div>
+        <div class="columnLeft">
+
+            <label>
+                <span>Тип:</span>
+                {{view App.SelectView promt="Все"}}
+            </label>
+            <label>
+                <span>Команда:</span>
+                {{view App.SelectView contentBinding=view.controller.teams promt="Все"}}
+            </label>
+            <label>
+                <span>За время:</span>
+                {{view App.SelectView}}
+            </label>
+
+            <button type="button" class="btn btn-large search-btn submit" title="Отфильтровать" {{action filter}}><i class="icon-search icon-white"></i></button>
+        </div>
     </div>
 </form>

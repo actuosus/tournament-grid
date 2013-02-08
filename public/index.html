@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+    <meta charset="utf-8"/>
     <title>Virtus.Pro Report</title>
 
     <meta name="Author" content="actuosus"/>
@@ -9,22 +10,39 @@
     <meta name="description" content="Virtus.Pro Report Visualization Test Project">
     <meta name="author" content="Arthur Chafonov <actuosus@gmail.com>">
 
-    <link href='http://fonts.googleapis.com/css?family=PT+Sans+Narrow:700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+    <meta property="og:title" content="Virtus.Pro Report"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:url" content="http://virtus-pro.herokuapp.com/"/>
+    <meta property="og:site_name" content="Virtus.Pro Report"/>
+    <meta property="fb:admins" content="USER_ID"/>
+    <meta property="og:description" content="Virtus.Pro Report Visualization Test Project"/>
 
-    <link rel="stylesheet/less" href="/vendor/less/bootstrap.less"/>
-    <script type="text/javascript" src="/vendor/javascripts/less-1.3.1.min.js"></script>
+    <link rel="stylesheet" href="/agamapro-virtus.pro-ebb4d51390f8/css/style.css" media="screen,projection"/>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700,300italic|Open+Sans:400,700,400italic,700italic&subset=latin,cyrillic'
+          rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" href="/agamapro-virtus.pro-ebb4d51390f8/css/style.css" media="screen,projection" />
 
     <link href="/app/stylesheets/main.css" rel="stylesheet"/>
 
     <!-- Not working with require.js https://github.com/DmitryBaranovskiy/raphael/issues/524 -->
-    <script type="text/javascript" src="/vendor/javascripts/raphael.js"></script>
+    <!--<script type="text/javascript" src="/vendor/javascripts/raphael.js"></script>-->
     <script type="text/javascript" src="/vendor/javascripts/require.js"></script>
 
-    <!-- Le fav and touch icons -->
     <link rel="shortcut icon" href="/images/favicon.ico">
     <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
     <link rel="apple-touch-icon" sizes="72x72" href="/images/apple-touch-icon-72x72.png">
     <link rel="apple-touch-icon" sizes="114x114" href="/images/apple-touch-icon-114x114.png">
+
+    <!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="css/ie.css" media="screen,projection"/><![endif]-->
+    <!--[if lte IE 8]>
+    <link rel="stylesheet" href="css/ie8.css" media="screen,projection"/><![endif]-->
+    <!--[if lte IE 7]>
+    <link rel="stylesheet" href="css/ie7.css" media="screen,projection"/><![endif]-->
+    <!-- <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" /> -->
 </head>
 <body>
     <script type="text/javascript">window.jQuery || document.write('<script src="/vendor/javascripts/jquery-1.8.2.min.js"><\/script>')</script>
@@ -36,103 +54,443 @@
     <script src="/vendor/javascripts/bootstrap.js" type="text/javascript"></script>
     <script src="/app/main.js" type="text/javascript"></script>
 
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="navbar-inner">
-            <div class="container">
-                <form class="navbar-search pull-left">
-                    <input type="text" class="search-query" placeholder="Поиск по сайту">
-                </form>
-                <ul class="nav nav-lang pull-right">
-                    <li class="active"><a href="#">RU</a></li>
-                    <li><a href="#">EN</a></li>
-                    <li><a href="#">DE</a></li>
+    <!-- header -->
+    <header class="i-header">
+        <div class="b-header cf">
+            <form class="b-header__search">
+                <input type="text" placeholder="Поиск по сайту" title="Поиск по сайту" class="searchField">
+                <button type="submit" class="submit"></button>
+            </form>
+            <div class="b-header__right">
+                <span class="username">FankySoul</span>
+                <img class="userAvatar" src="/agamapro-virtus.pro-ebb4d51390f8/img/dummy/avatar_23x23.jpg" alt="">
+                <a class="personal" href="" title="">Личный кабинет</a> |
+                <a class="quit" href="" title="">Выйти</a>
+                <a class="lang lang_first active" href="" title="">RU</a>
+                <a class="lang" href="" title="">EN</a>
+                <a class="lang" href="" title="">DE</a>
+            </div>
+        </div>
+    </header>
+    <!-- end header -->
+
+    <!-- wrapper -->
+    <div class="i-wrapper cf">
+
+        <a class="b-logo" href="/" title=""></a>
+
+        <!-- nav -->
+        <nav>
+            <ul class="b-nav">
+                <li class="b-nav__item"><a href="" title="" class="link active">Команда</a></li>
+                <li class="b-nav__item"><a href="" title="" class="link">Матчи</a></li>
+                <li class="b-nav__item"><a href="" title="" class="link">О нас</a></li>
+                <li class="b-nav__item"><a href="" title="" class="link">Партнеры</a></li>
+                <li class="b-nav__item benq"><a href="" title="" class="link"></a></li>
+            </ul>
+        </nav>
+        <!-- end nav -->
+
+        <!-- slider -->
+        <div class="i-slider">
+            <span class="leftArrow"></span>
+            <span class="rightArrow"></span>
+
+            <div class="boundingBox">
+                <ul class="b-slider">
+                    <li class="item">
+                        <a href="" title="" class="item__link">
+                            <img src="/agamapro-virtus.pro-ebb4d51390f8/img/dummy/slider/1.jpg" alt="">
+                            <span class="item__info">
+                                Триумф игроков RO X.KIS на
+                                финалах ZOTAC поверг всех в шок!
+                            </span>
+                        </a>
+                    </li>
+                    <li class="item">
+                        <a href="" title="" class="item__link">
+                            <img src="/agamapro-virtus.pro-ebb4d51390f8/img/dummy/slider/2.jpg" alt="">
+                            <span class="item__info">
+                                Победа VirtusPro на WCG’12 в 2012 номинации CS:GO
+                            </span>
+                        </a>
+                    </li>
+                    <li class="item">
+                        <a href="" title="" class="item__link">
+                            <img src="/agamapro-virtus.pro-ebb4d51390f8/img/dummy/slider/3.jpg" alt="">
+                            <span class="item__info">
+                                Мировая победа VirtusPro на WCG’12 в номинации CS:GO
+                            </span>
+                        </a>
+                    </li>
+                    <li class="item">
+                        <a href="" title="" class="item__link">
+                            <img src="/agamapro-virtus.pro-ebb4d51390f8/img/dummy/slider/1.jpg" alt="">
+                            <span class="item__info">
+                                Триумф игроков RO X.KIS на
+                                финалах ZOTAC поверг всех в шок!
+                            </span>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
-    </div>
+        <!-- end slider -->
 
-    <div id="wrap">
-        <div class="container">
-            <div class="row">
-                <div class="span3">
-                    <ul class="block-container nav nav-list">
-                        <li class="nav-header">Контент</li>
-                        <li><a href="#">Новости</a></li>
-                        <li><a href="#">Видео</a></li>
-                        <li class="active"><a href="#">Репортажи</a></li>
-                        <li><a href="#">Загрузки</a></li>
-                        <li><a href="#">Фото</a></li>
-                        <li><a href="#">VP Рубрики</a></li>
+        <!-- stream -->
+        <div class="i-stream">
+            <span class="i-stream__open"></span>
 
-                        <li class="nav-header">Учавствуй</li>
-                        <li><a href="#">Блогосфера</a></li>
-                        <li><a href="#">Турниры</a></li>
-                        <li><a href="#">Форум</a></li>
-                        <li><a href="#">Поиск команды</a></li>
-                        <li><a href="#">Комьюнити</a></li>
-                        <li><a href="#">Конурсы</a></li>
+            <div class="b-stream"></div>
+        </div>
+        <!-- end stream -->
 
-                        <li class="nav-header">Обучение</li>
-                        <li><a href="#">Counter Strike</a></li>
-                        <li><a href="#">Starcraft</a></li>
-                        <li><a href="#">World of Tanks</a></li>
-                        <li><a href="#">Dota 2</a></li>
-                        <li><a href="#">Counter Strike: GO</a></li>
 
-                        <li class="nav-header">База</li>
-                        <li><a href="#">Игроки</a></li>
-                        <li><a href="#">Команды</a></li>
-                        <li><a href="#">События</a></li>
-                        <li><a href="#">Матчи</a></li>
-                    </ul>
+        <!-- container -->
+        <div class="i-container cf">
 
-                    <ul class="block-container nav nav-list">
-                        <li class="nav-header">virtus.tv</li>
-                        <li><a href="#">All Streams</a></li>
-                        <li><a href="#">Записи трансляции</a></li>
-                    </ul>
-
-                    <ul class="nav nav-pills social-links">
-                        <li class="social-link social-link-fb"></li>
-                        <li class="social-link social-link-tw"></li>
-                        <li class="social-link social-link-youtube"></li>
-                        <li class="social-link social-link-vk"></li>
-                        <li class="social-link social-link-steam"></li>
-                    </ul>
-                </div>
-                <div class="span9">
-                    <div id="content"></div>
-                </div>
+            <div class="b-breadcrumbs">
+                <a href="" title="">Главная страница</a> <span class="divider">»</span>
+                <a href="" title="">Новости</a>  <span class="divider">»</span>
+                Команда VirtusPro побеждают на WCG’12 DOTA2
             </div>
+
+            <!-- aside 1 -->
+            <aside class="b-aside1">
+
+                <div class="b-aside__block">
+                    <p class="b-aside__title open">Контент</p>
+
+                    <ul class="b-aside__nav">
+                        <li class="b-aside__nav__item">
+                            <a href="" title="" class="link">Новости</a>
+                        </li>
+                        <li class="b-aside__nav__item">
+                            <a href="" title="" class="link">Видео</a>
+                        </li>
+                        <li class="b-aside__nav__item">
+                            <a href="" title="" class="link active">Репортажи</a>
+                            <ul class="b-aside__nav2">
+                                <li class="b-aside__nav2__item">
+                                    <a href="" title="" class="link live">Star Craft</a>
+                                </li>
+                                <li class="b-aside__nav2__item">
+                                    <a href="" title="" class="link live active">Counter Strike</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="b-aside__nav__item">
+                            <a href="" title="" class="link">Загрузки</a>
+                        </li>
+                        <li class="b-aside__nav__item">
+                            <a href="" title="" class="link">Фото</a>
+                        </li>
+                        <li class="b-aside__nav__item">
+                            <a href="" title="" class="link">VP Рубрики</a>
+                        </li>
+                    </ul>
+
+                    <p class="b-aside__title open">Участвуй</p>
+
+                    <ul class="b-aside__nav">
+                        <li class="b-aside__nav__item">
+                            <a href="" title="" class="link">Блогосфера</a>
+                        </li>
+                        <li class="b-aside__nav__item">
+                            <a href="" title="" class="link">Турниры</a>
+                        </li>
+                        <li class="b-aside__nav__item">
+                            <a href="" title="" class="link">Форум</a>
+                        </li>
+                        <li class="b-aside__nav__item">
+                            <a href="" title="" class="link">Поиск команд</a>
+                        </li>
+                        <li class="b-aside__nav__item">
+                            <a href="" title="" class="link">Комьюнити</a>
+                        </li>
+                        <li class="b-aside__nav__item">
+                            <a href="" title="" class="link">Конкурсы</a>
+                        </li>
+                    </ul>
+
+                    <p class="b-aside__title open">Обучение</p>
+
+                    <ul class="b-aside__nav">
+                        <li class="b-aside__nav__item">
+                            <a href="" title="" class="link">Сounter Strike</a>
+                        </li>
+                        <li class="b-aside__nav__item">
+                            <a href="" title="" class="link">Starcraft</a>
+                        </li>
+                        <li class="b-aside__nav__item">
+                            <a href="" title="" class="link">World of Tanks</a>
+                        </li>
+                        <li class="b-aside__nav__item">
+                            <a href="" title="" class="link">Dota 2</a>
+                        </li>
+                        <li class="b-aside__nav__item">
+                            <a href="" title="" class="link">Counter Strike: GO</a>
+                        </li>
+                    </ul>
+
+                    <p class="b-aside__title open">База</p>
+
+                    <ul class="b-aside__nav nobd">
+                        <li class="b-aside__nav__item">
+                            <a href="" title="" class="link">Игроки</a>
+                        </li>
+                        <li class="b-aside__nav__item">
+                            <a href="" title="" class="link">Команды</a>
+                        </li>
+                        <li class="b-aside__nav__item">
+                            <a href="" title="" class="link">Турниры</a>
+                        </li>
+                        <li class="b-aside__nav__item">
+                            <a href="" title="" class="link">Матчи</a>
+                        </li>
+                    </ul>
+
+                </div>
+
+                <div class="b-aside__block">
+                    <p class="b-aside__title open">Virtus.TV</p>
+
+                    <ul class="b-aside__nav nobd">
+                        <li class="b-aside__nav__item">
+                            <a href="" title="" class="link">All Streams</a>
+                        </li>
+                        <li class="b-aside__nav__item">
+                            <a href="" title="" class="link">Записи трансляций</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="b-aside__social">
+                    <a class="fb" href="" title=""></a>
+                    <a class="tw" href="" title=""></a>
+                    <a class="youtube" href="" title=""></a>
+                    <a class="vk" href="" title=""></a>
+                    <a class="steam" href="" title=""></a>
+                    <span class="fakeLine"></span>
+                </div>
+
+                <form class="b-aside__block b-formVoting">
+                    <p class="b-aside__title">Голосование</p>
+                    <p class="question">Как вам нравится редизайн
+                                        нашего сайта?</p>
+
+                    <label><input type="radio" name="vote">Не айс</label>
+                    <label><input type="radio" name="vote">Не плохо</label>
+                    <label><input type="radio" name="vote">Вполне себе ничего</label>
+                    <label><input type="radio" name="vote">Мне нравится</label>
+                    <label class="checked"><input type="radio" name="vote" checked="checked">Отличный получился</label>
+
+                    <button class="submit" type="submit"></button>
+                    <a class="allVotes" href="" title="">Результаты</a>
+                </form>
+
+            </aside>
+            <!-- end aside 1 -->
+
+            <!-- content -->
+            <div class="b-content b-content_aside1">
+                <p class="b-title b-title_bump"><span class="ico ico_players"></span>Репортаж
+                    <a class="link link_pencil" href="" title="">Добавить информацию</a></p>
+
+                <div class="b-profileReport cf">
+
+                    <!-- article__hgroup1 -->
+                    <div class="b-article__hgroup1">
+                        <img src="img/games/logo/sc2.png" alt="" class="logo">
+                        <h1 class="b-article__title">StarCraft 2 Regular Cup #30: DIMAGA!</h1>
+                        <span class="bigger">AsusCup spring 2012 gual CS</span>
+                        <a href="" class="author">FUki</a>
+                        20 августа 2012, в 21:52
+
+                        <div class="b-article__social">
+                            <a class="tw" href="" title=""></a>
+                            <a class="odnoklassniki" href="" title=""></a>
+                            <a class="fb" href="" title=""></a>
+                            <a class="vk" href="" title=""></a>
+                            <span class="more"></span>
+                            <span class="comments">22<i class="comments__rightEdge"></i></span>
+                        </div>
+
+                        <div class="b-votes">
+                            <span class="b-votes__points">+8623</span>
+                            <span class="b-votes__up"></span>
+                            <span class="b-votes__down"></span>
+                        </div>
+                    </div>
+                    <!-- article__hgroup1 -->
+                    <!-- profileReport__main -->
+                    <div class="b-profileReport__main">
+                        <div class="intro">
+                            <img class="intro__img" src="img/dummy/report_intro2.jpg" alt="">
+                            <p class="b-profileReport__title">Общая информация</p>
+
+                            <ul class="b-profileReport__general">
+                                <li class="item"><span class="item__title">Анонс:</span> <a href="" title="">Анонс Gamegune</a></li>
+                                <li class="item"><span class="item__title">Место:</span> Испания, Бильбао</li>
+                                <li class="item"><span class="item__title">Дата:</span> 26.07.12 - 29.07.12</li>
+                                <li class="item"><span class="item__title">Схема:</span> Группы + FDE</li>
+                                <li class="item"><span class="item__title">Участников:</span> 24</li>
+                                <li class="item"><span class="item__title">Сайт:</span> <a href="" title="">gamegune.com</a></li>
+                                <li class="item"><span class="item__title">Cпонсоры:</span> MSI, Asus</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- end profileReport__main -->
+
+                    <!-- profileReport__aside -->
+                    <aside class="b-profileReport__aside">
+                        <p class="b-profileReport__title">Призовой фонд</p>
+
+                        <table class="b-profileReport__prizes">
+                            <tr>
+                                <th colspan="2">Общий призовой фонд:</th>
+                                <th>$ 8500</th>
+                            </tr>
+                            <tr class="odd">
+                                <td>1</td>
+                                <td class="user"><a href="" title="" class="jp">AoMame</a></td>
+                                <td>$ 5000</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td class="user"><a href="" title="" class="ua">GreenBarrow</a></td>
+                                <td>$ 2500</td>
+                            </tr>
+                            <tr class="odd">
+                                <td>3</td>
+                                <td class="user"><a href="" title="" class="br">FanMoon</a></td>
+                                <td>$ 1000</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <div class="b-more">
+                                        <a class="more" href="" title="">Еще</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </aside>
+                    <!-- end profileReport__aside -->
+                </div>
+
+                <div class="i-listsTabs i-listsTabs_bd">
+                    <ul class="b-listsTabs">
+                        <li class="item active">Ход репортажа</li>
+                        <li class="item">Описание</li>
+                    </ul>
+                </div>
+
+                <div class="b-profileReport cf">
+                    <!-- profileReport__main -->
+                    <div class="b-profileReport__main b-profileReport__main_secondary">
+                        Если я правильно вас понял, и вы имеете ввиду под термином «условное макетирование» то, что автор в статье
+                        называет терминами «эскиз», «прототип» (все-таки прочитав статью, в которой используются одни термины, и
+                        потом быстро переключиться на терминологию другую, не так уж и просто.В этом кстати ваша ошибка ИМХО, стоило
+                        бы принять конвенцию предложенную автором, хотя бы в пределах топика, чтобы не создавать дополнительных
+                        путаниц.) то этот комментарий, идет в прямой конфликт со статьей) И было бы правильней высказать несогласие
+                        с автором, чем показывать этот пример как «интересный»
+
+                        <p class="b-profileReport__title">Твит лента</p>
+                        <!-- tweets -->
+                        <ul class="b-tweets">
+                            <li class="item">
+                                <a href="" class="userName">Zendelman</a><span class="time">8 minute ago</span> <br/>
+                                Представляем Вашему вниманию полноценный фраг-муви от HLTV.org, посвященный недавно организованной и прошедшей кс-лиге.
+                            </li>
+                            <li class="item">
+                                <a href="" class="userName">Proofy-Proof</a><span class="time">8 minute ago</span> <br/>
+                                Победил в чемпе WCG’12 @Ponteley и @Potapenko со счетом 12:3. Красивая была игра, спасибо вам ребята!
+                            </li>
+                            <li class="item">
+                                <a href="" class="userName">Zendelman</a><span class="time">8 minute ago</span> <br/>
+                                Представляем Вашему вниманию полноценный фраг-муви от HLTV.org, посвященный недавно организованной и прошедшей кс-лиге.
+                            </li>
+                        </ul>
+                        <!-- end tweets -->
+
+                        <div class="b-more">
+                            <a class="more" href="" title="">Еще</a>
+                        </div>
+                    </div>
+                    <!-- end profileReport__main -->
+
+                    <!-- profileReport__aside -->
+                    <aside class="b-profileReport__aside b-profileReport__aside_secondary">
+
+                        <div class="greyBlock">
+                            <p class="b-profileReport__title">Похожие репортажи</p>
+
+                            <ul class="b-profileReport__related">
+                                <li class="item"><a href="" title="">Gamegune 2012. Semifinal: Попытки играть на достойном уровне</a></li>
+                                <li class="item"><a href="" title="">Gamegune 2012. Online tournament: Как Virtus.pro стали чемпионами</a></li>
+                                <li class="item"><a href="" title="">Gamegune 2012.</a></li>
+                                <li class="item">
+                                    <div class="b-more">
+                                        <a class="more" href="" title="">Еще</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </aside>
+                    <!-- end profileReport__aside -->
+                </div>
+
+                <div id="content"></div>
+            </div>
+        <!-- end content -->
+    </div>
+    <!-- end container -->
+
+    </div>
+    <!-- end wrapper -->
+
+
+    <!-- footer -->
+    <footer class="b-footer">
+
+        <div class="b-footer__social">
+            © 2010-2012 <b>VIRTUS.PRO</b> <br/>
+            <a href="" title="" class="vk"></a>
+            <a href="" title="" class="fb"></a>
+            <a href="" title="" class="tw"></a>
         </div>
 
-        <div id="push"></div>
-    </div>
-
-    <div id="footer">
-        <div class="container">
-            <div class="row-fluid">
-                <div class="span3">
-                    <div id="copyright">&copy; 2010-2013 VIRTUS.PRO</div>
-                    <ul class="nav nav-pills social-links">
-                        <li class="social-link social-link-vk"></li>
-                        <li class="social-link social-link-fb"></li>
-                        <li class="social-link social-link-tw"></li>
-                    </ul>
-                </div>
-                <div class="span3" id="disclaimer">При копировании материалов активная ссылка на сайт обязательна.</div>
-
-                <div class="span6">
-                    <ul class="nav nav-pills">
-                        <li><a href="#">Команда</a></li>
-                        <li><a href="#">Матчи</a></li>
-                        <li><a href="#">О нас</a></li>
-                        <li><a href="#">Партнеры</a></li>
-                    </ul>
-                </div>
-            </div>
+        <div class="b-footer__copyright">
+            При копировании материалов активная
+            ссылка на сайт обязательна.
         </div>
-    </div>
+
+        <nav class="b-footer__nav">
+            <a href="" title="">команда</a>
+            <a href="" title="">матчи</a>
+            <a href="" title="">о нас</a>
+            <a href="" title="">партнеры</a>
+        </nav>
+    </footer>
+    <!-- end footer -->
+
+    <script src="/agamapro-virtus.pro-ebb4d51390f8/js/modernizr.js"></script>
+    <script>
+        Modernizr.load([
+            {
+                //load: 'https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js',
+                load: 'http://yandex.st/jquery/1.8.2/jquery.min.js',
+                complete: function () {
+                    if (!window.jQuery) {
+                        Modernizr.load('js/jquery-1.8.2.min.js');
+                    }
+                }
+            },
+            {
+                load: '/agamapro-virtus.pro-ebb4d51390f8/js/scripts.js'
+            }
+        ]);
+    </script>
 
     <script type="text/x-handlebars" data-template-name="application"></script>
 </body>

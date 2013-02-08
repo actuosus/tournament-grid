@@ -8,6 +8,7 @@
 .table {
     font-size: 13px;
     border: 1px solid #bebebe;
+    width: 100%;
 }
 
 .table th {
