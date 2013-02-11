@@ -18,6 +18,19 @@ define ->
   window.TournamentGrid = TournamentGrid
   window.App = App
 
+  DS.RecordArray.reopen
+    onLoad: (callback)->
+      if @get 'isLoaded'
+        callback this
+      else
+        that = @
+        isLoadedFn = ->
+          if that.get 'isLoaded'
+            that.removeObserver 'isLoaded', isLoadedFn
+            callback that
+      @addObserver 'isLoaded', isLoadedFn
+      @
+
   DS.RESTAdapter.configure 'plurals',
     country: 'countries'
     match: 'matches'

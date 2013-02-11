@@ -11,6 +11,10 @@
     width: 100%;
 }
 
+.table th, .table .td {
+    text-align: left;
+}
+
 .table th {
     padding: 2px 8px;
     line-height: 21px;

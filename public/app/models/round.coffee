@@ -14,4 +14,13 @@ define ->
 
     rounds: DS.belongsTo 'App.Championship'
 
+    teams: (->
+      matches = @get 'matches'
+      teams = []
+      matches.forEach (match)->
+        teams.push match.get 'team1'
+        teams.push match.get 'team2'
+      teams.uniq()
+    ).property('matches')
+
   App.Round.toString = -> 'Round'

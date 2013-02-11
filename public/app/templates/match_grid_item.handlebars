@@ -15,10 +15,6 @@
 </div>
 {{/if}}
 <div class="teams-container">
-    {{view App.TeamGridItemView contentBinding=view.content.team1 pointsBinding=view.content.team1_points}}
-    {{view App.TeamGridItemView contentBinding=view.content.team2 pointsBinding=view.content.team2_points}}
-
-    <div class="connector" style="height: 7px; width: 20px; right: -22px; top: 27px; border-bottom-style: none;">
-        <div class="connector" style="width: 20px; right: -20px; bottom: 0px;"></div>
-    </div>
+    {{view App.TeamGridItemView contentBinding=view.content.team1 pointsBinding=view.content.team1_points identifier="team1"}}
+    {{view App.TeamGridItemView contentBinding=view.content.team2 pointsBinding=view.content.team2_points identifier="team2"}}
 </div>

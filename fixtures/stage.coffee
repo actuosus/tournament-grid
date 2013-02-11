@@ -9,6 +9,7 @@
 module.exports.Stage = [
   _id: '51121246b54802daae000008'
   name: 'Отборочный'
+  description: 'Большая серия матчей с обилием команд'
   report_id: '511211b49709aab1ae000002'
   visual_type: 'matrix'
   rounds: ['51142b464242d3110c000002']
@@ -16,7 +17,8 @@ module.exports.Stage = [
   _id: '51121246b54802daae000009'
   name: '1/32'
   report_id: '511211b49709aab1ae000002'
-  visual_type: 'double'
+  visual_type: 'group'
+  rounds: ['5114472b6da8bd2910000002', '5114472b6da8bd2910000003', '5114472b6da8bd2910000004', '5114472b6da8bd2910000005', '5114472b6da8bd2910000006', '5114472b6da8bd2910000007']
 ,
   _id: '51121246b54802daae00000a'
   name: '1/16'
@@ -26,14 +28,18 @@ module.exports.Stage = [
 ,
   _id: '51121246b54802daae00000b'
   name: '1/8'
+  visual_type: 'team'
   report_id: '511211b49709aab1ae000002'
+  rounds: ['51142b464242d3110c000002']
 ,
   _id: '51121246b54802daae00000c'
   name: '1/4'
+  visual_type: 'double'
   report_id: '511211b49709aab1ae000002'
 ,
   _id: '51121246b54802daae00000d'
   name: '1/2'
+  visual_type: 'single'
   report_id: '511211b49709aab1ae000002'
 ,
   _id: '51121246b54802daae00000e'

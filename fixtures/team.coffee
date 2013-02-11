@@ -23,6 +23,10 @@ module.exports.Team = [
   name: 'Bly',
   country_id: '50fcdaf969f206c106000006'
 ,
+  _id: '5116163383cf2f2534000002'
+  name: 'Very long team name for testing purpose'
+  country_id: '50fcdaf969f206c106000009'
+,
   name: 'Natus Vincere'
   country_id: '50fcdaf969f206c106000009'
 ,

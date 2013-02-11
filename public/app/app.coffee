@@ -41,8 +41,6 @@ require [
       classNames: ['stage-view']
       childViews: ['tabBarView', 'contentView']
 
-      currentTabView: null
-
       setCurrentTabView: (@currentTabView)->
         console.log @currentTabView.get('content')
         @currentStage = @currentTabView.get 'content'
@@ -51,12 +49,27 @@ require [
           when 'grid'
             contentView = App.MatchGridView.create content: @currentStage.get 'rounds'
             console.log contentView
+          when 'group'
+            contentView = App.GridView.create
+              content: @currentStage.get 'rounds'
+              itemViewClass: Em.View.extend
+                tagName: 'table'
+                classNames: ['table', 'lineup-grid-item']
+                template: Em.Handlebars.compile(
+                  '<thead><tr><th colspan="2"><span class="lineup-grid-item-name">{{view.content.name}}</span></th></tr></thead><tbody>{{#each view.content.players}}<tr><td><i {{bindAttr class=":country-flag-icon :team-country-flag-icon countryFlagClassName"}}></i>{{nickname}}</td><td><span class="realname">({{realname}})</span></td></tr>{{/each}}</tbody>'
+                )
+              emptyViewClass: Em.View.extend
+                template: Em.Handlebars.compile('Пока что ни одного этапа')
           when 'matrix'
             contentView = App.GridView.create
               itemViewClass: App.MatchGridItemView
               stages: App.Stage.find()
               content: @currentStage.get('rounds.firstObject.matches')
             console.log contentView
+          when 'team'
+            contentView = App.StangingTableView.create
+              teams: @currentStage.get('rounds.firstObject.teams')
+              matches: @currentStage.get('rounds.firstObject.matches')
 #        @get('childViews').pushObject contentView
         @set 'currentView', contentView
 
@@ -75,6 +88,7 @@ require [
         itemViewClass: Em.View.extend
           tagName: 'li'
           classNames: ['item']
+          attributeBindings: ['description:title']
           template: Em.Handlebars.compile '{{name}}'
           click: ->
             @get('parentView').selectChildView(@)
@@ -91,7 +105,7 @@ require [
     teamStandingsContainerView = App.NamedContainerView.create
       title: 'Командный зачёт'
       contentView: stangingTableView
-    teamStandingsContainerView.appendTo '#content'
+#    teamStandingsContainerView.appendTo '#content'
 
     teamsController = Em.ArrayController.create
       content: App.Team.find()
@@ -105,14 +119,14 @@ require [
     selectionStageContainerView = App.NamedContainerView.create
       title: 'Отборочный этап'
       contentView: gridView
-    selectionStageContainerView.appendTo '#content'
+#    selectionStageContainerView.appendTo '#content'
 #    teamStandingsTableView = App.TeamStandingsTableView.create content: teamsController
 #    teamStandingsTableView.appendTo document.body
 
     championshipTableContainer = App.NamedContainerView.create
       title: 'Таблица результатов турнира'
       contentView: matchGridView
-    championshipTableContainer.appendTo '#content'
+#    championshipTableContainer.appendTo '#content'
 
     lineupView = App.GridView.create
       content: App.Team.find()
@@ -127,7 +141,7 @@ require [
       title: 'Состав команд'
       contentView: lineupView
 
-    lineupContainerView.appendTo '#content'
+#    lineupContainerView.appendTo '#content'
 
     groupContainerView = App.NamedContainerView.create
       title: 'Групповой этап'
@@ -142,26 +156,12 @@ require [
         emptyViewClass: Em.View.extend
           template: Em.Handlebars.compile('Пока что ни одного этапа')
 
-    groupContainerView.appendTo '#content'
+#    groupContainerView.appendTo '#content'
 
     window.teamsController = teamsController
 
     window.matchGrid = matchGridView
 #    window.teamStandingsTableView = teamStandingsTableView
-
-    DS.RecordArray.reopen
-      onLoad: (callback)->
-        if @get 'isLoaded'
-          callback this
-        else
-          that = @
-          isLoadedFn = ->
-            if that.get 'isLoaded'
-              that.removeObserver 'isLoaded', isLoadedFn
-              callback that
-        @addObserver 'isLoaded', isLoadedFn
-        @
-
 
     matches = App.store.find(App.Match, {}).onLoad (ra)->
       ra.forEach (match)->

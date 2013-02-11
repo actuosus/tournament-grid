@@ -12,6 +12,7 @@ ObjectId = Schema.ObjectId
 
 StageSchema = new Schema
   name: type: String
+  description: type: String
   report_id: type: ObjectId, ref: 'Report'
   visual_type: type: String
   sort_index: type: Number

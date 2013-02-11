@@ -1,0 +1,45 @@
+@import "_normalize_legacy.scss";
+@import "_base.scss";
+@import "_fonts.scss";
+
+html {
+	height: 100%;
+	min-width: $contentWidth;
+	}
+body {
+	position: relative;
+	min-height: 100%;
+	background: $colorBackground url('../img/css/bg.jpg') center 0 no-repeat;
+	color: $colorForeground;
+	font-family: $fontBody;
+	font-size: 13px;
+	line-height: 15px;
+	-webkit-font-smoothing: antialiased;
+	}
+.i-wrapper {
+	position: relative;
+	width: $contentWidth;
+	margin: 0 auto;
+	padding: 209px 0 $footerHeight;
+	}
+
+
+.b-logo {
+	display: block;
+	position: absolute;
+	top: 24px;
+	left: 37px;
+	width: 188px;
+	height: 178px;
+	background: url('../img/css/logo_188x178.png');
+	text-decoration: none;
+	}
+
+a:hover {
+	text-decoration: none;
+	}
+
+@import "_header.scss";
+@import "_content.scss";
+@import "_footer.scss";
+@import "_general.scss";

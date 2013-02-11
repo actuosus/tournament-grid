@@ -12,7 +12,11 @@ ObjectId = Schema.ObjectId
 
 ReportSchema = new Schema
   name: type: String
-  start_date: type: Date
   stages: [type: ObjectId, ref: 'Stage']
+
+  place: type: String
+  start_date: type: Date
+  end_date: type: Date
+  sponsors: type: String
 
 module.exports = ReportSchema

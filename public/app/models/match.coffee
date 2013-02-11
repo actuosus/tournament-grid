@@ -30,11 +30,12 @@ define ->
     games: DS.hasMany 'App.Game'
 
     winner: (->
+      console.log 'winner', @get('team1_points'), @get('team2_points')
       if @get('team1_points') > @get('team2_points')
         return @get 'team1'
       else
         return @get 'team2'
-    ).property('team1', 'team2')
+    ).property 'team1_points', 'team2_points'
 
     longDateString: (-> moment(@get 'date').format('LLLL')).property 'date'
 
