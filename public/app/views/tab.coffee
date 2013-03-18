@@ -1,7 +1,6 @@
 ###
  * tab
  * @author: actuosus
- * @fileOverview 
  * Date: 08/02/2013
  * Time: 01:43
 ###

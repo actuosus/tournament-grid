@@ -8,6 +8,8 @@
 
 mongoose = require 'mongoose'
 
+exports.UserSchema = require './user'
+
 exports.ChampionshipSchema = require './championship'
 exports.CountrySchema = require './country'
 exports.GameSchema = require './game'
@@ -20,6 +22,8 @@ exports.StageSchema = require './stage'
 exports.TeamSchema = require './team'
 
 console.log 'Registering models…'
+
+exports.User = mongoose.model 'User', exports.UserSchema
 
 exports.Championship = mongoose.model 'Championship', exports.ChampionshipSchema
 exports.Country = mongoose.model 'Country', exports.CountrySchema

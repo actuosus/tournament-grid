@@ -16,3 +16,21 @@ exports.list = (req, res)->
 exports.item = (req, res)->
   Stage.where('_id', req.params._id).findOne().exec (err, doc)->
     res.send stage: doc
+
+exports.create = (req, res)->
+  exports.create = (req, res) ->
+  if req.body?.stages
+    stages = []
+    for Stage, i in req.body.stages
+      console.log Stage, i
+      m = new Stage stage
+      await m.save defer err, stages[i]
+      console.log stages
+    res.send stages: stages
+  else if req.body?.stage
+    stage = req.body?.stage
+    m = new Stage stage
+    await m.save defer err, doc
+    res.send stage: doc
+  else
+    res.send 401, error: "server error"

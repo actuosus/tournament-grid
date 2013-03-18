@@ -1,0 +1,27 @@
+/**
+ * select
+ * @author: actuosus
+ * Date: 14/03/2013
+ * Time: 02:31
+ */
+
+.select .disclosure-icon {
+    font-size: 13px;
+    color: #575757;
+    font-style: normal !important;
+    font-family: Arial;
+}
+
+.select select {
+    opacity: 0;
+    z-index: 2;
+    position: absolute;
+}
+
+.select .current-value {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    font-size: 13px;
+    margin-top: -7px;
+}

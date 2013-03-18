@@ -1,0 +1,20 @@
+<div class="control-row">
+    <input type="text" name="name" class="name" placeholder="Name" {{bindAttr value="view.name"}}/>
+</div>
+
+<div class="control-row">
+    <textarea name="description" class="description" placeholder="Description" {{bindAttr value="view.description"}}></textarea>
+</div>
+
+<div class="control-row">
+    {{view App.SelectView contentBinding="App.stageVisualTypes"}}
+</div>
+
+<div class="control-row">
+    <input type="text" name="entrants-number" class="entrants-number" placeholder="Entrants number"/>
+</div>
+
+<div class="control-row">
+    <button class="btn btn-primary save-btn">Create</button>
+    <button class="btn cancel-btn">Cancel</button>
+</div>

@@ -7,3 +7,6 @@
 ###
 
 exports.api = require './api'
+
+exports.games = require './games'
+exports.reports = require './reports'

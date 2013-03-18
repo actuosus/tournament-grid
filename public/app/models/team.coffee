@@ -1,7 +1,7 @@
 ###
  * team
  * @author: actuosus
- * @fileOverview 
+ * @fileOverview Team model.
  * Date: 21/01/2013
  * Time: 07:29
 ###
@@ -15,7 +15,12 @@ define ->
     countryFlagClassName: (->
       'country-flag-icon-%@'.fmt @get 'country.code'
     ).property('country')
+
+    isSelected: no
+
+
     players: DS.hasMany 'App.Player'
+#    toString: -> "<Team:#{@get 'name'}>"
 
 #    matches: (-> App.Match.find({team_id: @get '_id'})).property()
 

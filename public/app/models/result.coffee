@@ -1,7 +1,7 @@
 ###
  * result
  * @author: actuosus
- * @fileOverview 
+ * @fileOverview Result model.
  * Date: 06/02/2013
  * Time: 03:07
 ###

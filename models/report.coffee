@@ -19,4 +19,12 @@ ReportSchema = new Schema
   end_date: type: Date
   sponsors: type: String
 
+  # Тип матча
+  match_type: type: String # team, player
+
+  # Game type
+  discipline: type: String
+
+  noRating: type: Boolean
+
 module.exports = ReportSchema

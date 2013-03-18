@@ -1,0 +1,66 @@
+/**
+ * nav_tabs
+ * @author: actuosus
+ * Date: 14/03/2013
+ * Time: 02:41
+ */
+
+.nav-tabs {
+    border-bottom: 4px solid rgb(31, 31, 31);
+    background-color: #d6d6d6;
+    background-image: -webkit-linear-gradient(top, #dadada, #e4e4e4);
+}
+
+.nav-tabs > li {
+    border-bottom: 1px solid #474747;
+}
+
+.nav-tabs > li > a {
+    padding-top: 2px;
+    padding-bottom: 2px;
+    margin-right: 0;
+    font-size: 13px;
+    font-family: 'Helvetica';
+    color: #404040;
+
+    border-left: 1px solid #eaeaea;
+    border-right: 1px solid #9f9f9f;
+    border-top: 1px solid #9f9f9f;
+
+    line-height: 15px;
+
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+}
+
+.nav-tabs > li:first-child > a {
+    border-left: 0;
+}
+
+.nav-tabs > li:last-child > a {
+    border-right: 0;
+}
+
+.nav-tabs > .active {
+    border-bottom: 1px solid rgb(33, 33, 33);
+}
+
+.nav-tabs > .active > a, .nav-tabs > .active > a:hover {
+    color: rgb(255, 255, 255);
+    text-shadow: 0 1px black;
+    font-weight: bold;
+    background-color: rgb(33, 33, 33);
+    background-image: -webkit-linear-gradient(top, #3f3f3f, #1f1f1f);
+    -webkit-font-smoothing: antialiased;
+    border-top: 1px solid #616161;
+    border-bottom: 0;
+
+    -webkit-border-radius: 3px 3px 0 0;
+    -moz-border-radius: 3px 3px 0 0;
+    border-radius: 3px 3px 0 0;
+}
+
+.nav-tabs > li:first-child > a:hover {
+    border-left: 0;
+}

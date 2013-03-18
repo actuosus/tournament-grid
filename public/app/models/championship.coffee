@@ -1,7 +1,7 @@
 ###
  * championship
  * @author: actuosus
- * @fileOverview 
+ * @fileOverview Championship model.
  * Date: 21/01/2013
  * Time: 07:28
 ###

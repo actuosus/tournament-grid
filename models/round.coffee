@@ -14,6 +14,7 @@ RoundSchema = new Schema
   championship: type: ObjectId, ref: 'Championship'
   name: type: String
   sort_index: type: Number
+  stage_id: type: ObjectId, ref: 'Stage'
   matches: [type: ObjectId, ref: 'Match']
 
 module.exports = RoundSchema

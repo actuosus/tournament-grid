@@ -1,0 +1,20 @@
+<thead>
+<tr>
+    <th colspan="2">
+        <span class="lineup-grid-item-name">{{view.content.name}}</span>
+    </th>
+</tr>
+</thead>
+<tbody>
+    {{#each view.content.players}}
+    <tr>
+        <td>
+            <i {{bindAttr class=":country-flag-icon :team-country-flag-icon countryFlagClassName"}}></i>
+            {{nickname}}
+        </td>
+        <td>
+            <span class="realname">({{realname}})</span>
+        </td>
+    </tr>
+    {{/each}}
+</tbody>

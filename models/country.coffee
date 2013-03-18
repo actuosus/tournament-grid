@@ -14,6 +14,8 @@ ObjectId = Schema.ObjectId
 
 CountrySchema = new Schema
   name: type: String
+  englishName: type: String
+  germanName: type: String
   code: type: String
 
 module.exports = CountrySchema

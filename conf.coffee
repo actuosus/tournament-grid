@@ -32,7 +32,7 @@ module.exports = ->
       }
     else
       return {
-      hostname: 'http://tournament-grid.local:3000'
+      hostname: 'localhost'
       port: 3000,
       mongo: 'mongodb://localhost/tournament_grid'
       memcache:

@@ -1,7 +1,7 @@
 ###
  * views
  * @author: actuosus
- * @fileOverview 
+ * @fileOverview
  * Date: 21/01/2013
  * Time: 08:58
 ###
@@ -10,20 +10,35 @@ define [
   'cs!views/select'
   'cs!views/grid'
   'cs!views/table'
+  'cs!views/popup'
+  'cs!views/autocomplete_text_field'
+  'cs!views/date_field'
+  'cs!views/country_select'
   'cs!views/named_container'
-  'cs!views/match_filter_form'
-  'cs!views/match_grid'
-  'cs!views/match_grid_item'
-  'cs!views/matches_table'
-  'cs!views/matches_table_container'
+  'cs!views/editable_label'
+
+  'cs!views/lineup'
+  'cs!views/tournament_grid'
+  'cs!views/match/filter_form'
+  'cs!views/match/grid'
+  'cs!views/match/grid_item'
+  'cs!views/match/table'
+  'cs!views/match/table_container'
   'cs!views/round_grid_item'
-  'cs!views/games_info_bar'
-  'cs!views/team_grid_item'
-  'cs!views/team_standings_table'
-  'cs!views/team_standings_table_item'
-  'cs!views/team_info_tooltip'
-  'cs!views/team_matches_tooltip'
-  'cs!views/team_info_item'
+  'cs!views/game/info_bar'
+  'cs!views/game/form'
+  'cs!views/team/form'
+  'cs!views/team/grid_item'
+  'cs!views/team/standings_table'
+  'cs!views/team/standings_table_item'
+  'cs!views/team/info_tooltip'
+  'cs!views/team/matches_tooltip'
+  'cs!views/team/info_item'
+
+  'cs!views/player/form'
+
+  'cs!views/stage/form'
+
   'cs!views/table_sorter'
   'cs!views/standing_table'
 ], -> console.log 'Views loaded.'

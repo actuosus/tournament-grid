@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Ember" type="javaScript">
+    <CLASSES />
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/public/vendor/javascripts/ember.js" />
+    </SOURCES>
+  </library>
+</component>

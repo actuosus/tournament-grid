@@ -4,3 +4,71 @@
  * Date: 15/02/2013
  * Time: 12:17
  */
+
+.test-grid {
+    position: relative;
+    overflow: hidden;
+}
+
+.test-grid div.jQBracket .connector {
+    -webkit-transition-property: border-color;
+    -webkit-transition-duration: 0.3s;
+}
+
+.test-grid div.jQBracket {
+    background: none;
+}
+
+.test-grid div.jQBracket .round {
+    position: relative;
+    width: 152px;
+    margin-right: 40px;
+    float: left;
+}
+
+.test-grid div.jQBracket .team {
+    width: 150px;
+    height: 19px;
+    line-height: 19px;
+    /*padding: 2px;*/
+    overflow: hidden;
+    border: 1px solid #828282;
+    color: black;
+    background-color: #efefef;
+    font-size: 12px;
+    box-shadow: none;
+    border-radius: 0;
+    -webkit-transition-property: background-color, border-color;
+    -webkit-transition-duration: 0.3s;
+}
+
+.test-grid div.jQBracket .team.lose {
+    background-color: inherit;
+    color: inherit;
+}
+
+.test-grid div.jQBracket .team span {
+    padding: 1px;
+    float: right;
+    font-size: 15px;
+    font-weight: bold;
+    line-height: 18px;
+    text-align: center;
+    color: white !important;
+    background-color: #9b9b9b;
+    cursor: default;
+
+    box-shadow: inset 0 0 3px rgba(0, 0, 0, 0);
+    border-radius: 0;
+
+    -webkit-transition-property: box-shadow;
+    -webkit-transition-duration: 0.3s;
+}
+
+.test-grid div.jQBracket .team.win span {
+    background-color: #5aaa71;
+}
+
+.test-grid div.jQBracket .team.lose span {
+    background-color: #af3a40;
+}

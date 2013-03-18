@@ -1,0 +1,19 @@
+/**
+ * combobox
+ * @author: actuosus
+ * Date: 15/03/2013
+ * Time: 17:40
+ */
+
+.combobox .autocomplete-text-field {
+    position: absolute;
+    width: auto;
+    top: 0;
+    left: 0;
+    right: 19px;
+    bottom: 0;
+}
+
+.combobox .text-field {
+    border: 0;
+}

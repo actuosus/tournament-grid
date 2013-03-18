@@ -1,0 +1,42 @@
+/**
+ * menu
+ * @author: actuosus
+ * Date: 14/03/2013
+ * Time: 02:35
+ */
+
+.menu {
+    position: absolute;
+    width: 205px;
+    background: white;
+    z-index: 200;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.75);
+    max-height: 200px;
+    overflow-y: auto;
+    /*margin-top: 4px;*/
+}
+
+.menu-item {
+    padding: 5px 10px;
+
+    cursor: default;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    -webkit-transition-property: background-color;
+    -webkit-transition-duration: .3s;
+}
+
+.menu-item:hover {
+    background-color: #e2e2e2;
+}
+
+.menu-item.is-selected {
+    background-color: #d0deff;
+}
+
+.menu-item .highlight {
+    font-weight: bold;
+}

@@ -14,7 +14,7 @@ StageSchema = new Schema
   name: type: String
   description: type: String
   report_id: type: ObjectId, ref: 'Report'
-  visual_type: type: String
+  visual_type: type: String # html
   sort_index: type: Number
   entrants_count: type: Number
   rounds: [type: ObjectId, ref: 'Round']

@@ -1,0 +1,25 @@
+<thead>
+<tr>
+    <th colspan="2">
+        <span class="lineup-grid-item-name"><i {{bindAttr class=":country-flag-icon :team-country-flag-icon view.content.countryFlagClassName"}}></i>{{view.content.name}}</span>
+        <button class="btn-clean remove-btn"><i class="icon-remove">&times;</i></button>
+    </th>
+</tr>
+</thead>
+<tbody>
+    {{#each view.content.players}}
+    <tr {{bindAttr class="stateManager.currentState.isError"}}>
+        <td>
+            <i {{bindAttr class=":country-flag-icon :team-country-flag-icon countryFlagClassName"}}></i>{{nickname}}
+        </td>
+        <td>
+            {{#if shortName}}
+            <span class="name">({{shortName}})</span>
+            {{/if}}
+        </td>
+    </tr>
+    {{/each}}
+    <tr>
+        <td>{{view App.AutocompleteTextField controllerBinding="App.playersController" entrantBinding=view.content}}<td>
+    </tr>
+</tbody>

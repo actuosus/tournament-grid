@@ -1,3 +1,6 @@
+// Last commit: bfe5574 (2013-02-28 23:57:19 -0800)
+
+
 (function() {
 window.DS = Ember.Namespace.create({
   // this one goes to 11
@@ -545,8 +548,9 @@ DS.Transaction = Ember.Object.extend({
 
     this.removeCleanRecords();
 
+    var result;
     if (!commitDetails.created.isEmpty() || !commitDetails.updated.isEmpty() || !commitDetails.deleted.isEmpty() || !relationships.isEmpty()) {
-      if (adapter && adapter.commit) { adapter.commit(store, commitDetails); }
+      if (adapter && adapter.commit) { result = adapter.commit(store, commitDetails); }
       else { throw fmt("Adapter is either null or does not implement `commit` method", this); }
     }
 
@@ -556,6 +560,8 @@ DS.Transaction = Ember.Object.extend({
     relationships.forEach(function(relationship) {
       relationship.destroy();
     });
+
+    return result;
   },
 
   /**
@@ -1793,7 +1799,7 @@ DS.Store = Ember.Object.extend(DS._Mappable, {
     a transaction.
   */
   commit: function() {
-    get(this, 'defaultTransaction').commit();
+    return get(this, 'defaultTransaction').commit();
   },
 
   /**
@@ -2546,12 +2552,10 @@ DS.Store = Ember.Object.extend(DS._Mappable, {
     if (id) { delete typeMap.idToCid[id]; }
   },
 
-  destroy: function() {
+  willDestroy: function() {
     if (get(DS, 'defaultStore') === this) {
       set(DS, 'defaultStore', null);
     }
-
-    return this._super();
   },
 
   // ........................
@@ -3685,18 +3689,29 @@ DS.Model = Ember.Object.extend(Ember.Evented, LoadPromise, {
   }, 'data'),
 
   hasManyDidChange: function(key) {
-    var cachedValue = this.cacheFor(key);
+    var cachedValue = this.cacheFor(key),
+        store = get(this, 'store'),
+        adapter = store.adapterForType(this.constructor);
 
     if (cachedValue) {
-      var type = get(this.constructor, 'relationshipsByName').get(key).type;
-      var store = get(this, 'store');
-      var ids = this._data.hasMany[key] || [];
+      var relationship = get(this.constructor, 'relationshipsByName').get(key),
+          type = relationship.type,
+          ids = this._data.hasMany[key] || [],
+          dirtyReferences;
 
       var references = map(ids, function(id) {
         // if it was already a reference, return the reference
         if (typeof id === 'object') { return id; }
         return store.referenceForId(type, id);
       });
+
+      if (adapter.shouldPreserveDirtyRecords(relationship)) {
+        dirtyReferences = get(cachedValue, 'content').map(function(reference) {
+          var record = store.findByClientId(reference.type, reference.clientId);
+          return get(record, 'isDirty') ? reference : null;
+        });
+        references = references.concat(Ember.A(dirtyReferences).compact());
+      }
 
       set(cachedValue, 'content', Ember.A(references));
     }
@@ -4447,6 +4462,8 @@ var get = Ember.get, set = Ember.set;
 var forEach = Ember.EnumerableUtils.forEach;
 
 DS.RelationshipChange = function(options) {
+  this.parentReference = options.parentReference;
+  this.childReference = options.childReference;
   this.firstRecordReference = options.firstRecordReference;
   this.firstRecordKind = options.firstRecordKind;
   this.firstRecordName = options.firstRecordName;
@@ -4502,7 +4519,7 @@ DS.RelationshipChange.determineRelationshipType = function(recordType, knownSide
   var knownContainerType = knownSide.kind;
   var options = recordType.metaForProperty(knownKey).options;
   var otherType = DS._inverseTypeFor(recordType, knownKey);
-    
+
   if(options.inverse){
     key = options.inverse;
     otherContainerType = get(otherType, 'relationshipsByName').get(key).kind; 
@@ -4536,10 +4553,10 @@ DS.RelationshipChange.createChange = function(firstRecordReference, secondRecord
     return DS.OneToManyChange.createChange(secondRecordReference, firstRecordReference, store, options);
   }
   else if (changeType === "oneToNone"){
-    return DS.OneToNoneChange.createChange(firstRecordReference, {}, store, options);
+    return DS.OneToNoneChange.createChange(firstRecordReference, secondRecordReference, store, options);
   }
   else if (changeType === "manyToNone"){
-    return DS.ManyToNoneChange.createChange(firstRecordReference, {}, store, options);
+    return DS.ManyToNoneChange.createChange(firstRecordReference, secondRecordReference, store, options);
   }
   else if (changeType === "oneToOne"){
     return DS.OneToOneChange.createChange(firstRecordReference, secondRecordReference, store, options);
@@ -4553,6 +4570,8 @@ DS.RelationshipChange.createChange = function(firstRecordReference, secondRecord
 DS.OneToNoneChange.createChange = function(childReference, parentReference, store, options) {
   var key = options.key;
   var change = DS.RelationshipChange._createChange({
+      parentReference: parentReference,
+      childReference: childReference,
       firstRecordReference: childReference,
       store: store,
       changeType: options.changeType,
@@ -4563,12 +4582,14 @@ DS.OneToNoneChange.createChange = function(childReference, parentReference, stor
   store.addRelationshipChangeFor(childReference, key, parentReference, null, change);
 
   return change;
-};  
+};
 
 /** @private */
 DS.ManyToNoneChange.createChange = function(childReference, parentReference, store, options) {
   var key = options.key;
   var change = DS.RelationshipChange._createChange({
+      parentReference: childReference,
+      childReference: parentReference,
       secondRecordReference: childReference,
       store: store,
       changeType: options.changeType,
@@ -4578,14 +4599,14 @@ DS.ManyToNoneChange.createChange = function(childReference, parentReference, sto
 
   store.addRelationshipChangeFor(childReference, key, parentReference, null, change);
   return change;
-};  
+};
 
 
 /** @private */
 DS.ManyToManyChange.createChange = function(childReference, parentReference, store, options) {
   // Get the type of the child based on the child's client ID
   var childType = childReference.type, key;
-  
+
   // If the name of the belongsTo side of the relationship is specified,
   // use that
   // If the type of the parent is specified, look it up on the child's type
@@ -4593,6 +4614,8 @@ DS.ManyToManyChange.createChange = function(childReference, parentReference, sto
   key = options.key;
 
   var change = DS.RelationshipChange._createChange({
+      parentReference: parentReference,
+      childReference: childReference,
       firstRecordReference: childReference,
       secondRecordReference: parentReference,
       firstRecordKind: "hasMany",
@@ -4612,7 +4635,7 @@ DS.ManyToManyChange.createChange = function(childReference, parentReference, sto
 DS.OneToOneChange.createChange = function(childReference, parentReference, store, options) {
   // Get the type of the child based on the child's client ID
   var childType = childReference.type, key;
-  
+
   // If the name of the belongsTo side of the relationship is specified,
   // use that
   // If the type of the parent is specified, look it up on the child's type
@@ -4627,6 +4650,8 @@ DS.OneToOneChange.createChange = function(childReference, parentReference, store
   }
 
   var change = DS.RelationshipChange._createChange({
+      parentReference: parentReference,
+      childReference: childReference,
       firstRecordReference: childReference,
       secondRecordReference: parentReference,
       firstRecordKind: "belongsTo",
@@ -4663,7 +4688,7 @@ DS.OneToOneChange.maintainInvariant = function(options, store, childReference, k
 DS.OneToManyChange.createChange = function(childReference, parentReference, store, options) {
   // Get the type of the child based on the child's client ID
   var childType = childReference.type, key;
-  
+
   // If the name of the belongsTo side of the relationship is specified,
   // use that
   // If the type of the parent is specified, look it up on the child's type
@@ -4678,6 +4703,8 @@ DS.OneToManyChange.createChange = function(childReference, parentReference, stor
   }
 
   var change = DS.RelationshipChange._createChange({
+      parentReference: parentReference,
+      childReference: childReference,
       firstRecordReference: childReference,
       secondRecordReference: parentReference,
       firstRecordKind: "belongsTo",
@@ -4764,13 +4791,13 @@ DS.RelationshipChange.prototype = {
 
   /** @private */
   destroy: function() {
-    var childReference = this.firstRecordReference,
+    var childReference = this.childReference,
         belongsToName = this.getFirstRecordName(),
         hasManyName = this.getSecondRecordName(),
         store = this.store,
         child, oldParent, newParent, lastParent, transaction;
 
-    store.removeRelationshipChangeFor(childReference, belongsToName, this.secondRecordReference, hasManyName, this.changeType);
+    store.removeRelationshipChangeFor(childReference, belongsToName, this.parentReference, hasManyName, this.changeType);
 
     if (transaction = this.transaction) {
       transaction.relationshipBecameClean(this);
@@ -5986,10 +6013,10 @@ DS.Serializer = Ember.Object.extend({
   registerEnumTransform: function(type, objects) {
     var transform = {
       deserialize: function(deserialized) {
-        return objects.objectAt(deserialized);
+        return Ember.A(objects).objectAt(deserialized);
       },
       serialize: function(serialized) {
-        return objects.indexOf(serialized);
+        return Ember.EnumerableUtils.indexOf(objects, serialized);
       },
       values: objects
     };
@@ -6352,7 +6379,7 @@ DS.JSONSerializer = DS.Serializer.extend({
 
     if (this.embeddedType(type, name)) {
       if (embeddedChild = get(record, name)) {
-        value = this.serialize(embeddedChild, { include: true });
+        value = this.serialize(embeddedChild, { includeId: true });
       }
 
       hash[key] = value;
@@ -6471,6 +6498,7 @@ DS.JSONSerializer = DS.Serializer.extend({
   },
 
   sideloadRelationships: function(loader, type, json, prop, loaded) {
+    if (loaded[prop]) { return; }
     loaded[prop] = true;
 
     get(type, 'relationshipsByName').forEach(function(key, meta) {
@@ -6478,7 +6506,7 @@ DS.JSONSerializer = DS.Serializer.extend({
       if (meta.kind === 'belongsTo') {
         key = this.pluralize(key);
       }
-      if (json[key] && !loaded[key]) {
+      if (json[key]) {
         this.sideloadRelationships(loader, meta.type, json, key, loaded);
       }
     }, this);
@@ -6984,6 +7012,19 @@ DS.Adapter = Ember.Object.extend(DS._Mappable, {
   /**
     @private
 
+    Determines whether dirty records for a particular association
+    should be preserved in the face of re-materialization.
+
+    @param {Object} association the association meta information
+    @return {Boolean}
+  */
+  shouldPreserveDirtyRecords: function(association) {
+    return false;
+  },
+
+  /**
+    @private
+
     This method recursively climbs the superclass hierarchy and
     registers any class-registered transforms on the adapter's
     serializer.
@@ -7137,7 +7178,7 @@ DS.Adapter = Ember.Object.extend(DS._Mappable, {
   },
 
   commit: function(store, commitDetails) {
-    this.save(store, commitDetails);
+    return this.save(store, commitDetails);
   },
 
   save: function(store, commitDetails) {
@@ -7288,7 +7329,7 @@ DS.FixtureAdapter = DS.Adapter.extend({
     Ember.assert("Unable to find fixtures for model type "+type.toString(), !!fixtures);
 
     if (fixtures) {
-      fixtures = fixtures.findProperty('id', id);
+      fixtures = Ember.A(fixtures).findProperty('id', id);
     }
 
     if (fixtures) {
@@ -7407,6 +7448,20 @@ DS.RESTSerializer = DS.JSONSerializer.extend({
 
 var get = Ember.get, set = Ember.set, merge = Ember.merge;
 
+var Node = function(record, operation) {
+  this.record = record;
+  this.operation = operation;
+  this.children = Ember.Set.create();
+  this.parent = null;
+};
+
+Node.prototype = {
+  addChild: function(childNode) {
+    this.children.add(childNode);
+    childNode.parent = this;
+  }
+};
+
 /**
   The REST adapter allows your store to communicate with an HTTP server by
   transmitting JSON via XHR. Most Ember.js apps that consume a JSON API
@@ -7472,6 +7527,147 @@ DS.RESTAdapter = DS.Adapter.extend({
     this._super.apply(this, arguments);
   },
 
+  save: function(store, commitDetails) {
+    if(get(this, 'bulkCommit') !== false) {
+      return this.saveBulk(store, commitDetails);
+    }
+    var adapter = this;
+
+    var rootNodes = this._createDependencyGraph(store, commitDetails);
+
+    function createNestedPromise(node) {
+      var promise;
+      if(!adapter.shouldSave(node.record)) {
+        // return an "identity" promise if we don't want to do anything
+        promise = jQuery.Deferred().resolve();
+      } else if(node.operation === "created") {
+        promise = adapter.createRecord(store, node.record.constructor, node.record);
+      } else if(node.operation === "updated") {
+        promise = adapter.updateRecord(store, node.record.constructor, node.record);
+      } else if(node.operation === "deleted") {
+        promise = adapter.deleteRecord(store, node.record.constructor, node.record);
+      }
+      if(node.children.length > 0) {
+        promise = promise.pipe(function() {
+          var childPromises = node.children.map(createNestedPromise);
+          return jQuery.when.apply(jQuery, childPromises);
+        });
+      }
+      return promise;
+    }
+
+    return jQuery.when.apply(jQuery, rootNodes.map(createNestedPromise));
+  },
+
+  // slightly more complex algorithm that will be
+  // less optimal if bulkCommit is not available
+  saveBulk: function(store, commitDetails) {
+    var adapter = this;
+
+    var rootNodes = this._createDependencyGraph(store, commitDetails);
+
+    function createNestedPromises(nodes) {
+
+      // 2d partition on operation and type
+      var map = Ember.MapWithDefault.create({
+        defaultValue: function() {
+          return Ember.MapWithDefault.create({
+            defaultValue: function() {
+              return Ember.OrderedSet.create();
+            }
+          });
+        }
+      });
+
+      nodes.forEach(function(node) {
+        var operation = adapter.shouldSave(node.record) ? node.operation : 'skipped';
+        map.get(operation).get(node.record.constructor).add(node);
+      });
+
+      function flatten(arr) {
+        return arr.reduce(function(a, b) {
+          return a.concat(b);
+        }, []);
+      }
+
+      var promises = map.keys.toArray().map(function(operation) {
+        var typeMap = map.get(operation);
+        return typeMap.keys.toArray().map(function(type) {
+          var nodes = typeMap.get(type);
+          var records = Ember.OrderedSet.create();
+          nodes.forEach(function(node) { records.add(node.record); });
+          var promise = null;
+          if (nodes.isEmpty() || operation === "skipped") {
+            promise = jQuery.Deferred().resolve();
+          } else if (operation === "deleted") {
+            promise = adapter.deleteRecords(store, type, records);
+          } else if (operation === "created") {
+            promise = adapter.createRecords(store, type, records);
+          } else if (operation === "updated") {
+            promise = adapter.updateRecords(store, type, records);
+          }
+          return promise.pipe(function() {
+            var children = Ember.A(nodes.toArray()).map(function(node) { return node.children.toArray(); });
+            return createNestedPromises(flatten(children));
+          });
+        });
+      });
+
+      return jQuery.when.apply(jQuery, flatten(promises));
+    }
+
+    return createNestedPromises(rootNodes);
+  },
+
+  _createDependencyGraph: function(store, commitDetails) {
+    var adapter = this;
+    var clientIdToNode = Ember.MapWithDefault.create({
+      defaultValue: function(clientId) {
+        var record = store.recordCache[clientId];
+        var operation = null;
+        if(commitDetails.deleted.has(record)) {
+          operation = "deleted";
+        } else if(commitDetails.created.has(record)) {
+          operation = "created";
+        } else if(commitDetails.updated.has(record)) {
+          operation = "updated";
+        }
+        var node = new Node(record, operation);
+        return node;
+      }
+    });
+
+    commitDetails.relationships.forEach(function(r) {
+      var childClientId = r.childReference.clientId;
+      var parentClientId = r.parentReference.clientId;
+
+      var childNode = clientIdToNode.get(childClientId);
+      var parentNode = clientIdToNode.get(parentClientId);
+
+      // in non-embedded case, child delete requests should
+      // come before the parent request
+      if(r.changeType === 'remove' && adapter.shouldSave(childNode.record)) {
+        childNode.addChild(parentNode);
+      } else {
+        parentNode.addChild(childNode);
+      }
+    });
+
+    var rootNodes = Ember.Set.create();
+    function filter(record) {
+      var node = clientIdToNode.get(get(record, 'clientId'));
+      if(!get(node, 'parent.record.isDirty')) {
+        rootNodes.add(node);
+      }
+    }
+
+    commitDetails.created.forEach(filter);
+    commitDetails.updated.forEach(filter);
+    commitDetails.deleted.forEach(filter);
+
+    return rootNodes;
+  },
+
   shouldSave: function(record) {
     var reference = get(record, '_reference');
 
@@ -7484,7 +7680,7 @@ DS.RESTAdapter = DS.Adapter.extend({
     var data = {};
     data[root] = this.serialize(record, { includeId: true });
 
-    this.ajax(this.buildURL(root), "POST", {
+    return this.ajax(this.buildURL(root), "POST", {
       data: data,
       context: this,
       success: function(json) {
@@ -7498,13 +7694,30 @@ DS.RESTAdapter = DS.Adapter.extend({
     });
   },
 
+  shouldPreserveDirtyRecords: function(relationship) {
+    return relationship.kind === 'hasMany';
+  },
+
   dirtyRecordsForRecordChange: function(dirtySet, record) {
+    this._dirtyTree(dirtySet, record);
+  },
+
+  dirtyRecordsForHasManyChange: function(dirtySet, record, relationship) {
+    var embeddedType = get(this, 'serializer').embeddedType(record.constructor, relationship.secondRecordName);
+
+    if (embeddedType === 'always') {
+      relationship.childReference.parent = relationship.parentReference;
+      this._dirtyTree(dirtySet, record);
+    }
+  },
+
+  _dirtyTree: function(dirtySet, record) {
     dirtySet.add(record);
 
     get(this, 'serializer').eachEmbeddedRecord(record, function(embeddedRecord, embeddedType) {
       if (embeddedType !== 'always') { return; }
       if (dirtySet.has(embeddedRecord)) { return; }
-      this.dirtyRecordsForRecordChange(dirtySet, embeddedRecord);
+      this._dirtyTree(dirtySet, embeddedRecord);
     }, this);
 
     var reference = record.get('_reference');
@@ -7512,15 +7725,15 @@ DS.RESTAdapter = DS.Adapter.extend({
     if (reference.parent) {
       var store = get(record, 'store');
       var parent = store.recordForReference(reference.parent);
-      this.dirtyRecordsForRecordChange(dirtySet, parent);
+      this._dirtyTree(dirtySet, parent);
     }
   },
 
-  dirtyRecordsForHasManyChange: Ember.K,
-
   createRecords: function(store, type, records) {
     if (get(this, 'bulkCommit') === false) {
-      return this._super(store, type, records);
+      return jQuery.when.apply(jQuery, records.map(function(record) {
+        return this.createRecord(store, type, record);
+      }, this));
     }
 
     var root = this.rootForType(type),
@@ -7532,7 +7745,7 @@ DS.RESTAdapter = DS.Adapter.extend({
       data[plural].push(this.serialize(record, { includeId: true }));
     }, this);
 
-    this.ajax(this.buildURL(root), "POST", {
+    return this.ajax(this.buildURL(root), "POST", {
       data: data,
       context: this,
       success: function(json) {
@@ -7550,7 +7763,7 @@ DS.RESTAdapter = DS.Adapter.extend({
     var data = {};
     data[root] = this.serialize(record);
 
-    this.ajax(this.buildURL(root, id), "PUT", {
+    return this.ajax(this.buildURL(root, id), "PUT", {
       data: data,
       context: this,
       success: function(json) {
@@ -7566,7 +7779,9 @@ DS.RESTAdapter = DS.Adapter.extend({
 
   updateRecords: function(store, type, records) {
     if (get(this, 'bulkCommit') === false) {
-      return this._super(store, type, records);
+      return jQuery.when.apply(jQuery, records.map(function(record) {
+        return this.updateRecord(store, type, record);
+      }, this));
     }
 
     var root = this.rootForType(type),
@@ -7578,7 +7793,7 @@ DS.RESTAdapter = DS.Adapter.extend({
       data[plural].push(this.serialize(record, { includeId: true }));
     }, this);
 
-    this.ajax(this.buildURL(root, "bulk"), "PUT", {
+    return this.ajax(this.buildURL(root, "bulk"), "PUT", {
       data: data,
       context: this,
       success: function(json) {
@@ -7593,7 +7808,7 @@ DS.RESTAdapter = DS.Adapter.extend({
     var id = get(record, 'id');
     var root = this.rootForType(type);
 
-    this.ajax(this.buildURL(root, id), "DELETE", {
+    return this.ajax(this.buildURL(root, id), "DELETE", {
       context: this,
       success: function(json) {
         Ember.run(this, function(){
@@ -7605,7 +7820,9 @@ DS.RESTAdapter = DS.Adapter.extend({
 
   deleteRecords: function(store, type, records) {
     if (get(this, 'bulkCommit') === false) {
-      return this._super(store, type, records);
+      return jQuery.when.apply(jQuery, records.map(function(record) {
+        return this.deleteRecord(store, type, record);
+      }, this));
     }
 
     var root = this.rootForType(type),
@@ -7618,7 +7835,7 @@ DS.RESTAdapter = DS.Adapter.extend({
       data[plural].push(serializer.serializeId( get(record, 'id') ));
     });
 
-    this.ajax(this.buildURL(root, 'bulk'), "DELETE", {
+    return this.ajax(this.buildURL(root, 'bulk'), "DELETE", {
       data: data,
       context: this,
       success: function(json) {
@@ -7632,7 +7849,7 @@ DS.RESTAdapter = DS.Adapter.extend({
   find: function(store, type, id) {
     var root = this.rootForType(type);
 
-    this.ajax(this.buildURL(root, id), "GET", {
+    return this.ajax(this.buildURL(root, id), "GET", {
       success: function(json) {
         Ember.run(this, function(){
           this.didFindRecord(store, type, json, id);
@@ -7644,7 +7861,7 @@ DS.RESTAdapter = DS.Adapter.extend({
   findAll: function(store, type, since) {
     var root = this.rootForType(type);
 
-    this.ajax(this.buildURL(root), "GET", {
+    return this.ajax(this.buildURL(root), "GET", {
       data: this.sinceQuery(since),
       success: function(json) {
         Ember.run(this, function(){
@@ -7657,7 +7874,7 @@ DS.RESTAdapter = DS.Adapter.extend({
   findQuery: function(store, type, query, recordArray) {
     var root = this.rootForType(type);
 
-    this.ajax(this.buildURL(root), "GET", {
+    return this.ajax(this.buildURL(root), "GET", {
       data: query,
       success: function(json) {
         Ember.run(this, function(){
@@ -7671,7 +7888,7 @@ DS.RESTAdapter = DS.Adapter.extend({
     var root = this.rootForType(type);
     ids = this.serializeIds(ids);
 
-    this.ajax(this.buildURL(root), "GET", {
+    return this.ajax(this.buildURL(root), "GET", {
       data: {ids: ids},
       success: function(json) {
         Ember.run(this, function(){
@@ -7716,7 +7933,7 @@ DS.RESTAdapter = DS.Adapter.extend({
       hash.data = JSON.stringify(hash.data);
     }
 
-    jQuery.ajax(hash);
+    return jQuery.ajax(hash);
   },
 
   url: "",

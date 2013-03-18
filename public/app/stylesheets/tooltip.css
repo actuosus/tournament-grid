@@ -1,0 +1,28 @@
+/**
+ * tooltip
+ * @author: actuosus
+ * Date: 14/03/2013
+ * Time: 02:33
+ */
+
+.tooltip .tooltip-arrow {
+    display: none;
+}
+
+.tooltip.in {
+    opacity: 0.9;
+}
+
+.tooltip-inner {
+    padding: 8px;
+}
+
+.tooltip-section {
+    margin-bottom: 8px;
+}
+
+.tooltip-name {
+    font-size: 14px;
+    border-bottom: 4px solid #f35900;
+    margin-bottom: 6px;
+}

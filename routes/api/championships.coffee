@@ -6,7 +6,7 @@
  * Time: 07:17
 ###
 
-Country = require('../../models').Championship
+Championship = require('../../models').Championship
 
 exports.list = (req, res)-> Championship.find({}).exec (err, docs)-> res.send docs
 

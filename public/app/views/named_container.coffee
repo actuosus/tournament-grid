@@ -1,7 +1,7 @@
 ###
  * named_container
  * @author: actuosus
- * @fileOverview 
+ * @fileOverview
  * Date: 06/02/2013
  * Time: 05:47
 ###
@@ -9,30 +9,34 @@
 define ->
   App.NamedContainerView = Em.ContainerView.extend
     classNames: ['block-container', 'named-container']
-    childViews: ['titleView', 'contentView'],
-    collapsed: no
     classNameBindings: ['collapsed']
+    childViews: ['titleView', 'toggleButtonView', 'contentView'],
+    collapsed: no
+
     titleView: Em.View.extend
       tagName: 'p'
       classNames: ['b-profileBlock__title']
       classNameBindings: ['collapsed:close']
       titleBinding: 'parentView.title'
       collapsedBinding: 'parentView.collapsed'
-      actionButtonLabel: (->
-        if @get 'collapsed'
-          'Развернуть'
-        else
-          'Свернуть'
-      ).property 'collapsed'
 
       template: Em.Handlebars.compile('{{view.title}}')
-      #  <button type="button" class="toggle-btn toggle-btn-expand pull-right" {{bindAttr title="view.actionButtonLabel"}}><i {{bindAttr class="view.collapsed:icon-chevron-down:icon-chevron-up"}}></i></button>
-#      didInsertElement: ->
-#        @.$('.toggle-btn').click =>
-#          @get('parentView').toggle()
-      click: -> @get('parentView').toggle()
+#      click: -> @get('parentView').toggle()
 
     contentView: Em.View.extend()
+
+    toggleButtonView: Em.View.extend
+      tagName: 'button'
+      classNames: ['btn-clean', 'b-profileBlock__toggle-button']
+      attributeBindings: ['title']
+      collapsedBinding: 'parentView.collapsed'
+      title: (->
+        if @get 'collapsed'
+          '_expand'.loc()
+        else
+          '_collapse'.loc()
+      ).property 'collapsed'
+      click: -> @get('parentView').toggle()
 
     toggle: ->
       if @get 'collapsed'

@@ -1,0 +1,22 @@
+/**
+ * control
+ * @author: actuosus
+ * Date: 03/03/2013
+ * Time: 20:02
+ */
+
+.control-row {
+    margin: 16px 0;
+}
+
+.control-row:first-child {
+    margin-top: 0;
+}
+
+.control-row:last-child {
+    margin-bottom: 0;
+}
+
+.control-row .btn {
+    margin-right: 11px;
+}

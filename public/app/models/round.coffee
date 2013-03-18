@@ -1,7 +1,7 @@
 ###
  * round
  * @author: actuosus
- * @fileOverview 
+ * @fileOverview Round model.
  * Date: 21/01/2013
  * Time: 14:25
 ###
@@ -10,17 +10,24 @@ define ->
   App.Round = DS.Model.extend
     primaryKey: '_id'
     name: DS.attr 'string'
+
+    parent: (-> @get 'stage').property('stage')
+    children: (-> @get 'matches').property('matches')
+
+    left: null
+    right: null
+
     matches: DS.hasMany 'App.Match'
 
-    rounds: DS.belongsTo 'App.Championship'
+    stage: DS.belongsTo 'App.Stage'
 
-    teams: (->
+    entrants: (->
       matches = @get 'matches'
-      teams = []
+      entrants = []
       matches.forEach (match)->
-        teams.push match.get 'team1'
-        teams.push match.get 'team2'
-      teams.uniq()
-    ).property('matches')
+        entrants.push match.get 'entrant1'
+        entrants.push match.get 'entrant2'
+      entrants.uniq()
+    ).property().volatile()
 
   App.Round.toString = -> 'Round'

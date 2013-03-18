@@ -1,12 +1,14 @@
 ###
  * models
  * @author: actuosus
- * @fileOverview 
+ * @fileOverview
  * Date: 21/01/2013
  * Time: 07:31
 ###
 
 require [
+  'cs!core'
+
   'cs!models/championship'
   'cs!models/country'
   'cs!models/game'

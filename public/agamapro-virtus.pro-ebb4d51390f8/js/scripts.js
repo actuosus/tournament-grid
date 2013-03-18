@@ -1,14 +1,14 @@
 jQuery(function($) {
 	"use strict";
 
-	if ($.browser.msie && $.browser.version < 8) {
-		/**
-		 * fix ie7 :focus
-		 */
-		$('textarea, input').bind('focus blur',function (){
-			$(this).toggleClass('focus');
-		});
-	}
+//	if ($.browser.msie && $.browser.version < 8) {
+//		/**
+//		 * fix ie7 :focus
+//		 */
+//		$('textarea, input').bind('focus blur',function (){
+//			$(this).toggleClass('focus');
+//		});
+//	}
 
 
 	/**

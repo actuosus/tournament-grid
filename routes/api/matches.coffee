@@ -6,6 +6,7 @@
  * Time: 07:18
 ###
 
+Round = require('../../models').Round
 Match = require('../../models').Match
 
 exports.list = (req, res)->
@@ -15,3 +16,43 @@ exports.list = (req, res)->
   query.exec (err, docs)-> res.send matches: docs
 
 exports.create = (req, res)->
+  if req.body?.matches
+    matches = []
+    for match, i in req.body.matches
+      console.log match, i
+      m = new Match match
+#      m.name = match.name
+      await m.save defer err, matches[i]
+      console.log matches
+    res.send matches: matches
+  else if req.body?.match
+    await Round.findOne req.body?.match.round_id, defer err, round
+    match = req.body?.match
+    m = new Match match
+    m.name = match.name
+    await m.save defer err, doc
+    round.matches.push m
+    await round.save defer err, round
+    res.send match: doc
+  else
+    res.send 401, error: "server error"
+
+exports.update = (req, res)->
+  if req.body?.matches
+    matches = []
+    for match, i in req.body.matches
+      console.log match, i
+      m = new Match match
+      #      m.name = match.name
+      await m.update(match, defer err, matches[i])
+    res.send matches: matches
+  else if req.body?.match
+#    await Round.findOne req.body?.match.round_id, defer err, round
+    match = req.body?.match
+    await Match.findOne req.params._id, defer err, m
+    await m.update(match, defer err, doc)
+#    round.matches.push m
+#    await round.save defer err, round
+    res.send match: doc
+  else
+    res.send 401, error: "server error"

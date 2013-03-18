@@ -1,0 +1,56 @@
+/**
+ * autocomplete_text_field
+ * @author: actuosus
+ */
+
+.autocomplete-text-field {
+    width: 100%;
+    position: relative;
+    min-height: 24px;
+}
+
+.autocomplete-text-field .cancel-btn {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    -webkit-appearance: none;
+    border: 0;
+    background: none;
+    width: 16px;
+    height: 16px;
+    padding: 0;
+    margin: -8px 0 0 0;
+    font-size: 10px;
+    color: gray;
+}
+
+.autocomplete-text-field .add-btn {
+    position: absolute;
+    right: 3px;
+    top: 50%;
+    border: 0;
+    background: none;
+    width: 16px;
+    height: 16px;
+    padding: 0;
+    margin: -8px 0 0 0;
+    font-size: 10px;
+    font-weight: bold;
+    color: gray;
+
+    -webkit-appearance: none;
+}
+
+.autocomplete-text-field .text-field {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+}
+
+.autocomplete-text-field .loader {
+    right: 11px;
+    position: absolute;
+    top: 50%;
+}

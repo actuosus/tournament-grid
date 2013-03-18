@@ -1,0 +1,576 @@
+/**
+ * country_flag_icon
+ * @author: actuosus
+ * Date: 14/03/2013
+ * Time: 02:30
+ */
+
+.country-flag-icon {
+    display: inline-block;
+    width: 16px;
+    height: 11px;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+.country-flag-icon-ax {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/ax.png);
+}
+.country-flag-icon-al {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/al.png);
+}
+.country-flag-icon-dz {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/dz.png);
+}
+.country-flag-icon-ad {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/ad.png);
+}
+.country-flag-icon-ag {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/ag.png);
+}
+.country-flag-icon-ar {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/ar.png);
+}
+.country-flag-icon-am {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/am.png);
+}
+.country-flag-icon-af {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/af.png);
+}
+.country-flag-icon-bs {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/bs.png);
+}
+.country-flag-icon-bd {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/bd.png);
+}
+.country-flag-icon-bb {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/bb.png);
+}
+.country-flag-icon-bh {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/bh.png);
+}
+.country-flag-icon-by {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/by.png);
+}
+.country-flag-icon-bz {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/bz.png);
+}
+.country-flag-icon-bj {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/bj.png);
+}
+.country-flag-icon-bg {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/bg.png);
+}
+.country-flag-icon-bo {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/bo.png);
+}
+.country-flag-icon-ba {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/ba.png);
+}
+.country-flag-icon-bw {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/bw.png);
+}
+.country-flag-icon-br {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/br.png);
+}
+.country-flag-icon-bn {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/bn.png);
+}
+.country-flag-icon-bf {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/bf.png);
+}
+.country-flag-icon-bt {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/bt.png);
+}
+.country-flag-icon-va {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/va.png);
+}
+.country-flag-icon-gb {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/gb.png);
+}
+.country-flag-icon-hu {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/hu.png);
+}
+.country-flag-icon-ve {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/ve.png);
+}
+.country-flag-icon-vn {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/vn.png);
+}
+.country-flag-icon-ga {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/ga.png);
+}
+.country-flag-icon-ht {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/ht.png);
+}
+.country-flag-icon-gy {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/gy.png);
+}
+.country-flag-icon-gm {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/gm.png);
+}
+.country-flag-icon-gh {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/gh.png);
+}
+.country-flag-icon-gt {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/gt.png);
+}
+.country-flag-icon-gf {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/gf.png);
+}
+.country-flag-icon-gn {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/gn.png);
+}
+.country-flag-icon-gw {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/gw.png);
+}
+.country-flag-icon-de {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/de.png);
+}
+.country-flag-icon-gi {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/gi.png);
+}
+.country-flag-icon-hn {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/hn.png);
+}
+.country-flag-icon-hk {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/hk.png);
+}
+.country-flag-icon-gd {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/gd.png);
+}
+.country-flag-icon-gl {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/gl.png);
+}
+.country-flag-icon-gr {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/gr.png);
+}
+.country-flag-icon-ge {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/ge.png);
+}
+.country-flag-icon-tl {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/tl.png);
+}
+.country-flag-icon-dj {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/dj.png);
+}
+.country-flag-icon-dm {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/dm.png);
+}
+.country-flag-icon-do {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/do.png);
+}
+.country-flag-icon-eg {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/eg.png);
+}
+.country-flag-icon-zm {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/zm.png);
+}
+.country-flag-icon-ws {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/ws.png);
+}
+.country-flag-icon-zw {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/zw.png);
+}
+.country-flag-icon-il {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/il.png);
+}
+.country-flag-icon-in {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/in.png);
+}
+.country-flag-icon-id {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/id.png);
+}
+.country-flag-icon-jo {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/jo.png);
+}
+.country-flag-icon-iq {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/iq.png);
+}
+.country-flag-icon-ir {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/ir.png);
+}
+.country-flag-icon-ie {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/ie.png);
+}
+.country-flag-icon-is {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/is.png);
+}
+.country-flag-icon-es {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/es.png);
+}
+.country-flag-icon-it {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/it.png);
+}
+.country-flag-icon-ye {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/ye.png);
+}
+.country-flag-icon-cv {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/cv.png);
+}
+.country-flag-icon-kz {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/kz.png);
+}
+.country-flag-icon-kh {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/kh.png);
+}
+.country-flag-icon-cm {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/cm.png);
+}
+.country-flag-icon-ca {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/ca.png);
+}
+.country-flag-icon-qa {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/qa.png);
+}
+.country-flag-icon-ke {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/ke.png);
+}
+.country-flag-icon-cy {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/cy.png);
+}
+.country-flag-icon-cn {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/cn.png);
+}
+.country-flag-icon-co {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/co.png);
+}
+.country-flag-icon-km {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/km.png);
+}
+.country-flag-icon-cg {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/cg.png);
+}
+.country-flag-icon-cr {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/cr.png);
+}
+.country-flag-icon-ci {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/ci.png);
+}
+.country-flag-icon-cu {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/cu.png);
+}
+.country-flag-icon-kw {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/kw.png);
+}
+.country-flag-icon-kg {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/kg.png);
+}
+.country-flag-icon-la {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/la.png);
+}
+.country-flag-icon-lv {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/lv.png);
+}
+.country-flag-icon-ls {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/ls.png);
+}
+.country-flag-icon-lb {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/lb.png);
+}
+.country-flag-icon-ly {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/ly.png);
+}
+.country-flag-icon-lt {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/lt.png);
+}
+.country-flag-icon-li {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/li.png);
+}
+.country-flag-icon-lu {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/lu.png);
+}
+.country-flag-icon-mu {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/mu.png);
+}
+.country-flag-icon-mg {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/mg.png);
+}
+.country-flag-icon-mk {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/mk.png);
+}
+.country-flag-icon-mw {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/mw.png);
+}
+.country-flag-icon-my {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/my.png);
+}
+.country-flag-icon-mv {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/mv.png);
+}
+.country-flag-icon-mt {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/mt.png);
+}
+.country-flag-icon-ma {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/ma.png);
+}
+.country-flag-icon-mh {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/mh.png);
+}
+.country-flag-icon-mx {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/mx.png);
+}
+.country-flag-icon-fm {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/fm.png);
+}
+.country-flag-icon-mz {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/mz.png);
+}
+.country-flag-icon-md {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/md.png);
+}
+.country-flag-icon-mc {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/mc.png);
+}
+.country-flag-icon-mn {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/mn.png);
+}
+.country-flag-icon-mm {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/mm.png);
+}
+.country-flag-icon-na {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/na.png);
+}
+.country-flag-icon-np {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/np.png);
+}
+.country-flag-icon-ne {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/ne.png);
+}
+.country-flag-icon-ng {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/ng.png);
+}
+.country-flag-icon-nl {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/nl.png);
+}
+.country-flag-icon-ni {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/ni.png);
+}
+.country-flag-icon-nz {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/nz.png);
+}
+.country-flag-icon-no {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/no.png);
+}
+.country-flag-icon-ae {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/ae.png);
+}
+.country-flag-icon-om {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/om.png);
+}
+.country-flag-icon-sh {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/sh.png);
+}
+.country-flag-icon-pk {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/pk.png);
+}
+.country-flag-icon-ps {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/ps.png);
+}
+.country-flag-icon-pa {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/pa.png);
+}
+.country-flag-icon-pg {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/pg.png);
+}
+.country-flag-icon-py {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/py.png);
+}
+.country-flag-icon-pe {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/pe.png);
+}
+.country-flag-icon-pl {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/pl.png);
+}
+.country-flag-icon-pt {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/pt.png);
+}
+.country-flag-icon-pr {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/pr.png);
+}
+.country-flag-icon-bi {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/bi.png);
+}
+.country-flag-icon-ki {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/ki.png);
+}
+.country-flag-icon-ml {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/ml.png);
+}
+.country-flag-icon-ru {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/ru.png);
+}
+.country-flag-icon-rw {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/rw.png);
+}
+.country-flag-icon-ro {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/ro.png);
+}
+.country-flag-icon-us {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/us.png);
+}
+.country-flag-icon-sv {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/sv.png);
+}
+.country-flag-icon-st {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/st.png);
+}
+.country-flag-icon-sa {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/sa.png);
+}
+.country-flag-icon-sz {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/sz.png);
+}
+.country-flag-icon-kp {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/kp.png);
+}
+.country-flag-icon-sc {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/sc.png);
+}
+.country-flag-icon-bl {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/bl.png);
+}
+.country-flag-icon-mf {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/mf.png);
+}
+.country-flag-icon-pm {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/pm.png);
+}
+.country-flag-icon-sn {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/sn.png);
+}
+.country-flag-icon-vc {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/vc.png);
+}
+.country-flag-icon-sh {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/sh.png);
+}
+.country-flag-icon-lc {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/lc.png);
+}
+.country-flag-icon-rs {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/rs.png);
+}
+.country-flag-icon-sg {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/sg.png);
+}
+.country-flag-icon-sy {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/sy.png);
+}
+.country-flag-icon-sk {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/sk.png);
+}
+.country-flag-icon-si {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/si.png);
+}
+.country-flag-icon-sd {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/sd.png);
+}
+.country-flag-icon-sr {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/sr.png);
+}
+.country-flag-icon-sl {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/sl.png);
+}
+.country-flag-icon-tj {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/tj.png);
+}
+.country-flag-icon-th {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/th.png);
+}
+.country-flag-icon-tw {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/tw.png);
+}
+.country-flag-icon-tz {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/tz.png);
+}
+.country-flag-icon-to {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/to.png);
+}
+.country-flag-icon-tt {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/tt.png);
+}
+.country-flag-icon-tn {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/tn.png);
+}
+.country-flag-icon-tm {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/tm.png);
+}
+.country-flag-icon-tr {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/tr.png);
+}
+.country-flag-icon-ug {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/ug.png);
+}
+.country-flag-icon-uz {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/uz.png);
+}
+.country-flag-icon-ua {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/ua.png);
+}
+.country-flag-icon-uy {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/uy.png);
+}
+.country-flag-icon-fj {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/fj.png);
+}
+.country-flag-icon-ph {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/ph.png);
+}
+.country-flag-icon-fi {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/fi.png);
+}
+.country-flag-icon-fr {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/fr.png);
+}
+.country-flag-icon-pf {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/pf.png);
+}
+.country-flag-icon-hr {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/hr.png);
+}
+.country-flag-icon-td {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/td.png);
+}
+.country-flag-icon-me {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/me.png);
+}
+.country-flag-icon-cz {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/cz.png);
+}
+.country-flag-icon-cl {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/cl.png);
+}
+.country-flag-icon-ch {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/ch.png);
+}
+.country-flag-icon-se {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/se.png);
+}
+.country-flag-icon-lk {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/lk.png);
+}
+.country-flag-icon-ec {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/ec.png);
+}
+.country-flag-icon-gq {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/gq.png);
+}
+.country-flag-icon-et {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/et.png);
+}
+.country-flag-icon-za {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/za.png);
+}
+.country-flag-icon-kr {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/kr.png);
+}
+.country-flag-icon-jm {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/jm.png);
+}
+.country-flag-icon-jp {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/jp.png);
+}
+.country-flag-icon-tk {
+    background-image: url(../../vendor/images/famfamfam_flag_icons/png/tk.png);
+}

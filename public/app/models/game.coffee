@@ -1,7 +1,7 @@
 ###
  * game
  * @author: actuosus
- * @fileOverview 
+ * @fileOverview Game model.
  * Date: 06/02/2013
  * Time: 05:21
 ###
@@ -11,5 +11,6 @@ define ->
     primaryKey: '_id'
     title: DS.attr 'string'
     link: DS.attr 'string'
+    match: DS.belongsTo 'App.Match'
 
   App.Game.toString = -> 'Game'

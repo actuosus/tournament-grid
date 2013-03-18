@@ -1,44 +1,66 @@
 {
-    "name":"tournament-grid",
-    "version":"0.0.1",
-    "description":"Tournament grid visualization for computer gaming.",
-    "main":"server.js",
-    "private":true,
-    "scripts":{
-        "start":"node server",
-        "test":"make test"
-    },
-    "keywords":[
-        "tournament",
-        "grid",
-        "visualization",
-        "express",
-        "node"
-    ],
-    "author":"Arthur Chafonov <actuosus@gmail.com>",
-    "maintainers":[
-        {
-            "name":"Arthur Chafonov",
-            "email":"actuosus@gmail.com",
-            "web":"http://actuosus.com"
-        }
-    ],
-    "dependencies":{
-        "express":"latest",
-        "jade":"latest",
-        "iced-coffee-script":"latest",
-        "mongoose":"latest"
-    },
-    "devDependencies":{
-        "async": "latest",
-        "openifyit-commons": "latest",
-        "openifyit-mongoose-fixtures": "latest",
-        "superagent":"latest",
-        "mocha":"latest",
-        "should":"latest"
-    },
-    "engines":{
-        "node":">= 0.8.14",
-        "npm":">= 1.1.0"
+  "name": "tournament-grid",
+  "version": "0.0.1",
+  "description": "Tournament grid visualization for computer gaming.",
+  "main": "server.js",
+  "private": true,
+  "scripts": {
+    "start": "node server",
+    "test": "make test"
+  },
+  "keywords": [
+    "tournament",
+    "grid",
+    "visualization",
+    "express",
+    "node"
+  ],
+  "author": "Arthur Chafonov <actuosus@gmail.com>",
+  "maintainers": [
+    {
+      "name": "Arthur Chafonov",
+      "email": "actuosus@gmail.com",
+      "web": "http://actuosus.com"
     }
+  ],
+  "dependencies": {
+    "express": "latest",
+    "jade": "latest",
+    "ect": "latest",
+    "iced-coffee-script": "latest",
+    "mongoose": "latest",
+    "spdy": "latest",
+    "passport": "latest",
+    "passport-http": "latest"
+  },
+  "devDependencies": {
+    "async": "latest",
+    "openifyit-commons": "latest",
+    "openifyit-mongoose-fixtures": "latest",
+    "superagent": "latest",
+    "mocha": "latest",
+    "should": "latest",
+
+    "grunt": "latest",
+    "grunt-contrib-requirejs": "latest",
+    "grunt-contrib-coffee": "latest",
+    "grunt-contrib-clean": "latest",
+    "grunt-contrib-copy": "latest",
+    "grunt-coffeelint": "latest"
+  },
+  "engines": {
+    "node": ">= 0.8.14",
+    "npm": ">= 1.1.0"
+  },
+  "volo": {
+    "baseUrl": "public/vendor/javascripts",
+    "dependencies": {
+      "jquery": "github:jquery/jquery/1.9.1",
+      "moment": "github:timrwood/moment/2.0.0",
+      "jquery-mousewheel": "github:brandonaaron/jquery-mousewheel/3.1.3",
+      "spin": "github:fgnass/spin.js/1.2.8",
+      "Faker": "github:Marak/Faker.js/0.5.5",
+      "handlebars": "github:wycats/handlebars.js/v1.0.10"
+    }
+  }
 }
