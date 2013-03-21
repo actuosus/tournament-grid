@@ -54,6 +54,7 @@ module.exports = (grunt)->
           'moment': '../vendor/javascripts/moment',
           'jquery': '../vendor/javascripts/jquery',
           'jquery.mousewheel': '../vendor/javascripts/jquery.mousewheel',
+          'jquery.cookie': '../vendor/javascripts/jquery.cookie',
           'jquery.isotope': '../vendor/javascripts/jquery.isotope',
           'Faker': '../vendor/javascripts/Faker',
           'raphael': '../vendor/javascripts/raphael',
