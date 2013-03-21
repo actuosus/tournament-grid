@@ -7,6 +7,7 @@
 ###
 
 define [
+  'jquery.cookie'
   'ember'
   'ember-data'
 ] , ()->

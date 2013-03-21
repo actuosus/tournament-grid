@@ -117,7 +117,8 @@ app.configure ->
 #  app.use processRandom
 
 app.locals
-  node_env: process.env.NODE_ENV
+#  node_env: process.env.NODE_ENV
+  node_env: 'production'
 #  staticDomain: '//static.tournament.local:3000'
   staticDomain: '//tournament.local:3000'
   moment: moment
