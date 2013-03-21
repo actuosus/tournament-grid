@@ -10,6 +10,7 @@ define ->
   App.Country = DS.Model.extend
     primaryKey: '_id'
     name: DS.attr 'string'
+#    _name: DS.attr 'object'
     englishName: DS.attr 'string'
     germanName: DS.attr 'string'
     code: DS.attr 'string'

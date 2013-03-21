@@ -21,6 +21,8 @@ require [
   'cs!fixtures'
 
   'text!templates/lineup_grid_item.handlebars'
+  'cs!mixins/translatable'
+  'cs!translators/yandex'
 ], ($, Fakera,
     ember,
     emberData,
@@ -39,16 +41,18 @@ require [
 
   App.isEditingMode = no
 
+  App.languages = Em.ArrayController.create
+    content: [
+      'ru', 'en', 'de'
+    ]
+
   App.ready = ->
-    # Preloading countries
-    App.countries = App.Country.find()
 
     App.report = App.Report.find('511211b49709aab1ae000002')
 
     App.entrantsController = Em.ArrayController.create
       searchResults: []
       search: ->
-
 
     App.set 'countriesController', Em.ArrayController.create
       content: []
@@ -60,6 +64,7 @@ require [
 #        @set 'content', App.Country.find options
         result = App.countries.filter (item, idx)->
           regexp = new RegExp(options.name, 'i')
+#          if item.get('_name')
           if item.get('name')?.match regexp
             return yes
           if item.get('englishName')?.match regexp
@@ -114,15 +119,9 @@ require [
       classNames: ['stage-view']
       childViews: ['tabBarView', 'contentView']
 
-      didInsertElement: ->
-        @testAutocomplete.set('content', App.Team.find())
-
       setCurrentTabView: (@currentTabView)->
         @currentStage = @currentTabView.get 'content'
         currentStage = @currentStage
-        if @currentStage.get('name') is 'Финал'
-          @set 'currentView', App.StageForm.create()
-          return
         switch @currentStage.get 'visual_type'
           when 'grid'
             contentView = App.TournamentGridView.create content: @currentStage
@@ -156,8 +155,18 @@ require [
           {{#each view.content}}
           {{view view.itemViewClass contentBinding=this}}
           {{/each}}
+
+            <li class="item add"><button class="btn-clean add">+</button></li>
+
           </ul>
         '''
+
+        didInsertElement: ->
+          @selectChildView @get('childViews.firstObject.childViews.firstObject')
+
+        click: (event)->
+          if $(event.target).hasClass('add')
+            @set 'parentView.currentView', App.StageForm.create(classNames: ['padded'])
 
         selectChildView: (childView)->
           @get('childViews').forEach (child)=>
@@ -178,10 +187,31 @@ require [
         content: App.Stage.find()
       contentView: Em.View.extend()
 
+    # Preloading countries
+    App.countries = App.Country.find()
+    App.anotherCountriesController = Em.ArrayController.create
+      content: []
+
     stageSelectorContainerView = App.NamedContainerView.create
-      title: 'Таблица результатов турнира'
+      title: '_tournament_results_table'.loc()
       contentView: stageView
-#    stageSelectorContainerView.appendTo '#content'
+      countriesIsUpdating: (controller)->
+        console.log 'countriesIsUpdating', controller.get('content.isUpdating'), controller.get('content.isLoaded')
+        unless controller.get('content.isUpdating')
+          @set 'loaderView.isVisible', no
+          @set 'statusTextView.value', ''
+        else
+          @set 'loaderView.isVisible', yes
+          @set 'statusTextView.value', 'Countries loading…'
+    App.anotherCountriesController.addObserver(
+                    'content.isUpdating',
+                    stageSelectorContainerView,
+                    stageSelectorContainerView.countriesIsUpdating
+                  )
+
+    App.anotherCountriesController.set('content', App.Country.find())
+
+    stageSelectorContainerView.appendTo '#content'
 
     window.stageView = stageView
 
@@ -263,14 +293,26 @@ require [
 
     createActualRounds = (roundsCount)->
       stage = App.Stage.createRecord
-        name: 'Test'
+        name: 'Test Stage'
         description: 'Testing grid layout'
         visual_type: 'grid'
+
+#      brackets = stage.get 'brackets'
+#
+#      winnerBracket = brackets.createRecord
+#        name: '_winners'.loc()
+#
+#      loserBracket = brackets.createRecord
+#        name: '_losers'.loc()
+#
+#      loserBracket.get('rounds').createRecord
+#        name: 'Wow'
+
       roundsCount = roundsCount or (Math.ceil(Math.random()*5))
       rounds = stage.get 'rounds'
       for i in [roundsCount..0]
         matchesCount = Math.pow(2, i)-1
-        console.log "Round #{i}, #{matchesCount+1} matches."
+        console.debug "Round #{i}, #{matchesCount+1} matches."
         roundName = "1/#{matchesCount+1} #{'_of_the_final'.loc()}"
         switch i
           when 0
@@ -280,6 +322,7 @@ require [
         round = rounds.createRecord
           itemIndex: i
           name: roundName
+          parentReference: 'stage'
         matches = round.get('matches')
         for j in [0..matchesCount]
           leftPath = rightPath = undefined
@@ -294,24 +337,53 @@ require [
             parentNodePath: "#{roundsCount-i+1}.#{Math.floor(j/2)}"
 #            team1: App.Team.createRecord(identifier: 'team1')
 #            team2: App.Team.createRecord(identifier: 'team2')
+        if i is 0
+          console.log 'Zero!'
+          round = rounds.createRecord
+            itemIndex: -1
+            parentReference: 'stage'
+          round.get('matches').createRecord
+            isWinner: yes
+            itemIndex: -1
       stage
+
+    createLoserBracket = (bracket, entrantsNumber)->
+      roundsCount = Math.log(entrantsNumber*2) / Math.log(2)-1;
+      rounds = bracket.get 'rounds'
+      matchesCount = entrantsNumber/2
+      rCount = roundsCount * 2 - 1
+      for r in [roundsCount-1..0]
+        for n in [1..0]
+          round = rounds.createRecord
+            itemIndex: rCount--
+            parentReference: 'bracket'
+          matches = round.get 'matches'
+          for m in [0...matchesCount]
+            if rCount > 0
+              parentNodePath = "#{rCount}.#{m}"
+            else
+              parentNodePath = null
+            console.log parentNodePath
+            match = matches.createRecord
+              itemIndex: m
+              parentNodePath: parentNodePath
+            console.log match.clientId
+        matchesCount /= 2
+
+    createActualRoundsByEntrants = (entrantsNumber)->
+      createActualRounds(Math.log(entrantsNumber) / Math.log(2)-1)
 
     window.createRounds = createRounds
     window.createActualRounds = createActualRounds
+    window.createLoserBracket = createLoserBracket
 
-    window.stage = createActualRounds(2)
-
-    window.actualGridView = App.TournamentGridView.create content: window.stage
-
-    App.NamedContainerView.create(
-      title: 'Actual Tournament Grid'
-      contentView: window.actualGridView
-    ).appendTo('#content')
+    window.stage = createActualRoundsByEntrants(8)
 
     testerView = Em.ContainerView.create
-      childViews: 'countrySelectView autocompleteTextFieldView editableLabel'.w()
+      childViews: 'countrySelectView autocompleteTextFieldView multilingualTextFieldView editableLabel'.w()
       countrySelectView: App.CountrySelectView.create(controller: App.countriesController)
       autocompleteTextFieldView: App.AutocompleteTextField.create(controller: App.teamsController)
+      multilingualTextFieldView: App.MultilingualTextField.create(languages: App.languages.content)
       editableLabel: App.EditableLabel.create(value: 'Some thing')
 
     App.NamedContainerView.create(
@@ -372,12 +444,20 @@ require [
 
     App.matchTypes = Em.ArrayController.create
       content: [
-        Em.Object.create name:'Период', id: 'period'
-        Em.Object.create name:'Дата', id: 'date'
-        Em.Object.create name:'Сегодня', id: 'today'
-        Em.Object.create name:'Вчера', id: 'yesterday'
-        Em.Object.create name:'Неделя', id: 'week'
-        Em.Object.create name:'Месяц', id: 'month'
+        Em.Object.create name:'_period'.loc(), id: 'period'
+        Em.Object.create name:'_date'.loc(), id: 'date'
+        Em.Object.create name:'_today'.loc(), id: 'today'
+        Em.Object.create name:'_yesterday'.loc(), id: 'yesterday'
+        Em.Object.create name:'_week'.loc(), id: 'week'
+        Em.Object.create name:'_month'.loc(), id: 'month'
+      ]
+
+    App.visualTypes = Em.ArrayController.create
+      content: [
+        Em.Object.create name:'_grid'.loc(), id: 'grid'
+        Em.Object.create name:'_group'.loc(), id: 'group'
+        Em.Object.create name:'_matrix'.loc(), id: 'matrix'
+        Em.Object.create name:'_team'.loc(), id: 'team'
       ]
 
     App.entrantsController.set('content', App.Team.find())

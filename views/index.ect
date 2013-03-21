@@ -17,26 +17,34 @@
     <meta property="fb:admins" content="USER_ID"/>
     <meta property="og:description" content="Virtus.Pro Report Visualization Test Project"/>
 
-    <link rel="stylesheet" href="/agamapro-virtus.pro-ebb4d51390f8/css/style.css" media="screen,projection"/>
+    <link rel="stylesheet" href="<%- @staticDomain %>/agamapro-virtus.pro-ebb4d51390f8/css/style.css" media="screen,projection"/>
     <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700,300italic|Open+Sans:400,700,400italic,700italic&subset=latin,cyrillic'
           rel='stylesheet' type='text/css'>
 
-    <link rel="stylesheet" href="/agamapro-virtus.pro-ebb4d51390f8/css/style.css" media="screen,projection" />
+    <link rel="stylesheet" href="<%- @staticDomain %>/agamapro-virtus.pro-ebb4d51390f8/css/style.css" media="screen,projection" />
 
+
+    <% if @node_env is 'production': %>
+    <link rel="stylesheet" href="<%- @staticDomain %>/bundle/stylesheets/app.css" />
+    <% else: %>
     <link rel="stylesheet" href="/app/stylesheets/main.css" />
-    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <% end %>
+    <link rel="icon" type="image/x-icon" href="<%- @staticDomain %>/favicon.ico" />
 
     <!-- Not working with require.js https://github.com/DmitryBaranovskiy/raphael/issues/524 -->
     <!--<script type="text/javascript" src="/vendor/javascripts/raphael.js"></script>-->
     <!--<script type="text/javascript" src="/vendor/javascripts/spin.js"></script>-->
     <script type="text/javascript" src="/vendor/javascripts/require.js"></script>
+    <% if @node_env is 'production': %>
+    <script type="text/javascript" src="<%- @staticDomain %>/bundle/app.js"></script>
+    <% else: %>
     <script type="text/javascript" src="/app/main.js"></script>
-    <!--<script type="text/javascript" src="/bundle/app.js"></script>-->
+    <% end %>
 
-    <link rel="shortcut icon" href="/images/favicon.ico">
-    <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="/images/apple-touch-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="/images/apple-touch-icon-114x114.png">
+    <link rel="shortcut icon" href="<%- @staticDomain %>/images/favicon.ico">
+    <link rel="apple-touch-icon" href="<%- @staticDomain %>/images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="<%- @staticDomain %>/images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="<%- @staticDomain %>/images/apple-touch-icon-114x114.png">
 
     <!--[if lt IE 9]>
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
@@ -49,7 +57,6 @@
     <!-- <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" /> -->
 </head>
 <body>
-
     <!-- header -->
     <header class="i-header">
         <div class="b-header cf">
@@ -59,7 +66,7 @@
             </form>
             <div class="b-header__right">
                 <span class="username">FankySoul</span>
-                <img class="userAvatar" src="/agamapro-virtus.pro-ebb4d51390f8/img/dummy/avatar_23x23.jpg" alt="">
+                <img class="userAvatar" src="<%- @staticDomain %>/agamapro-virtus.pro-ebb4d51390f8/img/dummy/avatar_23x23.jpg" alt="">
                 <a class="personal" href="" title="">Личный кабинет</a> |
                 <a class="quit" href="" title="">Выйти</a>
                 <a class="lang lang_first active" href="" title="">RU</a>
@@ -96,7 +103,7 @@
                 <ul class="b-slider">
                     <li class="item">
                         <a href="" title="" class="item__link">
-                            <img src="/agamapro-virtus.pro-ebb4d51390f8/img/dummy/slider/1.jpg" alt="">
+                            <img src="<%- @staticDomain %>/agamapro-virtus.pro-ebb4d51390f8/img/dummy/slider/1.jpg" alt="" width="370" height="164">
                             <span class="item__info">
                                 Триумф игроков RO X.KIS на
                                 финалах ZOTAC поверг всех в шок!
@@ -105,7 +112,7 @@
                     </li>
                     <li class="item">
                         <a href="" title="" class="item__link">
-                            <img src="/agamapro-virtus.pro-ebb4d51390f8/img/dummy/slider/2.jpg" alt="">
+                            <img src="<%- @staticDomain %>/agamapro-virtus.pro-ebb4d51390f8/img/dummy/slider/2.jpg" alt="" width="370" height="164">
                             <span class="item__info">
                                 Победа VirtusPro на WCG’12 в 2012 номинации CS:GO
                             </span>
@@ -113,7 +120,7 @@
                     </li>
                     <li class="item">
                         <a href="" title="" class="item__link">
-                            <img src="/agamapro-virtus.pro-ebb4d51390f8/img/dummy/slider/3.jpg" alt="">
+                            <img src="<%- @staticDomain %>/agamapro-virtus.pro-ebb4d51390f8/img/dummy/slider/3.jpg" alt="" width="370" height="164">
                             <span class="item__info">
                                 Мировая победа VirtusPro на WCG’12 в номинации CS:GO
                             </span>
@@ -121,7 +128,7 @@
                     </li>
                     <li class="item">
                         <a href="" title="" class="item__link">
-                            <img src="/agamapro-virtus.pro-ebb4d51390f8/img/dummy/slider/1.jpg" alt="">
+                            <img src="<%- @staticDomain %>/agamapro-virtus.pro-ebb4d51390f8/img/dummy/slider/1.jpg" alt="" width="370" height="164">
                             <span class="item__info">
                                 Триумф игроков RO X.KIS на
                                 финалах ZOTAC поверг всех в шок!
@@ -297,7 +304,7 @@
 
                     <!-- article__hgroup1 -->
                     <div class="b-article__hgroup1">
-                        <img src="/agamapro-virtus.pro-ebb4d51390f8/img/games/logo/sc2.png" alt="" class="logo">
+                        <img src="<%- @staticDomain %>/agamapro-virtus.pro-ebb4d51390f8/img/games/logo/sc2.png" alt="" class="logo" width="19" height="19">
                         <h1 class="b-article__title">StarCraft 2 Regular Cup #30: DIMAGA!</h1>
                         <span class="bigger">AsusCup spring 2012 gual CS</span>
                         <a href="" class="author">FUki</a>
@@ -322,7 +329,7 @@
                     <!-- profileReport__main -->
                     <div class="b-profileReport__main">
                         <div class="intro">
-                            <img class="intro__img" src="/agamapro-virtus.pro-ebb4d51390f8/img/dummy/report_intro2.jpg" alt="">
+                            <img class="intro__img" src="<%- @staticDomain %>/agamapro-virtus.pro-ebb4d51390f8/img/dummy/report_intro2.jpg" alt="" width="334" height="169">
                             <p class="b-profileReport__title">Общая информация</p>
 
                             <ul class="b-profileReport__general">
@@ -439,9 +446,9 @@
                 <ul class="b-profileReport__streams b-profileReport__streams_standalone">
                     <li class="item">
                         <div class="item__thumb">
-                            <img class="thumb" src="/agamapro-virtus.pro-ebb4d51390f8/img/dummy/streams/156x87/2.jpg" alt="">
+                            <img class="thumb" src="<%- @staticDomain %>/agamapro-virtus.pro-ebb4d51390f8/img/dummy/streams/156x87/2.jpg" alt="" width="156" height="87">
                             <div class="stream__info">
-                                <img src="/agamapro-virtus.pro-ebb4d51390f8/img/games/switchers/sc2.png" alt="">
+                                <img src="<%- @staticDomain %>/agamapro-virtus.pro-ebb4d51390f8/img/games/switchers/sc2.png" alt=""  width="19" height="19">
                                 <span class="stream__info__user ru">Tamerlan</span>
                             </div>
                         </div>
@@ -452,14 +459,14 @@
                     </li>
                     <li class="item" data-title="Превосходство рас <br/>SC2 над классами <br/>(разбор полетов).">
                         <div class="item__thumb">
-                            <img class="thumb" src="/agamapro-virtus.pro-ebb4d51390f8/img/dummy/streams/156x87/1.jpg" alt="">
+                            <img class="thumb" src="<%- @staticDomain %>/agamapro-virtus.pro-ebb4d51390f8/img/dummy/streams/156x87/1.jpg" alt="" width="156" height="87">
                             <div class="item__thumb__over"><!-- by javascript -->
                                                            Превосходство рас <br/>
                                                            SC2 над классами <br/>
                                                            (разбор полетов).
                             </div>
                             <div class="stream__info">
-                                <img src="/agamapro-virtus.pro-ebb4d51390f8/img/games/switchers/sc2.png" alt="">
+                                <img src="<%- @staticDomain %>/agamapro-virtus.pro-ebb4d51390f8/img/games/switchers/sc2.png" alt=""  width="19" height="19">
                                 <span class="stream__info__user ru">Tamerlan</span>
                             </div>
                         </div>
@@ -470,9 +477,9 @@
                     </li>
                     <li class="item">
                         <div class="item__thumb">
-                            <img class="thumb" src="/agamapro-virtus.pro-ebb4d51390f8/img/dummy/streams/156x87/3.jpg" alt="">
+                            <img class="thumb" src="<%- @staticDomain %>/agamapro-virtus.pro-ebb4d51390f8/img/dummy/streams/156x87/3.jpg" alt="" width="156" height="87">
                             <div class="stream__info">
-                                <img src="/agamapro-virtus.pro-ebb4d51390f8/img/games/switchers/sc2.png" alt="">
+                                <img src="<%- @staticDomain %>/agamapro-virtus.pro-ebb4d51390f8/img/games/switchers/sc2.png" alt=""  width="19" height="19">
                                 <span class="stream__info__user ru">Tamerlan</span>
                             </div>
                         </div>
@@ -494,13 +501,13 @@
 
                         <ul class="b-profileStreams__list">
                             <li class="item">
-                                <a href="" title="" class="item__thumb"><img src="/agamapro-virtus.pro-ebb4d51390f8/img/dummy/video_thumb.jpg" alt=""></a>
+                                <a href="" title="" class="item__thumb"><img src="<%- @staticDomain %>/agamapro-virtus.pro-ebb4d51390f8/img/dummy/video_thumb.jpg" alt="" width="188" height="126"></a>
 
                                 <p class="item__title">Virtus.pro vs. Natus Vincere</p>
                                 <span class="item__view">32  |  +88</span>
                             </li>
                             <li class="item">
-                                <a href="" title="" class="item__thumb"><img src="/agamapro-virtus.pro-ebb4d51390f8/img/dummy/video_thumb.jpg" alt=""></a>
+                                <a href="" title="" class="item__thumb"><img src="<%- @staticDomain %>/agamapro-virtus.pro-ebb4d51390f8/img/dummy/video_thumb.jpg" alt="" width="188" height="126"></a>
 
                                 <p class="item__title">Virtus.pro vs. Natus Vincere</p>
                                 <span class="item__view">32  |  +88</span>
@@ -521,13 +528,13 @@
 
                         <ul class="b-profileStreams__list">
                             <li class="item">
-                                <a href="" title="" class="item__thumb"><img src="/agamapro-virtus.pro-ebb4d51390f8/img/dummy/video_thumb.jpg" alt=""></a>
+                                <a href="" title="" class="item__thumb"><img src="<%- @staticDomain %>/agamapro-virtus.pro-ebb4d51390f8/img/dummy/video_thumb.jpg" alt="" width="188" height="126"></a>
 
                                 <p class="item__title">Virtus.pro vs. Natus Vincere</p>
                                 <span class="item__view">32  |  +88</span>
                             </li>
                             <li class="item">
-                                <a href="" title="" class="item__thumb"><img src="/agamapro-virtus.pro-ebb4d51390f8/img/dummy/video_thumb.jpg" alt=""></a>
+                                <a href="" title="" class="item__thumb"><img src="<%- @staticDomain %>/agamapro-virtus.pro-ebb4d51390f8/img/dummy/video_thumb.jpg" alt="" width="188" height="126"></a>
 
                                 <p class="item__title">Virtus.pro vs. Natus Vincere</p>
                                 <span class="item__view">32  |  +88</span>
@@ -551,16 +558,16 @@
 
                             <ul class="b-profileGallery__list">
                                 <li class="item">
-                                    <a href="" title="" class="item__thumb"><img src="/agamapro-virtus.pro-ebb4d51390f8/img/dummy/gallery/1.jpg" alt=""></a>
+                                    <a href="" title="" class="item__thumb"><img src="<%- @staticDomain %>/agamapro-virtus.pro-ebb4d51390f8/img/dummy/gallery/1.jpg" alt="" width="96" height="95"></a>
                                 </li>
                                 <li class="item">
-                                    <a href="" title="" class="item__thumb"><img src="/agamapro-virtus.pro-ebb4d51390f8/img/dummy/gallery/2.jpg" alt=""></a>
+                                    <a href="" title="" class="item__thumb"><img src="<%- @staticDomain %>/agamapro-virtus.pro-ebb4d51390f8/img/dummy/gallery/2.jpg" alt="" width="96" height="95"></a>
                                 </li>
                                 <li class="item">
-                                    <a href="" title="" class="item__thumb"><img src="/agamapro-virtus.pro-ebb4d51390f8/img/dummy/gallery/3.jpg" alt=""></a>
+                                    <a href="" title="" class="item__thumb"><img src="<%- @staticDomain %>/agamapro-virtus.pro-ebb4d51390f8/img/dummy/gallery/3.jpg" alt="" width="96" height="95"></a>
                                 </li>
                                 <li class="item">
-                                    <a href="" title="" class="item__thumb"><img src="/agamapro-virtus.pro-ebb4d51390f8/img/dummy/gallery/4.jpg" alt=""></a>
+                                    <a href="" title="" class="item__thumb"><img src="<%- @staticDomain %>/agamapro-virtus.pro-ebb4d51390f8/img/dummy/gallery/4.jpg" alt="" width="96" height="95"></a>
                                     <span class="item__view">32  |  +88</span>
                                 </li>
                             </ul>
@@ -578,8 +585,8 @@
 
                             <ul class="b-profileNews__list">
                                 <li class="item">
-                                    <img class="item__img" src="/agamapro-virtus.pro-ebb4d51390f8/img/dummy/news/70x70/1.jpg" alt="">
-                                    <img class="item__game" src="/agamapro-virtus.pro-ebb4d51390f8/img/games/logo/sc2_39x39.png" alt="" width="19" height="19">
+                                    <img class="item__img" src="<%- @staticDomain %>/agamapro-virtus.pro-ebb4d51390f8/img/dummy/news/70x70/1.jpg" alt="" width="70" height="70">
+                                    <img class="item__game" src="<%- @staticDomain %>/agamapro-virtus.pro-ebb4d51390f8/img/games/logo/sc2_39x39.png" alt="" width="19" height="19">
 
                                     <div class="item__titleWrapper">
                                         <a class="item__title" href="" title="">Knochen: «Нужно дать CS:GO шанс»</a> <span
@@ -591,8 +598,8 @@
                                     </p>
                                 </li>
                                 <li class="item">
-                                    <img class="item__img" src="/agamapro-virtus.pro-ebb4d51390f8/img/dummy/news/70x70/2.jpg" alt="">
-                                    <img class="item__game" src="/agamapro-virtus.pro-ebb4d51390f8/img/games/logo/sc2_39x39.png" alt="" width="19" height="19">
+                                    <img class="item__img" src="<%- @staticDomain %>/agamapro-virtus.pro-ebb4d51390f8/img/dummy/news/70x70/2.jpg" alt="" width="70" height="70">
+                                    <img class="item__game" src="<%- @staticDomain %>/agamapro-virtus.pro-ebb4d51390f8/img/games/logo/sc2_39x39.png" alt="" width="19" height="19">
 
                                     <div class="item__titleWrapper">
                                         <a class="item__title" href="" title="">Oskar в ex-BEASTS</a> <span class="item__date">02.07.12  12:55</span>
@@ -645,7 +652,7 @@
     </footer>
     <!-- end footer -->
 
-    <script src="/agamapro-virtus.pro-ebb4d51390f8/js/modernizr.js"></script>
+    <script src="<%- @staticDomain %>/agamapro-virtus.pro-ebb4d51390f8/js/modernizr.js"></script>
     <script>
         Modernizr.load([
 //            {
@@ -658,7 +665,7 @@
 //                }
 //            },
             {
-                load: '/agamapro-virtus.pro-ebb4d51390f8/js/scripts.js'
+                load: '<%- @staticDomain %>/agamapro-virtus.pro-ebb4d51390f8/js/scripts.js'
             }
         ]);
     </script>

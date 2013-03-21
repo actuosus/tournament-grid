@@ -13,11 +13,14 @@ exports.list = (req, res)->
     query = Country.find({})
     query.where('_id').in(req.query?.ids) if req.query?.ids
     if req.query?.name
-      reg = new RegExp req.query.name, 'i'
-      query.regex 'name', reg
-    query.sort('code')
+      if req.language
+        reg = new RegExp req.query.name, 'i'
+      else
+        reg = new RegExp req.query.name, 'i'
+      query.regex '_name.'+req.language, reg
+    query.sort 'code'
     query.exec (err, docs)-> res.send countries: docs
-  , Math.round(Math.random() * 1000)
+  , Math.round(Math.random() * 5000)
 
 exports.item = (req, res)->
   Country.where('_id', req.params._id).findOne().exec (err, doc)->

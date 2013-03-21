@@ -1,0 +1,21 @@
+/**
+ * block_container
+ * @author: actuosus
+ * Date: 18/03/2013
+ * Time: 23:37
+ */
+
+.block-container {
+    position: relative;
+}
+
+.block-container .b-profileBlock__title {
+    margin: 16px;
+}
+
+.block-container .grid,
+.block-container .match-grid {
+    margin-left: 16px;
+    margin-right: 16px;
+    margin-bottom: 16px;
+}

@@ -12,10 +12,11 @@
 }
 
 .tournament-grid {
-    /*overflow: hidden;*/
+    overflow: hidden;
 }
 
 .tournament-round-container {
+    float: left;
     width: 160px;
     margin-right: 21px;
 }

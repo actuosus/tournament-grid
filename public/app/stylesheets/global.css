@@ -12,6 +12,10 @@
     user-select: none;
 }
 
+.padded {
+    padding: 20px;
+}
+
 input[type="text"], input[type="url"], input[type="date"] {
     min-height: 21px;
     -webkit-appearance: none;
@@ -33,11 +37,11 @@ input[type="text"]:invalid {
 }
 
 textarea {
-    min-height: 111px;
+    min-height: 20px;
     -webkit-appearance: none;
     border: 1px solid #c3c3c3;
     border-radius: 2px;
-    padding-left: 10px;
+    padding: 10px;
 
     font-family: Arial, Helvetica, sans-serif;
     font-size: 13px;

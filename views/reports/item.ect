@@ -1,0 +1,324 @@
+<% extend 'layout.ect' %>
+
+<p class="b-title b-title_bump"><span class="ico ico_players"></span><%- @__ 'Report' %>
+    <a class="link link_pencil" href="" title=""><%- @__ 'Add information' %></a></p>
+
+<div class="b-profileReport cf">
+
+    <!-- article__hgroup1 -->
+    <div class="b-article__hgroup1">
+        <img src="//tournament.local:3000/agamapro-virtus.pro-ebb4d51390f8/img/games/logo/sc2.png" alt="" class="logo" width="19" height="19">
+        <h1 class="b-article__title"><%- @doc.name %></h1>
+        <span class="bigger">AsusCup spring 2012 gual CS</span>
+        <a href="/authors/<%- @doc.author._id %>" class="author"><%- @doc.author.username %></a>
+        <%- @moment(@doc.date).format('D MMMM YYYY, в hh:mm') %>
+
+        <div class="b-article__social">
+            <a class="tw" href="" title=""></a>
+            <a class="odnoklassniki" href="" title=""></a>
+            <a class="fb" href="" title=""></a>
+            <a class="vk" href="" title=""></a>
+            <span class="more"></span>
+            <span class="comments">22<i class="comments__rightEdge"></i></span>
+        </div>
+
+        <div class="b-votes">
+            <span class="b-votes__points">+8623</span>
+            <span class="b-votes__up"></span>
+            <span class="b-votes__down"></span>
+        </div>
+    </div>
+    <!-- article__hgroup1 -->
+    <!-- profileReport__main -->
+    <div class="b-profileReport__main">
+        <div class="intro">
+            <img class="intro__img" src="//tournament.local:3000/agamapro-virtus.pro-ebb4d51390f8/img/dummy/report_intro2.jpg" alt="" width="334" height="169">
+            <p class="b-profileReport__title"><%- @__ 'General information' %></p>
+
+            <ul class="b-profileReport__general">
+                <li class="item"><span class="item__title"><%- @__ 'Announce' %>:</span> <a href="" title="">Анонс Gamegune</a></li>
+                <li class="item"><span class="item__title"><%- @__ 'Place' %>:</span> <%- @doc.place %></li>
+                <li class="item"><span class="item__title"><%- @__ 'Date' %>:</span> <%- @moment(@doc.date).format('DD.MM.YYYY') %> - <%- @moment(@doc.date).format('DD.MM.YYYY') %></li>
+                <li class="item"><span class="item__title"><%- @__ 'Scheme' %>:</span> Группы + FDE</li>
+                <li class="item"><span class="item__title"><%- @__ 'Entrants' %>:</span> 24</li>
+                <li class="item"><span class="item__title"><%- @__ 'Site' %>:</span> <a href="" title="">gamegune.com</a></li>
+                <li class="item"><span class="item__title"><%- @__ 'Sponsors' %>:</span> <%- @doc.sponsors %></li>
+            </ul>
+        </div>
+    </div>
+    <!-- end profileReport__main -->
+
+    <!-- profileReport__aside -->
+    <aside class="b-profileReport__aside">
+        <p class="b-profileReport__title">Призовой фонд</p>
+
+        <table class="b-profileReport__prizes">
+            <tbody><tr>
+                <th colspan="2">Общий призовой фонд:</th>
+                <th>$ 8500</th>
+            </tr>
+            <tr class="odd">
+                <td>1</td>
+                <td class="user"><a href="" title="" class="jp">AoMame</a></td>
+                <td>$ 5000</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td class="user"><a href="" title="" class="ua">GreenBarrow</a></td>
+                <td>$ 2500</td>
+            </tr>
+            <tr class="odd">
+                <td>3</td>
+                <td class="user"><a href="" title="" class="br">FanMoon</a></td>
+                <td>$ 1000</td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <div class="b-more">
+                        <a class="more" href="" title=""><%- @__ 'More' %></a>
+                    </div>
+                </td>
+            </tr>
+            </tbody></table>
+    </aside>
+    <!-- end profileReport__aside -->
+</div>
+
+<div class="i-listsTabs i-listsTabs_bd">
+    <ul class="b-listsTabs">
+        <li class="item active">Ход репортажа</li>
+        <li class="item"><%- @__ 'Description' %></li>
+    </ul>
+</div>
+
+<div class="b-profileReport cf">
+    <!-- profileReport__main -->
+    <div class="b-profileReport__main b-profileReport__main_secondary">
+        Если я правильно вас понял, и вы имеете ввиду под термином «условное макетирование» то, что автор в статье
+        называет терминами «эскиз», «прототип» (все-таки прочитав статью, в которой используются одни термины, и
+        потом быстро переключиться на терминологию другую, не так уж и просто.В этом кстати ваша ошибка ИМХО, стоило
+        бы принять конвенцию предложенную автором, хотя бы в пределах топика, чтобы не создавать дополнительных
+        путаниц.) то этот комментарий, идет в прямой конфликт со статьей) И было бы правильней высказать несогласие
+        с автором, чем показывать этот пример как «интересный»
+
+        <p class="b-profileReport__title">Твит лента</p>
+        <!-- tweets -->
+        <ul class="b-tweets">
+            <li class="item">
+                <a href="" class="userName">Zendelman</a><span class="time">8 minute ago</span> <br>
+                Представляем Вашему вниманию полноценный фраг-муви от HLTV.org, посвященный недавно организованной и прошедшей кс-лиге.
+            </li>
+            <li class="item">
+                <a href="" class="userName">Proofy-Proof</a><span class="time">8 minute ago</span> <br>
+                Победил в чемпе WCG’12 @Ponteley и @Potapenko со счетом 12:3. Красивая была игра, спасибо вам ребята!
+            </li>
+            <li class="item">
+                <a href="" class="userName">Zendelman</a><span class="time">8 minute ago</span> <br>
+                Представляем Вашему вниманию полноценный фраг-муви от HLTV.org, посвященный недавно организованной и прошедшей кс-лиге.
+            </li>
+        </ul>
+        <!-- end tweets -->
+
+        <div class="b-more">
+            <a class="more" href="" title=""><%- @__ 'More' %></a>
+        </div>
+    </div>
+    <!-- end profileReport__main -->
+
+    <!-- profileReport__aside -->
+    <aside class="b-profileReport__aside b-profileReport__aside_secondary">
+
+        <div class="greyBlock">
+            <p class="b-profileReport__title"><%- @__ 'Similar reports' %></p>
+
+            <ul class="b-profileReport__related">
+                <li class="item"><a href="" title="">Gamegune 2012. Semifinal: Попытки играть на достойном уровне</a></li>
+                <li class="item"><a href="" title="">Gamegune 2012. Online tournament: Как Virtus.pro стали чемпионами</a></li>
+                <li class="item"><a href="" title="">Gamegune 2012.</a></li>
+                <li class="item">
+                    <div class="b-more">
+                        <a class="more" href="" title=""><%- @__ 'More' %></a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </aside>
+    <!-- end profileReport__aside -->
+</div>
+
+<div id="content"></div>
+<script type="text/x-handlebars" data-template-name="application"></script>
+
+<ul class="b-profileReport__streams b-profileReport__streams_standalone">
+    <li class="item">
+        <div class="item__thumb">
+            <img class="thumb" src="//tournament.local:3000/agamapro-virtus.pro-ebb4d51390f8/img/dummy/streams/156x87/2.jpg" alt="" width="156" height="87">
+            <div class="stream__info">
+                <img src="//tournament.local:3000/agamapro-virtus.pro-ebb4d51390f8/img/games/switchers/sc2.png" alt="" width="19" height="19">
+                <span class="stream__info__user ru">Tamerlan</span>
+            </div>
+        </div>
+        <div class="item__info">
+            <span class="item__info__live"></span>
+            <span class="item__info__likes">345</span>
+        </div>
+    </li>
+    <li class="item" data-title="Превосходство рас &lt;br/&gt;SC2 над классами &lt;br/&gt;(разбор полетов).">
+        <div class="item__thumb">
+            <img class="thumb" src="//tournament.local:3000/agamapro-virtus.pro-ebb4d51390f8/img/dummy/streams/156x87/1.jpg" alt="" width="156" height="87">
+            <div class="item__thumb__over"><!-- by javascript -->
+                Превосходство рас <br>
+                SC2 над классами <br>
+                (разбор полетов).
+            </div>
+            <div class="stream__info">
+                <img src="//tournament.local:3000/agamapro-virtus.pro-ebb4d51390f8/img/games/switchers/sc2.png" alt="" width="19" height="19">
+                <span class="stream__info__user ru">Tamerlan</span>
+            </div>
+        </div>
+        <div class="item__info">
+            <span class="item__info__live"></span>
+            <span class="item__info__likes">345</span>
+        </div>
+    </li>
+    <li class="item">
+        <div class="item__thumb">
+            <img class="thumb" src="//tournament.local:3000/agamapro-virtus.pro-ebb4d51390f8/img/dummy/streams/156x87/3.jpg" alt="" width="156" height="87">
+            <div class="stream__info">
+                <img src="//tournament.local:3000/agamapro-virtus.pro-ebb4d51390f8/img/games/switchers/sc2.png" alt="" width="19" height="19">
+                <span class="stream__info__user ru">Tamerlan</span>
+            </div>
+        </div>
+        <div class="item__info">
+            <span class="item__info__offline"></span>
+            <span class="item__info__likes">345</span>
+        </div>
+    </li>
+</ul>
+
+<div class="b-closingBox">
+    <!-- profileStreams -->
+    <div class="b-profileBlock b-profileStreams">
+        <p class="b-profileBlock__title"><%- @__ 'Video' %> <span class="figure">[ 3 ]</span>
+            <small>Видеозаписи с самыми яркими моментами игр</small>
+        </p>
+
+        <ul class="b-profileStreams__list">
+            <li class="item">
+                <a href="" title="" class="item__thumb"><img src="//tournament.local:3000/agamapro-virtus.pro-ebb4d51390f8/img/dummy/video_thumb.jpg" alt="" width="188" height="126"></a>
+
+                <p class="item__title">Virtus.pro vs. Natus Vincere</p>
+                <span class="item__view">32  |  +88</span>
+            </li>
+            <li class="item">
+                <a href="" title="" class="item__thumb"><img src="//tournament.local:3000/agamapro-virtus.pro-ebb4d51390f8/img/dummy/video_thumb.jpg" alt="" width="188" height="126"></a>
+
+                <p class="item__title">Virtus.pro vs. Natus Vincere</p>
+                <span class="item__view">32  |  +88</span>
+            </li>
+        </ul>
+
+        <div class="more">
+            <a class="more__link" href="" title=""><%- @__ 'More' %></a>
+        </div>
+    </div>
+    <!-- end profileStreams -->
+
+    <!-- profileStreams -->
+    <div class="b-profileBlock b-profileStreams">
+        <p class="b-profileBlock__title"><%- @__ 'Game videos' %> <span class="figure">[ 3 ]</span>
+            <small>Видеозаписи с самыми яркими моментами игр</small>
+        </p>
+
+        <ul class="b-profileStreams__list">
+            <li class="item">
+                <a href="" title="" class="item__thumb"><img src="//tournament.local:3000/agamapro-virtus.pro-ebb4d51390f8/img/dummy/video_thumb.jpg" alt="" width="188" height="126"></a>
+
+                <p class="item__title">Virtus.pro vs. Natus Vincere</p>
+                <span class="item__view">32  |  +88</span>
+            </li>
+            <li class="item">
+                <a href="" title="" class="item__thumb"><img src="//tournament.local:3000/agamapro-virtus.pro-ebb4d51390f8/img/dummy/video_thumb.jpg" alt="" width="188" height="126"></a>
+
+                <p class="item__title">Virtus.pro vs. Natus Vincere</p>
+                <span class="item__view">32  |  +88</span>
+            </li>
+        </ul>
+
+        <div class="more">
+            <a class="more__link" href="" title=""><%- @__ 'More' %></a>
+        </div>
+    </div>
+    <!-- end profileStreams -->
+
+    <div class="b-closingBox">
+
+        <!-- profileGallery -->
+        <div class="b-profileBlock b-profileGallery">
+            <p class="b-profileBlock__title"><%- @__ 'Gallery' %> <span class="figure">[ 2 ]</span>
+            </p>
+
+            <p class="b-profileGallery__title">Virtus.pro vs. Natus Vincere</p>
+
+            <ul class="b-profileGallery__list">
+                <li class="item">
+                    <a href="" title="" class="item__thumb"><img src="//tournament.local:3000/agamapro-virtus.pro-ebb4d51390f8/img/dummy/gallery/1.jpg" alt="" width="96" height="95"></a>
+                </li>
+                <li class="item">
+                    <a href="" title="" class="item__thumb"><img src="//tournament.local:3000/agamapro-virtus.pro-ebb4d51390f8/img/dummy/gallery/2.jpg" alt="" width="96" height="95"></a>
+                </li>
+                <li class="item">
+                    <a href="" title="" class="item__thumb"><img src="//tournament.local:3000/agamapro-virtus.pro-ebb4d51390f8/img/dummy/gallery/3.jpg" alt="" width="96" height="95"></a>
+                </li>
+                <li class="item">
+                    <a href="" title="" class="item__thumb"><img src="//tournament.local:3000/agamapro-virtus.pro-ebb4d51390f8/img/dummy/gallery/4.jpg" alt="" width="96" height="95"></a>
+                    <span class="item__view">32  |  +88</span>
+                </li>
+            </ul>
+
+            <div class="more">
+                <a class="more__link" href="" title=""><%- @__ 'More' %></a>
+            </div>
+        </div>
+        <!-- end profileGallery -->
+
+        <!-- profileNews -->
+        <div class="b-profileBlock b-profileNews b-profileNews_short">
+            <p class="b-profileBlock__title">Новости <span class="figure">[18]</span>
+            </p>
+
+            <ul class="b-profileNews__list">
+                <li class="item">
+                    <img class="item__img" src="//tournament.local:3000/agamapro-virtus.pro-ebb4d51390f8/img/dummy/news/70x70/1.jpg" alt="" width="70" height="70">
+                    <img class="item__game" src="//tournament.local:3000/agamapro-virtus.pro-ebb4d51390f8/img/games/logo/sc2_39x39.png" alt="" width="19" height="19">
+
+                    <div class="item__titleWrapper">
+                        <a class="item__title" href="" title="">Knochen: «Нужно дать CS:GO шанс»</a> <span class="item__date">02.07.12  12:55</span>
+                    </div>
+                    <p>Несмотря на огромное количество фильмов о тех полицейских, история Макса уникальна.</p>
+
+                    <p class="item__bottom">Комментариев: <span class="item__comments">24</span> <span class="item__likes">1458</span>
+                    </p>
+                </li>
+                <li class="item">
+                    <img class="item__img" src="//tournament.local:3000/agamapro-virtus.pro-ebb4d51390f8/img/dummy/news/70x70/2.jpg" alt="" width="70" height="70">
+                    <img class="item__game" src="//tournament.local:3000/agamapro-virtus.pro-ebb4d51390f8/img/games/logo/sc2_39x39.png" alt="" width="19" height="19">
+
+                    <div class="item__titleWrapper">
+                        <a class="item__title" href="" title="">Oskar в ex-BEASTS</a> <span class="item__date">02.07.12  12:55</span>
+                    </div>
+                    <p>Несмотря на огромное количество фильмов о тех полицейских, история Макса уникальна.</p>
+
+                    <p class="item__bottom">Комментариев: <span class="item__comments">24</span> <span class="item__likes">1458</span>
+                    </p>
+                </li>
+            </ul>
+
+            <div class="more">
+                <a href="" class="more__link"><%- @__ 'More' %></a>
+            </div>
+
+        </div>
+        <!-- end profileNews -->
+    </div>
+</div>

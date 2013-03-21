@@ -13,14 +13,14 @@ random = ->
   func.call() if typeof(func) is 'function'
 
 exports.list = (req, res)->
-  setTimeout ->
+#  setTimeout ->
     query = Team.find({})
     query.where('_id').in(req.query?.ids) if req.query?.ids
     if req.query?.name
       reg = new RegExp req.query.name, 'i'
       query.regex 'name', reg
     query.exec (err, docs)-> res.send teams: docs
-  , Math.round(Math.random() * 1000)
+#  , Math.round(Math.random() * 1000)
 
 exports.item = (req, res)->
   Team.where('_id', req.params._id).findOne().exec (err, doc)->

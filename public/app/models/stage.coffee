@@ -26,12 +26,13 @@ define ->
 
     getDescendant: (child, idx)-> child.get('children').objectAt idx if child
 
-    getByPath: (path)->
-      splittedPath = path.split '.'
-      lastChild = @getDescendant @, splittedPath[0]
-      for idx in [1...splittedPath.length]
-        lastChild = @getDescendant lastChild, splittedPath[idx]
-      lastChild
+    getByPath: (path, root = @)->
+      if path
+        splittedPath = path.split '.'
+        lastChild = @getDescendant root, splittedPath[0]
+        for idx in [1...splittedPath.length]
+          lastChild = @getDescendant lastChild, splittedPath[idx]
+        lastChild
 
     selectByPath: (startRoundIndex, startMatchIndex)->
       console.log startRoundIndex, startMatchIndex
@@ -103,26 +104,3 @@ define ->
     ).property()
 
   App.Stage.toString = -> 'Stage'
-
-#0:3
-#1:1
-#2:0
-#
-#
-#
-#0:7
-#1:3
-#2:1
-#3:0
-#
-#0:8
-#1:4
-#2:2
-#3:1
-#4:0
-#
-#0:9
-#1:4
-#2:2
-#3:1
-#4:0

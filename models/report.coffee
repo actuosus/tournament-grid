@@ -12,16 +12,18 @@ ObjectId = Schema.ObjectId
 
 ReportSchema = new Schema
   name: type: String
-  stages: [type: ObjectId, ref: 'Stage']
-
+  description: type: String
+  sponsors: type: String
   place: type: String
   start_date: type: Date
   end_date: type: Date
-  sponsors: type: String
 
+  author: type: ObjectId, ref: 'User'
+
+
+  stages: [type: ObjectId, ref: 'Stage']
   # Тип матча
   match_type: type: String # team, player
-
   # Game type
   discipline: type: String
 

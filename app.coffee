@@ -12,9 +12,13 @@ path = require 'path'
 http = require 'http'
 #spdy = require 'spdy'
 express = require 'express'
+i18n = require 'i18n'
+
 mongoose = require 'mongoose'
 passport = require 'passport'
 BasicStrategy = require('passport-http').BasicStrategy
+
+moment = require 'moment'
 
 models = require './models'
 routes = require './routes'
@@ -53,6 +57,11 @@ processRandom = (req, res, next)->
   else
     next()
 
+i18n.configure
+  locales:['ru', 'en', 'de']
+  defaultLocale: 'en'
+  cookie: 'lang'
+
 
 # HTTP Server setup
 app.configure ->
@@ -65,23 +74,48 @@ app.configure ->
 
   app.use passport.initialize()
 
+  app.use express.compress()
+
+  # Static files serving
+  oneYear = 31557600000
+  app.use express.static path.join(__dirname, 'public'), {maxAge: oneYear}
+
   # Logging
   app.use express.logger 'dev'
 
   app.use express.cookieParser()
 
+  app.use i18n.init
+
+  app.use (req, res, next)->
+    res.locals.language = req.language
+    moment.lang req.language
+    res.locals.__ = res.__ = ->
+      i18n.__.apply req, arguments
+    res.locals.__n = res.__n = ->
+      i18n.__n.apply req, arguments
+    next()
+
   # Post data support
   app.use express.bodyParser()
   app.use express.methodOverride()
 
-  # Static files serving
-  app.use express.static path.join __dirname, 'public'
+  app.use express.favicon()
 
   # Session support
   app.use express.session secret: 'Is it secure?'
 
   app.use cors
+
 #  app.use processRandom
+
+app.locals
+  node_env: process.env.NODE_ENV
+#  staticDomain: '//static.tournament.local:3000'
+  staticDomain: '//tournament.local:3000'
+  moment: moment
+  __: -> i18n.__ arguments
+  languages: ['ru', 'en', 'de']
 
 
 app.get '/api/championships', routes.api.championships.list
@@ -120,7 +154,12 @@ app.get '/api/teams/:_id', routes.api.teams.item
 app.delete '/api/teams/bulk', routes.api.teams.delete
 
 
-app.get '/', passport.authenticate('basic', { session: false }), (req, res)-> res.render 'index.ect'
+app.get '/', passport.authenticate('basic', { session: false }), (req, res)->
+  res.header('cache-control', 'public, max-age=2592000')
+  res.render 'index.ect'
+
+app.get '/reports', routes.reports.list
+app.get '/reports/:_id', routes.reports.item
 
 app.get '*', (req, res)-> res.status 404; res.render '404'
 

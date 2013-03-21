@@ -7,13 +7,14 @@
  */
 
 require({
-  baseUrl: 'app',
+  baseUrl: '/app',
   paths: {
     'jquery': '/vendor/javascripts/jquery',
     'jquery.ui.widget': '/vendor/javascripts/jquery.ui.widget',
     'jquery.fileupload': '/vendor/javascripts/jquery.fileupload',
     'jquery.mousewheel': '/vendor/javascripts/jquery.mousewheel',
     'jquery.isotope': '/vendor/javascripts/jquery.isotope',
+    'jquery.cookie': '/vendor/javascripts/jquery.cookie',
     'moment': '/vendor/javascripts/moment',
     'Faker': '/vendor/javascripts/Faker',
     'raphael': '/vendor/javascripts/raphael',
@@ -49,6 +50,7 @@ require({
   'jquery',
   'jquery.mousewheel',
   'jquery.isotope',
+  'jquery.cookie',
   'transit',
   'moment',
   'spin',

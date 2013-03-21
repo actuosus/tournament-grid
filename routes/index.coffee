@@ -9,4 +9,5 @@
 exports.api = require './api'
 
 exports.games = require './games'
+exports.players = require './players'
 exports.reports = require './reports'

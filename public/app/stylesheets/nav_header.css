@@ -1,0 +1,22 @@
+/**
+ * nav_header
+ * @author: actuosus
+ * Date: 18/03/2013
+ * Time: 23:35
+ */
+
+.nav-header {
+    color: #2a2a2a;
+    font-size: 18px;
+    font-family: 'HelveticaNeue-CondensedBold', 'PT Sans Narrow', 'Helvetica', sans-serif;
+    -webkit-font-smoothing: antialiased;
+
+    padding-top: 20px;
+    border-top: 1px solid #d0d0d0;
+}
+
+.nav-header:first-child {
+    padding-top: 0;
+    border-top: 0;
+}
+

@@ -9,65 +9,27 @@
 @import "menu.css";
 @import "combobox.css";
 @import "../../vendor/styles/bootstrap-tooltip.css";
+@import "block_container.css";
+@import "named_container.css";
 /*@import "test-grid.css";*/
 @import "games_info_bar.css";
-@import "nav_tabs.css";
+/*@import "nav_tabs.css";*/
+/*@import "nav_list.css";*/
+/*@import "navbar.css";*/
 @import "autocomplete_text_field.css";
 @import "team_grid_item.css";
 @import "country_flag_icon.css";
 @import "tournament_grid.css";
+@import "lineup_grid_item.css";
+@import "team_standings_table_item.css";
+@import "team_info_item.css";
+@import "multilingual-field.css";
 
 .icon-remove {
     font-style: normal;
     font-weight: bold;
     font-size: 12px;
     line-height: 17px;
-}
-
-.nav-list > li > a {
-    color: #535353;
-    font-size: 13px;
-    -webkit-trasition-property: color, background-color;
-    -webkit-trasition-duration: 0.3s;
-}
-
-.nav-list > .active > a, .nav-list > .active > a:hover {
-    color: #f25608;
-    background: white;
-    text-shadow: none;
-}
-
-.nav-header {
-    color: #2a2a2a;
-    font-size: 18px;
-    font-family: 'HelveticaNeue-CondensedBold', 'PT Sans Narrow', 'Helvetica', sans-serif;
-    -webkit-font-smoothing: antialiased;
-
-    padding-top: 20px;
-    border-top: 1px solid #d0d0d0;
-}
-
-.nav-header:first-child {
-    padding-top: 0;
-    border-top: 0;
-}
-
-.navbar .nav-lang {
-    font-size: 9px;
-    margin-top: 10px;
-}
-
-.navbar-inverse .nav-lang .active > a,
-.navbar-inverse .nav-lang .active > a:hover,
-.navbar-inverse .nav-lang .active > a:focus {
-    background-color: #f15c14;
-}
-
-.navbar .nav-lang > li > a {
-    text-decoration: underline;
-    padding: 0 3px 0;
-    line-height: 19px;
-    margin-left: 4px;
 }
 
 .block-container {
@@ -189,78 +151,13 @@
     float: right;
 }
 
-.team-info-tooltip {
-    /*width: 125px;*/
-}
-
-.team-info-tooltip-items {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-}
-
-.team-info-item {
-    display: block;
-    height: 20px;
-    text-align: left;
-}
-
-.team-info-item .player-name {
-    margin-left: 2px;
-    -webkit-font-smoothing: antialiased;
-}
-
 .header-item {
     cursor: default;
     -webkit-user-select: none;
 }
 
-.team-standings-table-item .name {
-    border-right: 1px solid #dddddd;
-}
-
-.team-standings-table-item .team-name {
-    width: auto;
-}
-
-.team-standings-table-item .name a {
-    color: #2a2a2a;
-    cursor: pointer;
-    -webkit-transition-property: color, background-color;
-    -webkit-transition-duration: .3s;
-}
-
-.team-standings-table-item .name a:hover {
-    color: #3291dc;
-}
-
 .chooser label {
     font-size: 10px;
-}
-
-.select {
-    border: 1px solid #c3c3c3;
-    border-radius: 2px;
-    min-height: 23px;
-    background-color: white;
-    box-shadow: inset 0px 1px 2px rgba(0, 0, 0, 0.1);
-    position: relative;
-    overflow: hidden;
-}
-
-.select .disclosure-button {
-    width: 18px;
-    min-height: 23px;
-    line-height: 23px;
-    position: absolute;
-    right: -1px;
-    top: -1px;
-    text-align: center;
-    font-size: 10px;
-    color: #575757;
-    border-radius: 0 2px 2px 0;
-    background-image: -webkit-linear-gradient(top, #ededed, #bfbfbf);
-    border: 1px solid #c3c3c3;
 }
 
 .search-btn {
@@ -285,35 +182,6 @@
     -webkit-appearance: none;
     border: 0;
     background: none;
-}
-
-.lineup-grid-item {
-    float: left;
-    width: 268px;
-    height: 160px;
-    margin: 10px;
-}
-
-.lineup-grid-item td {
-    background-color: white;
-}
-
-.lineup-grid-item .is-error td {
-    background-color: #ffc392;
-}
-
-.lineup-grid-item .remove-btn {
-    float: right;
-}
-
-.lineup-grid-item-name {
-    font-weight: bold;
-    font-size: 13px;
-    color: #000000;
-}
-
-.lineup-grid-item .realname {
-    color: #979797;
 }
 
 .b-profileBlock__title {
@@ -372,21 +240,6 @@
 
 .grid .team-grid-item:first-child {
     border-top: 1px solid #828282;
-}
-
-.block-container {
-    position: relative;
-}
-
-.block-container .b-profileBlock__title {
-    margin: 16px;
-}
-
-.block-container .grid,
-.block-container .match-grid {
-    margin-left: 16px;
-    margin-right: 16px;
-    margin-bottom: 16px;
 }
 
 .b-profileBlock__toggle-button {

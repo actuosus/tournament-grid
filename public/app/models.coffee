@@ -9,6 +9,7 @@
 require [
   'cs!core'
 
+  'cs!models/bracket'
   'cs!models/championship'
   'cs!models/country'
   'cs!models/game'

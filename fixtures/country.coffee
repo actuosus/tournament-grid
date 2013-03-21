@@ -11,6 +11,11 @@ module.exports.Country = [
   "name": "Южная Осетия",
   "englishName": "South Ossetia",
   "germanName": "",
+  "_name": {
+    "ru": "Южная Осетия",
+    "en": "South Ossetia",
+    "de": "",
+  }
   "code": "",
   "_id": "514569cef9bbb58f310000b4"
   },
@@ -18,6 +23,11 @@ module.exports.Country = [
   "name": "Андорра",
   "englishName": "Andorra",
   "germanName": "",
+  "_name": {
+    "ru": "Андорра",
+    "en": "Andorra",
+    "de": "Andorra",
+  }
   "_id": "514569cef9bbb58f3100001c",
   "code": "ad"
   },
@@ -1019,6 +1029,11 @@ module.exports.Country = [
   "name": "Россия",
   "englishName": "Russia",
   "germanName": "",
+  "_name": {
+    "ru": "Россия",
+    "en": "Russia",
+    "de": "Russland",
+  }
   "code": "ru"
   },
   {

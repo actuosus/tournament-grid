@@ -1,0 +1,24 @@
+/**
+ * navbar
+ * @author: actuosus
+ * Date: 18/03/2013
+ * Time: 23:35
+ */
+
+.navbar .nav-lang {
+    font-size: 9px;
+    margin-top: 10px;
+}
+
+.navbar-inverse .nav-lang .active > a,
+.navbar-inverse .nav-lang .active > a:hover,
+.navbar-inverse .nav-lang .active > a:focus {
+    background-color: #f15c14;
+}
+
+.navbar .nav-lang > li > a {
+    text-decoration: underline;
+    padding: 0 3px 0;
+    line-height: 19px;
+    margin-left: 4px;
+}

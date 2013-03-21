@@ -7,7 +7,13 @@
 
 Report = require('../models').Report
 
+exports.list = (req, res)->
+  Report.find({}).sort('name').exec (err, docs)->
+    res.render 'reports/list.ect', title: 'Reports', docs: docs
+
 exports.item = (req, res)->
-  Report.findById(req.params.id)
-    .exec (err, doc)->
-      res.render 'report/item', title: 'Report', item: doc
+  Report.findById(req.params._id)
+  .populate('author')
+  .exec (err, doc)->
+    console.log doc
+    res.render 'reports/item.ect', title: 'Report', doc: doc

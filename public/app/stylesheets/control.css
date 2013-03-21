@@ -20,3 +20,13 @@
 .control-row .btn {
     margin-right: 11px;
 }
+
+.form-vertical label {
+    display: block;
+    color: gray;
+    margin: 0 0 6px;
+}
+
+.control-row textarea {
+    margin-bottom: 5px;
+}

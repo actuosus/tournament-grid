@@ -6,6 +6,6 @@
 ###
 
 define ->
-  App.BinaryTree =
+  App.BinaryTree = Ember.Mixin.create
     left: ->
     right: ->

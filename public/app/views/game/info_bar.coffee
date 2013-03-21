@@ -13,7 +13,7 @@ define ['cs!views/game/form'], ->
     showInfoLabel: no
     template: Em.Handlebars.compile """
       {{#if view.showInfoLabel}}
-      <li class="games-info-bar-label">Инфо</li>
+      <li class="games-info-bar-label">{{loc '_info'}}</li>
       {{/if}}
       {{#each view.content}}
       <li><a {{bindAttr href="link" title="name"}}>{{view.contentIndex}}</a></li>

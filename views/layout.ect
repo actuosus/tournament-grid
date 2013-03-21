@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8"/>
+    <title>Virtus.Pro Report Test</title>
+
+    <meta name="Author" content="actuosus"/>
+    <meta name="Date" content="21/01/2013"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Virtus.Pro Report Visualization Test Project">
+    <meta name="author" content="Arthur Chafonov <actuosus@gmail.com>">
+
+    <meta property="og:title" content="Virtus.Pro Report"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:url" content="http://virtus-pro.herokuapp.com/"/>
+    <meta property="og:site_name" content="Virtus.Pro Report"/>
+    <meta property="fb:admins" content="USER_ID"/>
+    <meta property="og:description" content="Virtus.Pro Report Visualization Test Project"/>
+
+    <link rel="stylesheet" href="<%- @staticDomain %>/agamapro-virtus.pro-ebb4d51390f8/css/style.css" media="screen,projection"/>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700,300italic|Open+Sans:400,700,400italic,700italic&subset=latin,cyrillic'
+          rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" href="<%- @staticDomain %>/agamapro-virtus.pro-ebb4d51390f8/css/style.css" media="screen,projection" />
+
+
+    <% if @node_env is 'production': %>
+    <link rel="stylesheet" href="<%- @staticDomain %>/bundle/stylesheets/app.css" />
+    <% else: %>
+    <link rel="stylesheet" href="/app/stylesheets/main.css" />
+    <% end %>
+    <link rel="icon" type="image/x-icon" href="<%- @staticDomain %>/favicon.ico" />
+
+    <!-- Not working with require.js https://github.com/DmitryBaranovskiy/raphael/issues/524 -->
+    <!--<script type="text/javascript" src="/vendor/javascripts/raphael.js"></script>-->
+    <!--<script type="text/javascript" src="/vendor/javascripts/spin.js"></script>-->
+    <script type="text/javascript" src="/vendor/javascripts/require.js"></script>
+    <% if @node_env is 'production': %>
+    <script type="text/javascript" src="<%- @staticDomain %>/bundle/app.js"></script>
+    <% else: %>
+    <script type="text/javascript" src="/app/main.js"></script>
+    <% end %>
+
+    <link rel="shortcut icon" href="<%- @staticDomain %>/images/favicon.ico">
+    <link rel="apple-touch-icon" href="<%- @staticDomain %>/images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="<%- @staticDomain %>/images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="<%- @staticDomain %>/images/apple-touch-icon-114x114.png">
+
+    <!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="css/ie.css" media="screen,projection"/><![endif]-->
+    <!--[if lte IE 8]>
+    <link rel="stylesheet" href="css/ie8.css" media="screen,projection"/><![endif]-->
+    <!--[if lte IE 7]>
+    <link rel="stylesheet" href="css/ie7.css" media="screen,projection"/><![endif]-->
+    <!-- <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" /> -->
+</head>
+<body>
+<!-- header -->
+<header class="i-header">
+    <div class="b-header cf">
+        <form class="b-header__search">
+            <input type="text" placeholder="<%- @__ 'Site search' %>" title="<%- @__ 'Site search' %>" class="searchField">
+            <button type="submit" class="submit"></button>
+        </form>
+        <div class="b-header__right">
+
+            <span class="username">FankySoul</span>
+            <img class="userAvatar" src="<%- @staticDomain %>/agamapro-virtus.pro-ebb4d51390f8/img/dummy/avatar_23x23.jpg" alt="">
+            <a class="personal" href="" title=""><%- @__ 'My account' %></a> |
+            <a class="quit" href="" title=""><%- @__ 'Logout' %></a>
+
+            <% for language in @languages : %>
+                <%if @language is language : %>
+                    <a class="lang active" href="" hreflang="<%- language %>" title=""><%- language %></a>
+                <% else : %>
+                    <a class="lang" href="" hreflang="<%- language %>" title=""><%- language %></a>
+                <% end %>
+            <% end %>
+            <!--<a class="lang lang_first active" href="" title="">RU</a>-->
+            <!--<a class="lang" href="" title="">EN</a>-->
+            <!--<a class="lang" href="" title="">DE</a>-->
+        </div>
+    </div>
+</header>
+<!-- end header -->
+
+<!-- wrapper -->
+<div class="i-wrapper cf">
+
+<a class="b-logo" href="/" title=""></a>
+
+<!-- nav -->
+<nav>
+    <ul class="b-nav">
+        <li class="b-nav__item"><a href="" title="" class="link active"><%- @__ 'Team' %></a></li>
+        <li class="b-nav__item"><a href="" title="" class="link"><%- @__ 'Matches' %></a></li>
+        <li class="b-nav__item"><a href="" title="" class="link"><%- @__ 'About' %></a></li>
+        <li class="b-nav__item"><a href="" title="" class="link"><%- @__ 'Partners' %></a></li>
+        <li class="b-nav__item benq"><a href="" title="" class="link"></a></li>
+    </ul>
+</nav>
+<!-- end nav -->
+
+<!-- slider -->
+<div class="i-slider">
+    <span class="leftArrow"></span>
+    <span class="rightArrow"></span>
+
+    <div class="boundingBox">
+        <ul class="b-slider">
+            <li class="item">
+                <a href="" title="" class="item__link">
+                    <img src="<%- @staticDomain %>/agamapro-virtus.pro-ebb4d51390f8/img/dummy/slider/1.jpg" alt="" width="370" height="164">
+                            <span class="item__info">
+                                Триумф игроков RO X.KIS на
+                                финалах ZOTAC поверг всех в шок!
+                            </span>
+                </a>
+            </li>
+            <li class="item">
+                <a href="" title="" class="item__link">
+                    <img src="<%- @staticDomain %>/agamapro-virtus.pro-ebb4d51390f8/img/dummy/slider/2.jpg" alt="" width="370" height="164">
+                            <span class="item__info">
+                                Победа VirtusPro на WCG’12 в 2012 номинации CS:GO
+                            </span>
+                </a>
+            </li>
+            <li class="item">
+                <a href="" title="" class="item__link">
+                    <img src="<%- @staticDomain %>/agamapro-virtus.pro-ebb4d51390f8/img/dummy/slider/3.jpg" alt="" width="370" height="164">
+                            <span class="item__info">
+                                Мировая победа VirtusPro на WCG’12 в номинации CS:GO
+                            </span>
+                </a>
+            </li>
+            <li class="item">
+                <a href="" title="" class="item__link">
+                    <img src="<%- @staticDomain %>/agamapro-virtus.pro-ebb4d51390f8/img/dummy/slider/1.jpg" alt="" width="370" height="164">
+                            <span class="item__info">
+                                Триумф игроков RO X.KIS на
+                                финалах ZOTAC поверг всех в шок!
+                            </span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+<!-- end slider -->
+
+<!-- stream -->
+<div class="i-stream">
+    <span class="i-stream__open"></span>
+
+    <div class="b-stream"></div>
+</div>
+<!-- end stream -->
+
+
+<!-- container -->
+<div class="i-container cf">
+
+<div class="b-breadcrumbs">
+    <a href="" title=""><%- @__ 'Main page' %></a> <span class="divider">»</span>
+    <a href="" title=""><%- @__ 'News' %></a>  <span class="divider">»</span>
+    Команда VirtusPro побеждают на WCG’12 DOTA2
+</div>
+
+<!-- aside 1 -->
+<aside class="b-aside1">
+
+    <div class="b-aside__block">
+        <p class="b-aside__title open"><%- @__ 'Content' %></p>
+
+        <ul class="b-aside__nav">
+            <li class="b-aside__nav__item">
+                <a href="" title="" class="link"><%- @__ 'News' %></a>
+            </li>
+            <li class="b-aside__nav__item">
+                <a href="" title="" class="link"><%- @__ 'Video' %></a>
+            </li>
+            <li class="b-aside__nav__item">
+                <a href="" title="" class="link active"><%- @__ 'Reports' %></a>
+                <ul class="b-aside__nav2">
+                    <li class="b-aside__nav2__item">
+                        <a href="" title="" class="link live">Star Craft</a>
+                    </li>
+                    <li class="b-aside__nav2__item">
+                        <a href="" title="" class="link live active">Counter Strike</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="b-aside__nav__item">
+                <a href="" title="" class="link"><%- @__ 'Downloads' %></a>
+            </li>
+            <li class="b-aside__nav__item">
+                <a href="" title="" class="link"><%- @__ 'Photo' %></a>
+            </li>
+            <li class="b-aside__nav__item">
+                <a href="" title="" class="link"><%- @__ 'VP Column' %></a>
+            </li>
+        </ul>
+
+        <p class="b-aside__title open"><%- @__ 'Participate' %></p>
+
+        <ul class="b-aside__nav">
+            <li class="b-aside__nav__item">
+                <a href="" title="" class="link"><%- @__ 'Blogosphere' %></a>
+            </li>
+            <li class="b-aside__nav__item">
+                <a href="" title="" class="link"><%- @__ 'Tournaments' %></a>
+            </li>
+            <li class="b-aside__nav__item">
+                <a href="" title="" class="link"><%- @__ 'Forum' %></a>
+            </li>
+            <li class="b-aside__nav__item">
+                <a href="" title="" class="link"><%- @__ 'Team search' %></a>
+            </li>
+            <li class="b-aside__nav__item">
+                <a href="" title="" class="link"><%- @__ 'Community' %></a>
+            </li>
+            <li class="b-aside__nav__item">
+                <a href="" title="" class="link"><%- @__ 'Contests' %></a>
+            </li>
+        </ul>
+
+        <p class="b-aside__title open"><%- @__ 'Training' %></p>
+
+        <ul class="b-aside__nav">
+            <li class="b-aside__nav__item">
+                <a href="" title="" class="link">Сounter Strike</a>
+            </li>
+            <li class="b-aside__nav__item">
+                <a href="" title="" class="link">Starcraft</a>
+            </li>
+            <li class="b-aside__nav__item">
+                <a href="" title="" class="link">World of Tanks</a>
+            </li>
+            <li class="b-aside__nav__item">
+                <a href="" title="" class="link">Dota 2</a>
+            </li>
+            <li class="b-aside__nav__item">
+                <a href="" title="" class="link">Counter Strike: GO</a>
+            </li>
+        </ul>
+
+        <p class="b-aside__title open"><%- @__ 'Database' %></p>
+
+        <ul class="b-aside__nav nobd">
+            <li class="b-aside__nav__item">
+                <a href="" title="" class="link"><%- @__ 'Players' %></a>
+            </li>
+            <li class="b-aside__nav__item">
+                <a href="" title="" class="link"><%- @__ 'Teams' %></a>
+            </li>
+            <li class="b-aside__nav__item">
+                <a href="" title="" class="link"><%- @__ 'Tournaments' %></a>
+            </li>
+            <li class="b-aside__nav__item">
+                <a href="" title="" class="link"><%- @__ 'Matches' %></a>
+            </li>
+        </ul>
+
+    </div>
+
+    <div class="b-aside__block">
+        <p class="b-aside__title open">Virtus.TV</p>
+
+        <ul class="b-aside__nav nobd">
+            <li class="b-aside__nav__item">
+                <a href="" title="" class="link">All Streams</a>
+            </li>
+            <li class="b-aside__nav__item">
+                <a href="" title="" class="link">Записи трансляций</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="b-aside__social">
+        <a target="_blank" href="http://www.facebook.com/pages/VirtusPro/113348038744614" class="fb"></a>
+        <a target="_blank" href="http://twitter.com/TeamVirtusPRO" class="tw"></a>
+        <a target="_blank" href="http://www.youtube.com/user/TeamVirtusPro" class="youtube"></a>
+        <a target="_blank" href="http://vk.com/Virtus.Pro_fanclub" class="vk"></a>
+        <a target="_blank" href="http://steamcommunity.com/groups/virtusprofessional" class="steam"></a>
+
+        <span class="fakeLine"></span>
+    </div>
+
+    <form class="b-aside__block b-formVoting">
+        <p class="b-aside__title"><%- @__ 'Voting' %></p>
+        <p class="question">Как вам нравится редизайн
+            нашего сайта?</p>
+
+        <label><input type="radio" name="vote">Не айс</label>
+        <label><input type="radio" name="vote">Не плохо</label>
+        <label><input type="radio" name="vote">Вполне себе ничего</label>
+        <label><input type="radio" name="vote">Мне нравится</label>
+        <label class="checked"><input type="radio" name="vote" checked="checked">Отличный получился</label>
+
+        <button class="submit" type="submit"></button>
+        <a class="allVotes" href="" title=""><%- @__ 'Results' %></a>
+    </form>
+
+</aside>
+<!-- end aside 1 -->
+
+<!-- content -->
+<div class="b-content b-content_aside1">
+    <% content %>
+</div>
+<!-- end content -->
+</div>
+<!-- end container -->
+
+</div>
+<!-- end wrapper -->
+
+
+<!-- footer -->
+<footer class="b-footer">
+
+    <div class="b-footer__social">
+        © 2010-2013 <b>VIRTUS.PRO</b>
+        <br>
+        <a target="_blank" href="http://vk.com/virtus.pro_fanclub" class="vk"></a><a target="_blank" href="http://facebook.com/pages/VirtusPro/113348038744614" class="fb"></a><a target="_blank" href="http://twitter.com/TeamVirtusPRO" class="tw"></a>
+    </div>
+
+    <div class="b-footer__copyright">
+        При копировании материалов активная
+        ссылка на сайт обязательна.
+    </div>
+
+    <nav class="b-footer__nav">
+        <a href="" title=""><%- @__ 'team' %></a>
+        <a href="" title=""><%- @__ 'matches' %></a>
+        <a href="" title=""><%- @__ 'about' %></a>
+        <a href="" title=""><%- @__ 'partners' %></a>
+    </nav>
+</footer>
+<!-- end footer -->
+
+<script src="<%- @staticDomain %>/agamapro-virtus.pro-ebb4d51390f8/js/modernizr.js"></script>
+<script>
+    Modernizr.load([
+//            {
+//                //load: 'https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js',
+//                load: 'http://yandex.st/jquery/1.8.2/jquery.min.js',
+//                complete: function () {
+//                    if (!window.jQuery) {
+//                        Modernizr.load('js/jquery-1.8.2.min.js');
+//                    }
+//                }
+//            },
+        {
+            load: '<%- @staticDomain %>/agamapro-virtus.pro-ebb4d51390f8/js/scripts.js'
+        }
+    ]);
+</script>
+</body>
+</html>

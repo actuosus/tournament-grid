@@ -10,6 +10,10 @@ jQuery(function($) {
 //		});
 //	}
 
+  $('.b-header__right .lang').click(function(){
+    document.cookie = 'lang='+$(this).attr('hreflang')
+  });
+
 
 	/**
 	 * Placeholder support for old brawsers

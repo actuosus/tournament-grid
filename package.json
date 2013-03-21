@@ -31,7 +31,9 @@
     "mongoose": "latest",
     "spdy": "latest",
     "passport": "latest",
-    "passport-http": "latest"
+    "passport-http": "latest",
+    "moment": "latest",
+    "i18n": "latest"
   },
   "devDependencies": {
     "async": "latest",
@@ -40,13 +42,15 @@
     "superagent": "latest",
     "mocha": "latest",
     "should": "latest",
-
     "grunt": "latest",
     "grunt-contrib-requirejs": "latest",
     "grunt-contrib-coffee": "latest",
     "grunt-contrib-clean": "latest",
     "grunt-contrib-copy": "latest",
-    "grunt-coffeelint": "latest"
+    "grunt-coffeelint": "latest",
+    "grunt-contrib-cssmin": "~0.5.0",
+    "grunt-recess": "~0.3.1",
+    "grunt-exec": "~0.4.0"
   },
   "engines": {
     "node": "0.8.x",

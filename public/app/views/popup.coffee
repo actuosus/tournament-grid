@@ -10,9 +10,9 @@ define ->
   App.PopupView = Em.ContainerView.extend
     classNames: ['popup']
 
-    target: null,
+    target: null
 
-    childViews: ['arrowBorderView', 'arrowView'],
+    childViews: ['arrowBorderView', 'arrowView']
 
     arrowView: Em.View.extend
       classNames: ['popup-arrow']

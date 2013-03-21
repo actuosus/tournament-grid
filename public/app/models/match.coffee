@@ -33,7 +33,11 @@ define ->
     status: DS.attr 'string'
 
     entrants: (->
-      [@get('entrant1'), @get('entrant2')]
+      isWinner = @get 'isWinner'
+      if isWinner
+        [@get('entrant1')]
+      else
+        [@get('entrant1'), @get('entrant2')]
     ).property().volatile()
 
     entrant1: DS.belongsTo 'App.Team'
@@ -59,11 +63,46 @@ define ->
       @set 'entrants', [@get('entrant1'), @get('entrant2')]
     ).observes 'entrant2'
 
+    resolveBrackets: ->
+      matchIndex = @get 'itemIndex'
+      stage = @get('round.stage')
+      if stage
+        roundIndex = @get 'round.itemIndex'
+        brakets = stage.get 'brackets'
+
+        loserBracket = brakets.findProperty('name', 'Losers')
+
+        unless loserBracket
+          loserBracket = brakets.createRecord
+            itemIndex: 1
+            name: 'Losers'
+
+        rounds = loserBracket.get 'rounds'
+
+        round = rounds.findProperty('itemIndex', roundIndex + 1)
+
+        unless round
+          round = rounds.createRecord
+            itemIndex: roundIndex
+
+        matches = round.get('matches')
+        loser = @get 'loser'
+        if loser
+          if roundIndex is stage.get('rounds.length')-1
+            itemIndex = Math.floor(matchIndex/2)
+          else
+            itemIndex = matchIndex
+          match = matches.findProperty('itemIndex', itemIndex)
+          unless match
+            data = {itemIndex: itemIndex, isLocked: yes}
+            data["entrant#{Math.floor(matchIndex%2)+1}"] = loser
+            match = matches.createRecord data
+          else
+            match.get('entrants').replace Math.floor(matchIndex%2), 1, [loser]
+            match.set "entrant#{Math.floor(matchIndex%2)+1}", loser
+
     winnerChanged: (->
 #      console.debug 'winnerChanged'
-      stage = @get('round.stage')
-#      console.debug stage
-      console.debug @get 'itemIndex'
       nextMatch = @get 'parentNode'
       winner = @get 'winner'
       matchIndex = @get 'itemIndex'
@@ -76,6 +115,7 @@ define ->
           nextMatch.set "entrant#{matchIndex%2+1}", null
 
 #      stage.checkRounds('winners') if stage
+#      @resolveBrackets()
     ).observes('winner')
 
     loser: (->
@@ -106,19 +146,19 @@ define ->
     children: (-> @get 'entrants').property('entrants')
 
     parentNode: (->
-      stage = @get 'round.stage'
-      stage.getByPath(@get 'parentNodePath') if stage
+      parent = @get 'round.parent'
+      parent.getByPath(@get 'parentNodePath') if parent
     ).property('parentNodePath')
     childNodes: null
 
     left: (->
-      stage = @get 'round.stage'
-      stage.getByPath(@get 'leftPath') if stage
+      parent = @get 'round.parent'
+      parent.getByPath(@get 'leftPath') if parent
     ).property('leftPath')
 
     right: (->
-      stage = @get 'round.stage'
-      stage.getByPath(@get 'rightPath') if stage
+      parent = @get 'round.parent'
+      parent.getByPath(@get 'rightPath') if parent
     ).property('rightPath')
 
 #    future #default

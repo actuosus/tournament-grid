@@ -23,6 +23,22 @@ define [
     _info: 'Info'
     _tournament_results_table: 'Tournament results table'
     _add_entrant: 'Add entrant'
+    _winners: 'Winners'
+    _losers: 'Losers'
+    _name: 'Name'
+    _title: 'Title'
+    _description: 'Description'
+    _type: 'Type'
+    _entrants_number: 'Entrants number'
+    _grid: 'Grid'
+    _group: 'Group'
+    _matrix: 'Matrix'
+    _team: 'Team'
+    _team_name: 'Team name'
+    _matches: 'Matches'
+    _create: 'Create'
+    _cancel: 'Cancel'
+    _save: 'Save'
 
   ru_RU =
     _reset: 'Сброс'
@@ -36,6 +52,22 @@ define [
     _info: 'Инфо'
     _tournament_results_table: 'Таблица результатов турнира'
     _add_entrant: 'Добавить участника'
+    _winners: 'Победители'
+    _losers: 'Проигравшие'
+    _name: 'Имя'
+    _title: 'Название'
+    _description: 'Описание'
+    _type: 'Тип'
+    _entrants_number: 'Количество участников'
+    _grid: 'Сетка'
+    _group: 'Групповой'
+    _matrix: 'Матрица'
+    _team: 'Команда'
+    _team_name: 'Название команды'
+    _matches: 'Матчи'
+    _create: 'Создать'
+    _cancel: 'Отмена'
+    _save: 'Сохранить'
 
   de_DE =
     _reset: 'Rücksetzen'
@@ -49,19 +81,58 @@ define [
     _info: 'Info'
     _tournament_results_table: 'Ergebnisse Table Tournament'
     _add_entrant: 'Fügen Teilnehmer'
+    _winners: 'Gewinner'
+    _losers: 'Verlierer'
+    _name: 'Name'
+    _title: 'Benennung'
+    _description: 'Beschreibung'
+    _type: 'Typ'
+    _entrants_number: 'Anzahl der Teilnehmer'
+    _grid: 'Netz'
+    _group: 'Gruppe'
+    _matrix: 'Matrix'
+    _team: 'Team'
+    _team_name: 'Team Name'
+    _matches: 'Streichhölzer'
+    _create: 'Schaffen'
+    _cancel: 'Beenden'
+    _save: 'Speichern'
 
-  localize = ->
-    switch window.navigator.userLanguage or window.navigator.language
-      when 'en-US'
-        Em.STRINGS = en_US
-      when 'ru-RU'
-        Em.STRINGS = ru_RU
-      when 'de-DE'
-        Em.STRINGS = de_DE
-      else
-        Em.STRINGS = en_US
+  localize = (lang)->
+    if lang
+      switch lang
+        when 'en'
+          Em.STRINGS = en_US
+        when 'ru'
+          Em.STRINGS = ru_RU
+        when 'de'
+          Em.STRINGS = de_DE
+        else
+          Em.STRINGS = en_US
+    else
+      switch window.navigator.userLanguage or window.navigator.language
+        when 'en-US'
+          Em.STRINGS = en_US
+        when 'ru-RU'
+          Em.STRINGS = ru_RU
+        when 'de-DE'
+          Em.STRINGS = de_DE
+        else
+          Em.STRINGS = en_US
 
-  localize()
+  lang = $.cookie 'lang'
+  localize(lang)
+
+  Em.Handlebars.registerHelper 'loc', (property, fn)->
+    if fn.contexts and typeof fn.contexts[0] is 'string'
+      str = fn.contexts[0]
+    else if property[0] is '_'
+      str = property
+    else if /[A-Z]/.test property[0]
+      str = Em.getPath window, property
+    else
+      str = this.getPath property
+    new Handlebars.SafeString (str || '').loc('')
 
   Ember.Handlebars.registerBoundHelper 'moment', (value, options)->
     new Handlebars.SafeString(moment(value).format(options.hash.format))
@@ -73,7 +144,7 @@ define [
       split = value.split(re)
 
       if part and split.length > 1
-        console.log split[0].length, part.length
+#        console.log split[0].length, part.length
         originalPart = value.substring split[0].length, split[0].length + part.length
         value = [
           split[0]
@@ -94,6 +165,7 @@ define [
     autoinit: false
     customEvents:
       mousewheel: 'mouseWheel'
+    currentLanguage: lang
 #  App.deferReadiness()
   window.TournamentGrid = TournamentGrid
   window.App = App

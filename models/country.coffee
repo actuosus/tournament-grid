@@ -17,5 +17,10 @@ CountrySchema = new Schema
   englishName: type: String
   germanName: type: String
   code: type: String
+  _name: {
+    ru: type: String
+    en: type: String
+    de: type: String
+  }
 
 module.exports = CountrySchema

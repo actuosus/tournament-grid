@@ -1,20 +1,25 @@
+
 <div class="control-row">
-    <input type="text" name="name" class="name" placeholder="Name" {{bindAttr value="view.name"}}/>
+    <label for="name">{{loc '_title'}}:</label>
+    {{view App.MultilingualTextField name="name" classNames="name" valueBinding="view.name" languagesBinding="App.languages" selectedLanguage=App.currentLanguage}}
 </div>
 
 <div class="control-row">
-    <textarea name="description" class="description" placeholder="Description" {{bindAttr value="view.description"}}></textarea>
+    <label for="name">{{loc '_description'}}:</label>
+    {{view App.MultilingualTextArea name="description" classNames="description" cols="90" valueBinding="view.description" languagesBinding="App.languages" selectedLanguage=App.currentLanguage}}
 </div>
 
 <div class="control-row">
-    {{view App.SelectView contentBinding="App.stageVisualTypes"}}
+    <label for="name">{{loc '_type'}}:</label>
+    {{view App.SelectView contentBinding="App.visualTypes" valueBinding="view.visualType"}}
 </div>
 
 <div class="control-row">
+    <label for="entrants-number">{{loc '_entrants_number'}}:</label>
     <input type="text" name="entrants-number" class="entrants-number" placeholder="Entrants number"/>
 </div>
 
 <div class="control-row">
-    <button class="btn btn-primary save-btn">Create</button>
-    <button class="btn cancel-btn">Cancel</button>
+    <button class="btn btn-primary save-btn">{{loc '_create'}}</button>
+    <button class="btn cancel-btn">{{loc '_cancel'}}</button>
 </div>

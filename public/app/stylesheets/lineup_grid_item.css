@@ -1,0 +1,35 @@
+/**
+ * lineup_grid_item
+ * @author: actuosus
+ * Date: 18/03/2013
+ * Time: 23:36
+ */
+
+.lineup-grid-item {
+    float: left;
+    width: 268px;
+    height: 160px;
+    margin: 10px;
+}
+
+.lineup-grid-item td {
+    background-color: white;
+}
+
+.lineup-grid-item .is-error td {
+    background-color: #ffc392;
+}
+
+.lineup-grid-item .remove-btn {
+    float: right;
+}
+
+.lineup-grid-item-name {
+    font-weight: bold;
+    font-size: 13px;
+    color: #000000;
+}
+
+.lineup-grid-item .realname {
+    color: #979797;
+}

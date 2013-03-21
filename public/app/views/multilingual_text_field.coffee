@@ -1,0 +1,21 @@
+###
+ * multilingual_text_field
+ * @author: actuosus
+ * Date: 20/03/2013
+ * Time: 20:43
+###
+
+define ['cs!views/multilingual_field'], ->
+  App.MultilingualTextField = App.MultilingualField.extend
+    classNames: ['multilingual-text-field']
+
+    textFieldView: Em.TextField.extend
+      classNames: ['text-field']
+      nameBinding: 'parentView.name'
+      placeholderBinding: 'parentView.placeholder'
+      valueBinding: 'parentView.value'
+      valueChanged: (->
+        value = @get 'value'
+        @$().val value
+        @$().focus()
+      ).observes('value')

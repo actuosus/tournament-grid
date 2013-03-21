@@ -9,16 +9,16 @@
 <form class="selector row b-filter" xmlns="http://www.w3.org/1999/html">
     <div class="cf">
         <div class="span1">
-            <label>Матчи</label>
+            <label>{{loc '_matches'}}</label>
         </div>
         <div class="columnLeft">
 
             <label>
-                <span>Тип:</span>
+                <span>{{loc '_type'}}:</span>
                 {{view App.SelectView contentBinding=App.matchTypes promt="Все"}}
             </label>
             <label>
-                <span>Команда:</span>
+                <span>{{loc '_team'}}:</span>
                 {{view App.SelectView contentBinding=App.teamsController promt="Все"}}
             </label>
             <label>
