@@ -10,6 +10,8 @@ define ['cs!views/combobox'], ->
     classNames: ['country-select']
     currentValueView: Em.View.extend
       classNames: ['current-value']
+      contentBinding: 'parentView.autocompleteTextFieldView.selection'
+      contentChanged: (-> console.log @get 'content').observes('content')
       template: Em.Handlebars.compile(
         '<i {{bindAttr class=":country-flag-icon view.content.flagClassName"}}></i>'+
         '{{view.parentView.currentLabel}}')

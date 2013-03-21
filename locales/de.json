@@ -39,11 +39,17 @@
 	"General information": "Allgemeine Informationen",
 	"Scheme": "Scheme",
 	"VP Column": "VP Column",
-	"Participate": "Participate",
+	"Participate": "Teilnehmen",
 	"Blogosphere": "Blogosphere",
 	"Forum": "Forum",
-	"Team search": "Team search",
-	"Community": "Community",
-	"Contests": "Contests",
-	"Training": "Training"
+	"Team search": "Teamsuche",
+	"Community": "Gemeinde",
+	"Contests": "Gewinnspiele",
+	"Training": "Ausbildung",
+	"How do you like the redesign of our website?": "Wie gefällt Ihnen die Neugestaltung unserer Website?",
+	"Progress reporting": "Fortschrittsberichte",
+	"The prize fund": "Der Preisfonds",
+	"The total prize fund": "Der gesamte Preisfonds",
+	"Broadcast recordings": "Aufnahme von Sendungen",
+	"All Streams": "Alle Ströme"
 }

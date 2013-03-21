@@ -14,6 +14,7 @@ define [
   'cs!views/autocomplete_text_field'
   'cs!views/multilingual_text_field'
   'cs!views/multilingual_text_area'
+  'cs!views/multilingual_editable_label'
   'cs!views/date_field'
   'cs!views/country_select'
   'cs!views/named_container'

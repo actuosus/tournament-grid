@@ -13,6 +13,9 @@ define ->
     click: ->
       @$().attr 'contentEditable', ''
 
-    blur: ->
+    focusOut: ->
       @set 'value', @$().text()
       @$().removeAttr 'contentEditable'
+
+#    keyUp: ->
+#      @set 'value', @$().text()

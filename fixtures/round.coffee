@@ -28,6 +28,7 @@ module.exports.Round = [
 ,
   _id: '5114472b6da8bd2910000002'
   name: 'Группа A'
+  matches: ['51142bdc323f4b360c000007', '51142bdc323f4b360c000008']
 ,
   _id: '5114472b6da8bd2910000003'
   name: 'Группа B'

@@ -69,7 +69,7 @@
             <span class="username">FankySoul</span>
             <img class="userAvatar" src="<%- @staticDomain %>/agamapro-virtus.pro-ebb4d51390f8/img/dummy/avatar_23x23.jpg" alt="">
             <a class="personal" href="" title=""><%- @__ 'My account' %></a> |
-            <a class="quit" href="" title=""><%- @__ 'Logout' %></a>
+            <a class="quit" href="/logout" title=""><%- @__ 'Logout' %></a>
 
             <% for language in @languages : %>
                 <%if @language is language : %>
@@ -181,7 +181,7 @@
                 <a href="" title="" class="link"><%- @__ 'Video' %></a>
             </li>
             <li class="b-aside__nav__item">
-                <a href="" title="" class="link active"><%- @__ 'Reports' %></a>
+                <a href="/reports" title="" class="link active"><%- @__ 'Reports' %></a>
                 <ul class="b-aside__nav2">
                     <li class="b-aside__nav2__item">
                         <a href="" title="" class="link live">Star Craft</a>
@@ -269,10 +269,10 @@
 
         <ul class="b-aside__nav nobd">
             <li class="b-aside__nav__item">
-                <a href="" title="" class="link">All Streams</a>
+                <a href="" title="" class="link"><%- @__ 'All Streams' %></a>
             </li>
             <li class="b-aside__nav__item">
-                <a href="" title="" class="link">Записи трансляций</a>
+                <a href="" title="" class="link"><%- @__ 'Broadcast recordings' %></a>
             </li>
         </ul>
     </div>
@@ -289,8 +289,7 @@
 
     <form class="b-aside__block b-formVoting">
         <p class="b-aside__title"><%- @__ 'Voting' %></p>
-        <p class="question">Как вам нравится редизайн
-            нашего сайта?</p>
+        <p class="question"><%- @__ 'How do you like the redesign of our website?' %></p>
 
         <label><input type="radio" name="vote">Не айс</label>
         <label><input type="radio" name="vote">Не плохо</label>

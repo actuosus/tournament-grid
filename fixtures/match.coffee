@@ -162,4 +162,5 @@ module.exports.Match = [
   round_id: '51142b464242d3110c000002'
   map_type: 'Комарин'
   description: 'Короткое описание основного текста, для того'
+
 ]

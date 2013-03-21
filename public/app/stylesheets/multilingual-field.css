@@ -25,7 +25,7 @@
 .language-selector-item {
     /*display: inline-block;*/
     font-size: 10px;
-    /*width: 21px;*/
+    width: 25px;
     height: 21px;
     -webkit-font-smoothing: antialiased;
     text-transform: uppercase;
@@ -82,3 +82,27 @@
     margin-top: -1px;
     background: white;
 }
+
+.multilingual-editable-label {
+    position: relative;
+    display: inline-block;
+}
+
+.multilingual-editable-label .language-selector {
+    width: 14px;
+    height: 14px;
+    right: -14px;
+    background: white;
+    color: black;
+    box-shadow: 0 0 3px rgba(0,0,0,0.5);
+    line-height: 10px;
+    font-weight: normal;
+    border-radius: 2px;
+}
+
+.multilingual-editable-label .language-selector .current-value {
+    width: 14px;
+    height: 14px;
+    padding: 2px;
+}
+

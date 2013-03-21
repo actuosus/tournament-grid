@@ -26,6 +26,8 @@ define ['cs!translation'], ->
       translatedValues = @get 'translatedValues'
       return translatedValues[value] if translatedValues[value]
       selectedLanguage = @get 'selectedLanguage'
+      unless selectedLanguage
+        selectedLanguage = App.currentLanguage
       languages = @get 'languages'
       provider = @get 'selectedProvider'
       unless provider

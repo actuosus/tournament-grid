@@ -6,23 +6,11 @@
  * Time: 09:10
 ###
 
-define ['cs!core'], ->
-  App.Router.map (match)->
-    @route 'demo'
-#  App.Router = Ember.Router.extend
-#    enableLogging: yes
-#    location: 'history'
-#    root: Ember.Route.extend
-#      index: Ember.Route.extend
-#        route: '/'
-#        redirectsTo: 'demo'
+define ['cs!core', 'cs!models/stage'], ->
+  App.Router.map ->
+    @resource 'stage', path: '/stage/:stage_id', ->
+      @route 'new'
 #
-#      demo: Ember.Route.extend
-#        route: '/index'
-#        enter: ->
-#          $('.subhead h1').text('AdName')
-
-  App.DemoRoute = Ember.Route.extend
-    setupController: (controller)->
-      # Set the IndexController's `title`
-      controller.set 'title', "My App"
+#  App.StageRoute = Ember.Route.extend
+#    model: (params)->
+#      App.Stage.find params.stage_id

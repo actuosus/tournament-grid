@@ -46,16 +46,22 @@ define ['cs!views/team/grid_item'
 #          console.log (@get 'content')
           height = 45
           match = @get 'content'
+          roundIndex = @get('roundIndex')
+          currentIndex = Math.pow(2, roundIndex) - 1
           if match.get('isWinner')
             @set 'connectorView.isVisible', no
             @set 'dateView.isVisible', no
             @set 'infoBarView.isVisible', no
           @$().css(height: height * 2)
+#          console.log match.get('itemIndex'), match.get('round.itemIndex')
+          if (match.get('itemIndex') is -1) and (match.get('round.itemIndex') is -1)
+#            console.log currentIndex
+            @$().css marginTop: Math.floor(match.get('round.stage.rounds.firstObject.matches.length')/2) * (height*2)
+            return
           if @get('parentView.parentView.contentIndex') is 0
             if @get('contentIndex') is 0
               null
           else
-            currentIndex = Math.pow(2, @get('roundIndex')) - 1
             if @get('contentIndex') is 0
               @$().css marginTop: currentIndex * height
             else
@@ -64,6 +70,7 @@ define ['cs!views/team/grid_item'
         connectorView: Em.View.extend
           classNames: ['connector']
           template: Em.Handlebars.compile('<div class="one"></div><div class="another"></div>')
+          contentBinding: 'parentView.content'
           contentIndexBinding: 'parentView.contentIndex'
           roundIndexBinding: 'parentView.roundIndex'
           didInsertElement: ->
@@ -71,11 +78,19 @@ define ['cs!views/team/grid_item'
             roundIndex = @get 'roundIndex'
             contentIndex = @get 'contentIndex'
             currentIndex = Math.pow(2, roundIndex)
+
+            match = @get 'content'
+
+            console.log match.get('itemIndex'), match.get('round.itemIndex')
+
             if contentIndex%2
               top = -(currentIndex * height) + height
               @$().addClass('diff')
             else
               top = 39
+            if (match.get('itemIndex') is 0) and (match.get('round.itemIndex') is 0)
+              @$().css top: top, left: 156, height: 0
+              return
             @$().css {top: top, left: 156, height: currentIndex * height - (19/2)}
 
         dateView: App.EditableLabel.extend

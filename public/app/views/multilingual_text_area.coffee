@@ -9,7 +9,7 @@ define ['cs!views/multilingual_field'], ->
   App.MultilingualTextArea = App.MultilingualField.extend
     classNames: ['multilingual-text-area']
 
-    textFieldView: Em.TextArea.extend
+    fieldView: Em.TextArea.extend
       classNames: ['text-area']
       nameBinding: 'parentView.name'
       placeholderBinding: 'parentView.placeholder'

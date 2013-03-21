@@ -16,7 +16,7 @@ define ['cs!views/game/form'], ->
       <li class="games-info-bar-label">{{loc '_info'}}</li>
       {{/if}}
       {{#each view.content}}
-      <li><a {{bindAttr href="link" title="name"}}>{{view.contentIndex}}</a></li>
+      <li><a _target="blank" {{bindAttr href="link" title="name"}}>{{view.contentIndex}}</a></li>
       {{/each}}
       <li><a>+</a></li>
       """

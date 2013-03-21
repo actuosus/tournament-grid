@@ -21,16 +21,21 @@ define [
 
     createRecord: ->
       @$('.save-btn').attr('disabled', 'disabled')
-
-      stage = App.Stage.createRecord
-        name: @$('.name').val()
-        description: @$('.description').val()
-        visual_type: @get 'visualType'
-      stage.on 'didCreate', => @didCreate stage
-      stage.on 'becameError', =>
-        console.log arguments
-        stage.destroy()
-#      App.store.commit()
+      entransNumber = parseInt(@$('.entrants-number').val(), 10)
+      stage = window.createActualRoundsByEntrants(entransNumber)
+##      stage = App.Stage.createRecord
+#      stage.set 'name', @$('.name').val()
+#      stage.set 'description', @$('.description').val()
+#      stage.set 'visual_type', @get 'visualType'
+#
+##        name: @$('.name').val()
+##        description: @$('.description').val()
+##        visual_type: @get 'visualType'
+#      stage.on 'didCreate', => @didCreate stage
+#      stage.on 'becameError', =>
+#        console.log arguments
+#        stage.destroy()
+##      App.store.commit()
 
     submit: (event)->
       event.preventDefault()

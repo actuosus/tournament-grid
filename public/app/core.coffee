@@ -163,6 +163,7 @@ define [
   App = Em.Application.create
     VERSION: '0.1'
     autoinit: false
+    LOG_TRANSITIONS: true
     customEvents:
       mousewheel: 'mouseWheel'
     currentLanguage: lang

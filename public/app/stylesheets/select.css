@@ -50,3 +50,11 @@
     font-size: 13px;
     margin-top: -7px;
 }
+
+.country-select .current-value {
+    z-index: 10;
+}
+
+.country-select .text-field {
+    padding-left: 30px;
+}

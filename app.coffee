@@ -39,6 +39,10 @@ passport.use new BasicStrategy (username, password, done)->
     return done null, false if not user.validPassword password
     return done null, user
 
+passport.serializeUser (user, done)-> done null, user.id
+
+passport.deserializeUser (id, done)-> models.User.findById id, (err, user)-> done err, user
+
 cors = (req, res, next)->
   res.header 'Access-Control-Allow-Origin', '*'
   res.header 'Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE'
@@ -57,8 +61,10 @@ processRandom = (req, res, next)->
   else
     next()
 
+languages = ['ru', 'en', 'de']
+
 i18n.configure
-  locales:['ru', 'en', 'de']
+  locales: languages
   defaultLocale: 'en'
   cookie: 'lang'
 
@@ -72,7 +78,16 @@ app.configure ->
 
   app.engine '.ect', ectRenderer.render
 
+  # Post data support
+  app.use express.cookieParser()
+  app.use express.bodyParser()
+  app.use express.methodOverride()
+
+  # Session support
+  app.use express.session secret: 'Is it secure?'
+
   app.use passport.initialize()
+  app.use passport.session()
 
   app.use express.compress()
 
@@ -83,27 +98,19 @@ app.configure ->
   # Logging
   app.use express.logger 'dev'
 
-  app.use express.cookieParser()
-
   app.use i18n.init
 
   app.use (req, res, next)->
     res.locals.language = req.language
-    moment.lang req.language
+    if req.language and req.language in languages
+      moment.lang req.language
     res.locals.__ = res.__ = ->
       i18n.__.apply req, arguments
     res.locals.__n = res.__n = ->
       i18n.__n.apply req, arguments
     next()
 
-  # Post data support
-  app.use express.bodyParser()
-  app.use express.methodOverride()
-
-  app.use express.favicon()
-
-  # Session support
-  app.use express.session secret: 'Is it secure?'
+#  app.use express.favicon()
 
   app.use cors
 
@@ -115,7 +122,7 @@ app.locals
   staticDomain: '//tournament.local:3000'
   moment: moment
   __: -> i18n.__ arguments
-  languages: ['ru', 'en', 'de']
+  languages: languages
 
 
 app.get '/api/championships', routes.api.championships.list
@@ -153,15 +160,29 @@ app.post '/api/teams', routes.api.teams.create
 app.get '/api/teams/:_id', routes.api.teams.item
 app.delete '/api/teams/bulk', routes.api.teams.delete
 
+ensureAuthenticated = (req, res, next) ->
+  console.log 'ensureAuthenticated', req.isAuthenticated()
+  return next() if req.isAuthenticated()
+  res.redirect '/'
 
-app.get '/', passport.authenticate('basic', { session: false }), (req, res)->
+app.get '/', passport.authenticate('basic'), (req, res)->
   res.header('cache-control', 'public, max-age=2592000')
   res.render 'index.ect'
 
-app.get '/reports', routes.reports.list
-app.get '/reports/:_id', routes.reports.item
+app.get '/unauthorized', (req, res)->
+  res.statusCode = 401
+  res.render 'unauthorized.ect'
 
-app.get '*', (req, res)-> res.status 404; res.render '404'
+app.get '/logout', (req, res)->
+  req.logout()
+  res.statusCode = 401
+  res.render 'logged_out.ect'
+
+app.get '/reports', ensureAuthenticated, routes.reports.list
+app.get '/reports/:_id', ensureAuthenticated, routes.reports.item
+
+app.get '*', (req, res)-> res.status 404; res.render '404.ect'
+
 
 # Initialization
 grid.init = ->

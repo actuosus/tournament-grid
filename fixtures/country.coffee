@@ -759,7 +759,7 @@ module.exports.Country = [
   "_id": "514569cef9bbb58f31000097"
   },
   {
-  "name": "Сен-Мартен (владение Франции)",
+  "name": "Сен-Мартен",
   "englishName": "Saint Martin (French part)",
   "germanName": "",
   "code": "mf",

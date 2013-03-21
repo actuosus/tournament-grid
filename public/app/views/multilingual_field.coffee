@@ -7,7 +7,7 @@
 
 define ['cs!mixins/translatable', 'cs!views/language_menu'], ->
   App.MultilingualField = Em.ContainerView.extend App.Translatable,
-    childViews: ['textFieldView', 'languageSelectorView']
+    childViews: ['fieldView', 'languageSelectorView']
 
     value: null
     values: []
@@ -17,10 +17,7 @@ define ['cs!mixins/translatable', 'cs!views/language_menu'], ->
 
     provider: null
 
-    selectedLanguage: null
-
-    initMixin: ->
-      console.log arguments
+    selectedLanguage: App.currentLanguage
 
     selectedLanguageChanged: (->
       languages = @get 'languages'
@@ -30,7 +27,7 @@ define ['cs!mixins/translatable', 'cs!views/language_menu'], ->
       values = @get 'values'
       value = values.objectAt languageIndex
 #      @set 'value', value
-      @set 'textFieldView.value', value
+      @set 'fieldView.value', value
     ).observes('selectedLanguage')
 
     noValueChangeTimer: null
@@ -66,7 +63,7 @@ define ['cs!mixins/translatable', 'cs!views/language_menu'], ->
         values[languageIndex] = translation.get 'value'
     ).observes('translations')
 
-    textFieldView: Em.TextField.extend
+    fieldView: Em.TextField.extend
       classNames: ['text-field']
       nameBinding: 'parentView.name'
       placeholderBinding: 'parentView.placeholder'

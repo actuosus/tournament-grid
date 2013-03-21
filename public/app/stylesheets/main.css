@@ -46,6 +46,10 @@
     box-shadow: 0 1px 8px rgba(0, 0, 0, 0.25);
 }
 
+.b-content :first-child[class="block-container"] {
+    margin-top: 0;
+}
+
 .round-grid-item {
     position: relative;
     width: 178px;

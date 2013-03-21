@@ -18,6 +18,7 @@ define ['cs!views/autocomplete_text_field'], ->
     currentValueView: Em.View.extend
       classNames: ['current-value']
       template: Em.Handlebars.compile '{{view.parentView.currentLabel}}'
+      contentBinding: 'parentView.autocompleteTextFieldView.selection'
     disclosureButtonView: Em.View.extend
       classNames: ['disclosure-button', 'non-selectable']
       attributeBindings: ['title']

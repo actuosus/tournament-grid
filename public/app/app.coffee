@@ -58,8 +58,16 @@ require [
       content: []
       searchResults: []
       sort: (result, options)->
-        startRe = new RegExp('^'+options.name, 'i')
-        result.sort (item)-> if item.get('name').match(startRe) then -1 else 1
+        lowerCased = options.name.toLowerCase()
+        result.sort (a,b)->
+          lowerA = a.get('name').toLowerCase()
+          lowerB = b.get('name').toLowerCase()
+          if lowerA.indexOf(lowerCased) < lowerB.indexOf(lowerCased)
+            return -1
+          if lowerA.indexOf(lowerCased) > lowerB.indexOf(lowerCased)
+            return 1
+          if lowerA.indexOf(lowerCased) is lowerB.indexOf(lowerCased)
+            return 0
       search: (options)->
 #        @set 'content', App.Country.find options
         result = App.countries.filter (item, idx)->
@@ -121,7 +129,6 @@ require [
 
       setCurrentTabView: (@currentTabView)->
         @currentStage = @currentTabView.get 'content'
-        currentStage = @currentStage
         switch @currentStage.get 'visual_type'
           when 'grid'
             contentView = App.TournamentGridView.create content: @currentStage
@@ -177,11 +184,14 @@ require [
             else
               properChild .$().removeClass('active')
 
+#        itemViewClass: App.MultilingualEditableLabel.extend
         itemViewClass: Em.View.extend
           tagName: 'li'
           classNames: ['item']
+          languages: App.languages
           attributeBindings: ['description:title']
           template: Em.Handlebars.compile '{{name}}'
+#          valueBinding: 'content.name'
           click: ->
             @get('parentView').selectChildView(@)
         content: App.Stage.find()
@@ -375,61 +385,43 @@ require [
 
     window.createRounds = createRounds
     window.createActualRounds = createActualRounds
+    window.createActualRoundsByEntrants = createActualRoundsByEntrants
     window.createLoserBracket = createLoserBracket
 
     window.stage = createActualRoundsByEntrants(8)
 
     testerView = Em.ContainerView.create
-      childViews: 'countrySelectView autocompleteTextFieldView multilingualTextFieldView editableLabel'.w()
-      countrySelectView: App.CountrySelectView.create(controller: App.countriesController)
-      autocompleteTextFieldView: App.AutocompleteTextField.create(controller: App.teamsController)
-      multilingualTextFieldView: App.MultilingualTextField.create(languages: App.languages.content)
-      editableLabel: App.EditableLabel.create(value: 'Some thing')
+      childViews: 'countrySelectView autocompleteTextFieldView multilingualTextFieldView editableLabel multilingualEditableLabel'.w()
+      countrySelectView: Em.ContainerView.create
+        childViews: ['labelView', 'contentView']
+        classNames: ['control-row']
+        labelView: Em.View.create(tagName: 'label', template: Em.Handlebars.compile('Country selector'))
+        contentView: App.CountrySelectView.create(controller: App.countriesController)
+      autocompleteTextFieldView: Em.ContainerView.create
+        childViews: ['labelView', 'contentView']
+        classNames: ['control-row']
+        labelView: Em.View.create(tagName: 'label', template: Em.Handlebars.compile('Autocomplete text field'))
+        contentView: App.AutocompleteTextField.create(controller: App.teamsController)
+      multilingualTextFieldView: Em.ContainerView.create
+        childViews: ['labelView', 'contentView']
+        classNames: ['control-row']
+        labelView: Em.View.create(tagName: 'label', template: Em.Handlebars.compile('Multilingual text field'))
+        contentView: App.MultilingualTextField.create(languages: App.languages.content)
+      editableLabel: Em.ContainerView.create
+        childViews: ['labelView', 'contentView']
+        classNames: ['control-row']
+        labelView: Em.View.create(tagName: 'label', template: Em.Handlebars.compile('Editable label'))
+        contentView: App.EditableLabel.create(value: 'Some thing')
+      multilingualEditableLabel: Em.ContainerView.create
+        childViews: ['labelView', 'contentView']
+        classNames: ['control-row']
+        labelView: Em.View.create(tagName: 'label', template: Em.Handlebars.compile('Multilingual editable label'))
+        contentView: App.MultilingualEditableLabel.create(value: 'Слоники', languages: App.languages.content)
 
-    App.NamedContainerView.create(
-      title: 'Tester'
-      contentView: testerView
-    ).appendTo('#content')
-
-    App.GridCreationView = Em.ContainerView.extend
-      childViews: ['selectView', 'gridView']
-      value: null
-      content: (->
-        val = @get('value.id')
-        if val
-          exp = val / 2
-          if exp
-            createRounds(Math.log(exp) / Math.log(2))
-          else
-            []
-        else
-          []
-      ).property('value')
-      selectView: App.SelectView.extend
-        valueBinding: 'parentView.value'
-        content: [
-          Em.Object.create(id: 2, name: 2)
-          Em.Object.create(id: 4, name: 4)
-          Em.Object.create(id: 8, name: 8)
-          Em.Object.create(id: 16, name: 16)
-          Em.Object.create(id: 32, name: 32)
-          Em.Object.create(id: 64, name: 64)
-          Em.Object.create(id: 128, name: 128)
-          Em.Object.create(id: 256, name: 256)
-          Em.Object.create(id: 512, name: 512)
-          Em.Object.create(id: 1024, name: 1024)
-        ]
-      gridView: App.TournamentGridView.extend
-        contentBinding: 'parentView.content'
-        contentChanged: (->
-          if @get('contentView').$()
-            @get('contentView').$().width(@get('content.length') * 160)
-        ).observes('content')
-
-    App.NamedContainerView.create(
-      title: 'Tournament Grid Creation'
-      contentView: App.GridCreationView.create()
-    ).appendTo('#content')
+#    App.NamedContainerView.create(
+#      title: 'Tester'
+#      contentView: testerView
+#    ).appendTo('#content')
 
     App.teams = App.Team.find()
     App.peroids = Em.ArrayController.create
