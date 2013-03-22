@@ -5,7 +5,7 @@
  * Time: 22:23
 ###
 
-define ->
+define ['cs!core'],->
   App.YandexTranslator = Em.Object.extend
     isTranslator: yes
     serviceURL: 'http://translate.yandex.net/api/v1/tr.json/translate?callback=?'
@@ -27,4 +27,4 @@ define ->
 
     _didFetchTranslation: (data, cb)->
       console.log data
-      cb data.text[0]
+      cb data?.text?[0]

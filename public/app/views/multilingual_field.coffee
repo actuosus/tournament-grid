@@ -10,14 +10,18 @@ define ['cs!mixins/translatable', 'cs!views/language_menu'], ->
     childViews: ['fieldView', 'languageSelectorView']
 
     value: null
-    values: []
     languages: []
 
     automaticTranslation: yes
 
     provider: null
 
-    selectedLanguage: App.currentLanguage
+    selectedLanguage: null
+
+    init: ()->
+      @_super()
+      @set 'values', []
+      @set 'selectedLanguage', App.currentLanguage
 
     selectedLanguageChanged: (->
       languages = @get 'languages'
@@ -54,7 +58,7 @@ define ['cs!mixins/translatable', 'cs!views/language_menu'], ->
     ).observes('value')
 
     translationsChanged: (->
-      console.log 'translationsChanged', @get 'translations'
+      console.log @, 'translationsChanged', @get 'translations'
       translations = @get 'translations'
       languages = @get 'languages'
       values = @get 'values'
@@ -79,7 +83,7 @@ define ['cs!mixins/translatable', 'cs!views/language_menu'], ->
       classNames: ['language-selector']
       childViews: ['currentValueView']
       contentBinding: 'parentView.languages'
-      selection: null
+      selectionBinding: 'parentView.selectedLanguage'
       selectionChanged: (->
         selection = @get 'selection'
         content = @get 'content'

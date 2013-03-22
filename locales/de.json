@@ -19,7 +19,7 @@
 	"Partners": "Partner",
 	"Content": "Inhalt",
 	"News": "Nachrichten",
-	"Reports": "Bericht",
+	"Reports": "Berichte",
 	"Downloads": "Herunterladen",
 	"Photo": "Foto",
 	"Database": "Datenbank",
@@ -51,5 +51,15 @@
 	"The prize fund": "Der Preisfonds",
 	"The total prize fund": "Der gesamte Preisfonds",
 	"Broadcast recordings": "Aufnahme von Sendungen",
-	"All Streams": "Alle Ströme"
+	"All Streams": "Alle Ströme",
+	"You are logged out.": "Du abgemeldet.",
+	"Link to the site is mandatory when copy materials.": "Link zu der Seite ist obligatorisch, wenn Druckunterlagen.",
+	"Our Facebook page": "Unsere Facebook-Seite",
+	"Our Twitter channel": "Unsere Twitter-Kanal",
+	"Our Youtube channel": "Unser Youtube Kanal",
+	"Our Vkontakte group": "Unsere Vkontakte Gruppe",
+	"Our Steam group": "Unserer Steam-Gruppe",
+	"Do you want to": "Möchten Sie sich",
+	"sign in": "anmelden",
+	"Tweet feed": "Tweet-Feed"
 }

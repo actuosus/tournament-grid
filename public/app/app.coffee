@@ -41,11 +41,6 @@ require [
 
   App.isEditingMode = no
 
-  App.languages = Em.ArrayController.create
-    content: [
-      'ru', 'en', 'de'
-    ]
-
   App.ready = ->
 
     App.report = App.Report.find('511211b49709aab1ae000002')

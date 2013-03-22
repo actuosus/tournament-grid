@@ -81,6 +81,15 @@ module.exports = (grunt)->
 ##              out: 'public/app.css'
 ##            }
 #          ]
+    handlebars:
+      options:
+        namespace: 'Em.TEMPLATES'
+        files:
+          'public/bundle/templates.js': 'public/app/templates/**/*.handlebars'
+    ember_handlebars:
+      options:
+        files:
+          'public/bundle/templates.js': 'public/app/templates/**/*.handlebars'
     exec:
       minify_css:
         cmd: ->
@@ -113,3 +122,5 @@ module.exports = (grunt)->
 #  grunt.loadNpmTasks 'grunt-recess'
   grunt.loadNpmTasks 'grunt-contrib-coffee'
   grunt.loadNpmTasks 'grunt-coffeelint'
+#  grunt.loadNpmTasks 'grunt-contrib-handlebars'
+  grunt.loadNpmTasks 'grunt-ember-handlebars'

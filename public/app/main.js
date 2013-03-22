@@ -58,6 +58,6 @@ require({
   'handlebars',
   'ember',
   'ember-data',
-//  'cs!core',
+  'cs!core',
   'cs!app'
 ]);

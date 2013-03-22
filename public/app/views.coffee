@@ -7,6 +7,8 @@
 ###
 
 define [
+  'cs!core'
+
   'cs!views/select'
   'cs!views/grid'
   'cs!views/table'

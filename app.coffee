@@ -61,7 +61,7 @@ processRandom = (req, res, next)->
   else
     next()
 
-languages = ['ru', 'en', 'de']
+languages = ['ru', 'en', 'de', 'it']
 
 i18n.configure
   locales: languages
@@ -101,6 +101,7 @@ app.configure ->
   app.use i18n.init
 
   app.use (req, res, next)->
+    app.locals.user = req.user
     res.locals.language = req.language
     if req.language and req.language in languages
       moment.lang req.language
@@ -117,14 +118,13 @@ app.configure ->
 #  app.use processRandom
 
 app.locals
-#  node_env: process.env.NODE_ENV
-  node_env: 'production'
+  node_env: process.env.NODE_ENV
+#  node_env: 'production'
 #  staticDomain: '//static.tournament.local:3000'
   staticDomain: '//tournament.local:3000'
   moment: moment
   __: -> i18n.__ arguments
   languages: languages
-
 
 app.get '/api/championships', routes.api.championships.list
 
@@ -167,8 +167,10 @@ ensureAuthenticated = (req, res, next) ->
   res.redirect '/'
 
 app.get '/', passport.authenticate('basic'), (req, res)->
-  res.header('cache-control', 'public, max-age=2592000')
-  res.render 'index.ect'
+  console.log req.user
+#  res.header('cache-control', 'public, max-age=2592000')
+  res.redirect '/reports'
+#  res.render 'index.ect'
 
 app.get '/unauthorized', (req, res)->
   res.statusCode = 401
@@ -176,6 +178,7 @@ app.get '/unauthorized', (req, res)->
 
 app.get '/logout', (req, res)->
   req.logout()
+  app.locals.user = null
   res.statusCode = 401
   res.render 'logged_out.ect'
 

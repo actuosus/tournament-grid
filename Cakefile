@@ -20,6 +20,15 @@ task 'run', 'Start application server', ->
   server.stderr.on 'data', (data)->
     util.print data
 
+task 'watched', 'Start application server with autoreload', ->
+  server = exec "supervisor -q -e 'node|js|coffee|json' -i 'undefined,public/app' server.js"
+  server.stdout.setEncoding 'utf8'
+  server.stderr.setEncoding 'utf8'
+  server.stdout.on 'data', (data)->
+    console.log '\t', data.replace '\n', ''
+  server.stderr.on 'data', (data)->
+    util.print data
+
 task 'heroku:deploy', 'Deploy the project to Heroku', ->
   exec 'git push heroku master'
 

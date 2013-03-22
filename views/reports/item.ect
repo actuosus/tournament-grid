@@ -8,9 +8,9 @@
     <!-- article__hgroup1 -->
     <div class="b-article__hgroup1">
         <img src="//tournament.local:3000/agamapro-virtus.pro-ebb4d51390f8/img/games/logo/sc2.png" alt="" class="logo" width="19" height="19">
-        <h1 class="b-article__title"><%- @doc.name %></h1>
+        <h1 class="b-article__title"><%- @doc.loc 'name', @language %></h1>
         <span class="bigger">AsusCup spring 2012 gual CS</span>
-        <a href="/authors/<%- @doc.author._id %>" class="author"><%- @doc.author.username %></a>
+        <a href="/authors/<%- @doc.author.id %>" class="author"><%- @doc.author.username %></a>
         <%- @moment(@doc.date).format('D MMMM YYYY, в hh:mm') %>
 
         <div class="b-article__social">
@@ -37,7 +37,7 @@
 
             <ul class="b-profileReport__general">
                 <li class="item"><span class="item__title"><%- @__ 'Announce' %>:</span> <a href="" title="">Анонс Gamegune</a></li>
-                <li class="item"><span class="item__title"><%- @__ 'Place' %>:</span> <%- @doc.place %></li>
+                <li class="item"><span class="item__title"><%- @__ 'Place' %>:</span> <%- @doc.loc 'place', @language %></li>
                 <li class="item"><span class="item__title"><%- @__ 'Date' %>:</span> <%- @moment(@doc.date).format('DD.MM.YYYY') %> - <%- @moment(@doc.date).format('DD.MM.YYYY') %></li>
                 <li class="item"><span class="item__title"><%- @__ 'Scheme' %>:</span> Группы + FDE</li>
                 <li class="item"><span class="item__title"><%- @__ 'Entrants' %>:</span> 24</li>
@@ -94,14 +94,9 @@
 <div class="b-profileReport cf">
     <!-- profileReport__main -->
     <div class="b-profileReport__main b-profileReport__main_secondary">
-        Если я правильно вас понял, и вы имеете ввиду под термином «условное макетирование» то, что автор в статье
-        называет терминами «эскиз», «прототип» (все-таки прочитав статью, в которой используются одни термины, и
-        потом быстро переключиться на терминологию другую, не так уж и просто.В этом кстати ваша ошибка ИМХО, стоило
-        бы принять конвенцию предложенную автором, хотя бы в пределах топика, чтобы не создавать дополнительных
-        путаниц.) то этот комментарий, идет в прямой конфликт со статьей) И было бы правильней высказать несогласие
-        с автором, чем показывать этот пример как «интересный»
+        <%- @doc.loc 'description', @language %>
 
-        <p class="b-profileReport__title">Твит лента</p>
+        <p class="b-profileReport__title"><%- @__ 'Tweet feed' %></p>
         <!-- tweets -->
         <ul class="b-tweets">
             <li class="item">

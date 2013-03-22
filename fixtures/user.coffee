@@ -12,4 +12,13 @@ module.exports.User = [
   _id: '5149b02872267f7b2c00002f'
   username: 'FUki'
   password: 'fuki'
+  email: 'fuki@virtuspro.org'
+,
+  username: 'actuosus'
+  password: 'virtus'
+  email: 'actuosus@gmail.com'
+,
+  username: 'nortan'
+  password: 'virtus'
+  email: 'yuri@timofeev.su'
 ]

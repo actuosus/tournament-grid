@@ -10,116 +10,13 @@ define [
   'jquery.cookie'
   'ember'
   'ember-data'
-] , ()->
-
-  en_US =
-    _reset: 'Reset'
-    _loading: 'Loading'
-    _expand: 'Expand'
-    _collapse: 'Collapse'
-    _final: 'Final'
-    _of_the_final: 'of the final'
-    _semifinal: 'Semi-final'
-    _third_place_match: 'Third place match'
-    _info: 'Info'
-    _tournament_results_table: 'Tournament results table'
-    _add_entrant: 'Add entrant'
-    _winners: 'Winners'
-    _losers: 'Losers'
-    _name: 'Name'
-    _title: 'Title'
-    _description: 'Description'
-    _type: 'Type'
-    _entrants_number: 'Entrants number'
-    _grid: 'Grid'
-    _group: 'Group'
-    _matrix: 'Matrix'
-    _team: 'Team'
-    _team_name: 'Team name'
-    _matches: 'Matches'
-    _create: 'Create'
-    _cancel: 'Cancel'
-    _save: 'Save'
-
-  ru_RU =
-    _reset: 'Сброс'
-    _loading: 'Загрузка'
-    _expand: 'Развернуть'
-    _collapse: 'Свернуть'
-    _final: 'Финал'
-    _of_the_final: 'Финала'
-    _semifinal: 'Полуфинал'
-    _third_place_match: 'Матч за третье место'
-    _info: 'Инфо'
-    _tournament_results_table: 'Таблица результатов турнира'
-    _add_entrant: 'Добавить участника'
-    _winners: 'Победители'
-    _losers: 'Проигравшие'
-    _name: 'Имя'
-    _title: 'Название'
-    _description: 'Описание'
-    _type: 'Тип'
-    _entrants_number: 'Количество участников'
-    _grid: 'Сетка'
-    _group: 'Групповой'
-    _matrix: 'Матрица'
-    _team: 'Команда'
-    _team_name: 'Название команды'
-    _matches: 'Матчи'
-    _create: 'Создать'
-    _cancel: 'Отмена'
-    _save: 'Сохранить'
-
-  de_DE =
-    _reset: 'Rücksetzen'
-    _loading: 'Laden'
-    _expand: 'Erweitern'
-    _collapse: 'Drehen'
-    _final: 'Finale'
-    _of_the_final: 'des Final'
-    _semifinal: 'Halbfinal'
-    _third_place_match: 'Spiel um Platz drei'
-    _info: 'Info'
-    _tournament_results_table: 'Ergebnisse Table Tournament'
-    _add_entrant: 'Fügen Teilnehmer'
-    _winners: 'Gewinner'
-    _losers: 'Verlierer'
-    _name: 'Name'
-    _title: 'Benennung'
-    _description: 'Beschreibung'
-    _type: 'Typ'
-    _entrants_number: 'Anzahl der Teilnehmer'
-    _grid: 'Netz'
-    _group: 'Gruppe'
-    _matrix: 'Matrix'
-    _team: 'Team'
-    _team_name: 'Team Name'
-    _matches: 'Streichhölzer'
-    _create: 'Schaffen'
-    _cancel: 'Beenden'
-    _save: 'Speichern'
-
+  'cs!locales'
+  'cs!config'
+] , (cookie, ember, emberData, locales, config)->
+  console.log config
   localize = (lang)->
-    if lang
-      switch lang
-        when 'en'
-          Em.STRINGS = en_US
-        when 'ru'
-          Em.STRINGS = ru_RU
-        when 'de'
-          Em.STRINGS = de_DE
-        else
-          Em.STRINGS = en_US
-    else
-      switch window.navigator.userLanguage or window.navigator.language
-        when 'en-US'
-          Em.STRINGS = en_US
-        when 'ru-RU'
-          Em.STRINGS = ru_RU
-        when 'de-DE'
-          Em.STRINGS = de_DE
-        else
-          Em.STRINGS = en_US
+    lang ?= (window.navigator.userLanguage or window.navigator.language).substring(0, 2)
+    Em.STRINGS = locales[lang]
 
   lang = $.cookie 'lang'
   localize(lang)
@@ -167,7 +64,6 @@ define [
     LOG_TRANSITIONS: true
     customEvents:
       mousewheel: 'mouseWheel'
-    currentLanguage: lang
 #  App.deferReadiness()
   window.TournamentGrid = TournamentGrid
   window.App = App
@@ -193,6 +89,10 @@ define [
     revision: 11
     adapter: DS.RESTAdapter.create
       bulkCommit: no
-      namespace: 'api'
+      namespace: config.apiNamespace
 
   App.store.adapter.serializer.primaryKey = -> '_id'
+
+  # Localization configuration
+  App.languages = Em.ArrayController.create content: config.languages
+  App.currentLanguage = lang

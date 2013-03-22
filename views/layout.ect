@@ -35,6 +35,14 @@
     <!--<script type="text/javascript" src="/vendor/javascripts/raphael.js"></script>-->
     <!--<script type="text/javascript" src="/vendor/javascripts/spin.js"></script>-->
     <script type="text/javascript" src="/vendor/javascripts/require.js"></script>
+
+    <script type="text/javascript" id="grid-config">
+        window.gridConfig = {
+            languages: <%- JSON.stringify(@languages) %>
+
+        };
+    </script>
+
     <% if @node_env is 'production': %>
     <script type="text/javascript" src="<%- @staticDomain %>/bundle/app.js"></script>
     <% else: %>
@@ -66,10 +74,15 @@
         </form>
         <div class="b-header__right">
 
-            <span class="username">FankySoul</span>
-            <img class="userAvatar" src="<%- @staticDomain %>/agamapro-virtus.pro-ebb4d51390f8/img/dummy/avatar_23x23.jpg" alt="">
+            <% if @user : %>
+            <span class="username"><%- @user.username %></span>
+            <!--<img class="userAvatar" src="<%- @staticDomain %>/agamapro-virtus.pro-ebb4d51390f8/img/dummy/avatar_23x23.jpg" alt=""/>-->
+            <% if @user.gravatar : %>
+                <img class="userAvatar" src="<%- @user.gravatar %>" width="23" height="23" alt="<%- @user.username %>"/>
+            <% end %>
             <a class="personal" href="" title=""><%- @__ 'My account' %></a> |
             <a class="quit" href="/logout" title=""><%- @__ 'Logout' %></a>
+            <% end %>
 
             <% for language in @languages : %>
                 <%if @language is language : %>
@@ -278,11 +291,11 @@
     </div>
 
     <div class="b-aside__social">
-        <a target="_blank" href="http://www.facebook.com/pages/VirtusPro/113348038744614" class="fb"></a>
-        <a target="_blank" href="http://twitter.com/TeamVirtusPRO" class="tw"></a>
-        <a target="_blank" href="http://www.youtube.com/user/TeamVirtusPro" class="youtube"></a>
-        <a target="_blank" href="http://vk.com/Virtus.Pro_fanclub" class="vk"></a>
-        <a target="_blank" href="http://steamcommunity.com/groups/virtusprofessional" class="steam"></a>
+        <a target="_blank" href="http://www.facebook.com/pages/VirtusPro/113348038744614" class="fb" title="<%- @__ 'Our Facebook page' %>"></a>
+        <a target="_blank" href="http://twitter.com/TeamVirtusPRO" class="tw" title="<%- @__ 'Our Twitter channel' %>"></a>
+        <a target="_blank" href="http://www.youtube.com/user/TeamVirtusPro" class="youtube" title="<%- @__ 'Our Youtube channel' %>"></a>
+        <a target="_blank" href="http://vk.com/Virtus.Pro_fanclub" class="vk" title="<%- @__ 'Our Vkontakte group' %>"></a>
+        <a target="_blank" href="http://steamcommunity.com/groups/virtusprofessional" class="steam" title="<%- @__ 'Our Steam group' %>"></a>
 
         <span class="fakeLine"></span>
     </div>
@@ -322,12 +335,13 @@
     <div class="b-footer__social">
         © 2010-2013 <b>VIRTUS.PRO</b>
         <br>
-        <a target="_blank" href="http://vk.com/virtus.pro_fanclub" class="vk"></a><a target="_blank" href="http://facebook.com/pages/VirtusPro/113348038744614" class="fb"></a><a target="_blank" href="http://twitter.com/TeamVirtusPRO" class="tw"></a>
+        <a target="_blank" href="http://vk.com/virtus.pro_fanclub" class="vk" title="<%- @__ 'Our Vkontakte group' %>"></a>
+        <a target="_blank" href="http://facebook.com/pages/VirtusPro/113348038744614" class="fb" title="<%- @__ 'Our Facebook page' %>"></a>
+        <a target="_blank" href="http://twitter.com/TeamVirtusPRO" class="tw" title="<%- @__ 'Our Twitter channel' %>"></a>
     </div>
 
     <div class="b-footer__copyright">
-        При копировании материалов активная
-        ссылка на сайт обязательна.
+        <%- @__ 'Link to the site is mandatory when copy materials.' %>
     </div>
 
     <nav class="b-footer__nav">

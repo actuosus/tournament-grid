@@ -41,8 +41,8 @@
 	"VP Column": "VP Колонка",
 	"Participate": "Учавствуй",
 	"Blogosphere": "Блогосфера",
-	"Forum": "Forum",
-	"Team search": "Team search",
+	"Forum": "Форум",
+	"Team search": "Поиск комманд",
 	"Community": "Комьюнити",
 	"Contests": "Соревнования",
 	"Training": "Обучение",
@@ -51,5 +51,15 @@
 	"The prize fund": "Призовой фонд",
 	"The total prize fund": "Общий призовой фонд",
 	"Broadcast recordings": "Записи трансляций",
-	"All Streams": "Все каналы"
+	"All Streams": "Все каналы",
+	"You are logged out.": "Вы вышли.",
+	"Link to the site is mandatory when copy materials.": "При копировании материалов активная ссылка на сайт обязательна.",
+	"Our Facebook page": "Наша страница на Facebook",
+	"Our Twitter channel": "Наш канал на Twitter",
+	"Our Youtube channel": "Наш канал на Youtube",
+	"Our Vkontakte group": "Наша группа Вконтакте",
+	"Our Steam group": "Наша группа в Steam",
+	"Do you want to": "Хотите",
+	"sign in": "войти",
+	"Tweet feed": "Твит лента"
 }

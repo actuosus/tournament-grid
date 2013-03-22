@@ -7,5 +7,6 @@
 ###
 
 require [
+  'cs!core'
   'cs!fixtures/countries'
 ]
