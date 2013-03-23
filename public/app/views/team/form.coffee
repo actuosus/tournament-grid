@@ -20,6 +20,9 @@ define [
 
     didCreate: Em.K
 
+    focus: ->
+      @$('.name').focus()
+
     createRecord: ->
       country = @get 'countrySelectView.selection'
       transaction = App.store.transaction()

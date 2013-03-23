@@ -8,16 +8,14 @@
 
 define [
   'cs!views/grid'
-  'text!templates/team/grid_item.handlebars'
-], (grid, template)->
-  Em.TEMPLATES.newTeamGridItem = Em.Handlebars.compile template
-  App.LineupView = App.GridView.extend
-    itemViewClass: Em.View.extend
-      tagName: 'table'
-      classNames: ['table', 'lineup-grid-item']
-      templateName: 'newTeamGridItem'
+  'cs!views/team/lineup_grid_item'
+], ->
+  App.LineupView = Em.ContainerView.extend
+    childViews: ['contentView']#, 'addEntrantView'
 
-      click: (event)->
-        if $(event.target).hasClass('remove-btn')
-          @get('content').deleteRecord()
-          App.store.commit()
+    contentView: App.GridView.extend
+      contentBinding: 'parentView.content'
+      itemViewClass: App.TeamLineupGridItem
+
+    addEntrantView: App.TeamLineupGridItem.extend
+      classNames: ['boo']

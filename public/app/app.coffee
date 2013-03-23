@@ -41,13 +41,36 @@ require [
 
   App.isEditingMode = no
 
+  $(document.body).keydown (event)->
+    console.log event.keyCode
+    if event.ctrlKey
+      switch event.keyCode
+        when 69 # e
+          App.set 'isEditingMode', not App.get('isEditingMode')
+
+
   App.ready = ->
+    App.report = App.Report.find(window.currentReportId)
 
-    App.report = App.Report.find('511211b49709aab1ae000002')
-
-    App.entrantsController = Em.ArrayController.create
+    App.EntrantsController = Em.ArrayController.extend
       searchResults: []
       search: ->
+      searchQuery: ''
+      arrangedContent: (->
+        content = @get 'content'
+        searchQuery = @get 'searchQuery'
+        if searchQuery
+          reg = new RegExp(searchQuery, 'gi')
+          result = content.filter (item)->
+            matches = no
+            matches = yes if item.get('name').match reg
+            matches
+        else
+          result = content
+        result
+      ).property('content', 'searchQuery')
+
+    App.entrantsController = App.EntrantsController.create()
 
     App.set 'countriesController', Em.ArrayController.create
       content: []
@@ -157,8 +180,9 @@ require [
           {{#each view.content}}
           {{view view.itemViewClass contentBinding=this}}
           {{/each}}
-
+          {{#if App.isEditingMode}}
             <li class="item add"><button class="btn-clean add">+</button></li>
+          {{/if}}
 
           </ul>
         '''
@@ -243,11 +267,38 @@ require [
 
     window.lineupView = lineupView
 
-#    lineupContainerView = App.NamedContainerView.create
-#      title: 'Состав команд'
-#      contentView: lineupView
+    lineupContainerView = App.NamedContainerView.create
+      title: '_the_teams'.loc()
+      childViews: [
+        'titleView', 'toggleButtonView', 'contentView',
+        'loaderView', 'statusTextView', 'searchBarView'
+      ]
+      searchBarView: Em.ContainerView.extend
+        classNames: ['search-bar']
+        childViews: ['textFieldView']
+        isVisibleBinding: 'App.isEditingMode'
+        textFieldView: Em.TextField.extend
+          classNames: ['search-field']
+          placeholder: '_filter'.loc()
+          valueChanged: (->
+            App.entrantsController.set('searchQuery', @get 'value')
+          ).observes('value')
+      contentView: lineupView
 
-#    lineupContainerView.appendTo '#content'
+    $('.link_pencil').click (event)->
+      event.preventDefault()
+      App.set 'isEditingMode', not App.get('isEditingMode')
+
+      if lineupContainerView?.$()
+        $(document.body).scrollTo(lineupContainerView.$(), 500, {offset: {top: -18}})
+      else if stageSelectorContainerView?.$()
+        $(document.body).scrollTo(stageSelectorContainerView.$(), 500, {offset: {top: -18}})
+
+
+
+    App.report.didLoad = ->
+      if App.report?.get('match_type') is 'team'
+        lineupContainerView.appendTo '#content'
 
     groupContainerView = App.NamedContainerView.create
       title: 'Групповой этап'
@@ -417,6 +468,50 @@ require [
 #      title: 'Tester'
 #      contentView: testerView
 #    ).appendTo('#content')
+
+    App.Folder = Ember.Object.extend({
+      treeItemIsExpanded: false,  # Default to not expanded
+      name: null
+    });
+
+    App.File = Ember.Object.extend({
+      name: null
+    });
+
+    App.someController = Ember.Object.create({
+      tree: [
+        App.Folder.create({
+        name: 'Folder 1',
+        treeItemChildren: [
+          App.File.create({ name: 'File 1' }),
+          App.File.create({ name: 'File 2' }),
+          App.File.create({ name: 'File 3' })
+        ]
+        }),
+        App.Folder.create({
+        name: 'Folder 2', treeItemChildren: []
+        }),
+        App.Folder.create({
+        name: 'Folder 3',
+        treeItemChildren: [
+          App.Folder.create({
+            name: 'My pictures',
+            treeItemChildren: [
+              App.File.create({ name: 'File 1' }),
+              App.File.create({ name: 'File 2' })
+            ]
+          }),
+          App.File.create({ name: 'File 5' })
+        ]
+        }),
+      ]
+    });
+
+    treeView = App.TreeView.create
+      contentBinding: 'App.someController.tree'
+
+    treeView.appendTo('#content')
+
 
     App.teams = App.Team.find()
     App.peroids = Em.ArrayController.create

@@ -15,5 +15,4 @@ exports.item = (req, res)->
   Report.findById(req.params._id)
   .populate('author')
   .exec (err, doc)->
-    console.log doc
     res.render 'reports/item.ect', title: 'Report', doc: doc

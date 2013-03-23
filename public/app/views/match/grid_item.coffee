@@ -7,29 +7,43 @@
 ###
 
 define [
-  'text!templates/match/grid_item.handlebars'
-], (template)->
-  Em.TEMPLATES.matchGridItem = Em.Handlebars.compile template
-  App.MatchGridItemView = Em.View.extend
-    templateName: 'matchGridItem'
+  'cs!views/game/info_bar'
+  'cs!views/team/grid_item'
+], ->
+  App.MatchGridItemView = Em.ContainerView.extend
     classNames: ['match-grid-item']
+    childViews: ['dateView', 'infoBarView', 'contentView']
+    classNameBindings: ['content.isSelected']
 
-    didInsertElement: ->
-#      console.log @get 'round.matches.length'
-      console.log 'App.MatchGridItemView', @get('content.winner')
-      console.log 'childViews', @get('childViews')
+    mouseEnter: ->
+      node = @get 'content'
+      while node
+        node.set('isSelected', yes)
+        node = node.get('parentNode')
 
-      @get('childViews').forEach (view)=>
-        if App.TeamGridItemView.detectInstance view
-          if view.get('isWinner')
-            style = view.$().position()
-            style.left += view.$().width()
-            style.top += 280 / @get('round.matches.length')
-            connector = document.createElement('div')
-            connector.className = 'connector'
-            $(connector).css(style)
-            @$().append(connector)
+    mouseLeave: ->
+      node = @get 'content'
+      while node
+        node.set('isSelected', no)
+        node = node.get('parentNode')
 
-      @.$()
-      .height(300 / @get('round.matches.length'))
-      .css('margin-top', 280 / @get('round.matches.length'))
+    dateView: App.EditableLabel.extend
+      classNames: ['match-start-date']
+      contentBinding: 'parentView.content.date'
+
+      value: (->
+        moment(@get 'content.date').format('DD.MM.YY')
+      ).property('content')
+#              template: Em.Handlebars.compile('{{moment view.content.date format=DD.MM.YY}}')
+
+    infoBarView: App.GamesInfoBarView.extend
+      contentBinding: 'parentView.content.games'
+      showInfoLabel: yes
+      classNames: ['match-info-bar']
+
+    contentView: Em.CollectionView.extend
+      classNames: ['match-grid-item']
+      matchBinding: 'parentView.content'
+      contentBinding: 'parentView.content.entrants'
+
+      itemViewClass: App.TeamGridItemView

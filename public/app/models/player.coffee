@@ -13,6 +13,7 @@ define ->
     firstName: DS.attr 'string'
     middleName: DS.attr 'string'
     lastName: DS.attr 'string'
+    is_captain: DS.attr 'boolean'
     country: DS.belongsTo 'App.Country'
     team: DS.belongsTo 'App.Team'
     matches: DS.hasMany 'App.Match'

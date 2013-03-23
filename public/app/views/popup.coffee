@@ -40,8 +40,12 @@ define ->
       $(document.body).unbind('mousedown.popup')
       @hide()
 
+    onShow: Em.K
+
+    onHide: Em.K
+
     show: ->
-      @$().transition({ scale: 1 }, 300)
+      @$().transition({ scale: 1 }, 300, (=> @onShow()))
 
     hide: ->
-      @$().transition({ scale: 0 }, 300, (-> @destroy()).bind(@))
+      @$().transition({ scale: 0 }, 300, (=> @onHide(); @destroy()))

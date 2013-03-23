@@ -1,5 +1,6 @@
 /*@import "common.css";*/
 @import "global.css";
+@import "extras.css";
 @import "select.css";
 @import "tooltip.css";
 @import "table.css";
@@ -30,20 +31,6 @@
     font-weight: bold;
     font-size: 12px;
     line-height: 17px;
-}
-
-.block-container {
-    /*padding: 16px;*/
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
-    border: 1px solid #bcbcbc;
-    background-color: white;
-    margin-top: 20px;
-    -webkit-transition-property: box-shadow;
-    -webkit-transition-duration: 0.3s;
-}
-
-.block-container:hover {
-    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.25);
 }
 
 .b-content :first-child[class="block-container"] {
@@ -180,12 +167,7 @@
 .grid .match-grid-item {
     float: left;
     margin-right: 43px;
-}
-
-.toggle-btn {
-    -webkit-appearance: none;
-    border: 0;
-    background: none;
+    margin-bottom: 10px;
 }
 
 .b-profileBlock__title {

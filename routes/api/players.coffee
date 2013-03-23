@@ -47,3 +47,34 @@ exports.create = (req, res) ->
     res.send player: p
   else
     res.send 401, error: "server error"
+
+exports.update = (req, res)->
+  if req.body?.players
+    players = []
+    for player, i in req.body.players
+      console.log player, i
+      m = new Player player
+      await m.update(player, defer err, players[i])
+    res.send players: players
+  else if req.body?.player
+    player = req.body?.player
+    await Player.findOne req.params._id, defer err, p
+    await p.update(player, defer err, doc)
+    res.send player: doc
+  else
+    res.send 401, error: "server error"
+
+exports.delete = (req, res) ->
+  if req.body?.players
+    players = []
+    for id, i in req.body.players
+      console.log id
+      await Player.remove _id: id, defer err, players[i]
+    res.status 204
+    res.send()
+  else if req.params?._id?
+    Player.remove _id: req.params._id, (err)->
+      res.status 204 unless err
+      res.send()
+  else
+    res.send 401, error: "server error"

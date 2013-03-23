@@ -118,8 +118,8 @@ app.configure ->
 #  app.use processRandom
 
 app.locals
-  node_env: process.env.NODE_ENV
-#  node_env: 'production'
+#  node_env: process.env.NODE_ENV
+  node_env: 'production'
 #  staticDomain: '//static.tournament.local:3000'
   staticDomain: '//tournament.local:3000'
   moment: moment
@@ -138,9 +138,13 @@ app.post '/api/games', routes.api.games.create
 app.get '/api/matches', routes.api.matches.list
 app.post '/api/matches', routes.api.matches.create
 app.put '/api/matches', routes.api.matches.update
+app.put '/api/matches/:_id', routes.api.matches.update
 
 app.get '/api/players', routes.api.players.list
 app.post '/api/players', routes.api.players.create
+app.put '/api/players', routes.api.players.update
+app.put '/api/players/:_id', routes.api.players.update
+app.delete '/api/players/:_id', routes.api.players.delete
 
 app.get '/api/reports', routes.api.reports.list
 app.get '/api/reports/:_id', routes.api.reports.item
@@ -159,6 +163,7 @@ app.post '/api/stages', routes.api.stages.create
 app.get '/api/teams', routes.api.teams.list
 app.post '/api/teams', routes.api.teams.create
 app.get '/api/teams/:_id', routes.api.teams.item
+app.delete '/api/teams/:_id', routes.api.teams.delete
 app.delete '/api/teams/bulk', routes.api.teams.delete
 
 ensureAuthenticated = (req, res, next) ->
@@ -169,6 +174,8 @@ ensureAuthenticated = (req, res, next) ->
 app.get '/', passport.authenticate('basic'), (req, res)->
   console.log req.user
 #  res.header('cache-control', 'public, max-age=2592000')
+  if req.user?.language and not req.cookies?.lang
+    res.cookie 'lang', req.user.language
   res.redirect '/reports'
 #  res.render 'index.ect'
 

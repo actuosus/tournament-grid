@@ -15,6 +15,7 @@ define ['cs!views/autocomplete_text_field'], ->
       'autocompleteTextFieldView'
 #      'selectView'
       ]
+    valueBinding: 'autocompleteTextFieldView.selection'
     currentValueView: Em.View.extend
       classNames: ['current-value']
       template: Em.Handlebars.compile '{{view.parentView.currentLabel}}'

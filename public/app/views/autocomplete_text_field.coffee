@@ -78,10 +78,14 @@ define ['spin', 'cs!views/menu'], (Spinner)->
             event.preventDefault()
             @get('parentView').selectPrevious()
 
-      insertNewline: ->
-        menuView = @get 'parentView.menuView'
-        @$().val(@get 'parentView.selection.name')
+      insertNewline: (event)->
+        parentView = @get 'parentView'
+        menuView = parentView.get 'menuView'
+        @$().val(parentView.get 'selection.name') if parentView.get 'selection.name'
         menuView.set 'isVisible', no
+        parentView.insertNewline(event)
+
+    insertNewline: Em.K
 
     contentLoaded: (->
       return unless @get 'hasFocus'
@@ -150,19 +154,23 @@ define ['spin', 'cs!views/menu'], (Spinner)->
       attributeBindings: ['title']
       title: '_add_entrant'.loc()
       template: Em.Handlebars.compile '+'
-      click: ->
-        popup = App.PopupView.create target: @
-        formView = @get 'parentView.controller.formView'
-        popup.get('childViews').push(
-          formView.create
-            value: @get('parentView.textFieldView').$().val()
-            popupView: popup
-            entrant: @get('parentView.entrant')
-            didCreate: (entrant)=>
-              @set('parentView.selection', entrant)
-              popup.hide()
-        )
-        popup.append()
+      click: -> @get('parentView').showAddForm(@)
+
+
+    showAddForm: (target)->
+      popup = App.PopupView.create target: target
+      formView = @get 'controller.formView'
+      form = formView.create
+        value: @get('textFieldView').$().val()
+        popupView: popup
+        entrant: @get('entrant')
+        didCreate: (entrant)=>
+          @set('selection', entrant)
+          popup.hide()
+      popup.set 'formView', form
+      popup.get('childViews').push form
+      popup.append()
+
 
     cancelButtomView: Em.View.extend
       tagName: 'button'

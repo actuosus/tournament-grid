@@ -15,6 +15,7 @@
 </div>
 {{/if}}
 <div class="teams-container">
-    {{view App.TeamGridItemView contentBinding=view.content.team1 pointsBinding=view.content.team1_points identifier="team1"}}
-    {{view App.TeamGridItemView contentBinding=view.content.team2 pointsBinding=view.content.team2_points identifier="team2"}}
+    {{#each view.content.entrants }}
+        {{view App.TeamGridItemView contentBinding=this matchBinding=view.content}}
+    {{/each}}
 </div>

@@ -8,6 +8,7 @@
 define ['cs!views/combobox'], ->
   App.CountrySelectView = App.ComboBoxView.extend
     classNames: ['country-select']
+    valueBinding: 'autocompleteTextFieldView.selection'
     currentValueView: Em.View.extend
       classNames: ['current-value']
       contentBinding: 'parentView.autocompleteTextFieldView.selection'

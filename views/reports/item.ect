@@ -1,5 +1,34 @@
 <% extend 'layout.ect' %>
 
+<script type="text/javascript">
+    window.currentReportId = '<%- @doc.id %>';
+</script>
+
+<% if @node_env is 'production': %>
+<link rel="stylesheet" href="<%- @staticDomain %>/bundle/stylesheets/app.css" />
+<% else: %>
+<link rel="stylesheet" href="/app/stylesheets/main.css" />
+<% end %>
+<link rel="icon" type="image/x-icon" href="<%- @staticDomain %>/favicon.ico" />
+
+<!-- Not working with require.js https://github.com/DmitryBaranovskiy/raphael/issues/524 -->
+<!--<script type="text/javascript" src="/vendor/javascripts/raphael.js"></script>-->
+<!--<script type="text/javascript" src="/vendor/javascripts/spin.js"></script>-->
+<script type="text/javascript" src="/vendor/javascripts/require.js"></script>
+
+<script type="text/javascript" id="grid-config">
+    window.gridConfig = {
+        languages: <%- JSON.stringify(@languages) %>
+
+    };
+</script>
+
+<% if @node_env is 'production': %>
+<script type="text/javascript" src="<%- @staticDomain %>/bundle/app.js"></script>
+<% else: %>
+<script type="text/javascript" src="/app/main.js"></script>
+<% end %>
+
 <p class="b-title b-title_bump"><span class="ico ico_players"></span><%- @__ 'Report' %>
     <a class="link link_pencil" href="" title=""><%- @__ 'Add information' %></a></p>
 
@@ -195,7 +224,7 @@
     <!-- profileStreams -->
     <div class="b-profileBlock b-profileStreams">
         <p class="b-profileBlock__title"><%- @__ 'Video' %> <span class="figure">[ 3 ]</span>
-            <small>Видеозаписи с самыми яркими моментами игр</small>
+            <small><%- @__ 'Video of the brightest moments of the Games' %></small>
         </p>
 
         <ul class="b-profileStreams__list">
@@ -222,7 +251,7 @@
     <!-- profileStreams -->
     <div class="b-profileBlock b-profileStreams">
         <p class="b-profileBlock__title"><%- @__ 'Game videos' %> <span class="figure">[ 3 ]</span>
-            <small>Видеозаписи с самыми яркими моментами игр</small>
+            <small><%- @__ 'Video of the brightest moments of the Games' %></small>
         </p>
 
         <ul class="b-profileStreams__list">
@@ -279,7 +308,7 @@
 
         <!-- profileNews -->
         <div class="b-profileBlock b-profileNews b-profileNews_short">
-            <p class="b-profileBlock__title">Новости <span class="figure">[18]</span>
+            <p class="b-profileBlock__title"><%- @__ 'News' %> <span class="figure">[18]</span>
             </p>
 
             <ul class="b-profileNews__list">
@@ -292,7 +321,7 @@
                     </div>
                     <p>Несмотря на огромное количество фильмов о тех полицейских, история Макса уникальна.</p>
 
-                    <p class="item__bottom">Комментариев: <span class="item__comments">24</span> <span class="item__likes">1458</span>
+                    <p class="item__bottom"><%- @__ 'Comments' %>: <span class="item__comments">24</span> <span class="item__likes">1458</span>
                     </p>
                 </li>
                 <li class="item">
@@ -304,7 +333,7 @@
                     </div>
                     <p>Несмотря на огромное количество фильмов о тех полицейских, история Макса уникальна.</p>
 
-                    <p class="item__bottom">Комментариев: <span class="item__comments">24</span> <span class="item__likes">1458</span>
+                    <p class="item__bottom"><%- @__ 'Comments' %>: <span class="item__comments">24</span> <span class="item__likes">1458</span>
                     </p>
                 </li>
             </ul>

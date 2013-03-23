@@ -8,6 +8,7 @@
 module.exports.User = [
   username: 'admin'
   password: 'virtual'
+  language: 'en'
 ,
   _id: '5149b02872267f7b2c00002f'
   username: 'FUki'
@@ -17,8 +18,10 @@ module.exports.User = [
   username: 'actuosus'
   password: 'virtus'
   email: 'actuosus@gmail.com'
+  language: 'en'
 ,
   username: 'nortan'
   password: 'virtus'
   email: 'yuri@timofeev.su'
+  language: 'en'
 ]

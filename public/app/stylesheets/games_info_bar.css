@@ -48,3 +48,14 @@
     font-size: 7px;
     background-color: #3b3b3b;
 }
+
+.games-info-bar .games-create-button button {
+    padding: 0;
+    color: white;
+    font-size: 10px;
+    line-height: 11px;
+}
+
+.games-info-bar li.is-updating {
+    background-color: #971b1a;
+}

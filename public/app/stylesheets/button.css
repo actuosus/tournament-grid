@@ -66,3 +66,43 @@
     background-image: -webkit-linear-gradient(top, #d4d4d4 0%, #cacaca 100%);
     border-color: #a7a7a7;
 }
+
+.toggle-btn {
+    -webkit-appearance: none;
+    border: 0;
+    background: none;
+}
+
+.remove-btn {
+    position: absolute;
+    border-radius: 20px;
+    color: gray;
+    font-size: 9px;
+    padding: 0 3px 1px 3px;
+    line-height: 10px;
+    top: 50%;
+    margin-top: -6px;
+    z-index: 2;
+    vertical-align: middle;
+    text-align: center;
+    text-indent: 0;
+
+    background-color: rgba(255,255,255,0);
+
+    -webkit-transition-duration: 0.3s;
+    -webkit-transition-property: color, background-color;
+}
+
+.remove-btn:hover {
+    color: white;
+    background-color: #d56154;
+    box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.75);
+    text-shadow: 0 1px 1px rgba(0,0,0,0.5);
+}
+
+.remove-btn:active {
+    background-color: #7c7c7c;
+    color: white;
+    box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.75);
+    text-shadow: 0 1px 1px rgba(0,0,0,0.5);
+}

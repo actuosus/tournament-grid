@@ -22,6 +22,8 @@ define [
   'cs!views/named_container'
   'cs!views/editable_label'
 
+  'cs!views/tree_view'
+
   'cs!views/lineup'
   'cs!views/tournament_grid'
   'cs!views/match/filter_form'

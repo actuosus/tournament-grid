@@ -1,21 +1,22 @@
 <thead>
 <tr>
     <th colspan="2">
-        <span class="lineup-grid-item-name"><i {{bindAttr class=":country-flag-icon :team-country-flag-icon view.content.countryFlagClassName"}}></i>{{view.content.name}}</span>
-        <button class="btn-clean remove-btn"><i class="icon-remove">&times;</i></button>
+        <span class="lineup-grid-item-name"><i {{bindAttr class=":country-flag-icon :team-country-flag-icon view.content.country.flagClassName"}}></i>{{view.content.name}}</span>
+        <button class="btn-clean remove-btn remove"><i class="icon-remove remove">&times;</i></button>
     </th>
 </tr>
 </thead>
 <tbody>
     {{#each view.content.players}}
-    <tr {{bindAttr class="stateManager.currentState.isError"}}>
+    <tr {{bindAttr class=":lineup-grid-item-player-row stateManager.currentState.isError"}}>
         <td>
-            <i {{bindAttr class=":country-flag-icon :team-country-flag-icon countryFlagClassName"}}></i>{{nickname}}
+            <i {{bindAttr class=":country-flag-icon :player-country-flag-icon this.country.flagClassName"}}></i>{{nickname}}
         </td>
         <td>
             {{#if shortName}}
             <span class="name">({{shortName}})</span>
             {{/if}}
+            <button class="btn-clean remove-btn remove"><i class="icon-remove remove">&times;</i></button>
         </td>
     </tr>
     {{/each}}

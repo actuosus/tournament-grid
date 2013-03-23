@@ -33,3 +33,8 @@ define
   _create: 'Schaffen'
   _cancel: 'Beenden'
   _save: 'Speichern'
+  _edit: 'Bearbeiten'
+  _remove: 'Entfernen'
+  _the_teams: 'Die Teams'
+  _filter: 'Filtern'
+  _captain: 'Kapitän'

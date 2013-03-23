@@ -56,6 +56,7 @@ module.exports = (grunt)->
           'jquery.mousewheel': '../vendor/javascripts/jquery.mousewheel',
           'jquery.cookie': '../vendor/javascripts/jquery.cookie',
           'jquery.isotope': '../vendor/javascripts/jquery.isotope',
+          'jquery.scrollTo': '../vendor/javascripts/jquery.scrollTo.min',
           'Faker': '../vendor/javascripts/Faker',
           'raphael': '../vendor/javascripts/raphael',
           'spin': '../vendor/javascripts/spin',

@@ -15,6 +15,8 @@ UserSchema = new Schema
   password: type: String
   email: type: String
 
+  language: type: String
+
 UserSchema.methods.validPassword = (password)-> @password is password
 
 UserSchema.virtual('gravatar').get(->

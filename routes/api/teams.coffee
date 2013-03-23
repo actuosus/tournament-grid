@@ -53,5 +53,9 @@ exports.delete = (req, res) ->
       await Team.remove _id: id, defer err, teams[i]
     res.status 204
     res.send()
+  else if req.params?._id?
+    Team.remove _id: req.params._id, (err)->
+      res.status 204 unless err
+      res.send()
   else
     res.send 401, error: "server error"

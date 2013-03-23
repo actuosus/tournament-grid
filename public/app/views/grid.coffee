@@ -11,6 +11,21 @@ define ->
     templateName: 'grid'
     classNames: ['grid']
 
+    reorderDelegate: null
+
+    didReorderContent: (content)->
+      delegate = @get 'reorderDelegate'
+      if delegate
+        Ember.run.next ->
+          delegate.didReorderContent content
+
+    isValidDrop: (itemDragged, newParent, dropTarget)->
+      delegate = @get 'reorderDelegate'
+      if delegate and delegate.isValidDrop
+        delegate.isValidDrop(itemDragged, newParent, dropTarget)
+      else
+        return yes
+
     # Isotope
 #    didInsertElement: ->
 #      @$().isotope({masonry: {columnWidth: 114}})

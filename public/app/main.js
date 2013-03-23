@@ -10,11 +10,10 @@ require({
   baseUrl: '/app',
   paths: {
     'jquery': '/vendor/javascripts/jquery',
-    'jquery.ui.widget': '/vendor/javascripts/jquery.ui.widget',
-    'jquery.fileupload': '/vendor/javascripts/jquery.fileupload',
     'jquery.mousewheel': '/vendor/javascripts/jquery.mousewheel',
     'jquery.isotope': '/vendor/javascripts/jquery.isotope',
     'jquery.cookie': '/vendor/javascripts/jquery.cookie',
+    'jquery.scrollTo': '/vendor/javascripts/jquery.scrollTo.min',
     'moment': '/vendor/javascripts/moment',
     'Faker': '/vendor/javascripts/Faker',
     'raphael': '/vendor/javascripts/raphael',
@@ -35,6 +34,11 @@ require({
     'jquery.isotope': {
       deps: ['jquery']
     },
+
+    'jquery.scrollTo': {
+      deps: ['jquery']
+    },
+
     'ember': {
       deps: ['jquery', 'handlebars']
     },
@@ -49,6 +53,7 @@ require({
 }, [
   'jquery',
   'jquery.mousewheel',
+  'jquery.scrollTo',
   'jquery.isotope',
   'jquery.cookie',
   'transit',

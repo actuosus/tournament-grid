@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="<%- @language %>">
 <head>
     <meta charset="utf-8"/>
     <title>Virtus.Pro Report Test</title>
@@ -22,32 +22,7 @@
           rel='stylesheet' type='text/css'>
 
     <link rel="stylesheet" href="<%- @staticDomain %>/agamapro-virtus.pro-ebb4d51390f8/css/style.css" media="screen,projection" />
-
-
-    <% if @node_env is 'production': %>
-    <link rel="stylesheet" href="<%- @staticDomain %>/bundle/stylesheets/app.css" />
-    <% else: %>
-    <link rel="stylesheet" href="/app/stylesheets/main.css" />
-    <% end %>
-    <link rel="icon" type="image/x-icon" href="<%- @staticDomain %>/favicon.ico" />
-
-    <!-- Not working with require.js https://github.com/DmitryBaranovskiy/raphael/issues/524 -->
-    <!--<script type="text/javascript" src="/vendor/javascripts/raphael.js"></script>-->
-    <!--<script type="text/javascript" src="/vendor/javascripts/spin.js"></script>-->
-    <script type="text/javascript" src="/vendor/javascripts/require.js"></script>
-
-    <script type="text/javascript" id="grid-config">
-        window.gridConfig = {
-            languages: <%- JSON.stringify(@languages) %>
-
-        };
-    </script>
-
-    <% if @node_env is 'production': %>
-    <script type="text/javascript" src="<%- @staticDomain %>/bundle/app.js"></script>
-    <% else: %>
-    <script type="text/javascript" src="/app/main.js"></script>
-    <% end %>
+    <link rel="stylesheet" href="<%- @staticDomain %>/stylesheets/main.css" media="screen,projection" />
 
     <link rel="shortcut icon" href="<%- @staticDomain %>/images/favicon.ico">
     <link rel="apple-touch-icon" href="<%- @staticDomain %>/images/apple-touch-icon.png">
@@ -175,7 +150,7 @@
 <div class="i-container cf">
 
 <div class="b-breadcrumbs">
-    <a href="" title=""><%- @__ 'Main page' %></a> <span class="divider">»</span>
+    <a href="/" title=""><%- @__ 'Main page' %></a> <span class="divider">»</span>
     <a href="" title=""><%- @__ 'News' %></a>  <span class="divider">»</span>
     Команда VirtusPro побеждают на WCG’12 DOTA2
 </div>

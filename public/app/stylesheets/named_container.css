@@ -22,3 +22,18 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+.named-container .search-bar {
+    position: absolute;
+    right: 285px;
+    top: 13px;
+}
+
+.named-container .search-field {
+    border-radius: 15px;
+    outline: none;
+}
+
+.named-container .search-field:focus {
+    box-shadow: 0 0 8px #da4600;
+}

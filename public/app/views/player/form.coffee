@@ -16,30 +16,37 @@ define [
     templateName: 'playerForm'
     countrySelectViewBinding: 'childViews.firstObject'
 
-    nickname: (-> Faker.Company.companyName()).property().volatile()
+    nicknameBinding: 'value'
     firstName: (-> Faker.Name.firstName()).property().volatile()
     lastName: (-> Faker.Name.lastName()).property().volatile()
     middleName: ''
+    country: null
+    isCaptain: no
 
     didCreate: Em.K
+
+    focus: ->
+      @$('.nickname').focus()
 
     createRecord: ->
       @$('.save-btn').attr('disabled', 'disabled')
 
-      country = @get 'countrySelectView.selection'
+#      country = @get 'country'
+      country = @get('countrySelectView.autocompleteTextFieldView.selection')
       team = @get 'entrant'
-      player = App.Player.createRecord
-        country: country
-        team: team
-        nickname: @$('.nickname').val()
-        firstName: @$('.first-name').val()
-        middleName: @$('.middle-name').val()
-        lastName: @$('.last-name').val()
+      transaction = App.store.transaction()
+      player = transaction.createRecord(App.Player)
+      player.set 'country', country
+      player.set 'team', team
+      player.set 'nickname', @$('.nickname').val()
+      player.set 'firstName', @$('.first-name').val()
+      player.set 'middleName', @$('.middle-name').val()
+      player.set 'lastName', @$('.last-name').val()
       player.on 'didCreate', => @didCreate player
       player.on 'becameError', =>
         console.log arguments
         player.destroy()
-      App.store.commit()
+      transaction.commit()
 
     submit: (event)->
       event.preventDefault()

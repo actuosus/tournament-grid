@@ -16,12 +16,14 @@ define ['cs!views/game/form'], ->
       <li class="games-info-bar-label">{{loc '_info'}}</li>
       {{/if}}
       {{#each view.content}}
-      <li><a _target="blank" {{bindAttr href="link" title="name"}}>{{view.contentIndex}}</a></li>
+      <li {{bindAttr class="isUpdating"}}><a _target="blank" {{bindAttr href="link" title="name"}}>{{view.contentIndex}}</a></li>
       {{/each}}
-      <li><a>+</a></li>
+      {{#if App.isEditingMode}}
+      <li class="games-create-button"><button class="btn-clean create-btn">+</button></li>
+      {{/if}}
       """
     click: (event)->
-      if $(event.target).hasClass('games-info-bar-label')
+      if $(event.target).hasClass('games-create-button') or $(event.target).hasClass 'create-btn'
         popup = App.PopupView.create target: @
         popup.get('childViews').push(
                                       App.GameForm.create

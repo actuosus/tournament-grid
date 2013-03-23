@@ -29,7 +29,8 @@ module.exports.Team = [
 ,
   _id: '5116163383cf2f2534000002'
   name: 'Very long team name for testing purpose'
-  country_id: '50fcdaf969f206c106000009'
+  country_id: '514569cef9bbb58f3100001a'
+  players: ['5107d4cd351fb19719000007']
 ,
   name: 'Natus Vincere'
   country_id: '50fcdaf969f206c106000009'

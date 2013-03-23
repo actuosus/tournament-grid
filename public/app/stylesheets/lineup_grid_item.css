@@ -8,7 +8,7 @@
 .lineup-grid-item {
     float: left;
     width: 268px;
-    height: 160px;
+    height: 191px;
     margin: 10px;
 }
 
@@ -21,15 +21,119 @@
 }
 
 .lineup-grid-item .remove-btn {
-    float: right;
+    right: 6px;
+    top: 50%;
+    margin-top: -6px;
+}
+
+.lineup-grid-item .edit-btn {
+    position: absolute;
+    right: 26px;
+    border-radius: 20px;
+    background-color: #a5a5a5;
+    color: #FFF;
+    font-size: 9px;
+    padding: 0 3px 1px 3px;
+    line-height: 10px;
+    top: 50%;
+    margin-top: -6px;
+    z-index: 2;
+    vertical-align: middle;
+    text-align: center;
+    text-indent: 0;
+    -webkit-transition-duration: 0.3s;
+    -webkit-transition-property: background-color;
 }
 
 .lineup-grid-item-name {
     font-weight: bold;
     font-size: 13px;
     color: #000000;
+    max-width: 220px;
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.lineup-grid-item-real-name {
+    display: inline-block;
+    margin: 0 7px;
+    font-size: 11px;
+    color: #979797;
 }
 
 .lineup-grid-item .realname {
     color: #979797;
+}
+
+.lineup-grid-item-player-row .remove-btn {
+    right: 6px;
+    margin-top: -6px;
+}
+
+.lineup-grid-item-name-container {
+    background-color: #e5e5e5;
+    border: 1px solid #bababa;
+    border-bottom: 3px solid #e9550d;
+    height: 28px;
+    line-height: 29px;
+    position: relative;
+
+    -webkit-transition-duration: 0.3s;
+    -webkit-transition-property: background-color;
+}
+
+.lineup-grid-item-players {
+    max-height: 125px;
+    /*overflow: scroll;*/
+}
+
+
+.lineup-grid-item-player-row {
+    height: 24px;
+    line-height: 24px;
+    border: 1px solid #bababa;
+    border-top: 0;
+    overflow: hidden;
+    position: relative;
+
+    -webkit-transition-duration: 0.3s;
+    -webkit-transition-property: background-color, box-shadow;
+}
+
+.lineup-grid-item-player-row:hover {
+    background-color: #f2f2f2;
+    /*box-shadow: inset 0 0 7px rgba(0,0,0,0.75);*/
+}
+
+.lineup-grid-item-player-row .autocomplete-text-field .text-field {
+    border: 0;
+}
+
+.lineup-grid-item-name-container .country-flag-icon {
+    margin-top: 9px;
+    margin-left: 8px;
+    margin-right: 8px;
+}
+
+.lineup-grid-item-player-row .country-flag-icon {
+    margin-top: 6px;
+    margin-left: 8px;
+    margin-right: 8px;
+}
+
+.lineup-grid-item-captain-marker {
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+    background-color: #e9550d;
+    border-radius: 2px;
+    font-weight: bold;
+    color: white;
+    line-height: 11px;
+    font-size: 8px;
+    text-align: center;
+    vertical-align: 2px;
+    margin-left: -3px;
 }

@@ -7,15 +7,18 @@
 
 define [
   'cs!views/autocomplete_text_field'
+  'cs!mixins/moving_highlight'
 ], ->
   ###
   Represents team model in grid. Also can be used standalone.
   ###
-  App.TeamGridItemView = Em.ContainerView.extend
+  App.TeamGridItemView = Em.ContainerView.extend App.MovingHightlight,
     classNames: ['team-grid-item']
-    classNameBindings: ['winnerClassName', 'isEditing', 'teamUndefined']
+    classNameBindings: ['winnerClassName', 'isEditing', 'teamUndefined', 'isUpdating']
     childViews: '''countryFlagView nameView
      autocompleteView pointsView resetButtonView'''.w()
+
+    isUpdatingBinding: 'match.isUpdating'
 
     teamUndefined: (-> !@get('content')).property('content')
 
@@ -68,15 +71,23 @@ define [
           @set('isVisible', yes)
       ).observes('hasFocus')
 
+      insertNewline: ->
+        popup = @showAddForm(@)
+        popup.onShow = =>
+          popup.get('formView')?.focus()
+        popup.onHide = =>
+          @focus()
+
     nameView: Em.View.extend
       classNames: ['team-name']
       contentBinding: 'parentView.content'
       template: Em.Handlebars.compile '{{view.content.name}}'
 
       click: ->
-        unless @get('parentView.match.isLocked')
-          @set('parentView.autocompleteView.isVisible', yes)
-          @get('parentView.autocompleteView').focus()
+        if @get('parentView.isEditable')
+          unless @get('parentView.match.isLocked')
+            @set('parentView.autocompleteView.isVisible', yes)
+            @get('parentView.autocompleteView').focus()
 
     points: (->
       contentIndex = @get('contentIndex')
@@ -90,18 +101,20 @@ define [
       template: Em.Handlebars.compile '{{view.parentView.points}}'
 
       click: ->
-        @$().css
-          '-webkit-user-modify': 'read-write'
-          '-webkit-user-select': 'text'
-        @$().keyup =>
-          match = @get('parentView.parentView.match')
-          points = parseInt @$().text(), 10
-          if points >= 0 and match
-            match.set('entrant' + (@get('contentIndex')+1) + '_points', points)
-        @$().blur => @$().unbind('keyup').css {'-webkit-user-modify': 'none'}
-        @$().focus().select()
+        if @get('parentView.isEditable')
+          @$().css
+            '-webkit-user-modify': 'read-write'
+            '-webkit-user-select': 'text'
+          @$().keyup =>
+            match = @get('parentView.parentView.match')
+            points = parseInt @$().text(), 10
+            if points >= 0 and match
+              match.set('entrant' + (@get('contentIndex')+1) + '_points', points)
+          @$().blur => @$().unbind('keyup').css {'-webkit-user-modify': 'none'}
+          @$().focus().select()
 
     isEditing: no,
+    isEditableBinding: 'App.isEditingMode'
     match: Ember.computed -> @get 'parentView.match'
 
     isWinner: (->
@@ -119,15 +132,16 @@ define [
     ).property('match.winner')
 
     mouseEnter: ->
-      unless @get 'match.isLocked'
-        @set 'resetButtonView.isVisible', yes if @get 'content'
+      if @get('isEditable')
+        unless @get('match.isLocked')
+          @set 'resetButtonView.isVisible', yes if @get 'content'
 
     mouseLeave: ->
       @set 'resetButtonView.isVisible', no
 
     resetButtonView: Em.View.extend
       tagName: 'button'
-      classNames: ['btn-clean', 'team-reset-btn']
+      classNames: ['btn-clean', 'remove-btn', 'team-reset-btn']
       attributeBindings: ['title']
       title: '_reset'.loc()
       template: Em.Handlebars.compile('&times;')

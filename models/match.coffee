@@ -20,10 +20,10 @@ MatchSchema = new Schema
   type: type: String
   status: type: String
   championship: type: ObjectId, ref: 'Championship'
-  team1_id: type: ObjectId, ref: 'Team' # editable
-  team2_id: type: ObjectId, ref: 'Team' # editable
-  team1_points: type: Number # editable
-  team2_points: type: Number # editable
+  entrant1_id: type: ObjectId, ref: 'Team' # editable
+  entrant2_id: type: ObjectId, ref: 'Team' # editable
+  entrant1_points: type: Number # editable
+  entrant2_points: type: Number # editable
   player1_points: type: Number
   player2_points: type: Number
   player1_race_id: type: Number

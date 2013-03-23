@@ -19,4 +19,6 @@ PlayerSchema = new Schema
   middle_name: type: String
   last_name: type: String
 
+  is_captain: type: Boolean
+
 module.exports = PlayerSchema

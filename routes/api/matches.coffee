@@ -47,7 +47,6 @@ exports.update = (req, res)->
       await m.update(match, defer err, matches[i])
     res.send matches: matches
   else if req.body?.match
-#    await Round.findOne req.body?.match.round_id, defer err, round
     match = req.body?.match
     await Match.findOne req.params._id, defer err, m
     await m.update(match, defer err, doc)

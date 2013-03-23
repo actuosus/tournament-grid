@@ -16,6 +16,7 @@ define ['cs!views/multilingual_field'], ->
       valueBinding: 'parentView.value'
       valueChanged: (->
         value = @get 'value'
-        @$().val value
-        @$().focus()
+        if @$()
+          @$().val value
+          @$().focus()
       ).observes('value')
