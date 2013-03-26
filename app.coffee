@@ -113,11 +113,11 @@ app.configure ->
 
   app.use cors
 
-#app.configure 'production', ->
-#  app.use express.compress()
-#  # Static files serving
-#  oneYear = 31557600000
-#  app.use express.static path.join(__dirname, 'public'), {maxAge: oneYear}
+app.configure 'production', ->
+  app.use express.compress()
+  # Static files serving
+  oneYear = 31557600000
+  app.use express.static path.join(__dirname, 'public'), {maxAge: oneYear}
 
 
 #  app.use processRandom
