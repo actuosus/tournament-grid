@@ -116,11 +116,9 @@ app.configure ->
   app.use cors
 
 #  app.use processRandom
+port = 80
+port = conf.port if conf.port
 
-unless conf.port or conf.port isnt 80
-  port = 80
-else
-  port = conf.port
 app.locals
 #  node_env: process.env.NODE_ENV
   node_env: 'production'
