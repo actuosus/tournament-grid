@@ -262,6 +262,17 @@ textarea {
     box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.75);
     text-shadow: 0 1px 1px rgba(0,0,0,0.5);
 }
+.toggle-btn {
+    position: absolute;
+    right: 13px;
+    top: 18px;
+    height: 18px;
+    width: 22px;
+    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAJCAMAAADaUYZlAAAAOVBMVEU4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODiX3pCcAAAAE3RSTlMAAwYOFDg+SVBRbHCsrcXc8/n+d22gqAAAAD5JREFUeNpVyFsOgCAQQ9E6CuiIvPa/WEgaRuhPcw84cfyZsd5btkyYqWcykK8pMOBZkmD5w8sklAtHAAw8OpFEAipz42oiAAAAAElFTkSuQmCC') right 0 no-repeat;
+}
+.toggle-btn-collapsed {
+    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAJCAMAAADaUYZlAAAAOVBMVEU4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODiX3pCcAAAAE3RSTlMAAwYNFDk+SFFrbG+srcTb8/n+43xG/AAAADxJREFUeNpFyEEOgCAQQ9GCgAgowv0Pq0mbma76H8IJ21GAvi/L502I9w/KVQGCp0BJGLsxHSbTgOmQdT6lXQIj8v3aswAAAABJRU5ErkJggg==') right 6px no-repeat;
+}
 .menu {
     position: absolute;
     width: 205px;
@@ -460,6 +471,11 @@ textarea {
     border-radius: 15px;
     outline: none;
 }
+.named-container .search-bar .remove-btn {
+    right: 7px;
+    background: #a5a5a5;
+    color: white;
+}
 .named-container .search-field:focus {
     box-shadow: 0 0 8px #da4600;
 }
@@ -501,6 +517,7 @@ textarea {
     text-transform: uppercase;
     font-size: 7px;
     background-color: #3b3b3b;
+    cursor: default;
 }
 .games-info-bar .games-create-button button {
     padding: 0;
@@ -1300,6 +1317,20 @@ textarea {
     height: 191px;
     margin: 10px;
 }
+.csscolumns .lineup-grid {
+    -webkit-column-width: 258px;
+    -moz-column-width: 258px;
+    column-width: 258px;
+}
+.csscolumns .lineup-grid-item {
+    float: none;
+    
+    height: auto;
+    margin: 0 0 29px 0;
+    -webkit-column-break-inside: avoid;
+    -moz-column-break-inside: avoid;
+    column-break-inside: avoid;
+}
 .lineup-grid-item td {
     background-color: white;
 }
@@ -1406,6 +1437,43 @@ textarea {
     text-align: center;
     vertical-align: 2px;
     margin-left: -3px;
+}
+.csscolumns .group-lineup-grid {
+    -webkit-column-width: 428px;
+    -moz-column-width: 428px;
+    column-width: 428px;
+}
+.csscolumns .group-lineup-grid .lineup-grid-item {
+    width: 100%;
+}
+.match-grid {
+    overflow: hidden;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+}
+.csscolumns .match-grid {
+    -webkit-column-width: 158px;
+    -moz-column-width: 158px;
+    column-width: 158px;
+}
+.match-grid-item {
+    width: 158px;
+}
+.grid .match-grid-item {
+    float: left;
+    margin-right: 43px;
+    margin-bottom: 10px;
+}
+.csscolumns .match-grid .match-grid-item {
+    float: none;
+    margin-right: 0;
+    -webkit-column-break-inside: avoid;
+    -moz-column-break-inside: avoid;
+    column-break-inside: avoid;
+}
+.match-grid .team-grid-item {
+    margin-bottom: 5px;
 }
 .team-standings-table-item .name {
     border-right: 1px solid #dddddd;
@@ -1552,6 +1620,10 @@ textarea {
     border: 1px solid #bebebe;
     background-color: #efefef;
 }
+.matches-table-container .toggle-btn {
+    top: 40px;
+    right: 10px;
+}
 .matches-table-date {
     font-size: 11px;
     color: #838383;
@@ -1592,12 +1664,6 @@ textarea {
     float: right;
     margin-left: 10px;
 }
-.match-grid {
-    overflow: hidden;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -o-user-select: none;
-}
 .named-container-title {
     font-size: 19px;
     border-bottom: 3px solid #bebebe;
@@ -1610,9 +1676,6 @@ textarea {
     border-bottom: 0px solid #bebebe;
     margin-bottom: 0;
     padding-bottom: 0;
-}
-.match-grid-item {
-    width: 158px;
 }
 .match-start-date {
     font-size: 11px;
@@ -1643,11 +1706,6 @@ textarea {
 .grid {
     overflow: hidden;
 }
-.grid .match-grid-item {
-    float: left;
-    margin-right: 43px;
-    margin-bottom: 10px;
-}
 .b-profileBlock__title {
     -webkit-user-select: none;
 }
@@ -1658,8 +1716,11 @@ textarea {
     
     
     box-shadow: 0 0 14px rgba(0, 0, 0, 0);
-    -webkit-transition-property: background-color, box-shadow;
+    -webkit-transition-property: background-color, box-shadow, padding-right;
     -webkit-transition-duration: 0.3s;
+    -moz-transition-property: background-color, box-shadow, padding-right;
+    -moz-transition-duration: 0.3s;
+    position: relative;
 }
 .b-listsTabs .item:hover {
     background-color: #f3f3f3;
@@ -1675,6 +1736,27 @@ textarea {
 .b-listsTabs .item:last-child {
     border-right: 0;
 }
+.b-listsTabs .item .remove-btn {
+    margin-top: -5px;
+    right: 3px;
+    -webkit-transition-property: background-color, box-shadow, right;
+    -webkit-transition-duration: 0.3s;
+    -moz-transition-property: background-color, box-shadow, right;
+    -moz-transition-duration: 0.3s;
+}
+.b-listsTabs .item.is-editing {
+    padding-right: 25px;
+}
+.b-listsTabs .item.is-editing .remove-btn {
+    right: 7px;
+}
+.b-listsTabs .item.add {
+    background-color: #f0f0f0;
+}
+.b-listsTabs .item .add {
+    color: gray;
+    font-size: 11px;
+}
 .stage-view {
     margin-top: 16px;
 }
@@ -1686,9 +1768,6 @@ textarea {
 }
 .grid .team-grid-item {
     border-top: 0;
-}
-.match-grid .team-grid-item {
-    margin-bottom: 5px;
 }
 .grid .team-grid-item:first-child {
     border-top: 1px solid #828282;
@@ -1703,4 +1782,7 @@ textarea {
 .country-menu-item .country-flag-icon {
     margin-right: 4px;
     box-shadow: 0 0 4px rgba(0,0,0,0.5);
+}
+.collapsible {
+    position: relative;
 }

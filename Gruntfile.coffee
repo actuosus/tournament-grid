@@ -67,7 +67,8 @@ module.exports = (grunt)->
           'transit': '../vendor/javascripts/jquery.transit.min',
           'handlebars': '../vendor/javascripts/handlebars',
           'ember': '../vendor/javascripts/ember',
-          'ember-data': '../vendor/javascripts/ember-data'
+          'ember-data': '../vendor/javascripts/ember-data',
+          'modernizr.columns': '../vendor/javascripts/modernizr/columns'
           }
           name: 'main'
           out: 'public/bundle/app.js'
