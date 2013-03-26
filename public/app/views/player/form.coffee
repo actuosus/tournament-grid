@@ -21,7 +21,7 @@ define [
     lastName: (-> Faker.Name.lastName()).property().volatile()
     middleName: ''
     country: null
-    isCaptain: no
+    isCaptain: null
 
     didCreate: Em.K
 

@@ -13,7 +13,6 @@ define [
   'cs!locales'
   'cs!config'
 ] , (cookie, ember, emberData, locales, config)->
-  console.log config
   localize = (lang)->
     lang ?= (window.navigator.userLanguage or window.navigator.language).substring(0, 2)
     Em.STRINGS = locales[lang]

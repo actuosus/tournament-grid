@@ -9,7 +9,7 @@
 define [
          'cs!mixins/zooming'
          'cs!mixins/map_control'
-         'cs!views/round/grid_item'
+         'cs!views/round/tournament_grid_item'
 ], ->
   App.TournamentGridView = Em.ContainerView.extend App.MapControl,
     classNames: ['tournament-grid-container']

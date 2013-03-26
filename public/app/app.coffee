@@ -21,8 +21,11 @@ require [
   'cs!fixtures'
 
   'text!templates/lineup_grid_item.handlebars'
+
   'cs!mixins/translatable'
+  'cs!mixins/collapsable'
   'cs!translators/yandex'
+
 ], ($, Fakera,
     ember,
     emberData,
@@ -42,7 +45,6 @@ require [
   App.isEditingMode = no
 
   $(document.body).keydown (event)->
-    console.log event.keyCode
     if event.ctrlKey
       switch event.keyCode
         when 69 # e
@@ -152,15 +154,58 @@ require [
             contentView = App.TournamentGridView.create content: @currentStage
           when 'group'
             contentView = App.GridView.create
+              classNames: ['lineup-grid', 'group-lineup-grid']
               content: @currentStage.get 'rounds'
-              itemViewClass: Em.View.extend
-                tagName: 'table'
-                classNames: ['table', 'lineup-grid-item']
-                templateName: 'lineupGridItem'
-              emptyViewClass: Em.View.extend
-                template: Em.Handlebars.compile('Пока что ни одного этапа')
+
+              itemViewClass: Em.ContainerView.extend
+                classNames: ['lineup-grid-item']
+                childViews: ['contentView', 'matchesView']
+
+                contentView: Em.ContainerView.extend
+                  contentBinding: 'parentView.content'
+                  classNames: ['lineup-grid-item-name-container']
+                  childViews: ['countryFlagView', 'nameView', 'removeButtonView']
+
+                  countryFlagView: Em.View.extend
+                    tagName: 'i'
+                    classNames: ['country-flag-icon', 'team-country-flag-icon']
+                    classNameBindings: ['countryFlagClassName', 'hasFlag']
+                    attributeBindings: ['title']
+                    title: (-> @get 'content.country.name').property('content.country')
+                    contentBinding: 'parentView.content'
+                    hasFlag: (-> !!@get 'content.country.code').property('content.country')
+                    countryFlagClassName: (->
+                      'country-flag-icon-%@'.fmt @get 'content.country.code'
+                    ).property('content.country.code')
+
+                  nameView: Em.View.extend
+                    contentBinding: 'parentView.content'
+                    classNames: ['lineup-grid-item-name']
+                    template: Em.Handlebars.compile '{{view.content.name}}'
+
+                  removeButtonView: Em.View.extend
+                    tagName: 'button'
+                    contentBinding: 'parentView.content'
+                    isVisibleBinding: 'App.isEditingMode'
+                    classNames: ['btn-clean', 'remove-btn', 'remove']
+                    attributeBindings: ['title']
+                    title: '_remove'.loc()
+                    template: Em.Handlebars.compile '×'
+
+                    click: -> @get('content').deleteRecord()
+
+                matchesView: App.StangingTableView.extend(App.Collapsable,
+                  childViews: ['stadingsView', 'contentView', 'toggleButtonView']
+                  appendableViewBinding: 'contentView'
+                  teams: teamsController
+                  matchesBinding: 'parentView.content.matches'
+                  contentBinding: 'parentView.content.matches'
+                  collapsed: yes
+                )
+
           when 'matrix'
             contentView = App.GridView.create
+              classNames: ['match-grid']
               itemViewClass: App.MatchGridItemView
               stages: App.Stage.find()
               content: @currentStage.get('rounds.firstObject.matches')
@@ -204,12 +249,31 @@ require [
               properChild .$().removeClass('active')
 
 #        itemViewClass: App.MultilingualEditableLabel.extend
-        itemViewClass: Em.View.extend
+        itemViewClass: Em.ContainerView.extend
           tagName: 'li'
           classNames: ['item']
+          classNameBindings: 'isEditing'
+          isEditingBinding: 'App.isEditingMode'
+          childViews: ['nameView', 'removeButtonView']
           languages: App.languages
-          attributeBindings: ['description:title']
-          template: Em.Handlebars.compile '{{name}}'
+          attributeBindings: ['title']
+
+          titleBinding: 'content.description'
+
+          nameView: Em.View.extend
+            contentBinding: 'parentView.content'
+            template: Em.Handlebars.compile '{{name}}'
+
+          removeButtonView: Em.View.extend
+            tagName: 'button'
+            contentBinding: 'parentView.content'
+            isVisibleBinding: 'App.isEditingMode'
+            classNames: ['btn-clean', 'remove-btn', 'remove']
+            attributeBindings: ['title']
+            title: '_remove'.loc()
+            template: Em.Handlebars.compile '×'
+
+            click: -> @get('content').deleteRecord()
 #          valueBinding: 'content.name'
           click: ->
             @get('parentView').selectChildView(@)
@@ -275,12 +339,27 @@ require [
       ]
       searchBarView: Em.ContainerView.extend
         classNames: ['search-bar']
-        childViews: ['textFieldView']
+        childViews: ['textFieldView', 'clearButtonView']
         isVisibleBinding: 'App.isEditingMode'
+        clearButtonView: Em.View.extend
+          tagName: 'button'
+          isVisibleBinding: 'parentView.textFieldView.isNotClearValue'
+          classNames: ['btn-clean', 'remove-btn', 'remove']
+          attributeBindings: ['title']
+          title: '_remove'.loc()
+          template: Em.Handlebars.compile '×'
+
+          click: -> @set('parentView.textFieldView.value', '')
         textFieldView: Em.TextField.extend
           classNames: ['search-field']
           placeholder: '_filter'.loc()
           valueChanged: (->
+            if @get 'value'
+              @set 'isNotClearValue', yes
+            else
+              @$().val('')
+              @$().focus()
+              @set 'isNotClearValue', no
             App.entrantsController.set('searchQuery', @get 'value')
           ).observes('value')
       contentView: lineupView
@@ -434,7 +513,7 @@ require [
     window.createActualRoundsByEntrants = createActualRoundsByEntrants
     window.createLoserBracket = createLoserBracket
 
-    window.stage = createActualRoundsByEntrants(8)
+#    window.stage = createActualRoundsByEntrants(8)
 
     testerView = Em.ContainerView.create
       childViews: 'countrySelectView autocompleteTextFieldView multilingualTextFieldView editableLabel multilingualEditableLabel'.w()

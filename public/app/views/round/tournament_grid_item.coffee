@@ -1,5 +1,5 @@
 ###
- * grid_item
+ * tournament_grid_item
  * @author: actuosus
  * Date: 19/03/2013
  * Time: 16:08

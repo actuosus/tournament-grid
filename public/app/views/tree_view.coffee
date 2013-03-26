@@ -14,17 +14,17 @@ define ['cs!views/tree_item_view'], ->
     isNested: no
 
     nestingLevel: (->
-      'level-%@'.fmt(this.getPath('treeLevel'))
+      'level-%@'.fmt(@get('treeLevel'))
     ).property('treeLevel')
 
     treeLevel: (->
-      (@getPath('parentTreeView.treeLevel') || 0) + 1
+      (@get('parentTreeView.treeLevel') || 0) + 1
     ).property('parentTreeView.treeLevel')
 
     parentTreeView: (->
-      if @get('isNested') then @getPath('parentView.parentView') else undefined
+      if @get('isNested') then @get('parentView.parentView') else undefined
     ).property('isNested', 'parentView.parentView')
 
     rootTreeView: (->
-      @getPath('parentTreeView.rootTreeView') || @
+      @get('parentTreeView.rootTreeView') || @
     ).property('parentTreeView.rootTreeView')

@@ -22,6 +22,7 @@
 @import "country_flag_icon.css";
 @import "tournament_grid.css";
 @import "lineup_grid_item.css";
+@import "match_grid.css";
 @import "team_standings_table_item.css";
 @import "team_info_item.css";
 @import "multilingual-field.css";
@@ -52,6 +53,11 @@
 .matches-table-container {
     border: 1px solid #bebebe;
     background-color: #efefef;
+}
+
+.matches-table-container .toggle-btn {
+    top: 40px;
+    right: 10px;
 }
 
 .matches-table-date {
@@ -103,13 +109,6 @@
     margin-left: 10px;
 }
 
-.match-grid {
-    overflow: hidden;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -o-user-select: none;
-}
-
 .named-container-title {
     font-size: 19px;
     border-bottom: 3px solid #bebebe;
@@ -123,10 +122,6 @@
     border-bottom: 0px solid #bebebe;
     margin-bottom: 0;
     padding-bottom: 0;
-}
-
-.match-grid-item {
-    width: 158px;
 }
 
 .match-start-date {
@@ -164,12 +159,6 @@
     overflow: hidden;
 }
 
-.grid .match-grid-item {
-    float: left;
-    margin-right: 43px;
-    margin-bottom: 10px;
-}
-
 .b-profileBlock__title {
     -webkit-user-select: none;
 }
@@ -182,8 +171,13 @@
     /*border-top: 1px solid #dadada;*/
     /*border-left: 1px solid #eaeaea;*/
     box-shadow: 0 0 14px rgba(0, 0, 0, 0);
-    -webkit-transition-property: background-color, box-shadow;
+    -webkit-transition-property: background-color, box-shadow, padding-right;
     -webkit-transition-duration: 0.3s;
+
+    -moz-transition-property: background-color, box-shadow, padding-right;
+    -moz-transition-duration: 0.3s;
+
+    position: relative;
 }
 
 .b-listsTabs .item:hover {
@@ -204,6 +198,32 @@
     border-right: 0;
 }
 
+.b-listsTabs .item .remove-btn {
+    margin-top: -5px;
+    right: 3px;
+    -webkit-transition-property: background-color, box-shadow, right;
+    -webkit-transition-duration: 0.3s;
+    -moz-transition-property: background-color, box-shadow, right;
+    -moz-transition-duration: 0.3s;
+}
+
+.b-listsTabs .item.is-editing {
+    padding-right: 25px;
+}
+
+.b-listsTabs .item.is-editing .remove-btn {
+    right: 7px;
+}
+
+.b-listsTabs .item.add {
+    background-color: #f0f0f0;
+}
+
+.b-listsTabs .item .add {
+    color: gray;
+    font-size: 11px;
+}
+
 .stage-view {
     margin-top: 16px;
 }
@@ -218,10 +238,6 @@
 
 .grid .team-grid-item {
     border-top: 0;
-}
-
-.match-grid .team-grid-item {
-    margin-bottom: 5px;
 }
 
 .grid .team-grid-item:first-child {
@@ -239,4 +255,8 @@
 .country-menu-item .country-flag-icon {
     margin-right: 4px;
     box-shadow: 0 0 4px rgba(0,0,0,0.5);
+}
+
+.collapsible {
+    position: relative;
 }

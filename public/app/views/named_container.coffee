@@ -13,7 +13,7 @@ define ['spin'], (Spinner)->
     childViews: [
       'titleView', 'toggleButtonView', 'contentView',
       'loaderView', 'statusTextView'
-    ],
+    ]
     collapsed: no
 
     titleView: Em.View.extend

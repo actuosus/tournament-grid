@@ -1,0 +1,41 @@
+/**
+ * match_grid
+ * @author: actuosus
+ * Date: 25/03/2013
+ * Time: 00:09
+ */
+
+.match-grid {
+    overflow: hidden;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+}
+
+.csscolumns .match-grid {
+    -webkit-column-width: 158px;
+    -moz-column-width: 158px;
+    column-width: 158px;
+}
+
+.match-grid-item {
+    width: 158px;
+}
+
+.grid .match-grid-item {
+    float: left;
+    margin-right: 43px;
+    margin-bottom: 10px;
+}
+
+.csscolumns .match-grid .match-grid-item {
+    float: none;
+    margin-right: 0;
+    -webkit-column-break-inside: avoid;
+    -moz-column-break-inside: avoid;
+    column-break-inside: avoid;
+}
+
+.match-grid .team-grid-item {
+    margin-bottom: 5px;
+}

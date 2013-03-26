@@ -11,12 +11,16 @@ define ['cs!views/game/form'], ->
     tagName: 'ul'
     classNames: ['games-info-bar']
     showInfoLabel: no
+#    itemViewClass: Em.View.extend
+#      tagName: 'li
     template: Em.Handlebars.compile """
       {{#if view.showInfoLabel}}
       <li class="games-info-bar-label">{{loc '_info'}}</li>
       {{/if}}
       {{#each view.content}}
-      <li {{bindAttr class="isUpdating"}}><a _target="blank" {{bindAttr href="link" title="name"}}>{{view.contentIndex}}</a></li>
+      <li {{bindAttr class="isUpdating"}}>
+        <a _target="blank" {{bindAttr href="link" title="name"}}>{{view.contentIndex}}</a>
+      </li>
       {{/each}}
       {{#if App.isEditingMode}}
       <li class="games-create-button"><button class="btn-clean create-btn">+</button></li>

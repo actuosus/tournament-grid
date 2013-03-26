@@ -14,6 +14,7 @@ define [
     childViews: ['contentView']#, 'addEntrantView'
 
     contentView: App.GridView.extend
+      classNames: ['lineup-grid']
       contentBinding: 'parentView.content'
       itemViewClass: App.TeamLineupGridItem
 

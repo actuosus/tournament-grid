@@ -117,11 +117,16 @@ app.configure ->
 
 #  app.use processRandom
 
+if typeof conf.port is undefined  or conf.port is 80
+  port = 80
+else
+  port = conf.port
 app.locals
 #  node_env: process.env.NODE_ENV
   node_env: 'production'
 #  staticDomain: '//static.tournament.local:3000'
-  staticDomain: '//tournament.local:3000'
+#  staticDomain: '//tournament.local:3000'
+  staticDomain: "//#{conf.hostname}:#{port}"
   moment: moment
   __: -> i18n.__ arguments
   languages: languages
@@ -159,6 +164,8 @@ app.post '/api/rounds', routes.api.rounds.create
 app.get '/api/stages', routes.api.stages.list
 app.get '/api/stages/:_id', routes.api.stages.item
 app.post '/api/stages', routes.api.stages.create
+app.delete '/api/stages/:_id', routes.api.stages.delete
+app.delete '/api/stages/bulk', routes.api.stages.delete
 
 app.get '/api/teams', routes.api.teams.list
 app.post '/api/teams', routes.api.teams.create

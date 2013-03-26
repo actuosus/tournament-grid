@@ -17,6 +17,9 @@ define [
 
     visualType: 'grid'
 
+    name: null
+    description: null
+
     didCreate: Em.K
 
     createRecord: ->
@@ -25,8 +28,10 @@ define [
       stage = window.createActualRoundsByEntrants(entransNumber)
 ##      stage = App.Stage.createRecord
 #      stage.set 'name', @$('.name').val()
+      stage.set 'name', @get 'name'
 #      stage.set 'description', @$('.description').val()
-#      stage.set 'visual_type', @get 'visualType'
+      stage.set 'description', @get 'description'
+      stage.set 'visual_type', @get 'visualType.id'
 #
 ##        name: @$('.name').val()
 ##        description: @$('.description').val()

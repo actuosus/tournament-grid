@@ -12,10 +12,10 @@ define [
 ], ()->
   App.StangingTableView = Em.ContainerView.extend
     classNames: ['standing-table']
-    childViews: ['stadingsView', 'matchesView'],
+    childViews: ['stadingsView', 'contentView']
     stadingsView: App.TeamStandingsTableView.extend
       contentBinding: 'parentView.teams'
-    matchesView: App.MatchesTableContainerView.extend
+    contentView: App.MatchesTableContainerView.extend
 #      controller: App.MatchesTableController.extend
 #        teamsBinging: 'view.parentView.teams'
 #        contentBinding: 'view.content'

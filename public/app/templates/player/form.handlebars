@@ -13,8 +13,10 @@
 </div>
 
 <div class="control-row">
-    {{view Ember.Checkbox valueBinding="view.isCaptain"}}
-    <label>{{loc '_captain'}}</label>
+    <label>
+        {{view Ember.Checkbox checkedBinding="view.isCaptain"}}
+        {{loc '_captain'}}
+    </label>
 </div>
 
 <div class="control-row">

@@ -34,3 +34,18 @@ exports.create = (req, res)->
     res.send stage: doc
   else
     res.send 401, error: "server error"
+
+exports.delete = (req, res) ->
+  if req.body?.stages
+    stages = []
+    for id, i in req.body.stages
+      console.log id
+      await Stage.remove _id: id, defer err, stages[i]
+    res.status 204
+    res.send()
+  else if req.params?._id?
+    Stage.remove _id: req.params._id, (err)->
+      res.status 204 unless err
+      res.send()
+  else
+    res.send 401, error: "server error"

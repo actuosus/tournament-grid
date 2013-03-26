@@ -25,7 +25,8 @@ require({
     'transit': '/vendor/javascripts/jquery.transit.min',
     'handlebars': '/vendor/javascripts/handlebars',
     'ember': '/vendor/javascripts/ember',
-    'ember-data': '/vendor/javascripts/ember-data'
+    'ember-data': '/vendor/javascripts/ember-data',
+    'modernizr.columns': '/vendor/javascripts/modernizr/columns'
   },
   shim: {
     'jquery.mousewheel': {
@@ -63,6 +64,7 @@ require({
   'handlebars',
   'ember',
   'ember-data',
+  'modernizr.columns',
   'cs!core',
   'cs!app'
 ]);

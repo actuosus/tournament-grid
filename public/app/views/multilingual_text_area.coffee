@@ -18,6 +18,7 @@ define ['cs!views/multilingual_field'], ->
       colsBinding: 'parentView.cols'
       valueChanged: (->
         value = @get 'value'
-        @$().val value
-        @$().focus()
+        if @$()
+          @$().val value
+          @$().focus()
       ).observes('value')

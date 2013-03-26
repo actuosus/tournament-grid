@@ -10,7 +10,7 @@ module.exports = ->
   switch process.env.NODE_ENV
     when 'production'
       return {
-      hostname: 'http://virtus-pro.herokuapps.com/'
+      hostname: 'virtus-pro.herokuapps.com'
       mongo: process.env.MONGOLAB_URI
       memcache:
         host: process.env.MEMCACHIER_SERVERS
@@ -22,7 +22,7 @@ module.exports = ->
       }
     when 'test'
       return {
-      hostname: 'localhost'
+      hostname: 'tournament.local'
       port: 3001,
       mongo: 'mongodb://localhost/tournament_grid_test'
       memcache:
@@ -32,7 +32,7 @@ module.exports = ->
       }
     else
       return {
-      hostname: 'localhost'
+      hostname: 'tournament.local'
       port: 3000,
       mongo: 'mongodb://localhost/tournament_grid'
       memcache:

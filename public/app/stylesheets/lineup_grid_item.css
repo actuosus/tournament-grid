@@ -12,6 +12,22 @@
     margin: 10px;
 }
 
+.csscolumns .lineup-grid {
+    -webkit-column-width: 258px;
+    -moz-column-width: 258px;
+    column-width: 258px;
+}
+
+.csscolumns .lineup-grid-item {
+    float: none;
+    /*width: auto;*/
+    height: auto;
+    margin: 0 0 29px 0;
+    -webkit-column-break-inside: avoid;
+    -moz-column-break-inside: avoid;
+    column-break-inside: avoid;
+}
+
 .lineup-grid-item td {
     background-color: white;
 }
@@ -136,4 +152,14 @@
     text-align: center;
     vertical-align: 2px;
     margin-left: -3px;
+}
+
+.csscolumns .group-lineup-grid {
+    -webkit-column-width: 428px;
+    -moz-column-width: 428px;
+    column-width: 428px;
+}
+
+.csscolumns .group-lineup-grid .lineup-grid-item {
+    width: 100%;
 }
