@@ -117,7 +117,7 @@ app.configure ->
 
 #  app.use processRandom
 
-if typeof conf.port is undefined  or conf.port is 80
+unless conf.port or conf.port isnt 80
   port = 80
 else
   port = conf.port
