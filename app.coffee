@@ -89,11 +89,9 @@ app.configure ->
   app.use passport.initialize()
   app.use passport.session()
 
-  app.use express.compress()
-
   # Static files serving
-  oneYear = 31557600000
-  app.use express.static path.join(__dirname, 'public'), {maxAge: oneYear}
+#  oneYear = 31557600000
+  app.use express.static path.join(__dirname, 'public')
 
   # Logging
   app.use express.logger 'dev'
@@ -115,16 +113,28 @@ app.configure ->
 
   app.use cors
 
+#app.configure 'production', ->
+#  app.use express.compress()
+#  # Static files serving
+#  oneYear = 31557600000
+#  app.use express.static path.join(__dirname, 'public'), {maxAge: oneYear}
+
+
 #  app.use processRandom
 port = 80
 port = conf.port if conf.port
+
+if port is 80
+  staticDomain = "//#{conf.hostname}"
+else
+  staticDomain = "//#{conf.hostname}:#{port}"
 
 app.locals
 #  node_env: process.env.NODE_ENV
   node_env: 'production'
 #  staticDomain: '//static.tournament.local:3000'
 #  staticDomain: '//tournament.local:3000'
-  staticDomain: "//#{conf.hostname}:#{port}"
+  staticDomain: staticDomain
   moment: moment
   __: -> i18n.__ arguments
   languages: languages
