@@ -5,7 +5,7 @@
  * Time: 15:04
 ###
 
-define ->
+define ['cs!../core'],->
   App.Zooming = Ember.Mixin.create
     willInsertElement: ->
       buffer = @get('buffer')

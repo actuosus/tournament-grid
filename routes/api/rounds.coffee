@@ -25,13 +25,15 @@ exports.create = (req, res) ->
       console.log rounds
     res.send rounds: rounds
   else if req.body?.round
-#    await Stage.findOne req.body?.round.stage_id, defer err, stage
+    await Stage.findById req.body?.round.stage_id, defer err, stage
     round = req.body?.round
     r = new Round round
     r.name = round.name
     await r.save defer err, doc
-#    stage.rounds.push r
-#    await stage.save defer err, stage
+    console.log stage.rounds
+    stage.rounds.push r
+    await stage.save defer err, stage
+    console.log stage.rounds
     res.send round: doc
   else
     res.send 401, error: "server error"

@@ -28,7 +28,7 @@ exports.create = (req, res)->
       console.log games
     res.send games: games
   else if req.body?.game
-    await Match.findOne req.body?.game.match_id, defer err, match
+    await Match.findById req.body?.game.match_id, defer err, match
     game = req.body?.game
     g = new Game game
     g.name = game.name

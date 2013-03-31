@@ -5,7 +5,7 @@
  * Time: 09:47
 ###
 
-define ->
+define ['cs!../core'],->
   App.EditableLabel = Em.View.extend
     classNames: ['editable-label']
     template: Em.Handlebars.compile '{{view.value}}'

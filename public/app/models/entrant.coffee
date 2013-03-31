@@ -5,6 +5,6 @@
  * Time: 20:19
 ###
 
-define ->
+define ['cs!../core'],->
   App.Entrant = DS.Model.extend
     name: DS.attr 'string'

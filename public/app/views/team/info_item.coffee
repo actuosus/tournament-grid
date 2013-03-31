@@ -6,7 +6,8 @@
 ###
 
 define [
-  'text!templates/team/info_item.handlebars'
+  'text!../../templates/team/info_item.handlebars'
+  'cs!../../core'
 ], (template)->
   Em.TEMPLATES.teamInfoItem = Em.Handlebars.compile template
   App.TeamInfoItemView = Em.View.extend

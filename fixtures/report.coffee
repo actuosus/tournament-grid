@@ -8,8 +8,8 @@
 
 module.exports.Report = [
   _id: '511211b49709aab1ae000002'
-  name: 'StarCraft 2 Regular Cup #30: DIGAMA!'
-  _name:
+  title: 'StarCraft 2 Regular Cup #30: DIGAMA!'
+  _title:
     ru: 'StarCraft 2 Регулярный чемпионат #30: DIGAMA!'
     en: 'StarCraft 2 Regular Cup #30: DIGAMA!'
     de: 'Regelmäßige StarCraft 2 Cup # 30: DIGAMI!'
@@ -29,10 +29,11 @@ module.exports.Report = [
   author: '5149b02872267f7b2c00002f'
   match_type: 'team'
   stages: ['51121246b54802daae000008', '51121246b54802daae000009', '51121246b54802daae00000a', '51121246b54802daae00000b', '51121246b54802daae00000c', '51121246b54802daae00000d', '51121246b54802daae00000e' ]
+  entrants: ['50fcdf189c68d90f07000001', '50fcdf189c68d90f07000002', '50fcdf189c68d90f07000003', '50fcdf189c68d90f07000004', '5116163383cf2f2534000002']
 ,
   _id: '511211b49709aab1ae000003'
-  name: 'When the players, not teams'
-  _name:
+  title: 'When the players, not teams'
+  _title:
     ru: 'Когда игроки, а не команды'
     en: 'When the players, not teams'
     de: 'Wenn die Spieler, nicht-Teams'
@@ -51,5 +52,6 @@ module.exports.Report = [
     de: 'Moskau, Russland'
   author: '5149b02872267f7b2c00002f'
   match_type: 'player'
-  stages: ['51121246b54802daae000008', '51121246b54802daae000009', '51121246b54802daae00000a', '51121246b54802daae00000b', '51121246b54802daae00000c', '51121246b54802daae00000d', '51121246b54802daae00000e' ]
+  stages: ['51121246b54802daae00000f' ]
+  entrants: []
 ]

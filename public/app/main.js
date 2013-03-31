@@ -7,7 +7,8 @@
  */
 
 require({
-  baseUrl: '/app',
+//  baseUrl: '/app',
+  name: 'app',
   paths: {
     'jquery': '/vendor/javascripts/jquery',
     'jquery.mousewheel': '/vendor/javascripts/jquery.mousewheel',
@@ -26,7 +27,8 @@ require({
     'handlebars': '/vendor/javascripts/handlebars',
     'ember': '/vendor/javascripts/ember',
     'ember-data': '/vendor/javascripts/ember-data',
-    'modernizr.columns': '/vendor/javascripts/modernizr/columns'
+    'modernizr.columns': '/vendor/javascripts/modernizr/columns',
+    'bootstrap.tooltip': '/vendor/javascripts/bootstrap/bootstrap-tooltip'
   },
   shim: {
     'jquery.mousewheel': {
@@ -49,9 +51,15 @@ require({
 
     'transit': {
       deps: ['jquery']
+    },
+
+    'bootstrap.tooltip': {
+      deps: ['jquery']
     }
   }
-}, [
+});
+
+define([
   'jquery',
   'jquery.mousewheel',
   'jquery.scrollTo',
@@ -65,6 +73,6 @@ require({
   'ember',
   'ember-data',
   'modernizr.columns',
-  'cs!core',
-  'cs!app'
-]);
+  'cs!./core',
+  'cs!./application'
+], function(){console.log(arguments)})

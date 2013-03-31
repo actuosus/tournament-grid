@@ -5,7 +5,7 @@
  * Time: 22:22
 ###
 
-define ['cs!core'],->
+define ['cs!../core'],->
   App.GoogleTranslator = Em.Object.extend
     isTranslator: yes
     serviceURL: 'https://www.googleapis.com/language/translate/v2?callback=?'

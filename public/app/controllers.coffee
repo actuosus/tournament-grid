@@ -7,5 +7,5 @@
 ###
 
 define [
-  'cs!core'
+  'cs!./core'
 ], -> console.log 'Controllers loaded.'

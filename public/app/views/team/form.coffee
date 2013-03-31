@@ -7,7 +7,8 @@
 ###
 
 define [
-  'text!templates/team/form.handlebars'
+  'text!../../templates/team/form.handlebars'
+  'cs!../../core'
 ], (template)->
   Em.TEMPLATES.teamForm = Em.Handlebars.compile template
   App.TeamForm = Em.View.extend

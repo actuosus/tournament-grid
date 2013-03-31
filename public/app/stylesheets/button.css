@@ -67,6 +67,12 @@
     border-color: #a7a7a7;
 }
 
+.btn-large {
+    height: 34px;
+    font-size: 14px;
+    padding: 0 40px;
+}
+
 .toggle-btn {
     -webkit-appearance: none;
     border: 0;
@@ -118,4 +124,10 @@
 
 .toggle-btn-collapsed {
     background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAJCAMAAADaUYZlAAAAOVBMVEU4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODiX3pCcAAAAE3RSTlMAAwYNFDk+SFFrbG+srcTb8/n+43xG/AAAADxJREFUeNpFyEEOgCAQQ9GCgAgowv0Pq0mbma76H8IJ21GAvi/L502I9w/KVQGCp0BJGLsxHSbTgOmQdT6lXQIj8v3aswAAAABJRU5ErkJggg==') right 6px no-repeat;
+}
+
+.edit-btn {
+    height: 25px;
+    line-height: 25px;
+    background: url('../../agamapro-virtus.pro-ebb4d51390f8/img/css/sprites/ico-s85c67c08ea.png') 0 -3556px no-repeat;
 }

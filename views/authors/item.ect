@@ -1,0 +1,14 @@
+<% extend 'layout.ect' %>
+
+<div class="block-container padded">
+    <h2><%- @doc.username %></h2>
+</div>
+
+<div class="block-container">
+    <p class="b-profileBlock__title"><%- @__ 'Reports' %></p>
+    <div class="reports padded">
+        <% for report in @reports : %>
+            <div class="report"><a href="/reports/<%- report.id %>"><%- report.title %></a></div>
+        <% end %>
+    </div>
+</div>

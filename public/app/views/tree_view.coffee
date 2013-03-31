@@ -5,7 +5,10 @@
  * Time: 04:09
 ###
 
-define ['cs!views/tree_item_view'], ->
+define [
+  'cs!../core'
+  'cs!./tree_item_view'
+], ->
   App.TreeView = Em.CollectionView.extend
     classNames: ['tree']
 

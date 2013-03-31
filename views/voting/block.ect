@@ -1,0 +1,13 @@
+<form class="b-aside__block b-formVoting">
+    <p class="b-aside__title"><%- @__ 'Voting' %></p>
+    <p class="question"><%- @__ 'How do you like the redesign of our website?' %></p>
+
+    <label><input type="radio" name="vote">Не айс</label>
+    <label><input type="radio" name="vote">Не плохо</label>
+    <label><input type="radio" name="vote">Вполне себе ничего</label>
+    <label><input type="radio" name="vote">Мне нравится</label>
+    <label class="checked"><input type="radio" name="vote" checked="checked">Отличный получился</label>
+
+    <button class="submit" type="submit"></button>
+    <a class="allVotes" href="" title=""><%- @__ 'Results' %></a>
+</form>

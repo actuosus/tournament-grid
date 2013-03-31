@@ -6,7 +6,7 @@
  * Time: 19:00
 ###
 
-define ->
+define ['cs!../core'],->
   App.PopupView = Em.ContainerView.extend
     classNames: ['popup']
 
@@ -20,15 +20,40 @@ define ->
     arrowBorderView: Em.View.extend
       classNames: ['popup-arrow-border']
 
+    getContentDimensions: ->
+      contentView = @get('contentView')
+      dimensions =
+        width: contentView.$().width()
+        height: contentView.$().height()
+      dimensions
+
     didInsertElement: ->
       target = @get('target')
+#      targetElement = target.get('element')
+      element = @get('element')
+      dimensions = width: element.offsetWidth, height: element.offsetHeight
+#      targetDimensions = width: targetElement.offsetWidth, height: targetElement.offsetHeight
+      console.log dimensions
       if target
-        @$().css({transformOrigin: '-10px 30px', scale: 0})
         offset = target.$().offset()
         targetWidth = target.$().width()
         targetHeight = target.$().height()
         offset.left += targetWidth
         offset.top += targetHeight/2 - 30
+
+        transformOriginX = '-10px'
+
+        if offset.left + dimensions.width > window.innerWidth
+          offset.left -= dimensions.width + targetWidth
+          @$().addClass('right')
+          transformOriginX = "#{dimensions.width - targetWidth + 10}px"
+
+#        if offset.top + dimensions.height > window.innerHeight
+#          offset.top -= dimensions.height
+
+        transformOrigin = "#{transformOriginX} 30px"
+
+        @$().css({transformOrigin: transformOrigin, scale: 0})
         @$().css(offset)
         @show()
         $(document.body).bind('mousedown.popup', @onDocumentMouseDown.bind(@))
@@ -45,7 +70,10 @@ define ->
     onHide: Em.K
 
     show: ->
-      @$().transition({ scale: 1 }, 300, (=> @onShow()))
+      if @$()
+#        $(document.body).scrollTo(@$(), 300, {offset:{top: -100}})
+        @$().transition({ scale: 1 }, 300, (=> @onShow()))
 
     hide: ->
-      @$().transition({ scale: 0 }, 300, (=> @onHide(); @destroy()))
+      if @$()
+        @$().transition({ scale: 0 }, 300, (=> @onHide(); @destroy()))

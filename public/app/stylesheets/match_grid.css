@@ -26,6 +26,7 @@
     float: left;
     margin-right: 43px;
     margin-bottom: 10px;
+    position: relative;
 }
 
 .csscolumns .match-grid .match-grid-item {
@@ -36,6 +37,27 @@
     column-break-inside: avoid;
 }
 
-.match-grid .team-grid-item {
-    margin-bottom: 5px;
+.match-grid-item-edit-controls {
+    position: absolute;
+    top: 50%;
+    right: -10px;
+    margin-top: -2px;
+    background: black;
+    width: 12px;
+    height: 30px;
+    border-bottom: 0;
+    line-height: 21px;
+    vertical-align: top;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+
+.match-grid-item-edit-controls .remove-btn {
+    top: 8px;
+}
+
+.match-grid-item-edit-controls .edit-btn {
+    position: absolute;
+    bottom: 2px;
+    height: 18px;
 }

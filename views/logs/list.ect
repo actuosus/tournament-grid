@@ -1,0 +1,7 @@
+<% extend 'layout.ect' %>
+
+<% for doc in @docs : %>
+<div class="block-container padded">
+    <h2><a href="/logs/<%- doc.id %>"><%- doc.message %></a></h2>
+</div>
+<% end %>

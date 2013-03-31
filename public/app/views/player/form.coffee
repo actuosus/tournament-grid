@@ -7,7 +7,8 @@
 ###
 
 define [
-  'text!templates/player/form.handlebars'
+  'text!../../templates/player/form.handlebars'
+  'cs!../../core'
 ], (template)->
   Em.TEMPLATES.playerForm = Em.Handlebars.compile template
   App.PlayerForm = Em.View.extend
@@ -24,6 +25,9 @@ define [
     isCaptain: null
 
     didCreate: Em.K
+
+    didInserElement: ->
+      @set 'country', App.Country.find({name: 'Россия'})
 
     focus: ->
       @$('.nickname').focus()

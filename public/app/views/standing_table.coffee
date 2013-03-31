@@ -7,14 +7,14 @@
 ###
 
 define [
-  'cs!views/team/standings_table',
-  'cs!views/match/table_container'
+  'cs!./team/standings_table',
+  'cs!./match/table_container'
 ], ()->
   App.StangingTableView = Em.ContainerView.extend
     classNames: ['standing-table']
     childViews: ['stadingsView', 'contentView']
     stadingsView: App.TeamStandingsTableView.extend
-      contentBinding: 'parentView.teams'
+      contentBinding: 'parentView.entrants'
     contentView: App.MatchesTableContainerView.extend
 #      controller: App.MatchesTableController.extend
 #        teamsBinging: 'view.parentView.teams'

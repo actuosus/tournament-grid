@@ -105,6 +105,10 @@
     /*overflow: scroll;*/
 }
 
+.csscolumns .lineup-grid-item-players {
+    max-height: none;
+}
+
 
 .lineup-grid-item-player-row {
     height: 24px;
@@ -137,6 +141,10 @@
     margin-top: 6px;
     margin-left: 8px;
     margin-right: 8px;
+}
+
+.lineup-grid-item-player-row.is-saving {
+    opacity: 0.5;
 }
 
 .lineup-grid-item-captain-marker {

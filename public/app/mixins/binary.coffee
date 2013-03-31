@@ -5,7 +5,7 @@
  * Time: 20:02
 ###
 
-define ->
+define ['cs!../core'],->
   App.BinaryTree = Ember.Mixin.create
     left: ->
     right: ->

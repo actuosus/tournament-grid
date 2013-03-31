@@ -6,7 +6,10 @@
  * Time: 22:26
 ###
 
-define ['cs!views/match/filter_form', 'cs!views/match/table'], ()->
+define [
+  'cs!./filter_form'
+  'cs!./table'
+], ()->
   App.MatchesTableContainerView = Em.ContainerView.extend
     classNames: ['matches-table-container']
     childViews: ['filterView', 'tableView'],

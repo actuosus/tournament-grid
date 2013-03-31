@@ -5,7 +5,7 @@
  * Time: 03:26
 ###
 
-define ->
+define ['cs!../core'],->
   App.MovingHightlight = Ember.Mixin.create
 
     mouseEnter: (event)->

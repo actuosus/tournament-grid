@@ -25,8 +25,8 @@
     overflow: hidden;
     text-overflow: ellipsis;
 
-    -webkit-transition-property: background-color;
-    -webkit-transition-duration: .3s;
+    /*-webkit-transition-property: background-color;*/
+    /*-webkit-transition-duration: .3s;*/
 }
 
 .menu-item:hover {

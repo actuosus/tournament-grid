@@ -6,7 +6,7 @@
  * Time: 05:30
 ###
 
-define ['cs!views/game/form'], ->
+define ['cs!./form'], ->
   App.GamesInfoBarView = Em.View.extend
     tagName: 'ul'
     classNames: ['games-info-bar']
@@ -19,13 +19,14 @@ define ['cs!views/game/form'], ->
       {{/if}}
       {{#each view.content}}
       <li {{bindAttr class="isUpdating"}}>
-        <a _target="blank" {{bindAttr href="link" title="name"}}>{{view.contentIndex}}</a>
+        <a target="_blank" {{bindAttr href="link" title="title"}}>{{view.content.contentIndex}}</a>
       </li>
       {{/each}}
       {{#if App.isEditingMode}}
-      <li class="games-create-button"><button class="btn-clean create-btn">+</button></li>
+      <li class="games-create-button" {{bindAttr title="view.addButtonTitle"}}><button class="btn-clean create-btn">+</button></li>
       {{/if}}
       """
+    addButtonTitle: (-> '_add_game'.loc()).property()
     click: (event)->
       if $(event.target).hasClass('games-create-button') or $(event.target).hasClass 'create-btn'
         popup = App.PopupView.create target: @

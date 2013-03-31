@@ -7,8 +7,8 @@
 ###
 
 define [
-  'cs!views/grid'
-  'cs!views/team/lineup_grid_item'
+  'cs!./grid'
+  'cs!./team/lineup_grid_item'
 ], ->
   App.LineupView = Em.ContainerView.extend
     childViews: ['contentView']#, 'addEntrantView'

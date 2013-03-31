@@ -5,7 +5,7 @@
  * Time: 03:22
 ###
 
-define ->
+define ['cs!../core'], ->
   App.LanguageMenuView = Em.CollectionView.extend
     useFlags: no
     target: null

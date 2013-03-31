@@ -6,7 +6,7 @@
 ###
 
 define [
-  'text!templates/table.handlebars'
+  'text!../../templates/table.handlebars'
 ], (template)->
   Em.TEMPLATES.table = Em.Handlebars.compile template
   App.TableView = Em.View.extend

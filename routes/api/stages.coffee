@@ -6,6 +6,7 @@
  * Time: 05:14
 ###
 
+Report = require('../../models').Report
 Stage = require('../../models').Stage
 
 exports.list = (req, res)->
@@ -28,10 +29,13 @@ exports.create = (req, res)->
       console.log stages
     res.send stages: stages
   else if req.body?.stage
+    await Report.findById req.body?.stage.report_id, defer err, report
     stage = req.body?.stage
-    m = new Stage stage
-    await m.save defer err, doc
-    res.send stage: doc
+    s = new Stage stage
+    await s.save defer err, doc
+    report.stages.push s
+    await report.save defer err, report
+    res.send stage: s
   else
     res.send 401, error: "server error"
 
@@ -44,7 +48,10 @@ exports.delete = (req, res) ->
     res.status 204
     res.send()
   else if req.params?._id?
-    Stage.remove _id: req.params._id, (err)->
+    await Stage.findById req.params._id, defer err, stage
+#    await Report.findById stage.report_id, defer err, report
+    Stage.remove {_id: req.params._id}, (err)->
+      Report.update({_id: stage.report_id}, {$pull : {stages : req.params._id}})
       res.status 204 unless err
       res.send()
   else

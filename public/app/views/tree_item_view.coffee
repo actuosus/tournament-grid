@@ -5,7 +5,7 @@
  * Time: 04:10
 ###
 
-define ->
+define ['cs!../core'], ->
   App.TreeItemView = Em.ContainerView.extend
     classNames: ['tree-item']
     childViews: ['nestedTreeView']

@@ -6,7 +6,7 @@
  * Time: 03:07
 ###
 
-define ->
+define ['cs!../core'],->
   App.Result = DS.Model.extend
     primaryKey: '_id'
     name: DS.attr 'string'

@@ -6,7 +6,7 @@
  * Time: 03:06
 ###
 
-define ->
+define ['cs!../core'],->
   App.Stage = DS.Model.extend
     primaryKey: '_id'
     name: DS.attr 'string'
@@ -20,6 +20,8 @@ define ->
 
     left: null
     right: null
+
+    report: DS.belongsTo 'App.Report'
 
     rounds: DS.hasMany 'App.Round'
     brackets: DS.hasMany 'App.Bracket'
@@ -63,6 +65,15 @@ define ->
         entrants = entrants.concat round.get 'entrants'
       entrants.uniq()
     ).property().volatile()
+
+    matches: (->
+      matches = []
+      rounds = @get 'rounds'
+      rounds.forEach (round)->
+        round.get('matches').forEach (match)->
+          matches.push match
+      matches
+    ).property()
 
     checkRounds: (->
       rounds = @get 'rounds'

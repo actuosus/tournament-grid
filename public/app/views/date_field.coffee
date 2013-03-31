@@ -5,6 +5,6 @@
  * Time: 04:50
 ###
 
-define ->
+define ['cs!../core'],->
   App.DateField = Em.TextField.extend
     type: 'date'

@@ -6,7 +6,7 @@
  * Time: 07:29
 ###
 
-define ->
+define ['cs!../core'],->
   App.Match = DS.Model.extend
 #    init: ->
 #      @_super()
@@ -54,12 +54,10 @@ define ->
     games: DS.hasMany 'App.Game'
 
     entrant1Changed: (->
-#      console.debug 'entrant1Changed'
       @set 'entrants', [@get('entrant1'), @get('entrant2')]
     ).observes 'entrant1'
 
     entrant2Changed: (->
-#      console.debug 'entrant2Changed'
       @set 'entrants', [@get('entrant1'), @get('entrant2')]
     ).observes 'entrant2'
 
@@ -147,18 +145,52 @@ define ->
 
     parentNode: (->
       parent = @get 'round.parent'
-      parent.getByPath(@get 'parentNodePath') if parent
-    ).property('parentNodePath')
+      parentNodePath = @get 'parentNodePath'
+      if parentNodePath
+        return parent.getByPath(parentNodePath) if parent
+      else
+        if parent
+          round = @get 'round'
+          roundIndex = parent.get('rounds').indexOf(round)
+          roundsCount = parent.get('rounds.length')-1
+          matchIndex = round.get('matches').indexOf(@)
+          parentNodePath = "#{roundIndex+1}.#{Math.floor(matchIndex/2)}"
+          console.log 'parentNodePath', parentNodePath
+          @set 'parentNodePath', parentNodePath
+          return parent.getByPath(parentNodePath)
+    ).property('parentNodePath').volatile()
     childNodes: null
 
     left: (->
       parent = @get 'round.parent'
-      parent.getByPath(@get 'leftPath') if parent
+      leftPath = @get 'leftPath'
+      if leftPath
+        return parent.getByPath(leftPath) if parent
+      else
+        if parent
+          round = @get 'round'
+          roundIndex = parent.get('rounds').indexOf(round)
+          roundsCount = parent.get('rounds.length')
+          matchIndex = round.get('matches').indexOf(@)
+          leftPath = "#{roundsCount-roundIndex-1}.#{matchIndex*2}"
+          @set 'leftPath', leftPath
+          return parent.getByPath(leftPath)
     ).property('leftPath')
 
     right: (->
       parent = @get 'round.parent'
-      parent.getByPath(@get 'rightPath') if parent
+      rightPath = @get 'rightPath'
+      if rightPath
+        return parent.getByPath(rightPath) if parent
+      else
+        if parent
+          round = @get 'round'
+          roundIndex = parent.get('rounds').indexOf(round)
+          roundsCount = parent.get('rounds.length')
+          matchIndex = round.get('matches').indexOf(@)
+          rigthPath = "#{roundsCount-roundIndex-1}.#{matchIndex+1}"
+          @set 'rigthPath', rigthPath
+          return parent.getByPath(rigthPath)
     ).property('rightPath')
 
 #    future #default

@@ -5,7 +5,7 @@
  * Time: 23:12
 ###
 
-define ->
+define ['cs!../core'],->
   App.SelectView = Em.Select.extend
     tagName: 'div'
     template: Em.Handlebars.compile '''

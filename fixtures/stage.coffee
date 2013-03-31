@@ -15,7 +15,7 @@ module.exports.Stage = [
   rounds: ['51142b464242d3110c000002']
 ,
   _id: '51121246b54802daae000009'
-  name: '1/32'
+  name: 'Групповой'
   report_id: '511211b49709aab1ae000002'
   visual_type: 'group'
   rounds: ['5114472b6da8bd2910000002', '5114472b6da8bd2910000003', '5114472b6da8bd2910000004', '5114472b6da8bd2910000005', '5114472b6da8bd2910000006', '5114472b6da8bd2910000007']
@@ -27,7 +27,7 @@ module.exports.Stage = [
   rounds: ['50fd4a58cbbf53a72a000002', '50fd4a58cbbf53a72a000003', '50fd4a58cbbf53a72a000004']
 ,
   _id: '51121246b54802daae00000b'
-  name: '1/8'
+  name: 'Командный'
   visual_type: 'team'
   report_id: '511211b49709aab1ae000002'
   rounds: ['51142b464242d3110c000002']
@@ -44,5 +44,10 @@ module.exports.Stage = [
 ,
   _id: '51121246b54802daae00000e'
   name: 'Финал'
+  report_id: '511211b49709aab1ae000002'
+
+,
+  _id: '51121246b54802daae00000f'
+  name: 'Игроки'
   report_id: '511211b49709aab1ae000002'
 ]

@@ -38,3 +38,4 @@ define
   _the_teams: 'Die Teams'
   _filter: 'Filtern'
   _captain: 'Kapitän'
+  _add_game: 'Spiel hinzufügen'

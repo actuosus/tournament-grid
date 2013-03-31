@@ -6,7 +6,7 @@
  * Time: 07:29
 ###
 
-define ->
+define ['cs!../core'],->
   App.Player = DS.Model.extend
     primaryKey: '_id'
     nickname: DS.attr 'string'

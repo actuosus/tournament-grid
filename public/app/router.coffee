@@ -6,7 +6,7 @@
  * Time: 09:10
 ###
 
-define ['cs!core', 'cs!models/stage'], ->
+define ['cs!./core', 'cs!./models/stage'], ->
   App.Router.map ->
     @resource 'stage', path: '/stage/:stage_id', ->
       @route 'new'

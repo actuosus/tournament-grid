@@ -1,34 +1,5 @@
 <% extend 'layout.ect' %>
 
-<script type="text/javascript">
-    window.currentReportId = '<%- @doc.id %>';
-</script>
-
-<% if @node_env is 'production': %>
-<link rel="stylesheet" href="<%- @staticDomain %>/bundle/stylesheets/app.css" />
-<% else: %>
-<link rel="stylesheet" href="/app/stylesheets/main.css" />
-<% end %>
-<link rel="icon" type="image/x-icon" href="<%- @staticDomain %>/favicon.ico" />
-
-<!-- Not working with require.js https://github.com/DmitryBaranovskiy/raphael/issues/524 -->
-<!--<script type="text/javascript" src="/vendor/javascripts/raphael.js"></script>-->
-<!--<script type="text/javascript" src="/vendor/javascripts/spin.js"></script>-->
-<script type="text/javascript" src="/vendor/javascripts/require.js"></script>
-
-<script type="text/javascript" id="grid-config">
-    window.gridConfig = {
-        languages: <%- JSON.stringify(@languages) %>
-
-    };
-</script>
-
-<% if @node_env is 'production': %>
-<script type="text/javascript" src="<%- @staticDomain %>/bundle/app.js"></script>
-<% else: %>
-<script type="text/javascript" src="/app/main.js"></script>
-<% end %>
-
 <p class="b-title b-title_bump"><span class="ico ico_players"></span><%- @__ 'Report' %>
     <a class="link link_pencil" href="" title=""><%- @__ 'Add information' %></a></p>
 
@@ -171,6 +142,35 @@
 </div>
 
 <div id="content"></div>
+<script type="text/javascript">
+    window.currentReportId = '<%- @doc.id %>';
+</script>
+
+<% if @node_env is 'production': %>
+<link rel="stylesheet" href="<%- @staticDomain %>/bundle/stylesheets/app.css" />
+<% else: %>
+<link rel="stylesheet" href="/app/stylesheets/main.css" />
+<% end %>
+<link rel="icon" type="image/x-icon" href="<%- @staticDomain %>/favicon.ico" />
+
+<% if @node_env is 'production': %>
+<script data-main="/bundle/app.js" src="/vendor/javascripts/require.js"></script>
+<% else: %>
+<script data-main="/app/main.js" src="/vendor/javascripts/require.js"></script>
+<% end %>
+
+<script type="text/javascript" id="grid-config">
+    window.gridConfig = {
+        languages: <%- JSON.stringify(@languages) %>
+
+    };
+</script>
+
+<!--<% if @node_env is 'production': %>-->
+<!--<script type="text/javascript" src="<%- @staticDomain %>/bundle/app.js"></script>-->
+<!--<% else: %>-->
+<!--<script type="text/javascript" src="/app/main.js"></script>-->
+<!--<% end %>-->
 <script type="text/x-handlebars" data-template-name="application"></script>
 
 <ul class="b-profileReport__streams b-profileReport__streams_standalone">
@@ -223,7 +223,7 @@
 <div class="b-closingBox">
     <!-- profileStreams -->
     <div class="b-profileBlock b-profileStreams">
-        <p class="b-profileBlock__title"><%- @__ 'Video' %> <span class="figure">[ 3 ]</span>
+        <p class="b-profileBlock__title" data-toggle="collapse" data-target=".b-profileStreams__list"><%- @__ 'Video' %> <span class="figure">[ 3 ]</span>
             <small><%- @__ 'Video of the brightest moments of the Games' %></small>
         </p>
 
@@ -250,7 +250,7 @@
 
     <!-- profileStreams -->
     <div class="b-profileBlock b-profileStreams">
-        <p class="b-profileBlock__title"><%- @__ 'Game videos' %> <span class="figure">[ 3 ]</span>
+        <p class="b-profileBlock__title" data-toggle="collapse" data-target=".b-profileNews__list"><%- @__ 'Game videos' %> <span class="figure">[ 3 ]</span>
             <small><%- @__ 'Video of the brightest moments of the Games' %></small>
         </p>
 
@@ -274,75 +274,72 @@
         </div>
     </div>
     <!-- end profileStreams -->
+</div>
 
-    <div class="b-closingBox">
+<div class="b-closingBox">
 
-        <!-- profileGallery -->
-        <div class="b-profileBlock b-profileGallery">
-            <p class="b-profileBlock__title"><%- @__ 'Gallery' %> <span class="figure">[ 2 ]</span>
-            </p>
+    <!-- profileGallery -->
+    <div class="b-profileBlock b-profileGallery">
+        <p class="b-profileBlock__title" data-toggle="collapse" data-target=".b-profileGallery__list"><%- @__ 'Gallery' %> <span class="figure">[ 2 ]</span></p>
 
-            <p class="b-profileGallery__title">Virtus.pro vs. Natus Vincere</p>
+        <p class="b-profileGallery__title">Virtus.pro vs. Natus Vincere</p>
 
-            <ul class="b-profileGallery__list">
-                <li class="item">
-                    <a href="" title="" class="item__thumb"><img src="<%- @staticDomain %>/agamapro-virtus.pro-ebb4d51390f8/img/dummy/gallery/1.jpg" alt="" width="96" height="95"></a>
-                </li>
-                <li class="item">
-                    <a href="" title="" class="item__thumb"><img src="<%- @staticDomain %>/agamapro-virtus.pro-ebb4d51390f8/img/dummy/gallery/2.jpg" alt="" width="96" height="95"></a>
-                </li>
-                <li class="item">
-                    <a href="" title="" class="item__thumb"><img src="<%- @staticDomain %>/agamapro-virtus.pro-ebb4d51390f8/img/dummy/gallery/3.jpg" alt="" width="96" height="95"></a>
-                </li>
-                <li class="item">
-                    <a href="" title="" class="item__thumb"><img src="<%- @staticDomain %>/agamapro-virtus.pro-ebb4d51390f8/img/dummy/gallery/4.jpg" alt="" width="96" height="95"></a>
-                    <span class="item__view">32  |  +88</span>
-                </li>
-            </ul>
+        <ul class="b-profileGallery__list">
+            <li class="item">
+                <a href="" title="" class="item__thumb"><img src="<%- @staticDomain %>/agamapro-virtus.pro-ebb4d51390f8/img/dummy/gallery/1.jpg" alt="" width="96" height="95"></a>
+            </li>
+            <li class="item">
+                <a href="" title="" class="item__thumb"><img src="<%- @staticDomain %>/agamapro-virtus.pro-ebb4d51390f8/img/dummy/gallery/2.jpg" alt="" width="96" height="95"></a>
+            </li>
+            <li class="item">
+                <a href="" title="" class="item__thumb"><img src="<%- @staticDomain %>/agamapro-virtus.pro-ebb4d51390f8/img/dummy/gallery/3.jpg" alt="" width="96" height="95"></a>
+            </li>
+            <li class="item">
+                <a href="" title="" class="item__thumb"><img src="<%- @staticDomain %>/agamapro-virtus.pro-ebb4d51390f8/img/dummy/gallery/4.jpg" alt="" width="96" height="95"></a>
+                <span class="item__view">32  |  +88</span>
+            </li>
+        </ul>
 
-            <div class="more">
-                <a class="more__link" href="" title=""><%- @__ 'More' %></a>
-            </div>
+        <div class="more">
+            <a class="more__link" href="" title=""><%- @__ 'More' %></a>
         </div>
-        <!-- end profileGallery -->
-
-        <!-- profileNews -->
-        <div class="b-profileBlock b-profileNews b-profileNews_short">
-            <p class="b-profileBlock__title"><%- @__ 'News' %> <span class="figure">[18]</span>
-            </p>
-
-            <ul class="b-profileNews__list">
-                <li class="item">
-                    <img class="item__img" src="<%- @staticDomain %>/agamapro-virtus.pro-ebb4d51390f8/img/dummy/news/70x70/1.jpg" alt="" width="70" height="70">
-                    <img class="item__game" src="<%- @staticDomain %>/agamapro-virtus.pro-ebb4d51390f8/img/games/logo/sc2_39x39.png" alt="" width="19" height="19">
-
-                    <div class="item__titleWrapper">
-                        <a class="item__title" href="" title="">Knochen: «Нужно дать CS:GO шанс»</a> <span class="item__date">02.07.12  12:55</span>
-                    </div>
-                    <p>Несмотря на огромное количество фильмов о тех полицейских, история Макса уникальна.</p>
-
-                    <p class="item__bottom"><%- @__ 'Comments' %>: <span class="item__comments">24</span> <span class="item__likes">1458</span>
-                    </p>
-                </li>
-                <li class="item">
-                    <img class="item__img" src="<%- @staticDomain %>/agamapro-virtus.pro-ebb4d51390f8/img/dummy/news/70x70/2.jpg" alt="" width="70" height="70">
-                    <img class="item__game" src="<%- @staticDomain %>/agamapro-virtus.pro-ebb4d51390f8/img/games/logo/sc2_39x39.png" alt="" width="19" height="19">
-
-                    <div class="item__titleWrapper">
-                        <a class="item__title" href="" title="">Oskar в ex-BEASTS</a> <span class="item__date">02.07.12  12:55</span>
-                    </div>
-                    <p>Несмотря на огромное количество фильмов о тех полицейских, история Макса уникальна.</p>
-
-                    <p class="item__bottom"><%- @__ 'Comments' %>: <span class="item__comments">24</span> <span class="item__likes">1458</span>
-                    </p>
-                </li>
-            </ul>
-
-            <div class="more">
-                <a href="" class="more__link"><%- @__ 'More' %></a>
-            </div>
-
-        </div>
-        <!-- end profileNews -->
     </div>
+    <!-- end profileGallery -->
+
+    <!-- profileNews -->
+    <div class="b-profileBlock b-profileNews b-profileNews_short">
+        <p class="b-profileBlock__title" data-toggle="collapse" data-target=".b-profileNews__list"><%- @__ 'News' %> <span class="figure">[18]</span></p>
+
+        <ul class="b-profileNews__list">
+            <li class="item">
+                <img class="item__img" src="<%- @staticDomain %>/agamapro-virtus.pro-ebb4d51390f8/img/dummy/news/70x70/1.jpg" alt="" width="70" height="70">
+                <img class="item__game" src="<%- @staticDomain %>/agamapro-virtus.pro-ebb4d51390f8/img/games/logo/sc2_39x39.png" alt="" width="19" height="19">
+
+                <div class="item__titleWrapper">
+                    <a class="item__title" href="" title="">Knochen: «Нужно дать CS:GO шанс»</a> <span class="item__date">02.07.12  12:55</span>
+                </div>
+                <p>Несмотря на огромное количество фильмов о тех полицейских, история Макса уникальна.</p>
+
+                <p class="item__bottom"><%- @__ 'Comments' %>: <span class="item__comments">24</span> <span class="item__likes">1458</span>
+                </p>
+            </li>
+            <li class="item">
+                <img class="item__img" src="<%- @staticDomain %>/agamapro-virtus.pro-ebb4d51390f8/img/dummy/news/70x70/2.jpg" alt="" width="70" height="70">
+                <img class="item__game" src="<%- @staticDomain %>/agamapro-virtus.pro-ebb4d51390f8/img/games/logo/sc2_39x39.png" alt="" width="19" height="19">
+
+                <div class="item__titleWrapper">
+                    <a class="item__title" href="" title="">Oskar в ex-BEASTS</a> <span class="item__date">02.07.12  12:55</span>
+                </div>
+                <p>Несмотря на огромное количество фильмов о тех полицейских, история Макса уникальна.</p>
+
+                <p class="item__bottom"><%- @__ 'Comments' %>: <span class="item__comments">24</span> <span class="item__likes">1458</span>
+                </p>
+            </li>
+        </ul>
+
+        <div class="more">
+            <a href="" class="more__link"><%- @__ 'More' %></a>
+        </div>
+    </div>
+    <!-- end profileNews -->
 </div>

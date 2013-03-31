@@ -6,7 +6,7 @@
  * Time: 05:21
 ###
 
-define ['cs!views/autocomplete_text_field'], ->
+define ['cs!./autocomplete_text_field'], ->
   App.ComboBoxView = Em.ContainerView.extend
     classNames: ['select', 'combobox']
     childViews: [

@@ -5,7 +5,7 @@
  * Time: 22:04
 ###
 
-define ['cs!mixins/translatable', 'cs!views/language_menu'], ->
+define ['cs!../mixins/translatable', 'cs!./language_menu'], ->
   App.MultilingualField = Em.ContainerView.extend App.Translatable,
     childViews: ['fieldView', 'languageSelectorView']
 

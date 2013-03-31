@@ -5,7 +5,7 @@
  * Time: 22:15
 ###
 
-define ['cs!translation'], ->
+define ['cs!../core', 'cs!../translation'], ->
   App.Translatable = Ember.Mixin.create
     selectedLanguage: null
     selectedProvider: null

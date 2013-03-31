@@ -1,0 +1,65 @@
+<% extend 'layout.ect' %>
+
+<% if @node_env is 'production': %>
+<link rel="stylesheet" href="<%- @staticDomain %>/bundle/stylesheets/app.css" />
+<% else: %>
+<link rel="stylesheet" href="/app/stylesheets/main.css" />
+<% end %>
+<link rel="icon" type="image/x-icon" href="<%- @staticDomain %>/favicon.ico" />
+
+
+<div class="block-container">
+    <p class="b-profileBlock__title"><%- @__ 'Create report' %></p>
+    <form method="post" class="form-vertical padded">
+        <div class="control-row">
+            <label for="title"><%- @__ 'Title' %>:</label>
+            <input type="text" name="title" id="title" placeholder="<%- @__ 'Title' %>" class="input-large" value="<%- @doc.title %>"/>
+        </div>
+
+        <div class="control-row">
+            <label for="description"><%- @__ 'Description' %>:</label>
+            <textarea name="description" id="description" placeholder="<%- @__ 'Description' %>" cols="80"><%- @doc.description %></textarea>
+        </div>
+
+        <div class="control-row">
+            <label for="sponsors"><%- @__ 'Sponsors' %>:</label>
+            <input type="text" name="sponsors" id="sponsors" placeholder="<%- @__ 'Sponsors' %>" class="input-large" value="<%- @doc.sponsors %>"/>
+        </div>
+
+        <div class="control-row">
+            <label for="place"><%- @__ 'Place' %>:</label>
+            <input type="text" name="place" id="place" placeholder="<%- @__ 'Place' %>" class="input-large" value="<%- @doc.place %>"/>
+        </div>
+
+        <div class="control-row">
+            <label for="start_date"><%- @__ 'Start date' %>:</label>
+            <input type="date" name="start_date" id="start_date" placeholder="<%- @__ 'Start date' %>" class="input-large" value="<%- @doc.start_date %>"/>
+        </div>
+
+        <div class="control-row">
+            <label for="end_date"><%- @__ 'End date' %>:</label>
+            <input type="date" name="end_date" id="end_date" placeholder="<%- @__ 'End date' %>" class="input-large" value="<%- @doc.end_date %>"/>
+        </div>
+
+        <div class="control-row">
+            <label for="match_type"><%- @__ 'Match type' %>:</label>
+            <select name="match_type" id="match_type">
+                <option value="team"><%- @__ 'Teams' %></option>
+                <option value="player"><%- @__ 'Players' %></option>
+            </select>
+        </div>
+
+        <div class="control-row">
+            <label for="discipline"><%- @__ 'Discipline' %>:</label>
+            <select name="discipline" id="discipline">
+                <option value="team"><%- @__ 'Teams' %></option>
+                <option value="player"><%- @__ 'Players' %></option>
+            </select>
+        </div>
+
+        <div class="control-row">
+            <button type="submit" class="btn btn-large btn-primary"><%- @__ 'Create' %></button>
+            <button class="btn btn-large"><%- @__ 'Cancel' %></button>
+        </div>
+    </form>
+</div>

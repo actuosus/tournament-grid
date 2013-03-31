@@ -6,18 +6,18 @@
  * Time: 07:31
 ###
 
-require [
-  'cs!core'
+define [
+  'cs!./core'
 
-  'cs!models/bracket'
-  'cs!models/championship'
-  'cs!models/country'
-  'cs!models/game'
-  'cs!models/match'
-  'cs!models/player'
-  'cs!models/report'
-  'cs!models/result'
-  'cs!models/round'
-  'cs!models/stage'
-  'cs!models/team'
+  'cs!./models/bracket'
+  'cs!./models/championship'
+  'cs!./models/country'
+  'cs!./models/game'
+  'cs!./models/match'
+  'cs!./models/player'
+  'cs!./models/report'
+  'cs!./models/result'
+  'cs!./models/round'
+  'cs!./models/stage'
+  'cs!./models/team'
 ]

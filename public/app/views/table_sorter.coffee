@@ -6,7 +6,7 @@
  * Time: 20:03
 ###
 
-define ->
+define ['cs!../core'],->
   App.TableSorterView = Em.View.extend
     classNames: ['table-sorter']
 

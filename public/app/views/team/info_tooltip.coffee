@@ -7,7 +7,8 @@
 ###
 
 define [
-  'text!templates/team/info_tooltip.handlebars'
+  'text!../../templates/team/info_tooltip.handlebars'
+  'cs!../../core'
 ], (template)->
   Em.TEMPLATES.teamInfoTooltip = Em.Handlebars.compile template
   App.TeamInfoTooltipView = Em.View.extend

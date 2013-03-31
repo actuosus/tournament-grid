@@ -68,7 +68,8 @@ module.exports = (grunt)->
           'handlebars': '../vendor/javascripts/handlebars',
           'ember': '../vendor/javascripts/ember',
           'ember-data': '../vendor/javascripts/ember-data',
-          'modernizr.columns': '../vendor/javascripts/modernizr/columns'
+          'modernizr.columns': '../vendor/javascripts/modernizr/columns',
+          'bootstrap.tooltip': '../vendor/javascripts/bootstrap/bootstrap-tooltip'
           }
           name: 'main'
           out: 'public/bundle/app.js'

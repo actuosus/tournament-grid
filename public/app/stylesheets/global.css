@@ -47,3 +47,10 @@ textarea {
     -webkit-transition-property: outline;
     -webkit-transition-duration: .3s;
 }
+
+input[type="text"].input-large,
+input[type="url"].input-large,
+input[type="date"].input-large {
+    min-height: 32px;
+    border-radius: 1px;
+}

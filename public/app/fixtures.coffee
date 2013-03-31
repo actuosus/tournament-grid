@@ -6,7 +6,7 @@
  * Time: 15:02
 ###
 
-require [
-  'cs!core'
-  'cs!fixtures/countries'
+define [
+  'cs!./core'
+  'cs!./fixtures/countries'
 ]

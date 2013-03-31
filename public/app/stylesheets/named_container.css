@@ -43,3 +43,18 @@
 .named-container .search-field:focus {
     box-shadow: 0 0 8px #da4600;
 }
+
+.named-container-title {
+    font-size: 19px;
+    border-bottom: 3px solid #bebebe;
+    margin-top: 0;
+    line-height: 16px;
+    padding-bottom: 8px;
+    overflow: hidden;
+}
+
+.named-container.collapsed .named-container-title {
+    border-bottom: 0px solid #bebebe;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}

@@ -17,3 +17,7 @@
 .combobox .text-field {
     border: 0;
 }
+
+.country-select .country-flag-icon {
+    margin-right: 4px;
+}

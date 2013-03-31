@@ -6,7 +6,7 @@
  * Time: 07:41
 ###
 
-define ->
+define ['cs!../core'],->
   App.GridView = Em.CollectionView.extend
     templateName: 'grid'
     classNames: ['grid']

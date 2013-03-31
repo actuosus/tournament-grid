@@ -6,8 +6,8 @@
 ###
 
 define [
-  'text!templates/game/form.handlebars'
-  'cs!models/game'
+  'text!../../templates/game/form.handlebars'
+  'cs!../../models/game'
 ], (template)->
   Em.TEMPLATES.gameForm = Em.Handlebars.compile template
   App.GameForm = Em.View.extend
@@ -27,16 +27,17 @@ define [
       match = @get 'match'
 
       transaction = App.store.transaction()
-#      game = transaction.createRecord(App.Game)
-      game = App.Game.createRecord()
+      game = transaction.createRecord(App.Game)
+#      game = App.Game.createRecord()
       game.set 'match', match
+      game.set 'title', @$('.title').val()
       game.set 'link', @$('.link').val()
-      game.on 'didCreate', => @didCreate
+      game.on 'didCreate', => @didCreate game
       game.on 'becameError', =>
         console.log arguments
         game.destroy()
       match.get('games').pushObject(game)
-#      transaction.commit()
+      transaction.commit()
 
     submit: (event)->
       event.preventDefault()

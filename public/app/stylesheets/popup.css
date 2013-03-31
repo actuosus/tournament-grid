@@ -35,3 +35,15 @@
     top: 20px;
     left: -20px;
 }
+
+.popup.right .popup-arrow {
+    border-color: transparent transparent transparent #FFF;
+    right: -20px;
+    left: auto;
+}
+
+.popup.right .popup-arrow-border {
+    border-color: transparent transparent transparent #666666;
+    right: -20px;
+    left: auto;
+}

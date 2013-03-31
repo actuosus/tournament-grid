@@ -5,8 +5,8 @@
  * Time: 16:08
 ###
 
-define ['cs!views/team/grid_item'
-        'cs!views/game/info_bar'
+define ['cs!../team/grid_item'
+        'cs!../game/info_bar'
 ], ->
   App.RoundGridItemView = Em.ContainerView.extend
     classNames: ['tournament-round-container']
@@ -32,15 +32,25 @@ define ['cs!views/team/grid_item'
 
         mouseEnter: ->
           node = @get 'content'
+          lastNode = null
           while node
-            node.set('isSelected', yes)
-            node = node.get('parentNode')
+            unless Em.isEqual(node, lastNode)
+              node.set('isSelected', yes)
+              lastNode = node
+              node = node.get('parentNode')
+            else
+              break
 
         mouseLeave: ->
           node = @get 'content'
+          lastNode = null
           while node
-            node.set('isSelected', no)
-            node = node.get('parentNode')
+            unless Em.isEqual(node, lastNode)
+              node.set('isSelected', no)
+              lastNode = node
+              node = node.get('parentNode')
+            else
+              break
 
         didInsertElement: ->
 #          console.log (@get 'content')
@@ -104,11 +114,14 @@ define ['cs!views/team/grid_item'
 
         infoBarView: App.GamesInfoBarView.extend
           contentBinding: 'parentView.content.games'
+#          shouldShowInfoLabel: (->
+#            @get('content.length') > 0
+#          ).property('content.length')
           showInfoLabel: yes
           classNames: ['match-info-bar']
 
         contentView: Em.CollectionView.extend
-          classNames: ['match-grid-item']
+          classNames: ['match-grid-item-entrants']
           matchBinding: 'parentView.content'
           contentBinding: 'parentView.content.entrants'
 

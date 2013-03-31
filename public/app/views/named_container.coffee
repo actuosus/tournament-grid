@@ -6,7 +6,7 @@
  * Time: 05:47
 ###
 
-define ['spin'], (Spinner)->
+define ['spin', 'cs!../core'], (Spinner)->
   App.NamedContainerView = Em.ContainerView.extend
     classNames: ['block-container', 'named-container']
     classNameBindings: ['collapsed']

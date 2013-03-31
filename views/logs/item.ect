@@ -1,0 +1,10 @@
+<% extend 'layout.ect' %>
+
+<div class="block-container padded">
+    <h2><a href="/logs/<%- @doc.id %>"><%- @doc.message %></a></h2>
+    <p>Date: <%- @doc.date %></p>
+    <% if @doc.data : %>
+    <p>Line number: <%- @doc.data.lineNumber %></p>
+    <p>URL: <%- @doc.data.url %></p>
+    <% end %>
+</div>

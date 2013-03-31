@@ -9,6 +9,7 @@
 mongoose = require 'mongoose'
 
 exports.UserSchema = require './user'
+exports.LogSchema = require './log'
 
 exports.ChampionshipSchema = require './championship'
 exports.CountrySchema = require './country'
@@ -24,6 +25,7 @@ exports.TeamSchema = require './team'
 console.log 'Registering models…'
 
 exports.User = mongoose.model 'User', exports.UserSchema
+exports.Log = mongoose.model 'Log', exports.LogSchema
 
 exports.Championship = mongoose.model 'Championship', exports.ChampionshipSchema
 exports.Country = mongoose.model 'Country', exports.CountrySchema

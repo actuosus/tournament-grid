@@ -11,8 +11,8 @@ Schema = mongoose.Schema
 ObjectId = Schema.ObjectId
 
 ReportSchema = new Schema
-  name: type: String
-  _name:
+  title: type: String
+  _title:
     ru: type: String
     en: type: String
     de: type: String
@@ -32,6 +32,7 @@ ReportSchema = new Schema
 
   author: type: ObjectId, ref: 'User'
 
+  entrants: [type: ObjectId, ref: 'Teams']
 
   stages: [type: ObjectId, ref: 'Stage']
   # Тип матча
@@ -42,7 +43,10 @@ ReportSchema = new Schema
   noRating: type: Boolean
 
 ReportSchema.methods.loc = (key, lang)->
-  console.log key, lang
-  @["_#{key}"][lang] if @["_#{key}"]
+#  console.log key, lang, @[key]
+  if @["_#{key}"]
+    @["_#{key}"][lang]
+  else
+    @[key]
 
 module.exports = ReportSchema

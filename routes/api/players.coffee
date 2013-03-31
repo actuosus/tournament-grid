@@ -30,7 +30,7 @@ exports.create = (req, res) ->
   if req.body?.players
     players = []
     for player, i in req.body.players
-      await Team.findOne player.team_id, defer err, team
+      await Team.findById player.team_id, defer err, team
       console.log team, player, i
       p = new Player player
       await p.save defer err, players[i]
@@ -39,7 +39,7 @@ exports.create = (req, res) ->
       console.log players
     res.send players: players
   else if req.body?.player
-    await Team.findOne req.body?.player.team_id, defer err, team
+    await Team.findById req.body?.player.team_id, defer err, team
     p = new Player req.body?.player
     await p.save defer err, player
     team.players.push p
@@ -58,9 +58,9 @@ exports.update = (req, res)->
     res.send players: players
   else if req.body?.player
     player = req.body?.player
-    await Player.findOne req.params._id, defer err, p
+    await Player.findById req.params._id, defer err, p
     await p.update(player, defer err, doc)
-    res.send player: doc
+    res.send player: p
   else
     res.send 401, error: "server error"
 

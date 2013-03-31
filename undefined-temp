@@ -48024,7 +48024,7 @@ define('cs',['coffee-script'], function (CoffeeScript) {
 
 (function() {
 
-  define('cs!core',['ember', 'ember-data'], function() {
+  define('cs!./core',['ember', 'ember-data'], function() {
     var App, TournamentGrid;
     Ember.Handlebars.registerBoundHelper('moment', function(value, options) {
       return new Handlebars.SafeString(moment(value).format(options.hash.format));
@@ -48101,7 +48101,7 @@ define('cs',['coffee-script'], function (CoffeeScript) {
 
 (function() {
 
-  define('cs!router',['cs!core'], function() {
+  define('cs!router',['cs!./core'], function() {
     App.Router.map(function(match) {
       return this.route('demo');
     });
@@ -50067,7 +50067,7 @@ define('text!templates/stage/form.handlebars',[],function () { return '<div clas
 
 (function() {
 
-  require(['cs!core', 'cs!models/championship', 'cs!models/country', 'cs!models/game', 'cs!models/match', 'cs!models/player', 'cs!models/report', 'cs!models/result', 'cs!models/round', 'cs!models/stage', 'cs!models/team']);
+  require(['cs!./core', 'cs!models/championship', 'cs!models/country', 'cs!models/game', 'cs!models/match', 'cs!models/player', 'cs!models/report', 'cs!models/result', 'cs!models/round', 'cs!models/stage', 'cs!models/team']);
 
 }).call(this);
 
@@ -50119,7 +50119,7 @@ define('text!templates/lineup_grid_item.handlebars',[],function () { return '<th
 
 (function() {
 
-  require(['Faker', 'ember', 'ember-data', 'cs!core', 'cs!router', 'cs!controllers', 'cs!views', 'cs!models', 'cs!fixtures', 'text!templates/lineup_grid_item.handlebars'], function(Fakera, ember, emberData, core, router, controllers, views, models, fixtures, lineupGridItemTemplate) {
+  require(['Faker', 'ember', 'ember-data', 'cs!./core', 'cs!router', 'cs!controllers', 'cs!views', 'cs!models', 'cs!fixtures', 'text!templates/lineup_grid_item.handlebars'], function(Fakera, ember, emberData, core, router, controllers, views, models, fixtures, lineupGridItemTemplate) {
     Em.TEMPLATES.lineupGridItem = Em.Handlebars.compile(lineupGridItemTemplate);
     App.ApplicationController = Em.Controller.extend();
     App.ApplicationView = Em.View.extend({
@@ -50579,7 +50579,7 @@ require({
   'handlebars',
   'ember',
   'ember-data',
-//  'cs!core',
+//  'cs!./core',
   'cs!app'
 ]);
 define("main", function(){});

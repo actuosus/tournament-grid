@@ -6,8 +6,8 @@
 ###
 
 define [
-  'cs!locales/ru'
-  'cs!locales/en'
-  'cs!locales/de'
+  'cs!./locales/ru'
+  'cs!./locales/en'
+  'cs!./locales/de'
 ], (ru,en,de)->
   {ru: ru, en: en, de: de}

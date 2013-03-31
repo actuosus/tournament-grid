@@ -1,0 +1,67 @@
+/**
+ * b-listTabs
+ * @author: actuosus
+ * Date: 31/03/2013
+ * Time: 17:33
+ */
+
+.b-listsTabs {
+    background-image: -webkit-linear-gradient(top, #cacacb 0%, #dbdbdb 100%);
+}
+
+.b-listsTabs .item {
+    /*border-top: 1px solid #dadada;*/
+    /*border-left: 1px solid #eaeaea;*/
+    box-shadow: 0 0 14px rgba(0, 0, 0, 0);
+    -webkit-transition-property: background-color, box-shadow, padding-right;
+    -webkit-transition-duration: 0.3s;
+
+    -moz-transition-property: background-color, box-shadow, padding-right;
+    -moz-transition-duration: 0.3s;
+
+    position: relative;
+}
+
+.b-listsTabs .item:hover {
+    background-color: #f3f3f3;
+    box-shadow: 0 0 14px rgba(0, 0, 0, 0.5);
+}
+
+.b-listsTabs .item:active {
+    background-color: #bababa;
+}
+
+.b-listsTabs .item.active {
+    border-radius: 2px 2px 0 0;
+    -webkit-font-smoothing: antialiased;
+}
+
+.b-listsTabs .item:last-child {
+    border-right: 0;
+}
+
+.b-listsTabs .item .remove-btn {
+    margin-top: -5px;
+    right: 3px;
+    -webkit-transition-property: background-color, box-shadow, right;
+    -webkit-transition-duration: 0.3s;
+    -moz-transition-property: background-color, box-shadow, right;
+    -moz-transition-duration: 0.3s;
+}
+
+.b-listsTabs .item.is-editing {
+    padding-right: 25px;
+}
+
+.b-listsTabs .item.is-editing .remove-btn {
+    right: 7px;
+}
+
+.b-listsTabs .item.add {
+    background-color: #f0f0f0;
+}
+
+.b-listsTabs .item .add {
+    color: gray;
+    font-size: 11px;
+}

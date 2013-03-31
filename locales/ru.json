@@ -63,5 +63,14 @@
 	"sign in": "войти",
 	"Tweet feed": "Твит лента",
 	"Video of the brightest moments of the Games": "Видеозаписи с самыми яркими моментами игр",
-	"Comments": "Комментарии"
+	"Comments": "Комментарии",
+	"Name": "Имя",
+	"Start date": "Дата начала",
+	"End date": "Дата конца",
+	"Match type": "Тип матча",
+	"Title": "Название",
+	"Create": "Создать",
+	"Cancel": "Отменить",
+	"Create report": "Добавить репортаж",
+	"Discipline": "Дисциплина"
 }

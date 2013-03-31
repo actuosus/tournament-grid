@@ -6,6 +6,8 @@
  * Time: 08:56
 ###
 
+exports.logs = require './logs'
+
 exports.championships = require './championships'
 exports.countries = require './countries'
 exports.games = require './games'

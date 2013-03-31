@@ -6,7 +6,7 @@
  * Time: 20:31
 ###
 
-define ['spin', 'cs!views/menu'], (Spinner)->
+define ['spin', 'cs!./menu'], (Spinner)->
   App.AutocompleteTextField = Em.ContainerView.extend
     classNames: ['autocomplete-text-field']
     childViews: 'textFieldView loaderView addButtomView statusIconView'.w()
@@ -45,20 +45,28 @@ define ['spin', 'cs!views/menu'], (Spinner)->
       classNames: ['text-field']
 #      attributeBindings: ['type']
       lastValue: null
-      type: 'text'
-      tagName: 'input'
       placeholderBinding: 'parentView.placeholder'
 
+      shouldSearch: yes
+
       selectionChanged: (->
-        @$().val(@get 'parentView.selection.name')
+        labelValue = @get 'parentView.controller.labelValue'
+        if labelValue
+          @$().val(@get 'parentView.selection.'+labelValue)
+        else
+          @$().val(@get 'parentView.selection.name')
+        @set 'shouldSearch', no
       ).observes 'parentView.selection'
 
       valueChanged: (->
         controller = @get 'parentView.controller'
         value = @get 'value'
-        if value and value isnt @get 'lastValue'
+        if @get('shouldSearch') and value and value isnt @get 'lastValue'
           controller.search name: value
         @set 'lastValue', value
+        @set 'shouldSearch', yes
+
+        @set 'parentView.value', null
       ).observes 'value'
 
       focusIn: ->
@@ -73,16 +81,23 @@ define ['spin', 'cs!views/menu'], (Spinner)->
         switch event.keyCode
           when 40 # down
             event.preventDefault()
+            event.stopPropagation()
             @get('parentView').selectNext()
           when 38 # up
             event.preventDefault()
+            event.stopPropagation()
             @get('parentView').selectPrevious()
 
       insertNewline: (event)->
         parentView = @get 'parentView'
         menuView = parentView.get 'menuView'
-        @$().val(parentView.get 'selection.name') if parentView.get 'selection.name'
+        labelValue = @get 'parentView.controller.labelValue'
+        if labelValue
+          @$().val(parentView.get 'selection.'+labelValue) if parentView.get 'selection.name'
+        else
+          @$().val(parentView.get 'selection.name') if parentView.get 'selection.name'
         menuView.set 'isVisible', no
+        parentView.set 'value', @get 'parentView.selection'
         parentView.insertNewline(event)
 
     insertNewline: Em.K
@@ -102,8 +117,10 @@ define ['spin', 'cs!views/menu'], (Spinner)->
             content: content
             autocompleteView: @
             highlightBinding: 'autocompleteView.textFieldView.lastValue'
+            valueBinding: 'autocompleteView.value'
             selectionBinding: 'autocompleteView.selection'
             itemViewClass: @get('controller.menuItemViewClass')
+            target: @
           menuView.append()
           setTimeout((->
             if @get('textFieldView').$()
@@ -168,6 +185,7 @@ define ['spin', 'cs!views/menu'], (Spinner)->
           @set('selection', entrant)
           popup.hide()
       popup.set 'formView', form
+      popup.set 'contentView', form
       popup.get('childViews').push form
       popup.append()
 

@@ -7,7 +7,8 @@
 ###
 
 define [
-  'text!templates/match/table.handlebars'
+  'text!../../templates/match/table.handlebars'
+  'cs!../../core'
 ], (template)->
   Em.TEMPLATES.matchesTable = Em.Handlebars.compile template
   App.MatchesTableView = Em.View.extend

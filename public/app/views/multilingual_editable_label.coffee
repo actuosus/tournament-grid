@@ -6,8 +6,8 @@
 ###
 
 define [
-         'cs!views/editable_label'
-         'cs!views/multilingual_field'
+         'cs!./editable_label'
+         'cs!./multilingual_field'
 ], ->
   App.MultilingualEditableLabel = App.MultilingualField.extend
     classNames: ['multilingual-editable-label']

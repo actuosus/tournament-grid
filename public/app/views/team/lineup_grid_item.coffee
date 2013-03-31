@@ -5,7 +5,7 @@
  * Time: 21:19
 ###
 
-define ['cs!mixins/moving_highlight'], ->
+define ['cs!../../mixins/moving_highlight', 'cs!../autocomplete_text_field'], ->
   App.TeamLineupGridItem = Em.ContainerView.extend
     classNames: ['lineup-grid-item']
     childViews: ['teamNameView', 'playersView', 'addPlayerView']
@@ -13,7 +13,7 @@ define ['cs!mixins/moving_highlight'], ->
     teamNameView: Em.ContainerView.extend(App.MovingHightlight,
       contentBinding: 'parentView.content'
       classNames: ['lineup-grid-item-name-container']
-      childViews: ['countryFlagView', 'nameView', 'editButtonView', 'removeButtonView']
+      childViews: ['countryFlagView', 'nameView', 'removeButtonView']
 
       countryFlagView: Em.View.extend
         tagName: 'i'
@@ -60,7 +60,10 @@ define ['cs!mixins/moving_highlight'], ->
         title: '_remove'.loc()
         template: Em.Handlebars.compile '×'
 
-        click: -> @get('content').deleteRecord()
+        click: ->
+          team = @get('content')
+          team.deleteRecord()
+          team.store.commit()
     )
     playersView: Em.CollectionView.extend
       classNames: ['lineup-grid-item-players']
@@ -68,6 +71,7 @@ define ['cs!mixins/moving_highlight'], ->
 
       itemViewClass: Em.ContainerView.extend
         classNames: ['lineup-grid-item-player-row']
+        classNameBindings: ['content.isSaving']
         childViews: ['countryFlagView', 'nameView', 'realNameView', 'captianMarkerView', 'removeButtonView']
 
         countryFlagView: Em.View.extend
@@ -113,26 +117,36 @@ define ['cs!mixins/moving_highlight'], ->
           template: Em.Handlebars.compile '×'
 
           click: ->
-            console.log @get('content')
-            @get('content').deleteRecord()
+            player = @get('content')
+            console.log player
+            player.deleteRecord()
+
 
     addPlayerView: Em.ContainerView.extend
       classNames: ['lineup-grid-item-player-row']
       childViews: ['contentView']
       isVisibleBinding: 'App.isEditingMode'
+
       contentView: App.AutocompleteTextField.extend
         controllerBinding: 'App.playersController'
         entrantBinding: 'parentView.parentView.content'
 
+        addPlayer: (player)->
+          team = @get('parentView.parentView.content')
+          players = team.get('players')
+          players.pushObject player
+          player.store.commit()
+
         insertNewline: ->
-          popup = @showAddForm(@)
-          popup.onShow = =>
-            popup.get('formView')?.focus()
-          popup.onHide = =>
-            @focus()
+          player = @get 'value'
+          unless player
+            popup = @showAddForm(@)
+            popup.onShow = => popup.get('formView')?.focus()
+            popup.onHide = => @focus()
+          else
+            @addPlayer player
 
-
-#        selectionChanged: (->
-#          player = @get 'selection'
-#          @get('parentView.parentView.content.players').pushObject player
-#        ).observes('selection')
+        valueChanged: (->
+          player = @get 'value'
+          @addPlayer player if player
+        ).observes('value')

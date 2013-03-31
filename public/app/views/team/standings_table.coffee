@@ -6,7 +6,8 @@
 ###
 
 define [
-  'text!templates/team/standings_table.handlebars'
+  'text!../../templates/team/standings_table.handlebars'
+  'cs!../../core'
 ], (template)->
   Em.TEMPLATES.teamStandingsTable = Em.Handlebars.compile template
   App.TeamStandingsTableView = Em.View.extend

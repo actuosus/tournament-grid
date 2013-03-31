@@ -16,3 +16,19 @@ exports.item = (req, res)->
   .populate('author')
   .exec (err, doc)->
     res.render 'reports/item.ect', title: 'Report', doc: doc
+
+exports.createForm = (req, res)->
+  res.render 'reports/form.ect', title: 'Report', doc: {}
+
+exports.create = (req, res)->
+  console.log req.body
+  if req.body.title
+    report = new Report req.body
+    report.author = req.user
+    report.save (err, doc)->
+      if err
+        res.render 'reports/form.ect', title: 'Report', doc: req.body
+      else
+        res.redirect "/reports/#{doc.id}"
+  else
+    res.render 'reports/form.ect', title: 'Report', doc: req.body

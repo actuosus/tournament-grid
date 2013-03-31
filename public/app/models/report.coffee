@@ -6,10 +6,10 @@
  * Time: 02:48
 ###
 
-define ->
+define ['cs!../core'],->
   App.Report = DS.Model.extend
     primaryKey: '_id'
-    name: DS.attr 'string'
+    title: DS.attr 'string'
     description: DS.attr 'string'
     start_date: DS.attr 'date'
     end_date: DS.attr 'date'
@@ -19,5 +19,6 @@ define ->
     match_type: DS.attr 'string'
 
     stages: DS.hasMany 'App.Stage'
+    entrants: DS.hasMany 'App.Team'
 
   App.Report.toString = -> 'Report'

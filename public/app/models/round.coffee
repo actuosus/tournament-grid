@@ -6,7 +6,7 @@
  * Time: 14:25
 ###
 
-define ->
+define ['cs!../core'],->
   App.Round = DS.Model.extend
     primaryKey: '_id'
     name: DS.attr 'string'

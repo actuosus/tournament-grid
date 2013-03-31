@@ -130,14 +130,16 @@ else
   staticDomain = "//#{conf.hostname}:#{port}"
 
 app.locals
-#  node_env: process.env.NODE_ENV
-  node_env: 'production'
+  node_env: process.env.NODE_ENV
+#  node_env: 'production'
 #  staticDomain: '//static.tournament.local:3000'
 #  staticDomain: '//tournament.local:3000'
   staticDomain: staticDomain
   moment: moment
   __: -> i18n.__ arguments
   languages: languages
+
+app.post '/api/logs', routes.api.logs.create
 
 app.get '/api/championships', routes.api.championships.list
 
@@ -204,7 +206,15 @@ app.get '/logout', (req, res)->
   res.statusCode = 401
   res.render 'logged_out.ect'
 
+app.get '/logs', ensureAuthenticated, routes.logs.list
+app.get '/logs/:_id', ensureAuthenticated, routes.logs.item
+
+app.get '/authors', ensureAuthenticated, routes.authors.list
+app.get '/authors/:_id', ensureAuthenticated, routes.authors.item
+
 app.get '/reports', ensureAuthenticated, routes.reports.list
+app.get '/reports/create', ensureAuthenticated, routes.reports.createForm
+app.post '/reports/create', ensureAuthenticated, routes.reports.create
 app.get '/reports/:_id', ensureAuthenticated, routes.reports.item
 
 app.get '*', (req, res)-> res.status 404; res.render '404.ect'

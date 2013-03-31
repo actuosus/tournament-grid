@@ -1,30 +1,30 @@
 ###
- * app
+ * application
  * @author: actuosus
  * @fileOverview Application initialization.
  * Date: 21/01/2013
  * Time: 07:31
 ###
 
-require [
+define [
   'jquery'
   'Faker'
   'ember'
   'ember-data'
 
-  'cs!core'
+  'cs!./core'
 
-  'cs!router'
-  'cs!controllers'
-  'cs!views'
-  'cs!models'
-  'cs!fixtures'
+  'cs!./router'
+  'cs!./controllers'
+  'cs!./views'
+  'cs!./models'
+  'cs!./fixtures'
 
-  'text!templates/lineup_grid_item.handlebars'
+  'text!./templates/lineup_grid_item.handlebars'
 
-  'cs!mixins/translatable'
-  'cs!mixins/collapsable'
-  'cs!translators/yandex'
+  'cs!./mixins/translatable'
+  'cs!./mixins/collapsable'
+  'cs!./translators/yandex'
 
 ], ($, Fakera,
     ember,
@@ -38,9 +38,9 @@ require [
     lineupGridItemTemplate)->
   Em.TEMPLATES.lineupGridItem = Em.Handlebars.compile lineupGridItemTemplate
 
-  App.ApplicationController = Em.Controller.extend()
-  App.ApplicationView = Em.View.extend
-    templateName : 'application'
+#  App.ApplicationController = Em.Controller.extend()
+#  App.ApplicationView = Em.View.extend
+#    templateName : 'application'
 
   App.isEditingMode = no
 
@@ -52,7 +52,7 @@ require [
 
 
   App.ready = ->
-    App.report = App.Report.find(window.currentReportId)
+    App.set 'report', App.Report.find(window.currentReportId)
 
     App.EntrantsController = Em.ArrayController.extend
       searchResults: []
@@ -77,6 +77,7 @@ require [
     App.set 'countriesController', Em.ArrayController.create
       content: []
       searchResults: []
+      labelValue: 'name'
       sort: (result, options)->
         lowerCased = options.name.toLowerCase()
         result.sort (a,b)->
@@ -102,31 +103,45 @@ require [
       menuItemViewClass: Em.View.extend
         classNames: ['menu-item', 'country-menu-item']
         classNameBindings: ['isSelected']
-        isSelectedBinding: 'content.isSelected'
+#        isSelectedBinding: 'content.isSelected'
         template: Em.Handlebars.compile(
           '<i {{bindAttr class=":country-flag-icon view.content.flagClassName"}}></i>'+
           '{{highlight view.content.name partBinding=parentView.highlight}}')
-        click: ->
+        mouseDown: (event)->
+          event.stopPropagation()
+
+        click: (event)->
+          event.preventDefault()
+          event.stopPropagation()
+          @get('parentView').click(event)
           @set 'parentView.selection', @get 'content'
+          @set 'parentView.value', @get 'content'
           @set 'parentView.isVisible', no
 
     App.set 'teamsController', Em.ArrayController.create
       formView: App.TeamForm
       searchResults: []
+      labelValue: 'name'
       search: (options)->
         @set 'content', App.Team.find options
       menuItemViewClass: Em.View.extend
         classNames: ['menu-item']
+        classNameBindings: ['isSelected']
         template: Em.Handlebars.compile(
           '{{highlight view.content.name partBinding=parentView.highlight}}'
         )
-        click: ->
+        click: (event)->
+          event.preventDefault()
+          event.stopPropagation()
+          @get('parentView').click(event)
           @set 'parentView.selection', @get 'content'
+          @set 'parentView.value', @get 'content'
           @set 'parentView.isVisible', no
     window.teamsController = teamsController
     App.playersController = Em.ArrayController.create
       formView: App.PlayerForm
       searchResults: []
+      labelValue: 'nickname'
       search: (options)->
         searchOptions = {}
         if options.name
@@ -134,18 +149,21 @@ require [
         @set 'content', App.Player.find searchOptions
       menuItemViewClass: Em.View.extend
         classNames: ['menu-item']
+        classNameBindings: ['isSelected']
         template: Em.Handlebars.compile('{{view.content.nickname}}')
-        click: ->
+        click: (event)->
+          event.preventDefault()
+          event.stopPropagation()
+          @get('parentView').click(event)
           @set 'parentView.selection', @get 'content'
+          @set 'parentView.value', @get 'content'
           @set 'parentView.isVisible', no
-
-    stangingTableView = App.StangingTableView.create
-      teams: App.Team.find()
-      matches: App.Match.find()
 
     stageView = Em.ContainerView.create
       classNames: ['stage-view']
       childViews: ['tabBarView', 'contentView']
+
+      content: null
 
       setCurrentTabView: (@currentTabView)->
         @currentStage = @currentTabView.get 'content'
@@ -153,68 +171,20 @@ require [
           when 'grid'
             contentView = App.TournamentGridView.create content: @currentStage
           when 'group'
-            contentView = App.GridView.create
-              classNames: ['lineup-grid', 'group-lineup-grid']
+            contentView = App.GroupGridView.create
               content: @currentStage.get 'rounds'
-
-              itemViewClass: Em.ContainerView.extend
-                classNames: ['lineup-grid-item']
-                childViews: ['contentView', 'matchesView']
-
-                contentView: Em.ContainerView.extend
-                  contentBinding: 'parentView.content'
-                  classNames: ['lineup-grid-item-name-container']
-                  childViews: ['countryFlagView', 'nameView', 'removeButtonView']
-
-                  countryFlagView: Em.View.extend
-                    tagName: 'i'
-                    classNames: ['country-flag-icon', 'team-country-flag-icon']
-                    classNameBindings: ['countryFlagClassName', 'hasFlag']
-                    attributeBindings: ['title']
-                    title: (-> @get 'content.country.name').property('content.country')
-                    contentBinding: 'parentView.content'
-                    hasFlag: (-> !!@get 'content.country.code').property('content.country')
-                    countryFlagClassName: (->
-                      'country-flag-icon-%@'.fmt @get 'content.country.code'
-                    ).property('content.country.code')
-
-                  nameView: Em.View.extend
-                    contentBinding: 'parentView.content'
-                    classNames: ['lineup-grid-item-name']
-                    template: Em.Handlebars.compile '{{view.content.name}}'
-
-                  removeButtonView: Em.View.extend
-                    tagName: 'button'
-                    contentBinding: 'parentView.content'
-                    isVisibleBinding: 'App.isEditingMode'
-                    classNames: ['btn-clean', 'remove-btn', 'remove']
-                    attributeBindings: ['title']
-                    title: '_remove'.loc()
-                    template: Em.Handlebars.compile '×'
-
-                    click: -> @get('content').deleteRecord()
-
-                matchesView: App.StangingTableView.extend(App.Collapsable,
-                  childViews: ['stadingsView', 'contentView', 'toggleButtonView']
-                  appendableViewBinding: 'contentView'
-                  teams: teamsController
-                  matchesBinding: 'parentView.content.matches'
-                  contentBinding: 'parentView.content.matches'
-                  collapsed: yes
-                )
-
+              entrants: @currentStage.get 'entrants'
           when 'matrix'
             contentView = App.GridView.create
               classNames: ['match-grid']
               itemViewClass: App.MatchGridItemView
-              stages: App.Stage.find()
-              content: @currentStage.get('rounds.firstObject.matches')
+              content: @currentStage.get 'matches'
           when 'team'
             teamsController = Em.ArrayController.create
-              content: @currentStage.get('rounds.firstObject.teams')
+              content: @currentStage.get('entrants')
               sortProperties: ['gamesPlayed']
             contentView = App.StangingTableView.create
-              teams: teamsController
+              entrants: teamsController
               matches: @currentStage.get('rounds.firstObject.matches')
         @set 'currentView', contentView
 
@@ -237,7 +207,7 @@ require [
 
         click: (event)->
           if $(event.target).hasClass('add')
-            @set 'parentView.currentView', App.StageForm.create(classNames: ['padded'])
+            @set 'parentView.currentView', App.StageForm.create(classNames: ['padded'], report: App.report)
 
         selectChildView: (childView)->
           @get('childViews').forEach (child)=>
@@ -277,7 +247,7 @@ require [
 #          valueBinding: 'content.name'
           click: ->
             @get('parentView').selectChildView(@)
-        content: App.Stage.find()
+        contentBinding: 'parentView.content'
       contentView: Em.View.extend()
 
     # Preloading countries
@@ -308,26 +278,12 @@ require [
 
     window.stageView = stageView
 
-    teamStandingsContainerView = App.NamedContainerView.create
-      title: 'Командный зачёт'
-      contentView: stangingTableView
-#    teamStandingsContainerView.appendTo '#content'
-
     teamsController = Em.ArrayController.create
-      content: App.Team.find()
+      contentBinding: 'App.report.entrants'
       sortProperties: ['gamesPlayed']
 
-    gridView = App.GridView.create
-      itemViewClass: App.MatchGridItemView
-      stages: App.Stage.find()
-      content: App.Match.find()
-
-    selectionStageContainerView = App.NamedContainerView.create
-      title: 'Отборочный этап'
-      contentView: gridView
-
     lineupView = App.LineupView.create
-      content: App.entrantsController
+      contentBinding: 'App.report.entrants'
 
     window.lineupView = lineupView
 
@@ -373,43 +329,26 @@ require [
       else if stageSelectorContainerView?.$()
         $(document.body).scrollTo(stageSelectorContainerView.$(), 500, {offset: {top: -18}})
 
-
-
     App.report.didLoad = ->
+      stageView.set('content', App.report.get('stages'))
       if App.report?.get('match_type') is 'team'
         lineupContainerView.appendTo '#content'
 
-    groupContainerView = App.NamedContainerView.create
-      title: 'Групповой этап'
-      contentView: App.GridView.create
-        content: App.Stage.find()
-        itemViewClass: Em.View.extend
-          tagName: 'table'
-          classNames: ['table', 'lineup-grid-item']
-          templateName: 'lineupGridItem'
-        emptyViewClass: Em.View.extend
-          template: Em.Handlebars.compile('Пока что ни одного этапа')
-
-#    groupContainerView.appendTo '#content'
-
-#    window.matchGrid = matchGridView
-#    window.teamStandingsTableView = teamStandingsTableView
-
-    matches = App.store.find(App.Match, {}).onLoad (ra)->
-      ra.forEach (match)->
-        team1 = match.get('team1')
-        team2 = match.get('team2')
-        team1?.set('gamesPlayed', (team1.gamesPlayed + 1) || 1)
-        team2?.set('gamesPlayed', (team2.gamesPlayed + 1) || 1)
-        if match.get('team1_points') > match.get('team2_points')
-          team1?.set('wins', (team1.wins + 1) || 1)
-          team2?.set('loses', (team2.loses + 1) || 1)
-        else if match.get('team1_points') == match.get('team2_points')
-          team1?.set('draws', (team1.draws + 1) || 1)
-          team2?.set('draws', (team2.draws + 1) || 1)
-        else
-          team2?.set('wins', (team2.wins + 1) || 1)
-          team1?.set('loses', (team1.loses + 1) || 1)
+#    matches = App.store.find(App.Match, {}).onLoad (ra)->
+#      ra.forEach (match)->
+#        team1 = match.get('team1')
+#        team2 = match.get('team2')
+#        team1?.set('gamesPlayed', (team1.gamesPlayed + 1) || 1)
+#        team2?.set('gamesPlayed', (team2.gamesPlayed + 1) || 1)
+#        if match.get('team1_points') > match.get('team2_points')
+#          team1?.set('wins', (team1.wins + 1) || 1)
+#          team2?.set('loses', (team2.loses + 1) || 1)
+#        else if match.get('team1_points') == match.get('team2_points')
+#          team1?.set('draws', (team1.draws + 1) || 1)
+#          team2?.set('draws', (team2.draws + 1) || 1)
+#        else
+#          team2?.set('wins', (team2.wins + 1) || 1)
+#          team1?.set('loses', (team1.loses + 1) || 1)
 
     createRounds = (roundsCount)->
       rounds = []
@@ -515,84 +454,54 @@ require [
 
 #    window.stage = createActualRoundsByEntrants(8)
 
-    testerView = Em.ContainerView.create
-      childViews: 'countrySelectView autocompleteTextFieldView multilingualTextFieldView editableLabel multilingualEditableLabel'.w()
-      countrySelectView: Em.ContainerView.create
-        childViews: ['labelView', 'contentView']
-        classNames: ['control-row']
-        labelView: Em.View.create(tagName: 'label', template: Em.Handlebars.compile('Country selector'))
-        contentView: App.CountrySelectView.create(controller: App.countriesController)
-      autocompleteTextFieldView: Em.ContainerView.create
-        childViews: ['labelView', 'contentView']
-        classNames: ['control-row']
-        labelView: Em.View.create(tagName: 'label', template: Em.Handlebars.compile('Autocomplete text field'))
-        contentView: App.AutocompleteTextField.create(controller: App.teamsController)
-      multilingualTextFieldView: Em.ContainerView.create
-        childViews: ['labelView', 'contentView']
-        classNames: ['control-row']
-        labelView: Em.View.create(tagName: 'label', template: Em.Handlebars.compile('Multilingual text field'))
-        contentView: App.MultilingualTextField.create(languages: App.languages.content)
-      editableLabel: Em.ContainerView.create
-        childViews: ['labelView', 'contentView']
-        classNames: ['control-row']
-        labelView: Em.View.create(tagName: 'label', template: Em.Handlebars.compile('Editable label'))
-        contentView: App.EditableLabel.create(value: 'Some thing')
-      multilingualEditableLabel: Em.ContainerView.create
-        childViews: ['labelView', 'contentView']
-        classNames: ['control-row']
-        labelView: Em.View.create(tagName: 'label', template: Em.Handlebars.compile('Multilingual editable label'))
-        contentView: App.MultilingualEditableLabel.create(value: 'Слоники', languages: App.languages.content)
+    App.NamedContainerView.create(
+      title: 'Tester'
+      contentView: App.TesterView.create()
+    ).appendTo('#content')
 
-#    App.NamedContainerView.create(
-#      title: 'Tester'
-#      contentView: testerView
-#    ).appendTo('#content')
+#    App.Folder = Ember.Object.extend({
+#      treeItemIsExpanded: false,  # Default to not expanded
+#      name: null
+#    });
+#
+#    App.File = Ember.Object.extend({
+#      name: null
+#    });
+#
+#    App.someController = Ember.Object.create({
+#      tree: [
+#        App.Folder.create({
+#        name: 'Folder 1',
+#        treeItemChildren: [
+#          App.File.create({ name: 'File 1' }),
+#          App.File.create({ name: 'File 2' }),
+#          App.File.create({ name: 'File 3' })
+#        ]
+#        }),
+#        App.Folder.create({
+#        name: 'Folder 2', treeItemChildren: []
+#        }),
+#        App.Folder.create({
+#        name: 'Folder 3',
+#        treeItemChildren: [
+#          App.Folder.create({
+#            name: 'My pictures',
+#            treeItemChildren: [
+#              App.File.create({ name: 'File 1' }),
+#              App.File.create({ name: 'File 2' })
+#            ]
+#          }),
+#          App.File.create({ name: 'File 5' })
+#        ]
+#        }),
+#      ]
+#    });
+#
+#    treeView = App.TreeView.create
+#      contentBinding: 'App.someController.tree'
+#
+#    treeView.appendTo('#content')
 
-    App.Folder = Ember.Object.extend({
-      treeItemIsExpanded: false,  # Default to not expanded
-      name: null
-    });
-
-    App.File = Ember.Object.extend({
-      name: null
-    });
-
-    App.someController = Ember.Object.create({
-      tree: [
-        App.Folder.create({
-        name: 'Folder 1',
-        treeItemChildren: [
-          App.File.create({ name: 'File 1' }),
-          App.File.create({ name: 'File 2' }),
-          App.File.create({ name: 'File 3' })
-        ]
-        }),
-        App.Folder.create({
-        name: 'Folder 2', treeItemChildren: []
-        }),
-        App.Folder.create({
-        name: 'Folder 3',
-        treeItemChildren: [
-          App.Folder.create({
-            name: 'My pictures',
-            treeItemChildren: [
-              App.File.create({ name: 'File 1' }),
-              App.File.create({ name: 'File 2' })
-            ]
-          }),
-          App.File.create({ name: 'File 5' })
-        ]
-        }),
-      ]
-    });
-
-    treeView = App.TreeView.create
-      contentBinding: 'App.someController.tree'
-
-    treeView.appendTo('#content')
-
-
-    App.teams = App.Team.find()
     App.peroids = Em.ArrayController.create
       content: [
         Em.Object.create name:'Период', id: 'period'

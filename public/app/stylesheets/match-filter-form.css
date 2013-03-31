@@ -1,0 +1,28 @@
+/**
+ * match-filter-form
+ * @author: actuosus
+ * Date: 31/03/2013
+ * Time: 18:04
+ */
+
+.match-filter-form .columnLeft {
+    float: none;
+}
+
+.match-filter-form .span1 {
+    margin-top: 33px;
+    float: left;
+    margin-right: 30px;
+}
+
+.match-filter-form .select {
+    min-width: 90px;
+}
+
+.match-filter-form .b-filter {
+    padding: 0px 20px 17px;
+}
+
+.match-filter-form .b-filter label span {
+    font-size: 11px;
+}

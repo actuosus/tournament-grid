@@ -5,7 +5,7 @@
  * Time: 22:23
 ###
 
-define ['cs!core'],->
+define ['cs!../core'],->
   App.YandexTranslator = Em.Object.extend
     isTranslator: yes
     serviceURL: 'http://translate.yandex.net/api/v1/tr.json/translate?callback=?'

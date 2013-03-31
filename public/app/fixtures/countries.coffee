@@ -6,7 +6,7 @@
  * Time: 13:57
 ###
 
-define ['cs!models/country'], ->
+define ['cs!../models/country'], ->
   App.Country.Fixtures = [
 
   ]

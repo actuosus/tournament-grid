@@ -2,6 +2,6 @@
 
 <% for doc in @docs : %>
 <div class="block-container padded">
-    <h2><a href="/reports/<%- doc.id %>"><%- doc.loc('name', @language) %></a></h2>
+    <h2><a href="/reports/<%- doc.id %>"><%- doc.loc('title', @language) %></a></h2>
 </div>
 <% end %>

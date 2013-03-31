@@ -6,7 +6,7 @@
  * Time: 03:06
 ###
 
-define ->
+define ['cs!../core'],->
   App.Bracket = DS.Model.extend
     parent: (-> @get 'stage').property('stage')
     children: (-> @get 'rounds').property('rounds')

@@ -23,7 +23,7 @@
 	"Downloads": "Herunterladen",
 	"Photo": "Foto",
 	"Database": "Datenbank",
-	"Players": "Spieler",
+	"Players": "Spielern",
 	"Teams": "Teams",
 	"Tournaments": "Turniere",
 	"Results": "Ergebnisse",
@@ -63,5 +63,12 @@
 	"sign in": "anmelden",
 	"Tweet feed": "Tweet-Feed",
 	"Video of the brightest moments of the Games": "Video der hellsten Momente der Spiele",
-	"Comments": "Kommentare"
+	"Comments": "Kommentare",
+	"Title": "Titel",
+	"Start date": "Startdatum",
+	"End date": "Enddatum",
+	"Match type": "Spiel-Typ",
+	"Create": "Schaffen",
+	"Cancel": "Beenden",
+	"Create report": "Bericht erstellen"
 }

@@ -5,7 +5,7 @@
  * Time: 22:05
 ###
 
-define ['cs!views/multilingual_field'], ->
+define ['cs!./multilingual_field'], ->
   App.MultilingualTextArea = App.MultilingualField.extend
     classNames: ['multilingual-text-area']
 

@@ -4,6 +4,9 @@
     <type id="JRUBY" />
   </component>
   <component name="IdProvider" IDEtalkID="F3E97AFE5944B93484BA6C9B3A5A9BD6" />
+  <component name="ParserProjectConfiguration">
+    <class-path />
+  </component>
   <component name="ProjectResources">
     <default-html-doctype>http://www.w3.org/1999/xhtml</default-html-doctype>
   </component>

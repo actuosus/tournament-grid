@@ -26,7 +26,7 @@ exports.create = (req, res)->
       console.log matches
     res.send matches: matches
   else if req.body?.match
-    await Round.findOne req.body?.match.round_id, defer err, round
+    await Round.findById req.body?.match.round_id, defer err, round
     match = req.body?.match
     m = new Match match
     m.name = match.name
@@ -48,8 +48,8 @@ exports.update = (req, res)->
     res.send matches: matches
   else if req.body?.match
     match = req.body?.match
-    await Match.findOne req.params._id, defer err, m
-    await m.update(match, defer err, doc)
+    await Match.findByIdAndUpdate req.params._id, { $set: match }, defer err, doc
+#    await m.update(match, defer err, doc)
 #    round.matches.push m
 #    await round.save defer err, round
     res.send match: doc

@@ -5,7 +5,7 @@
  * Time: 00:24
 ###
 
-define ->
+define ['cs!./core'],->
   App.Translation = Em.Object.extend
     isEdited: no
 

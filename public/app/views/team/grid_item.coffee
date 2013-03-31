@@ -6,8 +6,8 @@
 ###
 
 define [
-  'cs!views/autocomplete_text_field'
-  'cs!mixins/moving_highlight'
+  'cs!../autocomplete_text_field'
+  'cs!../../mixins/moving_highlight'
 ], ->
   ###
   Represents team model in grid. Also can be used standalone.

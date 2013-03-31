@@ -158,112 +158,9 @@
 <!-- aside 1 -->
 <aside class="b-aside1">
 
-    <div class="b-aside__block">
-        <p class="b-aside__title open"><%- @__ 'Content' %></p>
+    <% include 'main_menu.ect' %>
 
-        <ul class="b-aside__nav">
-            <li class="b-aside__nav__item">
-                <a href="" title="" class="link"><%- @__ 'News' %></a>
-            </li>
-            <li class="b-aside__nav__item">
-                <a href="" title="" class="link"><%- @__ 'Video' %></a>
-            </li>
-            <li class="b-aside__nav__item">
-                <a href="/reports" title="" class="link active"><%- @__ 'Reports' %></a>
-                <ul class="b-aside__nav2">
-                    <li class="b-aside__nav2__item">
-                        <a href="" title="" class="link live">Star Craft</a>
-                    </li>
-                    <li class="b-aside__nav2__item">
-                        <a href="" title="" class="link live active">Counter Strike</a>
-                    </li>
-                </ul>
-            </li>
-            <li class="b-aside__nav__item">
-                <a href="" title="" class="link"><%- @__ 'Downloads' %></a>
-            </li>
-            <li class="b-aside__nav__item">
-                <a href="" title="" class="link"><%- @__ 'Photo' %></a>
-            </li>
-            <li class="b-aside__nav__item">
-                <a href="" title="" class="link"><%- @__ 'VP Column' %></a>
-            </li>
-        </ul>
-
-        <p class="b-aside__title open"><%- @__ 'Participate' %></p>
-
-        <ul class="b-aside__nav">
-            <li class="b-aside__nav__item">
-                <a href="" title="" class="link"><%- @__ 'Blogosphere' %></a>
-            </li>
-            <li class="b-aside__nav__item">
-                <a href="" title="" class="link"><%- @__ 'Tournaments' %></a>
-            </li>
-            <li class="b-aside__nav__item">
-                <a href="" title="" class="link"><%- @__ 'Forum' %></a>
-            </li>
-            <li class="b-aside__nav__item">
-                <a href="" title="" class="link"><%- @__ 'Team search' %></a>
-            </li>
-            <li class="b-aside__nav__item">
-                <a href="" title="" class="link"><%- @__ 'Community' %></a>
-            </li>
-            <li class="b-aside__nav__item">
-                <a href="" title="" class="link"><%- @__ 'Contests' %></a>
-            </li>
-        </ul>
-
-        <p class="b-aside__title open"><%- @__ 'Training' %></p>
-
-        <ul class="b-aside__nav">
-            <li class="b-aside__nav__item">
-                <a href="" title="" class="link">Сounter Strike</a>
-            </li>
-            <li class="b-aside__nav__item">
-                <a href="" title="" class="link">Starcraft</a>
-            </li>
-            <li class="b-aside__nav__item">
-                <a href="" title="" class="link">World of Tanks</a>
-            </li>
-            <li class="b-aside__nav__item">
-                <a href="" title="" class="link">Dota 2</a>
-            </li>
-            <li class="b-aside__nav__item">
-                <a href="" title="" class="link">Counter Strike: GO</a>
-            </li>
-        </ul>
-
-        <p class="b-aside__title open"><%- @__ 'Database' %></p>
-
-        <ul class="b-aside__nav nobd">
-            <li class="b-aside__nav__item">
-                <a href="" title="" class="link"><%- @__ 'Players' %></a>
-            </li>
-            <li class="b-aside__nav__item">
-                <a href="" title="" class="link"><%- @__ 'Teams' %></a>
-            </li>
-            <li class="b-aside__nav__item">
-                <a href="" title="" class="link"><%- @__ 'Tournaments' %></a>
-            </li>
-            <li class="b-aside__nav__item">
-                <a href="" title="" class="link"><%- @__ 'Matches' %></a>
-            </li>
-        </ul>
-
-    </div>
-
-    <div class="b-aside__block">
-        <p class="b-aside__title open">Virtus.TV</p>
-
-        <ul class="b-aside__nav nobd">
-            <li class="b-aside__nav__item">
-                <a href="" title="" class="link"><%- @__ 'All Streams' %></a>
-            </li>
-            <li class="b-aside__nav__item">
-                <a href="" title="" class="link"><%- @__ 'Broadcast recordings' %></a>
-            </li>
-        </ul>
-    </div>
+    <% include 'tv_menu.ect' %>
 
     <div class="b-aside__social">
         <a target="_blank" href="http://www.facebook.com/pages/VirtusPro/113348038744614" class="fb" title="<%- @__ 'Our Facebook page' %>"></a>
@@ -275,19 +172,7 @@
         <span class="fakeLine"></span>
     </div>
 
-    <form class="b-aside__block b-formVoting">
-        <p class="b-aside__title"><%- @__ 'Voting' %></p>
-        <p class="question"><%- @__ 'How do you like the redesign of our website?' %></p>
-
-        <label><input type="radio" name="vote">Не айс</label>
-        <label><input type="radio" name="vote">Не плохо</label>
-        <label><input type="radio" name="vote">Вполне себе ничего</label>
-        <label><input type="radio" name="vote">Мне нравится</label>
-        <label class="checked"><input type="radio" name="vote" checked="checked">Отличный получился</label>
-
-        <button class="submit" type="submit"></button>
-        <a class="allVotes" href="" title=""><%- @__ 'Results' %></a>
-    </form>
+    <% include 'voting/block.ect' %>
 
 </aside>
 <!-- end aside 1 -->

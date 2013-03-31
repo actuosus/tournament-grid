@@ -5,7 +5,7 @@
  * Time: 15:08
 ###
 
-define ->
+define ['cs!../core'],->
   App.MapControl = Ember.Mixin.create
     scale: 1
     minScale: 0.15
@@ -29,7 +29,7 @@ define ->
 
     mouseWheel: (event)->
       return if event.shiftKey
-      event.preventDefault()
+
 
       #      console.log (event)
 
@@ -38,13 +38,18 @@ define ->
       scale = @get('scale')
       scale = scale + event.originalEvent.wheelDeltaY/1000
 
-      transformOrigin = "#{event.pageX - offset.left}px #{event.pageY - offset.top}px"
-      @doScale scale, transformOrigin
+      if @canScale(scale)
+        event.preventDefault()
+        transformOrigin = "#{event.pageX - offset.left}px #{event.pageY - offset.top}px"
+        @doScale scale, transformOrigin
 
-    doScale: (scale, transformOrigin)->
+    canScale: (newScale)->
       minScale = @get 'minScale'
       maxScale = @get 'maxScale'
-      if minScale < scale < maxScale
+      minScale < newScale < maxScale
+
+    doScale: (scale, transformOrigin)->
+      if @canScale(scale)
         css = scale: scale
         css['transformOrigin'] = transformOrigin if transformOrigin
         @get('contentView').$().css css

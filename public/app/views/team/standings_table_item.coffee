@@ -8,7 +8,9 @@
 
 
 define [
-  'text!templates/team/standings_table_item.handlebars'
+  'text!../../templates/team/standings_table_item.handlebars'
+  'cs!../../core'
+  'bootstrap.tooltip'
 ], (template)->
   Em.TEMPLATES.teamStandingsTableItem = Em.Handlebars.compile template
   App.TeamStandingsTableItemView = Em.View.extend

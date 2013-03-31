@@ -5,7 +5,7 @@
  * Time: 01:20
 ###
 
-define ['cs!core'], ->
+define ['cs!../core'], ->
   App.Collapsable = Ember.Mixin.create
     classNames: ['collapsible']
     classNameBindings: ['collapsed']
@@ -28,11 +28,14 @@ define ['cs!core'], ->
 
     appendableView: null
 
-    init: ->
-      @_super()
-      appendableView = @get 'appendableView'
-      if appendableView
-        appendableView.get('childViews').pushObject @get 'toggleButtonView'
+#    init: ->
+#      @_super()
+#      appendableView = @get 'appendableView'
+#      if appendableView.isClass
+#        appendableView.prototype.childViews?.pushObject 'toggleButtonView'
+#        appendableView.prototype.toggleButtonView = @get 'toggleButtonView'
+#      if appendableView.isInstance
+#        appendableView.get('childViews').pushObject @get 'toggleButtonView'
 
 
 #    didInsertElement: ->
