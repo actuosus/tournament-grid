@@ -153,11 +153,7 @@
 <% end %>
 <link rel="icon" type="image/x-icon" href="<%- @staticDomain %>/favicon.ico" />
 
-<% if @node_env is 'production': %>
-<script data-main="/bundle/app.js" src="/vendor/javascripts/require.js"></script>
-<% else: %>
 <script data-main="/app/main.js" src="/vendor/javascripts/require.js"></script>
-<% end %>
 
 <script type="text/javascript" id="grid-config">
     window.gridConfig = {
