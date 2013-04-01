@@ -31,20 +31,20 @@ module.exports.Stage = [
   visual_type: 'team'
   report_id: '511211b49709aab1ae000002'
   rounds: ['51142b464242d3110c000002']
-,
-  _id: '51121246b54802daae00000c'
-  name: '1/4'
-  visual_type: 'double'
-  report_id: '511211b49709aab1ae000002'
-,
-  _id: '51121246b54802daae00000d'
-  name: '1/2'
-  visual_type: 'single'
-  report_id: '511211b49709aab1ae000002'
-,
-  _id: '51121246b54802daae00000e'
-  name: 'Финал'
-  report_id: '511211b49709aab1ae000002'
+#,
+#  _id: '51121246b54802daae00000c'
+#  name: '1/4'
+#  visual_type: 'double'
+#  report_id: '511211b49709aab1ae000002'
+#,
+#  _id: '51121246b54802daae00000d'
+#  name: '1/2'
+#  visual_type: 'single'
+#  report_id: '511211b49709aab1ae000002'
+#,
+#  _id: '51121246b54802daae00000e'
+#  name: 'Финал'
+#  report_id: '511211b49709aab1ae000002'
 
 ,
   _id: '51121246b54802daae00000f'
