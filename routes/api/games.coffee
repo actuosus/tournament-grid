@@ -37,4 +37,4 @@ exports.create = (req, res)->
     await match.save defer err, match
     res.send game: doc
   else
-    res.send 401, error: "server error"
+    res.send 400, error: "server error"

@@ -75,6 +75,7 @@ define [
     VERSION: '0.1'
     autoinit: false
     LOG_TRANSITIONS: true
+#    rootElement: '#content'
     customEvents:
       mousewheel: 'mouseWheel'
 #  App.deferReadiness()

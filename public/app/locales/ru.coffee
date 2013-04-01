@@ -39,3 +39,4 @@ define
   _filter: 'Фильтровать'
   _captain: 'Капитан'
   _add_game: 'Добавить игру'
+  _rating: 'Рейтинг'

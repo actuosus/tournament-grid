@@ -21,7 +21,7 @@ module.exports.Stage = [
   rounds: ['5114472b6da8bd2910000002', '5114472b6da8bd2910000003', '5114472b6da8bd2910000004', '5114472b6da8bd2910000005', '5114472b6da8bd2910000006', '5114472b6da8bd2910000007']
 ,
   _id: '51121246b54802daae00000a'
-  name: '1/16'
+  name: 'Single Elimination'
   report_id: '511211b49709aab1ae000002'
   visual_type: 'grid'
   rounds: ['50fd4a58cbbf53a72a000002', '50fd4a58cbbf53a72a000003', '50fd4a58cbbf53a72a000004']

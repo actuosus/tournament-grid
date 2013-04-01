@@ -18,19 +18,19 @@ define [
     templateName: 'teamStandingsTableItem'
     classNames: ['team-standings-table-item']
 
-    didInsertElement: ->
-      @teamTooltipView = @get 'childViews.firstObject'
-      @matchesTooltipView = @get('childViews').objectAt(1)
-      @.$('.team-name').tooltip(
-        html: yes
-        title: @teamTooltipView.get('element')
-        trigger: 'click'
-      ).tooltip('toggle').tooltip('toggle')
-      @.$('.team-losses').tooltip(
-        html: yes
-        title: @matchesTooltipView.get('element')
-        trigger: 'click'
-      ).tooltip('toggle').tooltip('toggle')
+#    didInsertElement: ->
+#      @teamTooltipView = @get 'childViews.firstObject'
+#      @matchesTooltipView = @get('childViews').objectAt(1)
+#      @.$('.team-name').tooltip(
+#        html: yes
+#        title: @teamTooltipView.get('element')
+#        trigger: 'click'
+#      ).tooltip('toggle').tooltip('toggle')
+#      @.$('.team-losses').tooltip(
+#        html: yes
+#        title: @matchesTooltipView.get('element')
+#        trigger: 'click'
+#      ).tooltip('toggle').tooltip('toggle')
 #      @tooltipView.set 'isVisible', no
 #
 #    mouseEnter: (event)->

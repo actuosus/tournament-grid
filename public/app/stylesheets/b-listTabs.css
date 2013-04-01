@@ -57,6 +57,10 @@
     right: 7px;
 }
 
+.b-listsTabs .item.is-updating {
+    opacity: 0.5;
+}
+
 .b-listsTabs .item.add {
     background-color: #f0f0f0;
 }
@@ -64,4 +68,9 @@
 .b-listsTabs .item .add {
     color: gray;
     font-size: 11px;
+}
+
+.b-listsTabs .item a {
+    text-decoration: none;
+    color: #383838;
 }

@@ -134,7 +134,8 @@ app.locals
 #  node_env: 'production'
 #  staticDomain: '//static.tournament.local:3000'
 #  staticDomain: '//tournament.local:3000'
-  staticDomain: staticDomain
+#  staticDomain: staticDomain
+  staticDomain: ''
   moment: moment
   __: -> i18n.__ arguments
   languages: languages
@@ -180,16 +181,17 @@ app.delete '/api/stages/bulk', routes.api.stages.delete
 app.get '/api/teams', routes.api.teams.list
 app.post '/api/teams', routes.api.teams.create
 app.get '/api/teams/:_id', routes.api.teams.item
+app.put '/api/teams/:_id', routes.api.teams.update
 app.delete '/api/teams/:_id', routes.api.teams.delete
 app.delete '/api/teams/bulk', routes.api.teams.delete
 
 ensureAuthenticated = (req, res, next) ->
-  console.log 'ensureAuthenticated', req.isAuthenticated()
+#  console.log 'ensureAuthenticated', req.isAuthenticated()
   return next() if req.isAuthenticated()
   res.redirect '/'
 
 app.get '/', passport.authenticate('basic'), (req, res)->
-  console.log req.user
+#  console.log req.user
 #  res.header('cache-control', 'public, max-age=2592000')
   if req.user?.language and not req.cookies?.lang
     res.cookie 'lang', req.user.language

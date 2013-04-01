@@ -25,9 +25,10 @@ define [
 
   'cs!./views/tester'
 
-  'cs!./views/tree_view'
+  'cs!./views/tree'
 
   'cs!./views/lineup'
+  'cs!./views/lineup_container'
   'cs!./views/tournament_grid'
   'cs!./views/match/filter_form'
   'cs!./views/match/grid'
@@ -44,6 +45,8 @@ define [
   'cs!./views/team/info_tooltip'
   'cs!./views/team/matches_tooltip'
   'cs!./views/team/info_item'
+
+  'cs!./views/stage/tabs'
 
   'cs!./views/player/form'
 

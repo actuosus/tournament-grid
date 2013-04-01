@@ -27,10 +27,16 @@ define ['cs!../../mixins/moving_highlight', 'cs!../autocomplete_text_field'], ->
           'country-flag-icon-%@'.fmt @get 'content.country.code'
         ).property('content.country.code')
 
-      nameView: Em.View.extend
-        contentBinding: 'parentView.content'
+      nameView: App.EditableLabel.extend
+        valueBinding: 'parentView.content.name'
         classNames: ['lineup-grid-item-name']
-        template: Em.Handlebars.compile '{{view.content.name}}'
+        isEditableBinding: 'App.isEditingMode'
+        valueChanged: (->
+          team = @get 'parentView.content'
+          if team
+            team.store.commit()
+        ).observes('value')
+#        template: Em.Handlebars.compile '{{view.content.name}}'
 
       editButtonView: Em.View.extend
         tagName: 'button'
@@ -62,12 +68,21 @@ define ['cs!../../mixins/moving_highlight', 'cs!../autocomplete_text_field'], ->
 
         click: ->
           team = @get('content')
+          container = @get('parentView.parentView.parentView.content')
           team.deleteRecord()
           team.store.commit()
+          if container
+            container.removeObject(team)
     )
     playersView: Em.CollectionView.extend
       classNames: ['lineup-grid-item-players']
       contentBinding: 'parentView.content.players'
+
+      contentChanged: (->
+        console.log 'players changed'
+        team = @get 'parentView.content'
+        team.set('proxy', false) if team.get('proxy')
+      ).observes('content.length')
 
       itemViewClass: Em.ContainerView.extend
         classNames: ['lineup-grid-item-player-row']

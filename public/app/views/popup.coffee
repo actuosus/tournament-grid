@@ -33,7 +33,7 @@ define ['cs!../core'],->
       element = @get('element')
       dimensions = width: element.offsetWidth, height: element.offsetHeight
 #      targetDimensions = width: targetElement.offsetWidth, height: targetElement.offsetHeight
-      console.log dimensions
+#      console.log dimensions
       if target
         offset = target.$().offset()
         targetWidth = target.$().width()

@@ -88,6 +88,10 @@ define ['spin', 'cs!./menu'], (Spinner)->
             event.stopPropagation()
             @get('parentView').selectPrevious()
 
+      keyUp: (event)->
+        switch event.keyCode
+          when 27 then @$().val('')
+
       insertNewline: (event)->
         parentView = @get 'parentView'
         menuView = parentView.get 'menuView'

@@ -33,7 +33,7 @@ define [
         itemViewClass: App.RoundGridItemView
 
     contentView: Em.CollectionView.extend
-      contentBinding: 'parentView.content.rounds'
+      contentBinding: 'parentView.content._rounds'
       classNames: ['tournament-grid']
 
       didInsertElement: ->

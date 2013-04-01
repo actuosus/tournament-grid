@@ -39,3 +39,4 @@ define
   _filter: 'Filter'
   _captain: 'Captain'
   _add_game: 'Add game'
+  _rating: 'Rating'

@@ -12,4 +12,6 @@ define [
   App.MultilingualEditableLabel = App.MultilingualField.extend
     classNames: ['multilingual-editable-label']
     fieldView: App.EditableLabel.extend
+      attributeBindings: ['lang']
+      langBinding: 'parentView.selectedLanguage'
       valueBinding: 'parentView.value'

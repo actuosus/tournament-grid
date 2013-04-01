@@ -36,4 +36,4 @@ exports.create = (req, res) ->
     console.log stage.rounds
     res.send round: doc
   else
-    res.send 401, error: "server error"
+    res.send 400, error: "server error"

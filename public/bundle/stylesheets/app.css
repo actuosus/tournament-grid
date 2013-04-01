@@ -40,12 +40,19 @@
 .b-listsTabs .item.is-editing .remove-btn {
     right: 7px;
 }
+.b-listsTabs .item.is-updating {
+    opacity: 0.5;
+}
 .b-listsTabs .item.add {
     background-color: #f0f0f0;
 }
 .b-listsTabs .item .add {
     color: gray;
     font-size: 11px;
+}
+.b-listsTabs .item a {
+    text-decoration: none;
+    color: #383838;
 }
 .non-selectable {
     -webkit-user-select: none;
@@ -1401,6 +1408,12 @@ input[type="date"].input-large {
 .tournament-match.is-selected .connector .another {
     border-color: #ff6c00;
 }
+.tournament-match .team-grid-item {
+    margin-bottom: 5px;
+}
+.tournament-match.is-final {
+    top: -15px;
+}
 .lineup-grid-item {
     float: left;
     width: 268px;
@@ -1729,6 +1742,13 @@ input[type="date"].input-large {
 }
 .match-filter-form .b-filter label span {
     font-size: 11px;
+}
+.editable-label {
+    min-width: 1em;
+    min-height: 1em;
+}
+.editable-label.is-empty {
+    box-shadow: 0 0 4px darkgoldenrod;
 }
 .icon-remove {
     font-style: normal;

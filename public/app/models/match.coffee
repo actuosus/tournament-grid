@@ -53,15 +53,31 @@ define ['cs!../core'],->
 
     games: DS.hasMany 'App.Game'
 
+#    isDirtyChanged: (->
+#      console.log @get 'isDirty'
+#      if @get 'isDirty'
+#        @set 'round.isDirty', yes
+#
+#    ).observes('isDirty')
+
     entrant1Changed: (->
-      @set 'entrants', [@get('entrant1'), @get('entrant2')]
+      isWinner = @get 'isWinner'
+      if isWinner
+        @set 'entrants', [@get('entrant1')]
+      else
+        @set 'entrants', [@get('entrant1'), @get('entrant2')]
     ).observes 'entrant1'
 
     entrant2Changed: (->
-      @set 'entrants', [@get('entrant1'), @get('entrant2')]
+      isWinner = @get 'isWinner'
+      if isWinner
+        @set 'entrants', [@get('entrant1')]
+      else
+        @set 'entrants', [@get('entrant1'), @get('entrant2')]
     ).observes 'entrant2'
 
     resolveBrackets: ->
+      console.log 'resolveBrackets'
       matchIndex = @get 'itemIndex'
       stage = @get('round.stage')
       if stage
@@ -104,6 +120,12 @@ define ['cs!../core'],->
       nextMatch = @get 'parentNode'
       winner = @get 'winner'
       matchIndex = @get 'itemIndex'
+      unless matchIndex
+        round = @get 'round'
+        if round
+          matches = round.get('matches')
+          if matches
+            matchIndex = matches.indexOf(@)
       if nextMatch
         if winner
           nextMatch.get('entrants').replace matchIndex%2, 1, [winner]

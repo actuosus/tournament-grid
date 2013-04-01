@@ -18,5 +18,6 @@ StageSchema = new Schema
   sort_index: type: Number
   entrants_count: type: Number
   rounds: [type: ObjectId, ref: 'Round']
+  rating: type: Number
 
 module.exports = StageSchema

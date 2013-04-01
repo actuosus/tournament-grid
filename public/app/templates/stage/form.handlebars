@@ -10,16 +10,21 @@
 </div>
 
 <div class="control-row">
-    <label for="name">{{loc '_type'}}:</label>
+    <label for="visual_type">{{loc '_type'}}:</label>
     {{view App.SelectView contentBinding="App.visualTypes" valueBinding="view.visualType"}}
 </div>
 
 <div class="control-row">
-    <label for="entrants-number">{{loc '_entrants_number'}}:</label>
-    <input type="text" name="entrants-number" class="entrants-number" size="2" maxlength="4"/>
+    <label for="rating">{{loc '_rating'}}:</label>
+    <input type="number" name="rating" class="rating" size="2" maxlength="4"/>
 </div>
 
 <div class="control-row">
-    <button class="btn btn-primary save-btn">{{loc '_create'}}</button>
-    <button class="btn cancel-btn">{{loc '_cancel'}}</button>
+    <label for="entrants-number">{{loc '_entrants_number'}}:</label>
+    <input type="number" name="entrants-number" class="entrants-number" size="2" maxlength="4"/>
+</div>
+
+<div class="control-row">
+    <button type="submit" class="btn btn-primary save-btn">{{loc '_create'}}</button>
+    <button type="button" class="btn cancel-btn">{{loc '_cancel'}}</button>
 </div>

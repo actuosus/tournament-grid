@@ -27,8 +27,13 @@ define ['cs!../team/grid_item'
       itemViewClass: Em.ContainerView.extend
         classNames: ['tournament-match']
         childViews: ['dateView', 'infoBarView', 'connectorView', 'contentView']
-        classNameBindings: ['content.isSelected']
+        classNameBindings: ['content.isSelected', 'content.isFinal']
+        attributeBindings: ['title']
         roundIndexBinding: 'parentView.parentView.contentIndex'
+
+        title: (->
+          "#{@get('roundIndex')}:#{@get('contentIndex')}"
+        ).property()
 
         mouseEnter: ->
           node = @get 'content'
@@ -58,21 +63,23 @@ define ['cs!../team/grid_item'
           match = @get 'content'
           roundIndex = @get('roundIndex')
           currentIndex = Math.pow(2, roundIndex) - 1
+          contentIndex = @get('contentIndex')
+          console.log contentIndex
           if match.get('isWinner')
             @set 'connectorView.isVisible', no
             @set 'dateView.isVisible', no
             @set 'infoBarView.isVisible', no
           @$().css(height: height * 2)
-#          console.log match.get('itemIndex'), match.get('round.itemIndex')
+          console.log roundIndex
           if (match.get('itemIndex') is -1) and (match.get('round.itemIndex') is -1)
 #            console.log currentIndex
             @$().css marginTop: Math.floor(match.get('round.stage.rounds.firstObject.matches.length')/2) * (height*2)
             return
-          if @get('parentView.parentView.contentIndex') is 0
-            if @get('contentIndex') is 0
+          if roundIndex is 0
+            if contentIndex is 0
               null
           else
-            if @get('contentIndex') is 0
+            if contentIndex is 0
               @$().css marginTop: currentIndex * height
             else
               @$().css marginTop: currentIndex * (height * 2)
@@ -83,6 +90,7 @@ define ['cs!../team/grid_item'
           contentBinding: 'parentView.content'
           contentIndexBinding: 'parentView.contentIndex'
           roundIndexBinding: 'parentView.roundIndex'
+
           didInsertElement: ->
             height = 45
             roundIndex = @get 'roundIndex'
@@ -101,6 +109,7 @@ define ['cs!../team/grid_item'
             if (match.get('itemIndex') is 0) and (match.get('round.itemIndex') is 0)
               @$().css top: top, left: 156, height: 0
               return
+
             @$().css {top: top, left: 156, height: currentIndex * height - (19/2)}
 
         dateView: App.EditableLabel.extend

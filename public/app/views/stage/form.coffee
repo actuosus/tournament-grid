@@ -19,6 +19,7 @@ define [
     visualType: 'grid'
 
     name: null
+    rating: null
     description: null
 
     didCreate: Em.K
@@ -27,11 +28,12 @@ define [
       @$('.save-btn').attr('disabled', 'disabled')
       entransNumber = parseInt(@$('.entrants-number').val(), 10)
       report = @get 'report'
-      stage = window.createActualRoundsByEntrants(entransNumber)
+      stage = report.createStageByEntrants entransNumber
 ##      stage = App.Stage.createRecord
 #      stage.set 'name', @$('.name').val()
       stage.set 'report', report
       stage.set 'name', @get 'name'
+      stage.set 'rating', @get 'rating'
 #      stage.set 'description', @$('.description').val()
       stage.set 'description', @get 'description'
       stage.set 'visual_type', @get 'visualType.id'

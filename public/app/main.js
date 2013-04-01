@@ -75,4 +75,6 @@ define([
   'modernizr.columns',
   'cs!./core',
   'cs!./application'
-], function(){console.log(arguments)})
+], function(){
+
+})

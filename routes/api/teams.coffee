@@ -7,6 +7,7 @@
 ###
 
 Team = require('../../models').Team
+Report = require('../../models').Report
 
 random = ->
   func = arguments[Math.floor(Math.random() * arguments.length)]
@@ -41,9 +42,28 @@ exports.create = (req, res) ->
     t = new Team team
     t.name = team.name
     await t.save defer err, doc
+    if team.report_id
+      await Report.findByIdAndUpdate team.report_id, {$push: {entrants: t._id}}, defer updateErr, report
     res.send team: doc
   else
-    res.send 401, error: "server error"
+    res.send 400, error: "server error"
+
+
+exports.update = (req, res)->
+  if req.body?.teams
+    teams = []
+    for team, i in req.body.teams
+      console.log team, i
+      m = new Player team
+      await m.update(team, defer err, teams[i])
+    res.send teams: teams
+  else if req.body?.team
+    team = req.body?.team
+    await Team.findById req.params._id, defer err, t
+    await t.update(team, defer err, doc)
+    res.send team: t
+  else
+    res.send 400, error: "server error"
 
 exports.delete = (req, res) ->
   if req.body?.teams
@@ -54,8 +74,10 @@ exports.delete = (req, res) ->
     res.status 204
     res.send()
   else if req.params?._id?
+    await Team.findById req.params._id, defer err, team
     Team.remove _id: req.params._id, (err)->
+      Report.update({_id: team.report_id}, {$pull : {entrants : req.params._id}})
       res.status 204 unless err
       res.send()
   else
-    res.send 401, error: "server error"
+    res.send 400, error: "server error"

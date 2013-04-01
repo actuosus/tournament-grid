@@ -8,4 +8,9 @@
 
 define [
   'cs!./core'
+  'cs!./controllers/countries'
+  'cs!./controllers/entrants'
+  'cs!./controllers/entrant'
+  'cs!./controllers/players'
+  'cs!./controllers/teams'
 ], -> console.log 'Controllers loaded.'

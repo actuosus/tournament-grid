@@ -18,6 +18,7 @@ define ['cs!../core'],->
 
     isSelected: no
 
+    report: DS.belongsTo 'App.Report'
 
     players: DS.hasMany 'App.Player'
 #    toString: -> "<Team:#{@get 'name'}>"

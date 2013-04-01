@@ -29,6 +29,7 @@
 @import "team_info_item.css";
 @import "multilingual-field.css";
 @import "match-filter-form.css";
+@import "editable-label.css";
 
 .icon-remove {
     font-style: normal;

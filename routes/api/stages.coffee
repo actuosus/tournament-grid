@@ -37,7 +37,7 @@ exports.create = (req, res)->
     await report.save defer err, report
     res.send stage: s
   else
-    res.send 401, error: "server error"
+    res.send 400, error: "server error"
 
 exports.delete = (req, res) ->
   if req.body?.stages
@@ -55,4 +55,4 @@ exports.delete = (req, res) ->
       res.status 204 unless err
       res.send()
   else
-    res.send 401, error: "server error"
+    res.send 400, error: "server error"

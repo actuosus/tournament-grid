@@ -59,7 +59,7 @@ define [
         match = @get 'parentView.parentView.match'
         console.debug 'Match', match
         if match
-          match.get('entrants')[@get 'parentView.contentIndex'] = newTeam
+#          match.get('entrants')[@get 'parentView.contentIndex'] = newTeam
           match.set "entrant#{@get('parentView.contentIndex')+1}", newTeam
         @set('isVisible', no)
       ).observes('selection')

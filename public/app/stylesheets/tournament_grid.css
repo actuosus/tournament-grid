@@ -80,3 +80,11 @@
 .tournament-match.is-selected .connector .another {
     border-color: #ff6c00;
 }
+
+.tournament-match .team-grid-item {
+    margin-bottom: 5px;
+}
+
+.tournament-match.is-final {
+    top: -15px;
+}

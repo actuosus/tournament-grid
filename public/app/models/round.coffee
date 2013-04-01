@@ -34,6 +34,12 @@ define ['cs!../core'],->
     stage: DS.belongsTo 'App.Stage'
     bracket: DS.belongsTo 'App.Bracket'
 
+    itemIndex: (->
+      parent = @get 'parent'
+      if parent
+        parent.get('rounds').indexOf @
+    ).property()
+
     entrants: (->
       matches = @get 'matches'
       entrants = []
@@ -41,6 +47,6 @@ define ['cs!../core'],->
         entrants.push match.get 'entrant1'
         entrants.push match.get 'entrant2'
       entrants.uniq()
-    ).property().volatile()
+    ).property('matches.@each.isLoaded')
 
   App.Round.toString = -> 'Round'

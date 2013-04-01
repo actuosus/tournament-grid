@@ -22,7 +22,11 @@ define [
     lastName: (-> Faker.Name.lastName()).property().volatile()
     middleName: ''
     country: null
-    isCaptain: null
+    isCaptain: no
+
+    isCaptainChanged: (->
+      console.log 'isCaptain', @get 'isCaptain'
+    ).observes('isCaptain')
 
     didCreate: Em.K
 
@@ -46,6 +50,7 @@ define [
       player.set 'firstName', @$('.first-name').val()
       player.set 'middleName', @$('.middle-name').val()
       player.set 'lastName', @$('.last-name').val()
+      player.set 'is_captain', @get 'isCaptain'
       player.on 'didCreate', => @didCreate player
       player.on 'becameError', =>
         console.log arguments
@@ -57,7 +62,7 @@ define [
       @createRecord()
 
     click: (event)->
-      event.preventDefault()
+      event.stopPropagation()
       if $(event.target).hasClass('save-btn')
         @createRecord()
       if $(event.target).hasClass('cancel-btn')

@@ -35,7 +35,7 @@ exports.create = (req, res)->
     await round.save defer err, round
     res.send match: doc
   else
-    res.send 401, error: "server error"
+    res.send 400, error: "server error"
 
 exports.update = (req, res)->
   if req.body?.matches
@@ -54,4 +54,4 @@ exports.update = (req, res)->
 #    await round.save defer err, round
     res.send match: doc
   else
-    res.send 401, error: "server error"
+    res.send 400, error: "server error"

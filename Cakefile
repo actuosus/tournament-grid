@@ -38,6 +38,15 @@ task 'browse', 'Open web browser', ->
   console.log "Opening web browser at #{url}…"
   spawn 'open', [url]
 
+task 'console', 'Interactive console', ->
+  conf = new Config()
+  mongoose = require 'mongoose'
+  mongoose.connect conf.mongo
+  models = require './models'
+
+  require 'iced-coffee-script/lib/coffee-script/repl'
+
+
 task 'db:seed', 'Seed database with fixtures', (options) ->
   path = require 'path'
   mongoose = require 'mongoose'

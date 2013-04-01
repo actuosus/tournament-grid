@@ -8,14 +8,22 @@
 define ['cs!../core'],->
   App.EditableLabel = Em.View.extend
     classNames: ['editable-label']
+    classNameBindings: ['isEmpty']
     template: Em.Handlebars.compile '{{view.value}}'
+    isEditable: yes
+
+    value: null
+
+    isEmpty: (-> !@get('value')).property('value')
 
     click: ->
-      @$().attr 'contentEditable', ''
+      if @get 'isEditable'
+        @$().attr 'contentEditable', ''
 
     focusOut: ->
-      @set 'value', @$().text()
-      @$().removeAttr 'contentEditable'
+      if @get 'isEditable'
+        @set 'value', @$().text()
+        @$().removeAttr 'contentEditable'
 
 #    keyUp: ->
 #      @set 'value', @$().text()

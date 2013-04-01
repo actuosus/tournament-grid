@@ -1,0 +1,15 @@
+/**
+ * editable-label
+ * @author: actuosus
+ * Date: 31/03/2013
+ * Time: 21:22
+ */
+
+.editable-label {
+    min-width: 1em;
+    min-height: 1em;
+}
+
+.editable-label.is-empty {
+    box-shadow: 0 0 4px darkgoldenrod;
+}

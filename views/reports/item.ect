@@ -167,6 +167,31 @@
 <!--<% else: %>-->
 <!--<script type="text/javascript" src="/app/main.js"></script>-->
 <!--<% end %>-->
+<!--<script type="text/x-handlebars" data-template-name="stages">-->
+    <!--<div class="block-container named-container">-->
+        <!--<p id="ember625" class="ember-view b-profileBlock__title">-->
+            <!--{{loc '_tournament_results_table'}}-->
+        <!--</p>-->
+        <!--<div class="i-listsTabs i-listsTabs_bd">-->
+            <!--<ul class="b-listsTabs">-->
+                <!--{{#each stage in controller.content}}-->
+                    <!--{{#linkTo stage stage tagName="li" classNames="item"}}{{stage.name}}{{/linkTo}}-->
+                <!--{{/each}}-->
+            <!--</ul>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</script>-->
+
+<!--<script type="text/x-handlebars" data-template-name="stage">-->
+    <!--{{stages}}-->
+    <!--<div class="block-container named-container">-->
+        <!--<h1>{{name}}</h1>-->
+        <!--{{#each matches}}-->
+            <!--{{view App.MatchGridItemView contentBinding=this}}-->
+        <!--{{/each}}-->
+    <!--</div>-->
+<!--</script>-->
+
 <script type="text/x-handlebars" data-template-name="application"></script>
 
 <ul class="b-profileReport__streams b-profileReport__streams_standalone">

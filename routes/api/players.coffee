@@ -46,7 +46,7 @@ exports.create = (req, res) ->
     await team.save defer err, team
     res.send player: p
   else
-    res.send 401, error: "server error"
+    res.send 400, error: "server error"
 
 exports.update = (req, res)->
   if req.body?.players
@@ -59,10 +59,14 @@ exports.update = (req, res)->
   else if req.body?.player
     player = req.body?.player
     await Player.findById req.params._id, defer err, p
-    await p.update(player, defer err, doc)
-    res.send player: p
+    if p
+      await p.update(player, defer err, doc)
+      await Team.findByIdAndUpdate player.team_id, {$push: {players: p._id}}, defer updateErr, team
+      res.send player: p
+    else
+      res.send 400, error: "server error"
   else
-    res.send 401, error: "server error"
+    res.send 400, error: "server error"
 
 exports.delete = (req, res) ->
   if req.body?.players
@@ -73,8 +77,10 @@ exports.delete = (req, res) ->
     res.status 204
     res.send()
   else if req.params?._id?
-    Player.remove _id: req.params._id, (err)->
-      res.status 204 unless err
-      res.send()
+    await Player.findById req.params._id, defer err, player
+    Player.findByIdAndRemove req.params._id, (removeErr)->
+      Team.findByIdAndUpdate player.team_id, {$pull: {players: req.params._id}}, (updateErr, numberAffected, rawResponse)->
+        res.status 204 unless updateErr
+        res.send()
   else
-    res.send 401, error: "server error"
+    res.send 400, error: "server error"
