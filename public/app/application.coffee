@@ -57,8 +57,7 @@ define [
     # Preloading countries
     App.countries = App.Country.find()
 
-    App.anotherCountriesController = Em.ArrayController.create
-      content: []
+    App.anotherCountriesController = Em.ArrayController.create content: []
 
     stageSelectorContainerView = App.NamedContainerView.create
       title: '_tournament_results_table'.loc()
