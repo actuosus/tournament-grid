@@ -10,11 +10,11 @@
     <tr class="matches-table-item">
         <td class="matches-table-date" title="Дата">{{moment date format=DD.MM.YY}}</td>
         <td class="matches-table-team1">{{entrant1.name}}<i {{bindAttr class=":country-flag-icon :team-country-flag-icon entrant1.countryFlagClassName"}}></i></td>
-        <td>[</td>
-        <td>{{entrant1_points}}</td>
-        <td>:</td>
-        <td>{{entrant2_points}}</td>
-        <td>]</td>
+        <td class="matches-table-points">[</td>
+        <td class="matches-table-points">{{entrant1_points}}</td>
+        <td class="matches-table-points">:</td>
+        <td class="matches-table-points">{{entrant2_points}}</td>
+        <td class="matches-table-points">]</td>
         <td class="matches-table-team2"><i {{bindAttr class=":country-flag-icon :team-country-flag-icon entrant2.countryFlagClassName"}}></i>{{entrant2.name}}</td>
         <td class="matches-table-map-type" title="Карта"><span class="matches-table-map-type-marker">@</span>{{map_type}}</td>
         <td class="matches-table-description" title="Описание"><a href="#">{{description}}</a></td>

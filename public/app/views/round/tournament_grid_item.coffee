@@ -64,13 +64,13 @@ define ['cs!../team/grid_item'
           roundIndex = @get('roundIndex')
           currentIndex = Math.pow(2, roundIndex) - 1
           contentIndex = @get('contentIndex')
-          console.log contentIndex
+#          console.log contentIndex
           if match.get('isWinner')
             @set 'connectorView.isVisible', no
             @set 'dateView.isVisible', no
             @set 'infoBarView.isVisible', no
           @$().css(height: height * 2)
-          console.log roundIndex
+#          console.log roundIndex
           if (match.get('itemIndex') is -1) and (match.get('round.itemIndex') is -1)
 #            console.log currentIndex
             @$().css marginTop: Math.floor(match.get('round.stage.rounds.firstObject.matches.length')/2) * (height*2)
@@ -99,7 +99,7 @@ define ['cs!../team/grid_item'
 
             match = @get 'content'
 
-            console.log match.get('itemIndex'), match.get('round.itemIndex')
+#            console.log match.get('itemIndex'), match.get('round.itemIndex')
 
             if contentIndex%2
               top = -(currentIndex * height) + height
@@ -109,7 +109,9 @@ define ['cs!../team/grid_item'
             if (match.get('itemIndex') is 0) and (match.get('round.itemIndex') is 0)
               @$().css top: top, left: 156, height: 0
               return
-
+            if match.get('round.matches.length') is 1
+              @$().css top: top, left: 156, height: 0
+              return
             @$().css {top: top, left: 156, height: currentIndex * height - (19/2)}
 
         dateView: App.EditableLabel.extend

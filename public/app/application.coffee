@@ -78,7 +78,7 @@ define [
 
     App.anotherCountriesController.set('content', App.Country.find())
 
-    stageSelectorContainerView.appendTo '#content'
+
 
     teamsController = Em.ArrayController.create
       contentBinding: 'App.report.entrants'
@@ -114,6 +114,8 @@ define [
       stageView.set('content', App.report.get('stages'))
       if App.report?.get('match_type') is 'team'
         lineupContainerView.appendTo '#content'
+
+    stageSelectorContainerView.appendTo '#content'
 
 #    matches = App.store.find(App.Match, {}).onLoad (ra)->
 #      ra.forEach (match)->

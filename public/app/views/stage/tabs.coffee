@@ -26,6 +26,7 @@ define [
     setViewForStage: (stage)->
       switch @currentStage.get 'visual_type'
         when 'grid'
+          @currentStage.get('matches')
           contentView = App.TournamentGridView.create content: @currentStage
         when 'group'
           contentView = App.GroupGridView.create

@@ -96,9 +96,9 @@ define ['cs!../core'],->
             entrant1.set('loses', (entrant1.loses + 1) || 1) if entrant1
 
       entrants.uniq()
-      Em.ArrayController.create
-        content: entrants.uniq()
-        itemController: 'entrant'
+#      Em.ArrayController.create
+#        content: entrants.uniq()
+#        itemController: 'entrant'
     ).property('rounds.@each.isLoaded')
 
     matches: (->
@@ -106,8 +106,13 @@ define ['cs!../core'],->
       matches = []
       rounds = @get 'rounds'
       console.log rounds.get('isLoaded')
-      rounds.forEach (round)->
-        round.get('matches').forEach (match)->
+      roundsLength = rounds.get 'length'
+      rounds.forEach (round, roundIndex)->
+#        round.set('itemIndex', roundsLength - roundIndex - 2)
+        matchesLength = round.get('matches.length')
+        round.get('matches').forEach (match, matchIndex)->
+#          console.log matchesLength - matchIndex - 2
+#          match.set('itemIndex', matchesLength - matchIndex - 2)
           matches.push match
       @notifyPropertyChange 'matches'
       matches
