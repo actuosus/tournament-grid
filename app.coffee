@@ -134,8 +134,8 @@ app.locals
 #  node_env: 'production'
 #  staticDomain: '//static.tournament.local:3000'
 #  staticDomain: '//tournament.local:3000'
-#  staticDomain: staticDomain
-  staticDomain: ''
+  staticDomain: staticDomain
+#  staticDomain: ''
   moment: moment
   __: -> i18n.__ arguments
   languages: languages
