@@ -22,7 +22,9 @@ define [
             result.incrementProperty property, increment
             results.set entrant, result
         else
-          results.set entrant, Ember.Object.create()
+          result = Ember.Object.create()
+          result.incrementProperty property, increment
+          results.set entrant, result
 
       @forEach (match)->
         entrant1 = match.get('entrant1')
