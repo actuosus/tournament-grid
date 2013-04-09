@@ -69,7 +69,8 @@ module.exports = (grunt)->
           'ember': '../vendor/scripts/ember',
           'ember-data': '../vendor/scripts/ember-data',
           'modernizr.columns': '../vendor/scripts/modernizr/columns',
-          'bootstrap.tooltip': '../vendor/scripts/bootstrap/bootstrap-tooltip'
+          'bootstrap.tooltip': '../vendor/scripts/bootstrap/bootstrap-tooltip',
+          'screenfull': '../vendor/scripts/screenfull.min',
           }
           name: 'main'
           out: 'public/bundle/app.js'
