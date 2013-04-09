@@ -7,6 +7,7 @@
 
 define [
   'cs!./group_table'
+  'cs!../../mixins/collapsable'
 ], ()->
   App.MatchesGroupTableContainerView = Em.ContainerView.extend
     classNames: ['matches-table-container']

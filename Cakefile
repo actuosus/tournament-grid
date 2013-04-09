@@ -21,7 +21,7 @@ task 'run', 'Start application server', ->
     util.print data
 
 task 'watched', 'Start application server with autoreload', ->
-  server = exec "supervisor -q -e 'node|js|coffee|json' -i 'undefined,public/app' server.js"
+  server = exec "supervisor -q -e 'node|js|coffee|json' -i 'undefined,public/app,public/bundle' server.js"
   server.stdout.setEncoding 'utf8'
   server.stderr.setEncoding 'utf8'
   server.stdout.on 'data', (data)->

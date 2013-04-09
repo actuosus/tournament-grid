@@ -77,6 +77,7 @@ define([
   'moment',
   'spin',
   'Faker',
+  'handlebars',
   'ember',
   'ember-data',
 //  'ember-table',
@@ -84,5 +85,9 @@ define([
   'cs!./core',
   'cs!./application'
 ], function(){
-
+  App.ready()
 })
+
+require(['cs!application'], function(){
+  App.ready()
+});

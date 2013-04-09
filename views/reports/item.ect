@@ -153,7 +153,14 @@
 <% end %>
 <link rel="icon" type="image/x-icon" href="<%- @staticDomain %>/favicon.ico" />
 
-<script data-main="/app/main.js" src="/vendor/scripts/require.js"></script>
+<% if @node_env is 'production': %>
+<!--<script type="text/javascript" src="<%- @staticDomain %>/bundle/app.js"></script>-->
+<script data-main="/bundle/app.js" src="/vendor/scripts/require.js"></script>
+<% else: %>
+<script type="text/javascript" src="/app/main.js"></script>
+<% end %>
+
+<!--<script data-main="/app/main.js" src="/vendor/scripts/require.js"></script>-->
 
 <script type="text/javascript" id="grid-config">
     window.gridConfig = {
@@ -162,11 +169,6 @@
     };
 </script>
 
-<!--<% if @node_env is 'production': %>-->
-<!--<script type="text/javascript" src="<%- @staticDomain %>/bundle/app.js"></script>-->
-<!--<% else: %>-->
-<!--<script type="text/javascript" src="/app/main.js"></script>-->
-<!--<% end %>-->
 
 <script type="text/x-handlebars" data-template-name="stages/new">
     {{view App.StageForm}}
