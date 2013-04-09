@@ -9,21 +9,52 @@ define ['cs!../core'],->
   App.EditableLabel = Em.View.extend
     classNames: ['editable-label']
     classNameBindings: ['isEmpty']
-    template: Em.Handlebars.compile '{{view.value}}'
+#    template: Em.Handlebars.compile '{{view.value}}'
     isEditable: yes
 
     value: null
 
     isEmpty: (-> !@get('value')).property('value')
 
+    didInsertElement: ->
+      @$().text(@get 'value')
+
+    isEditableChanged: (->
+      unless @get 'isEditable'
+        @$().removeAttr 'contentEditable'
+    ).observes('isEditable')
+
     click: ->
       if @get 'isEditable'
         @$().attr 'contentEditable', ''
+        @$().attr 'tabIndex', 0
+        @$().focus()
+        @$().select()
+
+    mouseEnter: ->
+      if @get 'isEditable'
+        @$().addClass('active')
+
+    mouseLeave: ->
+      if @get 'isEditable'
+        @$().removeClass('active')
+
+#    focusIn: ->
+#      @$().select()
 
     focusOut: ->
       if @get 'isEditable'
-        @set 'value', @$().text()
+        text = @$().text()
+        @setValue (text)
         @$().removeAttr 'contentEditable'
+
+    setValue: (value)->
+      @set('value', value) if @get('value') isnt value
+
+    _valueChanged: (->
+      @$().text(@get 'value') if @$()
+    ).observes('value')
+
 
 #    keyUp: ->
 #      @set 'value', @$().text()

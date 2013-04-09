@@ -9,6 +9,13 @@
     width: 885px;
     padding: 20px;
     overflow-y: scroll;
+    position: relative;
+}
+
+.tournament-grid-container .fullscreen-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
 }
 
 .tournament-grid {
@@ -30,8 +37,22 @@
     position: relative;
 }
 
+.tournament-match.is-dirty .match-info-bar .games-info-bar-label {
+    background-color: red;
+}
+
+.tournament-match.is-dirty .team-grid-item {
+    box-shadow: 0 0 10px red;
+}
+
 .tournament-match.is-selected .team-grid-item {
     box-shadow: 0 0 10px #ff6c00;
+}
+
+.tournament-match .save-btn {
+    position: absolute;
+    top: -5px;
+    left: 60px;
 }
 
 .connector {
@@ -87,4 +108,16 @@
 
 .tournament-match.is-final {
     top: -15px;
+}
+
+.tournament-bracket {
+    overflow: hidden;
+}
+
+.tournament-bracket-name {
+    text-align: center;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 16px;
+    margin-bottom: 20px;
 }

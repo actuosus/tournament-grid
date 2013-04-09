@@ -1,0 +1,15 @@
+/**
+ * team-lineup-grid
+ * @author: actuosus
+ * Date: 09/04/2013
+ * Time: 16:32
+ */
+
+.csscolumns .team-lineup-grid .lineup-grid {
+    -webkit-column-gap: 29px;
+    -moz-column-gap: 29px;
+    column-gap: 29px;
+    -webkit-column-width: 268px;
+    -moz-column-width: 268px;
+    column-width: 268px;
+}

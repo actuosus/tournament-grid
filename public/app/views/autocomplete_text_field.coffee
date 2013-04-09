@@ -61,11 +61,10 @@ define ['spin', 'cs!./menu'], (Spinner)->
       valueChanged: (->
         controller = @get 'parentView.controller'
         value = @get 'value'
-        if @get('shouldSearch') and value and value isnt @get 'lastValue'
+        if controller and @get('shouldSearch') and value and value isnt @get 'lastValue'
           controller.search name: value
         @set 'lastValue', value
         @set 'shouldSearch', yes
-
         @set 'parentView.value', null
       ).observes 'value'
 
@@ -138,10 +137,11 @@ define ['spin', 'cs!./menu'], (Spinner)->
         else
           @set('menuView.content', content)
           @set('menuView.isVisible', yes)
-      unless content.length
-        @addButtomView.set 'isVisible', yes
-      else
-        @addButtomView.set 'isVisible', no
+      if @addButtomView?.isInstance
+        unless content.length
+          @addButtomView.set 'isVisible', yes
+        else
+          @addButtomView.set 'isVisible', no
     ).observes 'content.isLoaded'
 
     loaderView: Em.View.extend
@@ -151,6 +151,7 @@ define ['spin', 'cs!./menu'], (Spinner)->
       title: '_loading'.loc()
       isLoadingBinding: 'parentView.isLoading'
       didInsertElement: ->
+        @_super()
         opts =
           lines: 15, # The number of lines to draw
           length: 2, # The length of each line

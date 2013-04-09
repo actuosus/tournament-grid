@@ -8,8 +8,24 @@
 
 define ['cs!../core'],->
   App.Stage = DS.Model.extend
+    loc: (->
+      console.log arguments
+    ).property()
+
     primaryKey: '_id'
-    name: DS.attr 'string'
+    name: DS.attr('string', {loc: {keyPath: '_name', defaultLanguage: 'ru'}})
+    __name: ((a,b,c,d)->
+      nameHash = @get '_name'
+      currentLanguage = App.get('currentLanguage')
+      value = ''
+      if currentLanguage and nameHash
+        value = nameHash[currentLanguage]
+      unless value
+        value = @get 'name'
+      value
+    ).property('_name', 'App.currentLanguage')
+
+    _name: DS.attr('object')
     description: DS.attr 'string'
     visual_type: DS.attr 'string'
     sort_index: DS.attr 'number'
@@ -19,6 +35,8 @@ define ['cs!../core'],->
 
     parent: (-> @get 'report').property('report')
     children: (-> @get 'rounds').property('rounds')
+
+    treeItemChildren: (-> @get 'rounds').property('rounds')
 
     left: null
     right: null
@@ -80,26 +98,11 @@ define ['cs!../core'],->
       rounds.forEach (round)->
         entrants = entrants.concat round.get 'entrants'
 
-        round.get('matches').forEach (match)->
-          entrant1 = match.get('entrant1')
-          entrant2 = match.get('entrant2')
-          entrant1.set('gamesPlayed', (entrant1.gamesPlayed + 1) || 1) if entrant1
-          entrant2.set('gamesPlayed', (entrant2.gamesPlayed + 1) || 1) if entrant2
-          if match.get('entrant1_points') > match.get('entrant2_points')
-            entrant1.set('wins', (entrant1.wins + 1) || 1) if entrant1
-            entrant2.set('loses', (entrant2.loses + 1) || 1) if entrant2
-          else if match.get('entrant1_points') == match.get('entrant2_points')
-            entrant1.set('draws', (entrant1.draws + 1) || 1) if entrant1
-            entrant2.set('draws', (entrant2.draws + 1) || 1) if entrant2
-          else
-            entrant2.set('wins', (entrant2.wins + 1) || 1) if entrant2
-            entrant1.set('loses', (entrant1.loses + 1) || 1) if entrant1
-
       entrants.uniq()
 #      Em.ArrayController.create
 #        content: entrants.uniq()
 #        itemController: 'entrant'
-    ).property('rounds.@each.isLoaded')
+    ).property().volatile() #'rounds.@each.isLoaded'
 
     matches: (->
       console.log 'matches'
@@ -116,7 +119,7 @@ define ['cs!../core'],->
           matches.push match
       @notifyPropertyChange 'matches'
       matches
-    ).property('rounds.@each.isLoaded')
+    ).property().volatile() #'rounds.@each.isLoaded'
 
     checkRounds: (->
       rounds = @get 'rounds'
@@ -157,8 +160,48 @@ define ['cs!../core'],->
       losers
     ).property()
 
+#    selectTeam: (team)->
+#      rounds = @get 'rounds'
+#      rounds.forEach (round, roundIndex)->
+#        round.get('matches').forEach (match, matchIndex)->
+#          entrants = match.get('entrants')
+
+    createWinnerBracket: (bracket, entrantsNumber)->
+      unless bracket
+        bracket = @get('brackets').createRecord(name: 'Winner bracket')
+      roundsCount = Math.log(entrantsNumber*2) / Math.log(2)-1
+      rounds = bracket.get 'rounds'
+      for i in [roundsCount..0]
+        matchesCount = Math.pow(2, i)-1
+        console.debug "Round #{i}, #{matchesCount+1} matches."
+        roundName = "1/#{matchesCount+1} #{'_of_the_final'.loc()}"
+        switch i
+          when 0
+            roundName = '_final'.loc()
+          when 1
+            roundName = '_semifinal'.loc()
+        round = rounds.createRecord
+          itemIndex: i
+          name: roundName
+          parentReference: 'stage'
+        matches = round.get 'matches'
+        for j in [0..matchesCount]
+          leftPath = rightPath = undefined
+          if roundsCount-i-1 >= 0
+            leftPath = "#{roundsCount-i-1}.#{j*2}"
+            rightPath = "#{roundsCount-i-1}.#{j*2+1}"
+          matches.createRecord
+            itemIndex: j
+            date: new Date()
+            leftPath: leftPath
+            rightPath: rightPath
+            parentNodePath: "#{roundsCount-i+1}.#{Math.floor(j/2)}"
+
+
     createLoserBracket: (bracket, entrantsNumber)->
-      roundsCount = Math.log(entrantsNumber*2) / Math.log(2)-1;
+      roundsCount = Math.log(entrantsNumber*2) / Math.log(2)-1
+      unless bracket
+        bracket = @get('brackets').createRecord(name: 'Loser bracket')
       rounds = bracket.get 'rounds'
       matchesCount = entrantsNumber/2
       rCount = roundsCount * 2 - 1
@@ -179,5 +222,22 @@ define ['cs!../core'],->
               parentNodePath: parentNodePath
             console.log match.clientId
         matchesCount /= 2
+
+    createTree: ()->
+      matches = @get 'matches'
+      map = Em.Map.create()
+      matches.forEach (match)->
+        entrant = match.get('entrants').objectAt(0)
+        if map.has entrant
+          entrantMatches = map.get entrant
+          entrantMatches.push match
+        else
+          map.set entrant, [match]
+
+      rootNode = App.Node.create()
+      map.keys.forEach (entrant)->
+        matches = map.get entrant
+        matches.forEach (match)->
+          rootNode.set 'left', App.Node.create(data: match)
 
   App.Stage.toString = -> 'Stage'

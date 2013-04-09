@@ -16,4 +16,8 @@ define ['cs!./combobox'], ->
         '<i {{bindAttr class=":country-flag-icon view.content.flagClassName"}}></i>'
 #        '{{view.parentView.currentLabel}}'
       )
+    autocompleteTextFieldView: App.AutocompleteTextField.extend
+      childViews: 'textFieldView loaderView statusIconView'.w()
+      controllerBinding: 'parentView.controller'
+      click: -> @select()
 

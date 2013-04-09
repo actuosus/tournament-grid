@@ -35,6 +35,7 @@ define ['spin', 'cs!../core'], (Spinner)->
       title: '_loading'.loc()
       isLoadingBinding: 'parentView.isLoading'
       didInsertElement: ->
+        @_super()
         opts =
           lines: 15, # The number of lines to draw
           length: 2, # The length of each line

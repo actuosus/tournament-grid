@@ -9,11 +9,26 @@
 define ['cs!../core'],->
   App.Round = DS.Model.extend
     primaryKey: '_id'
-    name: DS.attr 'string'
+    name: DS.attr('string', {loc: {keyPath: '_name', defaultLanguage: 'ru'}})
+    __name: (->
+      console.log arguments
+      nameHash = @get '_name'
+      currentLanguage = App.get('currentLanguage')
+      value = ''
+      if currentLanguage and nameHash
+        value = nameHash[currentLanguage]
+      unless value
+        value = @get 'name'
+      value
+    ).property('_name', 'App.currentLanguage').volatile()
+
+    _name: DS.attr('object')
 
     parentReference: 'stage'
     parent: (-> @get @get 'parentReference').property('stage')
     children: (-> @get 'matches').property('matches')
+
+    treeItemChildren: (-> @get 'matches').property('matches')
 
 
     getDescendant: (child, idx)-> child.get('children').objectAt idx if child

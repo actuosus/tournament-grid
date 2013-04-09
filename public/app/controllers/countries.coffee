@@ -31,6 +31,8 @@ define [
         #          if item.get('_name')
         if item.get('name')?.match regexp
           return yes
+        if item.get('__name')?.match regexp
+          return yes
         if item.get('englishName')?.match regexp
           return yes
       @set 'content', @sort(result, options)
@@ -41,7 +43,7 @@ define [
 #        isSelectedBinding: 'content.isSelected'
       template: Em.Handlebars.compile(
         '<i {{bindAttr class=":country-flag-icon view.content.flagClassName"}}></i>'+
-        '{{highlight view.content.name partBinding=parentView.highlight}}')
+        '{{highlight view.content.__name partBinding=parentView.highlight}}')
       mouseDown: (event)->
         event.stopPropagation()
 

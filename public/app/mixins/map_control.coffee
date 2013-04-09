@@ -36,7 +36,7 @@ define ['cs!../core'],->
         offset = @$().offset()
 
         scale = @get('scale')
-        scale = scale + event.originalEvent.wheelDeltaY/1000
+        scale = scale + event.originalEvent.wheelDelta/1000
 
         if @canScale(scale)
           event.preventDefault()

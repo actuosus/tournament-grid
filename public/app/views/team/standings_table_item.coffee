@@ -10,6 +10,7 @@
 define [
   'text!../../templates/team/standings_table_item.handlebars'
   'cs!../../core'
+  'cs!./cell'
   'bootstrap.tooltip'
 ], (template)->
   Em.TEMPLATES.teamStandingsTableItem = Em.Handlebars.compile template
@@ -17,6 +18,10 @@ define [
     tagName: 'tr'
     templateName: 'teamStandingsTableItem'
     classNames: ['team-standings-table-item']
+    classNameBindings: ['content.isSelected']
+
+    click: ->
+      @toggleProperty 'content.isSelected'
 
 #    didInsertElement: ->
 #      @teamTooltipView = @get 'childViews.firstObject'

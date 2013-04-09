@@ -28,7 +28,7 @@ define ['cs!../core'],->
       selectedView = childViews.objectAt(index)
       console.log selected
 
-      if @$() and selectedView.$()
+      if @$() and selectedView?.$()
         @$().scrollTo(selectedView.$())
       selectedView.set('isSelected', yes) if selected
 #      selected.set('isSelected', yes) if selected

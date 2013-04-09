@@ -20,16 +20,18 @@ define ['cs!../mixins/translatable', 'cs!./language_menu'], ->
 
     init: ()->
       @_super()
-      @set 'values', []
+      @set 'values', new Em.Map()
       @set 'selectedLanguage', App.currentLanguage
 
+    appCurrentLanguageChanged: (->
+      @set 'selectedLanguage', App.get('currentLanguage')
+    ).observes('App.currentLanguage')
+
     selectedLanguageChanged: (->
-      languages = @get 'languages'
       selectedLanguage = @get 'selectedLanguage'
       console.log 'selectedLanguageChanged', selectedLanguage
-      languageIndex = languages.indexOf selectedLanguage
       values = @get 'values'
-      value = values.objectAt languageIndex
+      value = values.get selectedLanguage
 #      @set 'value', value
       @set 'fieldView.value', value
     ).observes('selectedLanguage')
@@ -44,12 +46,10 @@ define ['cs!../mixins/translatable', 'cs!./language_menu'], ->
     ).observes('hasInput')
 
     valueChanged: (->
-      languages = @get 'languages'
       selectedLanguage = @get 'selectedLanguage'
-      languageIndex = languages.indexOf selectedLanguage
       values = @get 'values'
       value = @get 'value'
-      values[languageIndex] = value
+      values.set selectedLanguage, value
       @set 'hasInput', yes
 #      if @get 'noValueChangeTimer'
       clearTimeout @get 'noValueChangeTimer'
@@ -60,11 +60,9 @@ define ['cs!../mixins/translatable', 'cs!./language_menu'], ->
     translationsChanged: (->
       console.log @, 'translationsChanged', @get 'translations'
       translations = @get 'translations'
-      languages = @get 'languages'
       values = @get 'values'
       translations.forEach (translation)->
-        languageIndex = languages.indexOf translation.targetLanguage
-        values[languageIndex] = translation.get 'value'
+        values.set translation.targetLanguage, translation.get 'value'
     ).observes('translations')
 
     fieldView: Em.TextField.extend

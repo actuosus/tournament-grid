@@ -163,6 +163,17 @@ module.exports.Match = [
   map_type: 'Комарин'
   description: 'Короткое описание основного текста, для того'
 ,
+  _id: '51142bdc323f4b360c00000f',
+  name: 'Bly vs Wikipediots',
+  entrant1_id: '50fcdf189c68d90f07000004',
+  entrant2_id: '50fcdf189c68d90f07000002',
+  entrant1_points: 2,
+  entrant2_points: 2,
+  date: new Date '08.24.2012'
+  round_id: '5114472b6da8bd2910000002'
+  map_type: 'Комарин'
+  description: 'Пример ничьи'
+,
   _id: '51142bdc323f4b360c000009',
   name: 'LeX vs evil',
   entrant1_id: '5107d4cd351fb19719000002',
@@ -173,5 +184,37 @@ module.exports.Match = [
   round_id: '5114472b6da8bd2910000008'
   map_type: 'Комарин'
   description: 'Короткое описание основного текста, для того'
-
+,
+  _id: '51142bdc323f4b360c000010',
+  name: 'LeX vs evil',
+  entrant1_id: '5107d4cd351fb19719000002',
+  entrant2_id: '5107d4cd351fb19719000003',
+  entrant1_points: 4,
+  entrant2_points: 7,
+  date: new Date '03.24.2013'
+  round_id: '5114472b6da8bd2910000008'
+  map_type: 'Комарин'
+  description: 'Короткое описание основного текста, для того'
+,
+  _id: '51142bdc323f4b360c000011',
+  name: 'LeX vs evil',
+  entrant1_id: '5107d4cd351fb19719000002',
+  entrant2_id: '5107d4cd351fb19719000003',
+  entrant1_points: 4,
+  entrant2_points: 7,
+  date: new Date '03.24.2013'
+  round_id: '5114472b6da8bd2910000008'
+  map_type: 'Комарин'
+  description: 'Короткое описание основного текста, для того'
+,
+  _id: '51142bdc323f4b360c000012',
+  name: 'LeX vs evil',
+  entrant1_id: '5107d4cd351fb19719000002',
+  entrant2_id: '5107d4cd351fb19719000003',
+  entrant1_points: 4,
+  entrant2_points: 7,
+  date: new Date '03.24.2013'
+  round_id: '5114472b6da8bd2910000008'
+  map_type: 'Комарин'
+  description: 'Короткое описание основного текста, для того'
 ]

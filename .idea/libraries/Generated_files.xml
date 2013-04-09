@@ -1,11 +1,5 @@
 <component name="libraryTable">
   <library name="Generated files" type="javaScript">
-    <properties>
-      <sourceFilesUrls>
-        <item url="file://$PROJECT_DIR$/public/app/application.js" />
-        <item url="file://$PROJECT_DIR$/routes/api/matches.js" />
-      </sourceFilesUrls>
-    </properties>
     <CLASSES>
       <root url="file://$PROJECT_DIR$/public/app/application.js" />
       <root url="file://$PROJECT_DIR$/routes/api/matches.js" />

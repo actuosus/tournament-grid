@@ -23,3 +23,7 @@
 .team-standings-table-item .name a:hover {
     color: #3291dc;
 }
+
+.team-standings-table-item.is-selected {
+    font-weight: bold;
+}

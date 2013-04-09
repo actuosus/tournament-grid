@@ -8,3 +8,7 @@
 define ['cs!../core'],->
   App.Entrant = DS.Model.extend
     name: DS.attr 'string'
+
+    url: DS.attr 'string'
+
+    pro: DS.attr 'boolean'

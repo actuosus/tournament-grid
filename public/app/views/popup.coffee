@@ -28,6 +28,7 @@ define ['cs!../core'],->
       dimensions
 
     didInsertElement: ->
+      @_super()
       target = @get('target')
 #      targetElement = target.get('element')
       element = @get('element')

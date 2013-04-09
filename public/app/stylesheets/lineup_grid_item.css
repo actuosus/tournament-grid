@@ -13,6 +13,12 @@
 }
 
 .csscolumns .lineup-grid {
+    -webkit-column-gap: 29px;
+    -moz-column-gap: 29px;
+    column-gap: 29px;
+    /*-webkit-column-count: 2;*/
+    /*-moz-column-count: 2;*/
+    /*column-count: 2;*/
     -webkit-column-width: 258px;
     -moz-column-width: 258px;
     column-width: 258px;
@@ -29,7 +35,8 @@
 }
 
 .lineup-grid-item td {
-    background-color: white;
+    /*background-color: white;*/
+    position: relative;
 }
 
 .lineup-grid-item .is-error td {
@@ -67,9 +74,11 @@
     color: #000000;
     max-width: 220px;
     display: inline-block;
-    overflow: hidden;
+    /*overflow: hidden;*/
     text-overflow: ellipsis;
     white-space: nowrap;
+    padding: 0 5px;
+    margin: 5px 0;
 }
 
 .lineup-grid-item-real-name {
@@ -92,9 +101,9 @@
     background-color: #e5e5e5;
     border: 1px solid #bababa;
     border-bottom: 3px solid #e9550d;
-    height: 28px;
-    line-height: 29px;
+    height: 25px;
     position: relative;
+    overflow: hidden;
 
     -webkit-transition-duration: 0.3s;
     -webkit-transition-property: background-color;
@@ -103,6 +112,10 @@
 .lineup-grid-item-players {
     max-height: 125px;
     /*overflow: scroll;*/
+}
+
+.lineup-grid-item-players .lineup-grid-item-name {
+    margin: 0;
 }
 
 .csscolumns .lineup-grid-item-players {

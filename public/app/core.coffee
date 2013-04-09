@@ -12,6 +12,7 @@ define [
   'ember-data'
   'cs!./locales'
   'cs!./config'
+#  'cs!lib/array'
 ] , (cookie, ember, emberData, locales, config)->
 #  window.onerror = (errorMsg, url, lineNumber)->
 #    data =
@@ -27,11 +28,13 @@ define [
 #      type: 'POST'
 #    })
 
-  localize = (lang)->
-    lang ?= (window.navigator.userLanguage or window.navigator.language).substring(0, 2)
-    Em.STRINGS = locales[lang]
-
   lang = $.cookie 'lang'
+
+  localize = (language)->
+    language ?= (window.navigator.userLanguage or window.navigator.language).substring(0, 2)
+    Em.STRINGS = locales[language]
+    lang = language
+
   localize(lang)
 
   Em.Handlebars.registerHelper 'loc', (property, fn)->
@@ -40,9 +43,23 @@ define [
     else if property[0] is '_'
       str = property
     else if /[A-Z]/.test property[0]
-      str = Em.getPath window, property
+      str = Em.get window, property
     else
-      str = this.getPath property
+      str = this.get property
+    new Handlebars.SafeString (str || '').loc('')
+
+  Em.Handlebars.registerBoundHelper '_loc', (value, options)->
+    console.log arguments
+    if options.contexts and typeof options.contexts[0] is 'string'
+      str = options.contexts[0]
+    else if typeof value is 'object'
+      str = value[App.currentLanguage]
+    else if value is '_'
+      str = value
+    else if /[A-Z]/.test value
+      str = Em.get window, value
+    else
+      str = this.get "_#{value}.#{App.currentLanguage}"
     new Handlebars.SafeString (str || '').loc('')
 
   Ember.Handlebars.registerBoundHelper 'moment', (value, options)->
@@ -78,7 +95,7 @@ define [
 #    rootElement: '#content'
     customEvents:
       mousewheel: 'mouseWheel'
-#  App.deferReadiness()
+  App.deferReadiness()
   window.TournamentGrid = TournamentGrid
   window.App = App
 
@@ -99,6 +116,26 @@ define [
     country: 'countries'
     match: 'matches'
 
+  DS.JSONTransforms.object =
+    serialize: (deserialized)->
+      unless Em.isNone(deserialized)
+        if deserialized.keys and deserialized.values
+          o = {}
+          deserialized.forEach (key, value)->
+            o[key] = value
+          return o
+      if Em.isNone(deserialized) then {} else deserialized
+
+    deserialize: (serialized)->
+      if Em.isNone(serialized) then {} else serialized
+
+  DS.JSONTransforms.string =
+    deserialize: (serialized)->
+      if Em.isNone(serialized) then null else String(serialized)
+
+    serialize: (deserialized)->
+      if Em.isNone(deserialized) then null else String(deserialized)
+
   App.store = DS.Store.create
     revision: 11
     adapter: DS.RESTAdapter.create
@@ -106,7 +143,27 @@ define [
       namespace: config.apiNamespace
 
   App.store.adapter.serializer.primaryKey = -> '_id'
+#  App.store.adapter.serializer.keyForAttributeName = (type, name)->
+##    console.log arguments
+#    console.log type.metaForProperty name
+#    name
+#  App.store.adapter.serializer.extractAttribute = (type, hash, attributeName)->
+#    console.log arguments
+#    key = this._keyForAttributeName(type, attributeName)
+#    hash[key]
+#  App.store.adapter.materializeAttribute = (record, serialized, attributeName, attributeType)->
+#    value = this.extractAttribute(record.constructor, serialized, attributeName);
+#    value = this.deserializeValue(value, attributeType);
+#
+#    record.materializeAttribute(attributeName, value);
 
   # Localization configuration
   App.languages = Em.ArrayController.create content: config.languages
-  App.currentLanguage = lang
+  App.set 'currentLanguage', lang
+
+  App.LanguageObserver = Em.Object.extend
+    currentLanguageChanged: (->
+      localize App.get('currentLanguage')
+    ).observes('App.currentLanguage')
+
+  App.languageObserver = App.LanguageObserver.create()

@@ -10,11 +10,13 @@ define ['cs!../core'],->
   App.Report = DS.Model.extend
     primaryKey: '_id'
     title: DS.attr 'string'
+    _title: DS.attr 'object'
     description: DS.attr 'string'
     start_date: DS.attr 'date'
     end_date: DS.attr 'date'
     date: DS.attr 'date'
     place: DS.attr 'string'
+    _place: DS.attr 'object'
 
     match_type: DS.attr 'string'
 
@@ -53,7 +55,7 @@ define ['cs!../core'],->
           itemIndex: i
           name: roundName
           parentReference: 'stage'
-        matches = round.get('matches')
+        matches = round.get 'matches'
         for j in [0..matchesCount]
           leftPath = rightPath = undefined
           if roundsCount-i-1 >= 0
@@ -80,5 +82,21 @@ define ['cs!../core'],->
 
     createStageByEntrants: (entrantsNumber)->
       @createStage Math.log(entrantsNumber) / Math.log(2)-1
+
+    createStageByRoundsNumber: (roundsNumber)->
+      stage = App.Stage.createRecord()
+      rounds = stage.get 'rounds'
+      for i in [1..roundsNumber]
+        rounds.createRecord parentReference: 'stage'
+      stage
+
+    createStageByMatchesNumber: (matchesNumber)->
+      stage = App.Stage.createRecord()
+      rounds = stage.get 'rounds'
+      round = rounds.createRecord parentReference: 'stage'
+      matches = round.get 'matches'
+      for i in [1..matchesNumber]
+        matches.createRecord date: new Date()
+      stage
 
   App.Report.toString = -> 'Report'

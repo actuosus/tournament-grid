@@ -11,7 +11,9 @@
 @import "button.css";
 @import "menu.css";
 @import "combobox.css";
+@import "tree.css";
 @import "../../vendor/styles/bootstrap-tooltip.css";
+@import "../../vendor/styles/ember-table.css";
 @import "block_container.css";
 @import "named_container.css";
 /*@import "test-grid.css";*/
@@ -23,6 +25,7 @@
 @import "team_grid_item.css";
 @import "country_flag_icon.css";
 @import "tournament_grid.css";
+@import "team-lineup-grid.css";
 @import "lineup_grid_item.css";
 @import "match_grid.css";
 @import "team_standings_table_item.css";
@@ -64,12 +67,36 @@
     right: 10px;
 }
 
+.matches-table-container .save-btn {
+    position: absolute;
+    top: 3px;
+    right: 50px;
+}
+
+.matches-table-container-inner {
+    position: relative;
+    overflow: hidden;
+}
+
+.matches-table-container-header {
+    position: relative;
+    border-top: 1px solid #bebebe;
+}
+
+.matches-table-container-header .add-btn {
+    right: 30px;
+}
+
+.matches-table-container-header .toggle-btn {
+    top: 7px;
+}
+
 .matches-table-title {
-    padding: 4px 8px;
+    padding: 5px 8px;
 }
 
 .matches-table-date {
-    font-size: 11px;
+    font-size: 10px;
     color: #838383;
 }
 
@@ -77,6 +104,10 @@
     color: #7a7a7a;
     width: 4px;
     padding: 4px 2px !important;
+}
+
+.matches-table-points .points-label {
+    padding: 0 3px;
 }
 
 .matches-table-map-type {
@@ -91,6 +122,24 @@
 
 .team-info-tooltip-items {
     font-size: 11px;
+}
+
+.lineup-grid-item .team-standings-table th {
+    line-height: 18px;
+    background-color: white;
+    border-bottom: 1px solid #bebebe;
+}
+
+.lineup-grid-item .team-standings-table th:hover {
+    background-color: #efefef;
+}
+
+.lineup-grid-item .team-standings-table td {
+    padding: 3px 8px 2px;
+}
+
+.matches-group-table td {
+    padding: 2px 8px;
 }
 
 .matches-table-description {
@@ -125,6 +174,11 @@
 
 .matches-group-table {
     border: 0;
+}
+
+.matches-group-table .team-name,
+.matches-group-table .team-undefined .team-name {
+    width: 92px;
 }
 
 .match-start-date {
@@ -182,14 +236,6 @@
     margin-top: 14px;
 }
 
-.grid .team-grid-item {
-    border-top: 0;
-}
-
-.grid .team-grid-item:first-child {
-    border-top: 1px solid #828282;
-}
-
 .b-profileBlock__toggle-button {
     position: absolute;
     right: 13px;
@@ -242,4 +288,25 @@
 
 .group-lineup-grid .lineup-grid-item-name-container {
     padding: 0 8px;
+}
+
+.matches-table-item {
+    position: relative;
+}
+
+.matches-table-item .team-grid-item {
+    border: 0;
+    background-color: transparent;
+}
+
+.matches-table-item td {
+    position: relative;
+}
+
+.matches-table-item.is-dirty td {
+    background-color: rgba(255,0,0,0.2);
+}
+
+.matches-table-item.is-updating td {
+    background-color: rgba(155,0,155,0.2);
 }

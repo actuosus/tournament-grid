@@ -7,11 +7,20 @@
 ###
 
 define [
-  'text!../../templates/match/table.handlebars'
+  'text!../../templates/match/table_item.handlebars'
   'cs!../../core'
 ], (template)->
-  Em.TEMPLATES.matchesTable = Em.Handlebars.compile template
-  App.MatchesTableView = Em.View.extend
+  Em.TEMPLATES.matchesTableItem = Em.Handlebars.compile template
+  App.MatchesTableView = Em.CollectionView.extend
     tagName: 'table'
-    templateName: 'matchesTable'
     classNames: ['matches-table', 'table']
+    itemViewClass: Em.View.extend
+      tagName: 'tr'
+      classNames: ['matches-table-item']
+      classNameBindings: ['content.isDirty']
+      templateName: 'matchesTableItem'
+
+      click: (event)->
+        if $(event.target).hasClass('remove-btn')
+          match = @get 'content'
+          match.deleteRecord() if match

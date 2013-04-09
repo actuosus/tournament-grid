@@ -5,13 +5,27 @@
  * Time: 02:28
  */
 
+.team-grid-item-container {
+    border: 1px solid #828282;
+    background-color: #efefef;
+    width: 154px;
+    height: 23px;
+    overflow: hidden;
+    position: relative;
+
+    -webkit-transition-property: background-color, border-color, box-shadow;
+    -webkit-transition-duration: 0.3s;
+}
+
+.team-grid-item-container.is-highlighted {
+    box-shadow: 0 0 10px green;
+}
+
 .team-grid-item {
     width: 150px;
     height: 19px;
     padding: 2px;
     overflow: hidden;
-    border: 1px solid #828282;
-    background-color: #efefef;
     font-size: 12px;
     position: relative;
 
@@ -116,14 +130,24 @@
     -webkit-transition-duration: 0.3s;
 }
 
+.editable-label.team-points,
+.editable-label.team-points.active,
+.editable-label.team-points:focus {
+    background-color: #9b9b9b;
+}
+
 .team-points:hover {
     box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.5);
 }
 
-.team-winner .team-points {
+.team-winner .team-points,
+.team-winner .team-points.active,
+.team-winner .team-points:focus {
     background-color: #5aaa71;
 }
 
-.team-loser .team-points {
+.team-loser .team-points,
+.team-loser .team-points.active,
+.team-loser .team-points:focus {
     background-color: #af3a40;
 }

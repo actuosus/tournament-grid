@@ -31,8 +31,9 @@ exports.create = (req, res)->
     m = new Match match
     m.name = match.name
     await m.save defer err, doc
-    round.matches.push m
-    await round.save defer err, round
+    if round
+      round.matches.push m
+      await round.save defer err, round
     res.send match: doc
   else
     res.send 400, error: "server error"

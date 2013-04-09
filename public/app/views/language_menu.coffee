@@ -28,11 +28,13 @@ define ['cs!../core'], ->
       click: (event)->
         event.preventDefault()
         @set 'selection', @get 'content'
+        @set 'parentView.isVisible', no
 
       mouseEnter: (event)->
         @set 'selection', @get 'content'
 
     didInsertElement: ->
+      @_super()
       target = @get('target')
       if target
 #        @$().css({transformOrigin: '-10px 30px', scale: 0})

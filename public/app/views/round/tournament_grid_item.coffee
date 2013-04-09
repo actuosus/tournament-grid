@@ -5,11 +5,12 @@
  * Time: 16:08
 ###
 
-define ['cs!../team/grid_item'
+define ['cs!../team/grid_item_container'
         'cs!../game/info_bar'
 ], ->
   App.RoundGridItemView = Em.ContainerView.extend
     classNames: ['tournament-round-container']
+    classNameBindings: ['content.isDirty']
     childViews: ['nameView', 'contentView']
 
     nameView: App.EditableLabel.extend
@@ -26,14 +27,12 @@ define ['cs!../team/grid_item'
 
       itemViewClass: Em.ContainerView.extend
         classNames: ['tournament-match']
-        childViews: ['dateView', 'infoBarView', 'connectorView', 'contentView']
-        classNameBindings: ['content.isSelected', 'content.isFinal']
+        childViews: ['dateView', 'infoBarView', 'connectorView', 'contentView', 'saveButtonView']
+        classNameBindings: ['content.isSelected', 'content.isFinal', 'content.isDirty']
         attributeBindings: ['title']
         roundIndexBinding: 'parentView.parentView.contentIndex'
 
-        title: (->
-          "#{@get('roundIndex')}:#{@get('contentIndex')}"
-        ).property()
+        titleBinding: 'content.description'
 
         mouseEnter: ->
           node = @get 'content'
@@ -58,6 +57,7 @@ define ['cs!../team/grid_item'
               break
 
         didInsertElement: ->
+          @_super()
 #          console.log (@get 'content')
           height = 45
           match = @get 'content'
@@ -92,6 +92,7 @@ define ['cs!../team/grid_item'
           roundIndexBinding: 'parentView.roundIndex'
 
           didInsertElement: ->
+            @_super()
             height = 45
             roundIndex = @get 'roundIndex'
             contentIndex = @get 'contentIndex'
@@ -113,6 +114,22 @@ define ['cs!../team/grid_item'
               @$().css top: top, left: 156, height: 0
               return
             @$().css {top: top, left: 156, height: currentIndex * height - (19/2)}
+
+        saveButtonView: Em.View.extend
+          tagName: 'button'
+          classNames: ['btn', 'btn-primary', 'btn-mini', 'save-btn', 'save']
+          template: Em.Handlebars.compile '{{loc "_save"}}'
+          isVisible: (->
+            isEditingMode = App.get('isEditingMode')
+            isDirty = @get 'parentView.content.isDirty'
+            yes if isEditingMode and isDirty
+          ).property('App.isEditingMode', 'parentView.content.isDirty')
+
+          click: ->
+            match = @get 'parentView.content'
+
+            if match
+              match.transaction.commit()
 
         dateView: App.EditableLabel.extend
           classNames: ['match-start-date']
@@ -136,4 +153,5 @@ define ['cs!../team/grid_item'
           matchBinding: 'parentView.content'
           contentBinding: 'parentView.content.entrants'
 
-          itemViewClass: App.TeamGridItemView
+          itemViewClass: App.TeamGridItemContainerView.extend
+            matchBinding: 'parentView.match'

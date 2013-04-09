@@ -7,6 +7,7 @@
 
 define [
   'cs!../autocomplete_text_field'
+  'cs!../number'
   'cs!../../mixins/moving_highlight'
 ], ->
   ###
@@ -18,6 +19,7 @@ define [
     childViews: '''countryFlagView nameView
      autocompleteView pointsView resetButtonView'''.w()
 
+    matchBinding: 'parentView.match'
     isUpdatingBinding: 'match.isUpdating'
 
     teamUndefined: (-> !@get('content')).property('content')
@@ -47,8 +49,9 @@ define [
       contentFilter: (content)->
         return unless content
         entrants = @get 'parentView.match.round.stage.entrants'
-        @set 'content', content.filter (item)->
-          not entrants.contains item
+        if entrants
+          @set 'content', content.filter (item)->
+            not entrants.contains item
 
       selectionChanged: (->
         oldTeam = @get 'parentView.content'
@@ -91,31 +94,43 @@ define [
 
     points: (->
       contentIndex = @get('contentIndex')
-      @get("parentView.match.entrant#{contentIndex+1}_points")
-    ).property()
+      console.log @get('match'), contentIndex
+      @get("match.entrant#{contentIndex+1}_points")
+    ).property('match.entrant1_points', 'match.entrant2_points')
 
-    pointsView: Em.View.extend
+    pointsView: App.NumberView.extend
+      tagName: 'div'
       classNames: ['team-points']
       contentBinding: 'parentView.content'
       contentIndexBinding: 'parentView.contentIndex'
-      template: Em.Handlebars.compile '{{view.parentView.points}}'
+      valueBinding: 'parentView.points'
+      isEditableBinding: 'parentView.isEditable'
+#      template: Em.Handlebars.compile '{{view.parentView.points}}'
+      matchBinding: 'parentView.match'
+      max: 99
 
-      click: ->
-        if @get('parentView.isEditable')
-          @$().css
-            '-webkit-user-modify': 'read-write'
-            '-webkit-user-select': 'text'
-          @$().keyup =>
-            match = @get('parentView.parentView.match')
-            points = parseInt @$().text(), 10
-            if points >= 0 and match
-              match.set('entrant' + (@get('contentIndex')+1) + '_points', points)
-          @$().blur => @$().unbind('keyup').css {'-webkit-user-modify': 'none'}
-          @$().focus().select()
+      valueChanged: (->
+        match = @get('match')
+        points = @get('value')
+        if points >= 0 and match
+          match.set('entrant' + (@get('contentIndex')+1) + '_points', points)
+      ).observes('value')
 
+#      click: ->
+#        if @get('parentView.isEditable')
+#          @$().css
+#            '-webkit-user-modify': 'read-write'
+#            '-webkit-user-select': 'text'
+#          @$().keyup =>
+#            match = @get('match')
+#            points = parseInt @$().text(), 10
+#            if points >= 0 and match
+#              match.set('entrant' + (@get('contentIndex')+1) + '_points', points)
+#          @$().blur => @$().unbind('keyup').css {'-webkit-user-modify': 'none'}
+#          @$().focus().select()
+#
     isEditing: no,
     isEditableBinding: 'App.isEditingMode'
-    match: Ember.computed -> @get 'parentView.match'
 
     isWinner: (->
       @get('parentView.match.winner.clientId') is @get('content.clientId')
@@ -135,9 +150,15 @@ define [
       if @get('isEditable')
         unless @get('match.isLocked')
           @set 'resetButtonView.isVisible', yes if @get 'content'
+      entrant = @get 'content'
+      if entrant
+        entrant.set('isHighlighted', yes)
 
     mouseLeave: ->
       @set 'resetButtonView.isVisible', no
+      entrant = @get 'content'
+      if entrant
+        entrant.set('isHighlighted', no)
 
     resetButtonView: Em.View.extend
       tagName: 'button'

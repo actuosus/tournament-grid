@@ -51,25 +51,25 @@ module.exports = (grunt)->
 #          appDir: 'public/app'
 #          dir: 'public/bundle'
           paths: {
-          'moment': '../vendor/javascripts/moment',
-          'jquery': '../vendor/javascripts/jquery',
-          'jquery.mousewheel': '../vendor/javascripts/jquery.mousewheel',
-          'jquery.cookie': '../vendor/javascripts/jquery.cookie',
-          'jquery.isotope': '../vendor/javascripts/jquery.isotope',
-          'jquery.scrollTo': '../vendor/javascripts/jquery.scrollTo.min',
-          'Faker': '../vendor/javascripts/Faker',
-          'raphael': '../vendor/javascripts/raphael',
-          'spin': '../vendor/javascripts/spin',
-          'cs': '../vendor/javascripts/cs',
-          'text': '../vendor/javascripts/text',
-          'coffee-script': '../vendor/javascripts/coffee-script',
-#          'iced-coffee-script': '../vendor/javascripts/coffee-script-iced-large',
-          'transit': '../vendor/javascripts/jquery.transit.min',
-          'handlebars': '../vendor/javascripts/handlebars',
-          'ember': '../vendor/javascripts/ember',
-          'ember-data': '../vendor/javascripts/ember-data',
-          'modernizr.columns': '../vendor/javascripts/modernizr/columns',
-          'bootstrap.tooltip': '../vendor/javascripts/bootstrap/bootstrap-tooltip'
+          'moment': '../vendor/scripts/moment',
+          'jquery': '../vendor/scripts/jquery',
+          'jquery.mousewheel': '../vendor/scripts/jquery.mousewheel',
+          'jquery.cookie': '../vendor/scripts/jquery.cookie',
+          'jquery.isotope': '../vendor/scripts/jquery.isotope',
+          'jquery.scrollTo': '../vendor/scripts/jquery.scrollTo.min',
+          'Faker': '../vendor/scripts/Faker',
+          'raphael': '../vendor/scripts/raphael',
+          'spin': '../vendor/scripts/spin',
+          'cs': '../vendor/scripts/cs',
+          'text': '../vendor/scripts/text',
+          'coffee-script': '../vendor/scripts/coffee-script',
+#          'iced-coffee-script': '../vendor/scripts/coffee-script-iced-large',
+          'transit': '../vendor/scripts/jquery.transit.min',
+          'handlebars': '../vendor/scripts/handlebars',
+          'ember': '../vendor/scripts/ember',
+          'ember-data': '../vendor/scripts/ember-data',
+          'modernizr.columns': '../vendor/scripts/modernizr/columns',
+          'bootstrap.tooltip': '../vendor/scripts/bootstrap/bootstrap-tooltip'
           }
           name: 'main'
           out: 'public/bundle/app.js'

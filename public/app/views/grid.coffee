@@ -28,6 +28,7 @@ define ['cs!../core'],->
 
     # Isotope
 #    didInsertElement: ->
+#      @_super()
 #      @$().isotope({masonry: {columnWidth: 114}})
 #
 #    arrayDidChange: (content, start, removed, added)->

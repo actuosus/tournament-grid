@@ -17,17 +17,12 @@ define ['cs!../core', 'cs!../translation'], ->
 
     translatedValues: {}
 
-#    _valueChanged: (
-#
-#    ).observes('value')
-
     translate: (value)->
       return unless value
       translatedValues = @get 'translatedValues'
       return translatedValues[value] if translatedValues[value]
       selectedLanguage = @get 'selectedLanguage'
-      unless selectedLanguage
-        selectedLanguage = App.currentLanguage
+      selectedLanguage = App.currentLanguage unless selectedLanguage
       languages = @get 'languages'
       provider = @get 'selectedProvider'
       unless provider

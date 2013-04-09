@@ -28,7 +28,9 @@ MatchSchema = new Schema
   player2_points: type: Number
   player1_race_id: type: Number
   player2_race_id: type: Number
+
   round_id: type: ObjectId, ref: 'Round'
+  stage_id: type: ObjectId, ref: 'Stage'
 
   games: [type: ObjectId, ref: 'Game'] # editable
 

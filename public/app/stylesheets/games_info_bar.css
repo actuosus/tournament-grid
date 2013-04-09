@@ -48,6 +48,9 @@
     font-size: 7px;
     background-color: #3b3b3b;
     cursor: default;
+
+    -webkit-transition-property: background-color;
+    -webkit-transition-duration: .3s;
 }
 
 .games-info-bar .games-create-button button {

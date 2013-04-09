@@ -59,9 +59,8 @@ exports.update = (req, res)->
     res.send teams: teams
   else if req.body?.team
     team = req.body?.team
-    await Team.findById req.params._id, defer err, t
-    await t.update(team, defer err, doc)
-    res.send team: t
+    await Team.findByIdAndUpdate req.params._id, { $set: team }, defer err, doc
+    res.send team: doc
   else
     res.send 400, error: "server error"
 

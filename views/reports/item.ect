@@ -153,7 +153,7 @@
 <% end %>
 <link rel="icon" type="image/x-icon" href="<%- @staticDomain %>/favicon.ico" />
 
-<script data-main="/app/main.js" src="/vendor/javascripts/require.js"></script>
+<script data-main="/app/main.js" src="/vendor/scripts/require.js"></script>
 
 <script type="text/javascript" id="grid-config">
     window.gridConfig = {
@@ -167,30 +167,46 @@
 <!--<% else: %>-->
 <!--<script type="text/javascript" src="/app/main.js"></script>-->
 <!--<% end %>-->
-<!--<script type="text/x-handlebars" data-template-name="stages">-->
-    <!--<div class="block-container named-container">-->
-        <!--<p id="ember625" class="ember-view b-profileBlock__title">-->
-            <!--{{loc '_tournament_results_table'}}-->
-        <!--</p>-->
-        <!--<div class="i-listsTabs i-listsTabs_bd">-->
-            <!--<ul class="b-listsTabs">-->
-                <!--{{#each stage in controller.content}}-->
-                    <!--{{#linkTo stage stage tagName="li" classNames="item"}}{{stage.name}}{{/linkTo}}-->
-                <!--{{/each}}-->
-            <!--</ul>-->
-        <!--</div>-->
-    <!--</div>-->
-<!--</script>-->
 
-<!--<script type="text/x-handlebars" data-template-name="stage">-->
-    <!--{{stages}}-->
-    <!--<div class="block-container named-container">-->
-        <!--<h1>{{name}}</h1>-->
-        <!--{{#each matches}}-->
-            <!--{{view App.MatchGridItemView contentBinding=this}}-->
-        <!--{{/each}}-->
-    <!--</div>-->
-<!--</script>-->
+<script type="text/x-handlebars" data-template-name="stages/new">
+    {{view App.StageForm}}
+</script>
+
+<script type="text/x-handlebars" data-template-name="stages">
+    <div class="block-container named-container">
+        <p class="ember-view b-profileBlock__title">
+            {{loc '_tournament_results_table'}}
+        </p>
+
+        <div class="stage-view">
+            <div class="i-listsTabs i-listsTabs_bd">
+                {{log controller.content}}
+                <ul class="b-listsTabs">
+                    {{#each stage in controller}}
+                    {{#linkTo stage stage tagName="li" classNames="item"}}{{stage.name}}{{/linkTo}}
+                    {{/each}}
+                    {{#if App.isEditingMode}}
+                    {{#linkTo stages.new tagName="li" classNames="item"}}+{{/linkTo}}
+                    {{/if}}
+                </ul>
+            </div>
+
+            {{outlet}}
+        </div>
+    </div>
+</script>
+
+<script type="text/x-handlebars" data-template-name="stage">
+    <div class="grid">
+        {{#each matches}}
+        {{view App.MatchGridItemView contentBinding=this}}
+        {{/each}}
+    </div>
+</script>
+
+<script type="text/x-handlebars" data-template-name="matches/new">
+    {{view App.MatchGridItemView}}
+</script>
 
 <script type="text/x-handlebars" data-template-name="application"></script>
 

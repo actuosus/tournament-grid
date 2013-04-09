@@ -25,11 +25,13 @@ define [
       @$('.name').focus()
 
     createRecord: ->
-      country = @get 'countrySelectView.selection'
+      country = @get 'countrySelectView.value'
       transaction = App.store.transaction()
+      report = App.get('report')
       team = transaction.createRecord(App.Team)
       team.set 'country', country
       team.set 'name', @$('.name').val()
+      team.set 'report', report
       team.on 'didCreate', => @didCreate team
       team.on 'becameError', =>
         console.log arguments

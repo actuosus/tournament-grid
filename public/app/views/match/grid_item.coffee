@@ -8,12 +8,14 @@
 
 define [
   'cs!../game/info_bar'
-  'cs!../team/grid_item'
+  'cs!../team/grid_item_container'
 ], ->
   App.MatchGridItemView = Em.ContainerView.extend
     classNames: ['match-grid-item']
-    childViews: ['dateView', 'infoBarView', 'contentView']#, 'editControlsView'
+    childViews: ['dateView', 'infoBarView', 'contentView', 'saveButtonView']#, 'editControlsView'
     classNameBindings: ['content.isSelected']
+    attributeBindings: ['title']
+    titleBinding: 'content.description'
 
     mouseEnter: ->
       @set 'editControlsView.isVisible', yes
@@ -31,6 +33,11 @@ define [
         node.set('isSelected', no)
         node = node.get('parentNode')
 
+    click: ->
+      url = @get 'content.url'
+      # Redirect to match URL
+      document.location.href = url if url
+
     dateView: App.EditableLabel.extend
       classNames: ['match-start-date']
       contentBinding: 'parentView.content.date'
@@ -45,12 +52,27 @@ define [
       showInfoLabel: yes
       classNames: ['match-info-bar']
 
+    saveButtonView: Em.View.extend
+      tagName: 'button'
+      classNames: ['btn', 'btn-primary', 'btn-mini', 'save-btn', 'save']
+      template: Em.Handlebars.compile '{{loc "_save"}}'
+      isVisible: (->
+        isEditingMode = App.get('isEditingMode')
+        isDirty = @get 'parentView.content.isDirty'
+        yes if isEditingMode and isDirty
+      ).property('App.isEditingMode', 'parentView.content.isDirty')
+
+      click: ->
+        match = @get 'parentView.content'
+        match.transaction.commit() if match
+
     contentView: Em.CollectionView.extend
       classNames: ['match-grid-item-entrants']
       matchBinding: 'parentView.content'
       contentBinding: 'parentView.content.entrants'
 
-      itemViewClass: App.TeamGridItemView
+      itemViewClass: App.TeamGridItemContainerView.extend
+        matchBinding: 'parentView.match'
 
     editControlsView: Em.ContainerView.extend
       classNames: ['match-grid-item-edit-controls']

@@ -14,17 +14,22 @@ define [
 
   'cs!./core'
 
-  'cs!./router'
   'cs!./controllers'
   'cs!./views'
   'cs!./models'
   'cs!./fixtures'
+
+  'cs!./router'
 
   'text!./templates/lineup_grid_item.handlebars'
 
   'cs!./mixins/translatable'
   'cs!./mixins/collapsable'
   'cs!./translators/yandex'
+
+#  'cs!./tree_test'
+
+  'cs!lib/node'
 
 ], ()->
 
@@ -42,26 +47,27 @@ define [
             App.set 'isEditingMode', not App.get('isEditingMode')
 
   App.ready = ->
-    App.set 'report', App.Report.find window.currentReportId
 
+    App.set 'report', App.Report.find window.currentReportId
+#
     App.set 'entrantsController', App.EntrantsController.create()
     App.set 'countriesController', App.CountriesController.create()
     App.set 'teamsController', App.TeamsController.create()
     App.set 'playersController', App.PlayersController.create()
-
-    window.teamsController = teamsController
-
-    stageView = App.StageTabsView.create()
-    window.stageView = stageView
-
-    # Preloading countries
+#
+#    window.teamsController = teamsController
+#
+    stageTabsView = App.StageTabsView.create()
+    window.stageView = stageTabsView
+#
+#    # Preloading countries
     App.countries = App.Country.find()
-
-    App.anotherCountriesController = Em.ArrayController.create content: []
-
+#
+#    App.anotherCountriesController = Em.ArrayController.create content: []
+#
     stageSelectorContainerView = App.NamedContainerView.create
       title: '_tournament_results_table'.loc()
-      contentView: stageView
+      contentView: stageTabsView
       countriesIsUpdating: (controller)->
         console.log 'countriesIsUpdating', controller.get('content.isUpdating'), controller.get('content.isLoaded')
         unless controller.get('content.isUpdating')
@@ -70,72 +76,75 @@ define [
         else
           @set 'loaderView.isVisible', yes
           @set 'statusTextView.value', 'Countries loading…'
-    App.anotherCountriesController.addObserver(
-                    'content.isUpdating',
-                    stageSelectorContainerView,
-                    stageSelectorContainerView.countriesIsUpdating
-                  )
-
-    App.anotherCountriesController.set('content', App.Country.find())
-
-
-
-    teamsController = Em.ArrayController.create
-      contentBinding: 'App.report.entrants'
-      sortProperties: ['gamesPlayed']
-      editingModeChanged: ->
-        content = @get 'content'
-        if App.get('isEditingMode')
-          content.createRecord({proxy: true, report: App.get('report')})
-        else
-          proxy = content.find (item)-> item if item.get('proxy')
-          content.removeObject(proxy) if proxy
-    App.addObserver 'isEditingMode', teamsController, teamsController.editingModeChanged
-
-    reportEntrants = App.EntrantsController.create content: App.report.get 'entrants'
+#    App.anotherCountriesController.addObserver(
+#                    'content.isUpdating',
+#                    stageSelectorContainerView,
+#                    stageSelectorContainerView.countriesIsUpdating
+#                  )
+#
+#    App.anotherCountriesController.set('content', App.Country.find())
+#
+#
+#
+#    teamsController = Em.ArrayController.create
+#      contentBinding: 'App.report.entrants'
+#      sortProperties: ['gamesPlayed']
+#      editingModeChanged: ->
+#        content = @get 'content'
+#        if App.get('isEditingMode')
+#          content.createRecord({proxy: true, report: App.get('report')})
+#        else
+#          proxy = content.find (item)-> item if item.get('proxy')
+#          content.removeObject(proxy) if proxy
+#    App.addObserver 'isEditingMode', teamsController, teamsController.editingModeChanged
+#
+    reportEntrants = App.EntrantsController.create contentBinding: 'App.report.entrants'
     lineupView = App.LineupView.create
+      classNames: ['team-lineup-grid']
       controller: reportEntrants
       contentBinding: 'controller.arrangedContent'
-
+#
     window.lineupView = lineupView
-
+#
     lineupContainerView = App.LineupContainerView.create contentView: lineupView
+#
+#    $('.link_pencil').click (event)->
+#      event.preventDefault()
+#      App.set 'isEditingMode', not App.get('isEditingMode')
+#
+#      if lineupContainerView?.$()
+#        $(document.body).scrollTo(lineupContainerView.$(), 500, {offset: {top: -18}})
+#      else if stageSelectorContainerView?.$()
+#        $(document.body).scrollTo(stageSelectorContainerView.$(), 500, {offset: {top: -18}})
+#
+    App.get('report').didLoad = ->
+      stageTabsView.set('content', App.report.get('stages'))
 
-    $('.link_pencil').click (event)->
-      event.preventDefault()
-      App.set 'isEditingMode', not App.get('isEditingMode')
-
-      if lineupContainerView?.$()
-        $(document.body).scrollTo(lineupContainerView.$(), 500, {offset: {top: -18}})
-      else if stageSelectorContainerView?.$()
-        $(document.body).scrollTo(stageSelectorContainerView.$(), 500, {offset: {top: -18}})
-
-    App.report.didLoad = ->
-      stageView.set('content', App.report.get('stages'))
       if App.report?.get('match_type') is 'team'
         lineupContainerView.appendTo '#content'
-
+#
     stageSelectorContainerView.appendTo '#content'
-
-#    matches = App.store.find(App.Match, {}).onLoad (ra)->
-#      ra.forEach (match)->
-#        team1 = match.get('team1')
-#        team2 = match.get('team2')
-#        team1?.set('gamesPlayed', (team1.gamesPlayed + 1) || 1)
-#        team2?.set('gamesPlayed', (team2.gamesPlayed + 1) || 1)
-#        if match.get('team1_points') > match.get('team2_points')
-#          team1?.set('wins', (team1.wins + 1) || 1)
-#          team2?.set('loses', (team2.loses + 1) || 1)
-#        else if match.get('team1_points') == match.get('team2_points')
-#          team1?.set('draws', (team1.draws + 1) || 1)
-#          team2?.set('draws', (team2.draws + 1) || 1)
-#        else
-#          team2?.set('wins', (team2.wins + 1) || 1)
-#          team1?.set('loses', (team1.loses + 1) || 1)
-
+#
+#    ###
+#      Кодировать и визуализировать состояние матча (сохранение и редактирование)
+#
+#      Подтверждать сохранение и закрытие каждого матча
+#      В течении получаса (суток) редактирование матча возможно
+#
+#      Группу тоже можно и нужно закрывать
+#
+#      При клике на участника группы он маркируется
+#
+#    ###
+#
 #    App.NamedContainerView.create(
 #      title: 'Tester'
 #      contentView: App.TesterView.create()
+#    ).appendTo('#content')
+
+#    App.NamedContainerView.create(
+#      title: '3D'
+#      contentView: App.Tournament3DGridView.create(content: App.get('report.stages'))
 #    ).appendTo('#content')
 
     App.peroids = Em.ArrayController.create
@@ -160,15 +169,39 @@ define [
 
     App.visualTypes = Em.ArrayController.create
       content: [
-        Em.Object.create name:'_grid'.loc(), id: 'grid'
+#        Em.Object.create name:'_grid'.loc(), id: 'grid'
+        Em.Object.create name:'_single'.loc(), id: 'single'
+        Em.Object.create name:'_double'.loc(), id: 'double'
         Em.Object.create name:'_group'.loc(), id: 'group'
         Em.Object.create name:'_matrix'.loc(), id: 'matrix'
         Em.Object.create name:'_team'.loc(), id: 'team'
       ]
 
-    App.entrantsController.set 'content', App.Team.find()
+#  rootNode = App.Node.create(content: 'root')
+#  rootNode.set('left', App.Node.create(
+#    content: 'left1',
+#    left: App.Node.create(content: 'left2'),
+#    right: App.Node.create(content: 'right2'))
+#  )
+#  rootNode.set('right', App.Node.create(content: 'right1'))
+#
+#  App.MatchTreeItemView = App.TreeItemView.extend
+#    treeItemViewClass: (->
+#      App.MatchGridItemView.extend
+#        classNames: ['tree-item-view-content'],
+#        contentBinding: 'parentView.content'
+#        contentIndexBinding: 'parentView.contentIndex'
+#    ).property()
+#
+#  treeView = App.TreeView.create content: [rootNode]
+##  treeView.appendTo '#content'
+#
+#  App.NamedContainerView.create(
+#    title: 'Tree'
+#    contentView: treeView
+#  ).appendTo('#content')
 
-#  $ -> App.advanceReadiness()
+  $ -> App.advanceReadiness()
   App.ready()
 
 

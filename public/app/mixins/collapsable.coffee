@@ -10,6 +10,8 @@ define ['cs!../core'], ->
     classNames: ['collapsible']
     classNameBindings: ['collapsed']
     childViews: ['toggleButtonView']
+
+    isCollapsed: no
     collapsed: no
 
     toggleButtonView: Em.View.extend
@@ -17,30 +19,38 @@ define ['cs!../core'], ->
       classNames: ['btn-clean', 'toggle-btn']
       classNameBindings: ['collapsed:toggle-btn-collapsed']
       attributeBindings: ['title']
-      collapsedBinding: 'parentView.collapsed'
+      collapsedBinding: 'collapseTarget.collapsed'
       title: (->
         if @get 'collapsed'
           '_expand'.loc()
         else
           '_collapse'.loc()
       ).property 'collapsed'
-      click: -> @get('parentView').toggle()
 
-    appendableView: null
+      click: ->
+#        width = @$().width()
+#        height = @$().height()
+        @get('collapseTarget').toggle()
+#        @line.animate('path':"M0 #{height}L#{width/2} 0L#{width} #{height}", 300)
 
-#    init: ->
-#      @_super()
-#      appendableView = @get 'appendableView'
-#      if appendableView.isClass
-#        appendableView.prototype.childViews?.pushObject 'toggleButtonView'
-#        appendableView.prototype.toggleButtonView = @get 'toggleButtonView'
-#      if appendableView.isInstance
-#        appendableView.get('childViews').pushObject @get 'toggleButtonView'
+#      didInsertElement: ->
+#        width = @$().width()
+#        height = @$().height()
+#        @paper = Raphael @.get('element'), width, height
+#        @line = @paper.path "M0 0L#{width/2} #{height}L#{width} 0"
+#        @line.attr 'stroke-width', 2
 
+    init: ->
+      @_super()
+      toggleButtonTarget = @get 'toggleButtonTarget'
+#      if toggleButtonAppendViewBinding.isClass
+#        toggleButtonAppendViewBinding.prototype.childViews?.pushObject 'toggleButtonView'
+#        toggleButtonAppendViewBinding.prototype.toggleButtonView = @get 'toggleButtonView'
+      if toggleButtonTarget.isInstance
+        toggleButtonView = @get('toggleButtonView').create(collapseTarget: @)
+        toggleButtonTarget.get('childViews').pushObject toggleButtonView
 
-#    didInsertElement: ->
-#      if @get 'collapsed'
-#        @$().height(0)
+    didInsertElement: -> @$().hide() if @get 'collapsed'
 
     toggle: ->
       if @get 'collapsed'
@@ -48,12 +58,19 @@ define ['cs!../core'], ->
       else
         @collapse()
 
+    isCollapsedChanged: (->
+      if @get 'isCollapsed'
+        @expand()
+      else
+        @collapse()
+    ).observes('isCollapsed')
+
     collapse: ->
-      contentView = @get('contentView')
+      contentView = @
       if contentView
-        @get('contentView').$().slideUp 300, => @set 'collapsed', yes
+        contentView.$().slideUp 300, => @set 'collapsed', yes
 
     expand: ->
-      contentView = @get('contentView')
+      contentView = @
       if contentView
-        @get('contentView').$().slideDown 300, => @set 'collapsed', no
+        contentView.$().slideDown 300, => @set 'collapsed', no

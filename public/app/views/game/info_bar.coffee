@@ -27,6 +27,7 @@ define ['cs!./form'], ->
       {{/if}}
       """
     addButtonTitle: (-> '_add_game'.loc()).property()
+
     click: (event)->
       if $(event.target).hasClass('games-create-button') or $(event.target).hasClass 'create-btn'
         popup = App.PopupView.create target: @

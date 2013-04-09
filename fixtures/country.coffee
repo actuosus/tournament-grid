@@ -27,7 +27,7 @@ module.exports.Country = [
     "ru": "Андорра",
     "en": "Andorra",
     "de": "Andorra",
-  }
+  },
   "_id": "514569cef9bbb58f3100001c",
   "code": "ad"
   },
@@ -35,6 +35,11 @@ module.exports.Country = [
   "name": "Объединённые Арабские Эмираты",
   "englishName": "United Arab Emirates",
   "germanName": "",
+  "_name": {
+    "ru": "Объединённые Арабские Эмираты",
+    "en": "United Arab Emirates",
+    "de": "Vereinigte Arabische Emirate",
+  },
   "code": "ae",
   "_id": "514569cef9bbb58f3100008a"
   },
@@ -42,6 +47,11 @@ module.exports.Country = [
   "name": "Афганистан",
   "englishName": "Afganistan",
   "germanName": "Afghanistan",
+  "_name": {
+    "ru": "Афганистан",
+    "en": "Afganistan",
+    "de": "Afghanistan",
+  },
   "_id": "514569cef9bbb58f3100009b",
   "code": "af"
   },
@@ -49,6 +59,11 @@ module.exports.Country = [
   "name": "Антигуа и Барбуда",
   "englishName": "Antigua and Barbuda",
   "germanName": "",
+  "_name": {
+    "ru": "Антигуа и Барбуда",
+    "en": "Antigua and Barbuda",
+    "de": "Antigua und Barbuda",
+  },
   "_id": "514569cef9bbb58f3100001d",
   "code": "ag"
   },
@@ -56,6 +71,11 @@ module.exports.Country = [
   "name": "Албания",
   "englishName": "Albania",
   "germanName": "Albanien",
+  "_name": {
+    "ru": "Албания",
+    "en": "Albania",
+    "de": "Albanien",
+  },
   "_id": "514569cef9bbb58f3100001a",
   "code": "al"
   },
@@ -63,6 +83,11 @@ module.exports.Country = [
   "name": "Армения",
   "englishName": "Armenia",
   "germanName": "",
+  "_name": {
+    "ru": "Армения",
+    "en": "Armenia",
+    "de": "Armenien",
+  },
   "_id": "514569cef9bbb58f3100001f",
   "code": "am"
   },
@@ -70,6 +95,11 @@ module.exports.Country = [
   "name": "Аргентина",
   "englishName": "Argentina",
   "germanName": "",
+  "_name": {
+    "ru": "Аргентина",
+    "en": "Argentina",
+    "de": "Argentinien",
+  },
   "_id": "514569cef9bbb58f3100001e",
   "code": "ar"
   },
@@ -77,6 +107,11 @@ module.exports.Country = [
   "name": "Аландские острова",
   "englishName": "Åland Islands",
   "germanName": "Åland",
+  "_name": {
+    "ru": "Аландские острова",
+    "en": "Åland Islands",
+    "de": "Åland",
+  },
   "_id": "514569cef9bbb58f310000a8",
   "code": "ax"
   },
@@ -84,6 +119,11 @@ module.exports.Country = [
   "name": "Босния и Герцеговина",
   "englishName": "Bosnia and Herzegovina",
   "germanName": "",
+  "_name": {
+    "ru": "Босния и Герцеговина",
+    "en": "Bosnia and Herzegovina",
+    "de": "Bosnien und Herzegovina",
+  },
   "_id": "514569cef9bbb58f3100002a",
   "code": "ba"
   },
@@ -91,6 +131,11 @@ module.exports.Country = [
   "name": "Барбадос",
   "englishName": "Barbados",
   "germanName": "",
+  "_name": {
+    "ru": "Барбадос",
+    "en": "Barbados",
+    "de": "Barbados",
+  },
   "_id": "514569cef9bbb58f31000025",
   "code": "bb"
   },
@@ -98,6 +143,11 @@ module.exports.Country = [
   "name": "Бангладеш",
   "englishName": "Bangladesh",
   "germanName": "",
+  "_name": {
+    "ru": "Бангладеш",
+    "en": "Bangladesh",
+    "de": "Bangladesch",
+  },
   "_id": "514569cef9bbb58f31000024",
   "code": "bd"
   },
@@ -105,6 +155,11 @@ module.exports.Country = [
   "name": "Буркина Фасо",
   "englishName": "Burkina Faso",
   "germanName": "",
+  "_name": {
+    "ru": "Буркина Фасо",
+    "en": "Burkina Faso",
+    "de": "Burkina Faso",
+  },
   "_id": "514569cef9bbb58f3100002f",
   "code": "bf"
   },
@@ -112,6 +167,11 @@ module.exports.Country = [
   "name": "Болгария",
   "englishName": "Bulgaria",
   "germanName": "",
+  "_name": {
+    "ru": "Болгария",
+    "en": "Bulgaria",
+    "de": "Bulgarien",
+  },
   "_id": "514569cef9bbb58f3100002e",
   "code": "bg"
   },
@@ -119,6 +179,11 @@ module.exports.Country = [
   "name": "Бахрейн",
   "englishName": "Bahrain",
   "germanName": "",
+  "_name": {
+    "ru": "Бахрейн",
+    "en": "Bahrain",
+    "de": "Bahrain",
+  },
   "_id": "514569cef9bbb58f31000023",
   "code": "bh"
   },
@@ -126,6 +191,11 @@ module.exports.Country = [
   "name": "Республика Бурунди",
   "englishName": "Republic of Burundi",
   "germanName": "",
+  "_name": {
+    "ru": "Республика Бурунди",
+    "en": "Republic of Burundi",
+    "de": "Burundi",
+  },
   "code": "bi",
   "_id": "514569cef9bbb58f310000b7"
   },
@@ -133,6 +203,11 @@ module.exports.Country = [
   "name": "Бенин",
   "englishName": "Benin",
   "germanName": "",
+  "_name": {
+    "ru": "Бенин",
+    "en": "Benin",
+    "de": "Benin",
+  },
   "_id": "514569cef9bbb58f310000a9",
   "code": "bj"
   },
@@ -140,6 +215,11 @@ module.exports.Country = [
   "name": "Сен-Бартельми",
   "englishName": "Saint-Barthelemy",
   "germanName": "",
+  "_name": {
+    "ru": "Сен-Бартельми",
+    "en": "Saint-Barthelemy",
+    "de": "Saint-Barthélemy",
+  },
   "code": "bl",
   "_id": "514569cef9bbb58f310000ba"
   },
@@ -147,6 +227,11 @@ module.exports.Country = [
   "name": "Бруней",
   "englishName": "Brunei",
   "germanName": "",
+  "_name": {
+    "ru": "Бруней",
+    "en": "Brunei",
+    "de": "Brunei Darussalam",
+  },
   "_id": "514569cef9bbb58f3100002d",
   "code": "bn"
   },
@@ -154,6 +239,11 @@ module.exports.Country = [
   "name": "Боливия",
   "englishName": "Bolivia",
   "germanName": "",
+  "_name": {
+    "ru": "Боливия",
+    "en": "Bolivia",
+    "de": "Bolivien",
+  },
   "_id": "514569cef9bbb58f31000029",
   "code": "bo"
   },
@@ -161,6 +251,11 @@ module.exports.Country = [
   "name": "Бразилия",
   "englishName": "Brazil",
   "germanName": "",
+  "_name": {
+    "ru": "Бразилия",
+    "en": "Brazil",
+    "de": "Brasilien",
+  },
   "_id": "514569cef9bbb58f3100002c",
   "code": "br"
   },
@@ -168,6 +263,11 @@ module.exports.Country = [
   "name": "Багамы",
   "englishName": "Bahamas",
   "germanName": "",
+  "_name": {
+    "ru": "Багамы",
+    "en": "Bahamas",
+    "de": "Bahamas",
+  },
   "_id": "514569cef9bbb58f31000022",
   "code": "bs"
   },
@@ -175,6 +275,11 @@ module.exports.Country = [
   "name": "Бутан",
   "englishName": "Bhutan",
   "germanName": "",
+  "_name": {
+    "ru": "Бутан",
+    "en": "Bhutan",
+    "de": "Bhutan",
+  },
   "_id": "514569cef9bbb58f31000028",
   "code": "bt"
   },
@@ -182,6 +287,11 @@ module.exports.Country = [
   "name": "Ботcвана",
   "englishName": "Botswana",
   "germanName": "",
+  "_name": {
+    "ru": "Ботcвана",
+    "en": "Botswana",
+    "de": "Botsuana",
+  },
   "_id": "514569cef9bbb58f3100002b",
   "code": "bw"
   },
@@ -189,6 +299,11 @@ module.exports.Country = [
   "name": "Беларусь",
   "englishName": "Belarus",
   "germanName": "",
+  "_name": {
+    "ru": "Беларусь",
+    "en": "Belarus",
+    "de": "Belarus",
+  },
   "_id": "514569cef9bbb58f31000026",
   "code": "by"
   },
@@ -196,6 +311,11 @@ module.exports.Country = [
   "name": "Белиз",
   "englishName": "Belize",
   "germanName": "",
+  "_name": {
+    "ru": "Белиз",
+    "en": "Belize",
+    "de": "Belize",
+  },
   "_id": "514569cef9bbb58f31000027",
   "code": "bz"
   },

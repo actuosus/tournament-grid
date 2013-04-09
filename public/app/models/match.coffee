@@ -21,6 +21,8 @@ define ['cs!../core'],->
 #
 #      stateManager.goToState 'empty'
 
+    url: DS.attr 'string'
+
     isLocked: no
     isSelected: no
 
@@ -50,6 +52,7 @@ define ['cs!../core'],->
     entrant2_race_id: DS.attr 'number'
 
     round: DS.belongsTo 'App.Round'
+    stage: DS.belongsTo 'App.Stage'
 
     games: DS.hasMany 'App.Game'
 
@@ -164,6 +167,8 @@ define ['cs!../core'],->
 
     parent: (-> @get 'round').property('round')
     children: (-> @get 'entrants').property('entrants')
+
+    treeItemChildren: (-> @get 'entrants').property('entrants')
 
     parentNode: (->
       parent = @get 'round.parent'

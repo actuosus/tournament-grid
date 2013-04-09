@@ -1,0 +1,24 @@
+<!--
+ * table_item
+ * @author: actuosus
+ * @fileOverview 
+ * Date: 28/01/2013
+ * Time: 22:17
+-->
+
+<td class="matches-table-date" title="Дата">{{moment view.content.date format=DD.MM.YY}}</td>
+<td class="matches-table-team1">{{view App.TeamCellView contentBinding=view.content.entrant1 matchBinding=view.content contentIndex=0}}</td>
+<td class="matches-table-points" title="Счёт">[{{view App.NumberView classNames="points-label" valueBinding=view.content.entrant1_points}}</td>
+<td class="matches-table-points">:</td>
+<td class="matches-table-points">{{view App.NumberView classNames="points-label" valueBinding=view.content.entrant2_points}}]</td>
+<td class="matches-table-team2">{{view App.TeamCellView contentBinding=view.content.entrant2 matchBinding=view.content contentIndex=1}}</td>
+<td class="matches-table-map-type" title="Карта"><span class="matches-table-map-type-marker">@</span>{{view.content.map_type}}</td>
+<td class="matches-table-description" title="Описание"><a href="#">{{view.content.description}}</a></td>
+<td>
+    {{view App.GamesInfoBarView contentBinding=view.content.games}}
+</td>
+{{#if App.isEditingMode}}
+    <td>
+        <button class="btn-clean remove-btn">&times;</button>
+    </td>
+{{/if}}

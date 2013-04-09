@@ -5,7 +5,11 @@
  * Time: 21:19
 ###
 
-define ['cs!../../mixins/moving_highlight', 'cs!../autocomplete_text_field'], ->
+define [
+  'cs!../../mixins/moving_highlight'
+  'cs!../autocomplete_text_field'
+  'cs!../editable_label'
+], ->
   App.TeamLineupGridItem = Em.ContainerView.extend
     classNames: ['lineup-grid-item']
     childViews: ['teamNameView', 'playersView', 'addPlayerView']
@@ -13,7 +17,7 @@ define ['cs!../../mixins/moving_highlight', 'cs!../autocomplete_text_field'], ->
     teamNameView: Em.ContainerView.extend(App.MovingHightlight,
       contentBinding: 'parentView.content'
       classNames: ['lineup-grid-item-name-container']
-      childViews: ['countryFlagView', 'nameView', 'removeButtonView']
+      childViews: ['countryFlagView', 'nameView', 'removeButtonView']#'editButtonView',
 
       countryFlagView: Em.View.extend
         tagName: 'i'
@@ -52,6 +56,7 @@ define ['cs!../../mixins/moving_highlight', 'cs!../autocomplete_text_field'], ->
           popup.get('childViews').push(
             App.TeamForm.create
               popupView: popup
+              nameBinding: 'parentView.entrant.name'
               entrant: @get('parentView.entrant')
               didUpdate: (entrant)=> popup.hide()
           )
@@ -135,7 +140,6 @@ define ['cs!../../mixins/moving_highlight', 'cs!../autocomplete_text_field'], ->
             player = @get('content')
             console.log player
             player.deleteRecord()
-
 
     addPlayerView: Em.ContainerView.extend
       classNames: ['lineup-grid-item-player-row']

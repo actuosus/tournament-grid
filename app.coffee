@@ -171,6 +171,7 @@ app.get '/api/results/:_id', routes.api.results.item
 app.get '/api/rounds', routes.api.rounds.list
 app.get '/api/rounds/:_id', routes.api.rounds.item
 app.post '/api/rounds', routes.api.rounds.create
+app.put '/api/rounds/:_id', routes.api.rounds.update
 
 app.get '/api/stages', routes.api.stages.list
 app.get '/api/stages/:_id', routes.api.stages.item

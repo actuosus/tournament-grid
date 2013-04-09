@@ -10,11 +10,11 @@ require({
 //  baseUrl: '/site',
   name: 'site',
   paths: {
-    'jquery': '/vendor/javascripts/jquery',
-    'bootstrap.collapse': '/vendor/javascripts/bootstrap/bootstrap-collapse',
-    'bootstrap.transition': '/vendor/javascripts/bootstrap/bootstrap-transition',
-    'coffee-script': '/vendor/javascripts/coffee-script',
-    'cs': '/vendor/javascripts/cs'
+    'jquery': '/vendor/scripts/jquery',
+    'bootstrap.collapse': '/vendor/scripts/bootstrap/bootstrap-collapse',
+    'bootstrap.transition': '/vendor/scripts/bootstrap/bootstrap-transition',
+    'coffee-script': '/vendor/scripts/coffee-script',
+    'cs': '/vendor/scripts/cs'
   },
   shim: {
     'bootstrap.collapse': {

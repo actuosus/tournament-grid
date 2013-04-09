@@ -10,6 +10,15 @@
     min-height: 1em;
 }
 
-.editable-label.is-empty {
-    box-shadow: 0 0 4px darkgoldenrod;
+/*.editable-label.is-empty {*/
+    /*box-shadow: 0 0 4px darkgoldenrod;*/
+/*}*/
+
+.editable-label:focus {
+    background-color: white;
+}
+
+.editable-label.active {
+    background-color: rgba(255,255,255,0.5);
+    box-shadow: 0 0 10px violet;
 }

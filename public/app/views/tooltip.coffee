@@ -20,6 +20,7 @@ define ->
       classNames: ['popup-arrow-border']
 
     didInsertElement: ->
+      @_super()
       target = @get('target')
       if target
         @$().css({transformOrigin: '-10px 30px', scale: 0})
