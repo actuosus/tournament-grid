@@ -154,11 +154,22 @@ define [
       if entrant
         entrant.set('isHighlighted', yes)
 
+      unless @teamLineupPopup
+        team = @get('content')
+        if team
+          @teamLineupPopup = App.PopupView.create(target: @)
+          @teamLineupPopup.get('childViews').push(App.TeamLineupGridItem.create(content: team))
+          @teamLineupPopup.append()
+      else
+        @teamLineupPopup.show()
+
     mouseLeave: ->
       @set 'resetButtonView.isVisible', no
       entrant = @get 'content'
       if entrant
         entrant.set('isHighlighted', no)
+
+#      @teamLineupPopup?.hide()
 
     resetButtonView: Em.View.extend
       tagName: 'button'

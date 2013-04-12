@@ -7,8 +7,12 @@
 ###
 
 define ['cs!../core'],->
-  App.Team = DS.Model.extend
+  App.Team = DS.Model.extend Ember.History,
     primaryKey: '_id'
+    _trackProperties: [
+      'name'
+      'players'
+    ]
     name: DS.attr 'string'
     country: DS.belongsTo 'App.Country'
 #    country: Em.computed -> App.Country.createRecord name: 'Япония', code: 'jp'

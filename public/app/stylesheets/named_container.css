@@ -58,3 +58,8 @@
     margin-bottom: 0;
     padding-bottom: 0;
 }
+
+.named-container .add-team-btn {
+    top: 27px;
+    right: 40px;
+}

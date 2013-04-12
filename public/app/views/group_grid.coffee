@@ -7,6 +7,7 @@
 
 define [
   'cs!./grid',
+  'cs!./loader'
   'cs!./standing_table',
   'cs!./editable_label',
   'cs!./multilingual_editable_label',
@@ -23,7 +24,7 @@ define [
       contentView: Em.ContainerView.extend
         contentBinding: 'parentView.content'
         classNames: ['lineup-grid-item-name-container']
-        childViews: ['nameView', 'addButtonView', 'removeButtonView']
+        childViews: ['nameView', 'addButtonView', 'removeButtonView', 'loaderView']
 
         nameView: App.EditableLabel.extend
           isEditableBinding: 'App.isEditingMode'

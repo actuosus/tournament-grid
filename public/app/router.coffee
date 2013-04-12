@@ -14,7 +14,7 @@ define [
   App.Router.map ->
     @resource 'stages', ->
 #      @route 'new'
-#      @resource 'stage', path: '/:stage_id', ->
+      @resource 'stage', path: '/:stage_id'
 #        @resource 'matches', ->
 #          @route 'new'
 #

@@ -7,7 +7,13 @@
 ###
 
 define ['cs!../core'],->
-  App.Match = DS.Model.extend
+  App.Match = DS.Model.extend Ember.History,
+    primaryKey: '_id'
+
+    _trackProperties: [
+      'entrant1_points'
+      'entrant2_points'
+    ]
 #    init: ->
 #      @_super()
 #
@@ -20,19 +26,36 @@ define ['cs!../core'],->
 #      @._setup()
 #
 #      stateManager.goToState 'empty'
+    currentStatus: (->
+      status = @get 'status'
+      date = @get 'date'
+      entrant1_points = @get 'entrant1_points'
+      entrant2_points = @get 'entrant2_points'
+      currentDate = new Date
+      if not date or date > currentDate and (not entrant1_points and not entrant2_points)
+        currentStatus = 'future'
+      if date < currentDate or (entrant1_points and entrant2_points) and status isnt 'closed'
+        currentStatus = 'active'
+      if date > (currentDate + 12) and (entrant1_points and entrant2_points)
+        currentStatus = 'delayed'
+      currentStatus
+    ).property('date', 'entrant1_points', 'entrant2_points')
+
 
     url: DS.attr 'string'
 
     isLocked: no
     isSelected: no
 
-    primaryKey: '_id'
     name: DS.attr 'string'
     description: DS.attr 'string'
     date: DS.attr 'date'
+
     map_type: DS.attr 'string'
+
     type: DS.attr 'string'
-    status: DS.attr 'string'
+
+    editingStatus: DS.attr 'string'
 
     entrants: (->
       isWinner = @get 'isWinner'

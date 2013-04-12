@@ -18,7 +18,7 @@
 }
 
 .team-grid-item-container.is-highlighted {
-    box-shadow: 0 0 10px green;
+    box-shadow: 0 0 10px #ff6c00;
 }
 
 .team-grid-item {

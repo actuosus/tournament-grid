@@ -13,7 +13,8 @@ define [
     title: '_the_teams'.loc()
     childViews: [
       'titleView', 'toggleButtonView', 'contentView',
-      'loaderView', 'statusTextView', 'searchBarView'
+      'loaderView', 'statusTextView', 'searchBarView',
+      'addEntrantButtonView'
     ]
     searchBarView: Em.ContainerView.extend
       classNames: ['search-bar']
@@ -28,6 +29,7 @@ define [
         template: Em.Handlebars.compile '×'
 
         click: -> @set('parentView.textFieldView.value', '')
+
       textFieldView: Em.TextField.extend
         classNames: ['search-field']
         placeholder: '_filter'.loc()
@@ -44,3 +46,13 @@ define [
             @set 'isNotClearValue', no
           @set('parentView.parentView.contentView.controller.searchQuery', @get 'value')
         ).observes('value')
+
+    addEntrantButtonView: Em.View.extend
+      tagName: 'button'
+      classNames: ['btn-clean', 'add-btn', 'add', 'add-team-btn']
+      template: Em.Handlebars.compile '+'
+      click: ->
+        team = App.Team.createRecord()
+        report = App.get('report')
+        team.set 'name', @$('.name').val()
+        team.set 'report', report

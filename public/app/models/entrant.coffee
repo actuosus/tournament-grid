@@ -7,8 +7,7 @@
 
 define ['cs!../core'],->
   App.Entrant = DS.Model.extend
+    primaryKey: '_id'
     name: DS.attr 'string'
-
     url: DS.attr 'string'
-
     pro: DS.attr 'boolean'

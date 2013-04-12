@@ -49,6 +49,10 @@
 {{#if view.isTeamType}}
 <div class="control-section control-section-group">
     <div class="control-row">
+        <label for="entrants-number">{{loc '_entrants_number'}}:</label>
+        <input type="number" name="entrants-number" class="team-entrants-number" size="2" maxlength="4"/>
+    </div>
+    <div class="control-row">
         <label for="matches-number">{{loc '_matches_number'}}:</label>
         <input type="number" name="matches-number" class="team-matches-number" size="2" maxlength="4"/>
     </div>

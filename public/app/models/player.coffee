@@ -17,6 +17,9 @@ define ['cs!../core'],->
     country: DS.belongsTo 'App.Country'
     team: DS.belongsTo 'App.Team'
     matches: DS.hasMany 'App.Match'
+
+    race: DS.belongsTo 'App.GameRace'
+
     countryFlagClassName: (->
       'country-flag-icon-%@'.fmt @get 'country.code'
     ).property('country')

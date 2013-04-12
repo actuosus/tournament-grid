@@ -30,6 +30,7 @@ define
   _matrix: 'Матрица'
   _team: 'Команда'
   _team_name: 'Название команды'
+  _enter_team_name: 'Введите имя команды'
   _matches: 'Матчи'
   _matches_number: 'Количество матчей'
   _create: 'Создать'

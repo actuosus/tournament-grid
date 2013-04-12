@@ -37,6 +37,9 @@ define [
 
   localize(lang)
 
+  ###
+   * Localization Handlebars helper.
+  ###
   Em.Handlebars.registerHelper 'loc', (property, fn)->
     if fn.contexts and typeof fn.contexts[0] is 'string'
       str = fn.contexts[0]
@@ -88,6 +91,7 @@ define [
     new Handlebars.SafeString value
 
   TournamentGrid = Em.Namespace.create
+
   App = Em.Application.create
     VERSION: '0.1'
     autoinit: false
@@ -96,6 +100,7 @@ define [
     customEvents:
       mousewheel: 'mouseWheel'
   App.deferReadiness()
+
   window.TournamentGrid = TournamentGrid
   window.App = App
 
@@ -136,6 +141,18 @@ define [
     serialize: (deserialized)->
       if Em.isNone(deserialized) then null else String(deserialized)
 
+  DS.StateManager.reopen
+    enterState: (transition)->
+      @_super(transition)
+      console.log @, arguments, @get 'currentState'
+
+      record = @record
+      currentState = @get 'currentState'
+
+      switch currentState.name
+        when 'uncommitted'
+          localStorage.setItem 'boo', JSON.stringify record._data
+
   App.store = DS.Store.create
     revision: 11
     adapter: DS.RESTAdapter.create
@@ -167,3 +184,5 @@ define [
     ).observes('App.currentLanguage')
 
   App.languageObserver = App.LanguageObserver.create()
+
+  App

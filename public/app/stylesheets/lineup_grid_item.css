@@ -109,6 +109,11 @@
     -webkit-transition-property: background-color;
 }
 
+.lineup-grid-item-name-container .loader {
+    top: 2px;
+    right: 21px;
+}
+
 .lineup-grid-item-players {
     max-height: 125px;
     /*overflow: scroll;*/
@@ -183,4 +188,9 @@
 
 .csscolumns .group-lineup-grid .lineup-grid-item {
     width: 100%;
+}
+
+.lineup-grid-item-name-container .autocomplete-text-field {
+    position: absolute;
+    top: 0;
 }

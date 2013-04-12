@@ -27,6 +27,7 @@ require({
     'handlebars': '/vendor/scripts/handlebars',
     'ember': '/vendor/scripts/ember',
     'ember-data': '/vendor/scripts/ember-data',
+    'ember-history': '/vendor/scripts/ember-history',
     'ember-table': '/vendor/scripts/ember-table',
     'modernizr.columns': '/vendor/scripts/modernizr/columns',
     'bootstrap.tooltip': '/vendor/scripts/bootstrap/bootstrap-tooltip',
@@ -50,6 +51,9 @@ require({
       deps: ['jquery', 'handlebars']
     },
     'ember-data': {
+      deps: ['ember']
+    },
+    'ember-history': {
       deps: ['ember']
     },
 
@@ -80,14 +84,15 @@ define([
   'handlebars',
   'ember',
   'ember-data',
+  'ember-history',
 //  'ember-table',
   'modernizr.columns',
   'cs!./core',
   'cs!./application'
 ], function(){
-  App.ready()
+//  App.ready()
 })
 
-require(['cs!application'], function(){
-  App.ready()
-});
+//require(['cs!application'], function(){
+//  App.ready()
+//});

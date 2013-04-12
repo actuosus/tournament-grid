@@ -7,6 +7,10 @@
 </div>
 
 <div class="control-row">
+    {{view App.ComboboxView controllerBinding="App.racesController" placeholder="Race" valueBinding="view.race"}}
+</div>
+
+<div class="control-row">
     <input type="text" name="first-name" class="first-name" size="10" placeholder="First name" {{bindAttr value="view.firstName"}} />
     <input type="text" name="middle-name" class="middle-name" size="10" placeholder="Middle name" {{bindAttr value="view.middleName"}} />
     <input type="text" name="last-name" class="last-name" size="10" placeholder="Last name" {{bindAttr value="view.lastName"}} />

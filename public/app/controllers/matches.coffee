@@ -27,6 +27,8 @@ define [
           results.set entrant, result
 
       @forEach (match)->
+        # TODO Only for closed matches
+
         entrant1 = match.get('entrant1')
         entrant2 = match.get('entrant2')
         entrant1_points = match.get('entrant1_points')
@@ -35,8 +37,8 @@ define [
         incrementPropertyForEntrant entrant1, 'matchesPlayed' if entrant1
         incrementPropertyForEntrant entrant2, 'matchesPlayed' if entrant2
 
-        incrementPropertyForEntrant entrant1, 'points', entrant1_points if entrant1_points
-        incrementPropertyForEntrant entrant2, 'points', entrant2_points if entrant2_points
+#        incrementPropertyForEntrant entrant1, 'points', entrant1_points if entrant1_points
+#        incrementPropertyForEntrant entrant2, 'points', entrant2_points if entrant2_points
 
         if entrant1_points and entrant2_points
           if entrant1_points > entrant2_points

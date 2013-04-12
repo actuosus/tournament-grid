@@ -8,6 +8,7 @@
 
 define ['cs!../core'],->
   App.Bracket = DS.Model.extend
+    primaryKey: '_id'
     parent: (-> @get 'stage').property('stage')
     children: (-> @get 'rounds').property('rounds')
 

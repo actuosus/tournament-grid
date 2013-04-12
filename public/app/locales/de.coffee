@@ -30,6 +30,7 @@ define
   _matrix: 'Matrix'
   _team: 'Team'
   _team_name: 'Team Name'
+  _enter_team_name: 'Enter team name'
   _matches: 'Spiele'
   _matches_number: 'Spiel Anzahl'
   _create: 'Schaffen'

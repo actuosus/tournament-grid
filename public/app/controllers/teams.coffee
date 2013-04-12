@@ -14,8 +14,10 @@ define [
     formView: App.TeamForm
     searchResults: []
     labelValue: 'name'
+
     search: (options)->
       @set 'content', App.Team.find options
+
     menuItemViewClass: Em.View.extend
       classNames: ['menu-item']
       classNameBindings: ['isSelected']

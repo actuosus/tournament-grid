@@ -6,7 +6,10 @@
  * Time: 20:31
 ###
 
-define ['spin', 'cs!./menu'], (Spinner)->
+define [
+  'cs!./menu'
+  'cs!./loader'
+], (Spinner)->
   App.AutocompleteTextField = Em.ContainerView.extend
     classNames: ['autocomplete-text-field']
     childViews: 'textFieldView loaderView addButtomView statusIconView'.w()
@@ -14,6 +17,8 @@ define ['spin', 'cs!./menu'], (Spinner)->
     value: null
     selection: null
     placeholder: null
+
+    hasFocus: no
 
     contentBinding: 'controller.arrangedContent'
 
@@ -28,11 +33,13 @@ define ['spin', 'cs!./menu'], (Spinner)->
       @set 'selection', @get('content').objectAt(index-1)
 
     hasFocusChanged: (->
-      if @get 'hasFocus'
-        @set 'menuView.isVisible', yes
-      else
-        unless @get 'menuView.hasFocus'
-          @set 'menuView.isVisible', no
+      menuView = @get 'menuView'
+      if menuView
+        if @get 'hasFocus'
+          menuView.set 'isVisible', yes
+        else
+          unless menuView.get 'hasFocus'
+            menuView.set 'isVisible', no
     ).observes('hasFocus')
 
     select: (event)->
@@ -70,10 +77,9 @@ define ['spin', 'cs!./menu'], (Spinner)->
 
       focusIn: ->
         @set 'parentView.hasFocus', yes
-        @$().select()
 
       focusOut: (event)->
-        setTimeout (-> @set 'parentView.hasFocus', no).bind(@), 150
+        setTimeout (=> @set 'parentView.hasFocus', no), 150
 
       keyDown: (event)->
 #        console.log event.keyCode
@@ -144,31 +150,7 @@ define ['spin', 'cs!./menu'], (Spinner)->
           @addButtomView.set 'isVisible', no
     ).observes 'content.isLoaded'
 
-    loaderView: Em.View.extend
-      classNames: ['loader', 'non-selectable']
-      isVisible: no
-      attributeBindings: ['title']
-      title: '_loading'.loc()
-      isLoadingBinding: 'parentView.isLoading'
-      didInsertElement: ->
-        @_super()
-        opts =
-          lines: 15, # The number of lines to draw
-          length: 2, # The length of each line
-          width: 1, # The line thickness
-          radius: 5, # The radius of the inner circle
-          corners: 1, # Corner roundness (0..1)
-          rotate: 0, # The rotation offset
-          color: '#000', # #rgb or #rrggbb
-          speed: 2, # Rounds per second
-          trail: 60, # Afterglow percentage
-          shadow: false, # Whether to render a shadow
-          hwaccel: false, # Whether to use hardware acceleration
-          className: 'spinner', # The CSS class to assign to the spinner
-          zIndex: 2e9, # The z-index (defaults to 2000000000)
-          top: 'auto', # Top position relative to parent in px
-          left: 'auto' # Left position relative to parent in px
-        spinner = new Spinner(opts).spin @get 'element'
+    loaderView: App.LoaderView.extend()
 
     addButtomView: Em.View.extend
       tagName: 'button'

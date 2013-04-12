@@ -37,14 +37,17 @@ define [
 #  App.ApplicationView = Em.View.extend
 #    templateName : 'application'
 
-  App.isEditingMode = no
+  App.set 'isEditingMode', no
 
   $(document.body).keydown (event)->
+    console.log event.keyCode
     if event.ctrlKey
       if event.shiftKey
         switch event.keyCode
           when 69 # e
             App.set 'isEditingMode', not App.get('isEditingMode')
+          when 90 # z
+            History.undo()
 
   App.ready = ->
 
@@ -116,13 +119,19 @@ define [
 #        $(document.body).scrollTo(lineupContainerView.$(), 500, {offset: {top: -18}})
 #      else if stageSelectorContainerView?.$()
 #        $(document.body).scrollTo(stageSelectorContainerView.$(), 500, {offset: {top: -18}})
+
+    initer = Em.Object.create
+      reportMatchTypeDefined: ->
+        report = App.get('report')
+        if report?.get('match_type') is 'team'
+          lineupContainerView.appendTo '#content'
+
+    App.report.addObserver 'match_type', initer, initer.reportMatchTypeDefined
 #
     App.get('report').didLoad = ->
-      stageTabsView.set('content', App.report.get('stages'))
+      report = App.get('report')
+      stageTabsView.set('content', report.get('stages'))
 
-      if App.report?.get('match_type') is 'team'
-        lineupContainerView.appendTo '#content'
-#
     stageSelectorContainerView.appendTo '#content'
 #
 #    ###
@@ -202,6 +211,5 @@ define [
 #  ).appendTo('#content')
 
   $ -> App.advanceReadiness()
-  App.ready()
 
 

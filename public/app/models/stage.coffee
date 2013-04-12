@@ -8,11 +8,12 @@
 
 define ['cs!../core'],->
   App.Stage = DS.Model.extend
+    primaryKey: '_id'
+
     loc: (->
       console.log arguments
     ).property()
 
-    primaryKey: '_id'
     name: DS.attr('string', {loc: {keyPath: '_name', defaultLanguage: 'ru'}})
     __name: ((a,b,c,d)->
       nameHash = @get '_name'
@@ -47,6 +48,8 @@ define ['cs!../core'],->
     brackets: DS.hasMany 'App.Bracket'
 
     rating: DS.attr 'number'
+
+    entrantsNumber: DS.attr 'number'
 
     _rounds: (->
       rounds = @get 'rounds'

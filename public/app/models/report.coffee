@@ -23,6 +23,8 @@ define ['cs!../core'],->
     stages: DS.hasMany 'App.Stage'
     entrants: DS.hasMany 'App.Team'
 
+    races: DS.hasMany 'App.Race'
+
     createStage: (roundsCount)->
       stage = App.Stage.createRecord
         name: 'Test Stage'

@@ -7,8 +7,9 @@
 ###
 
 define ['cs!../core'],->
-  App.Round = DS.Model.extend
+  App.Round = DS.Model.extend Ember.History,
     primaryKey: '_id'
+    _trackProperties: ['name']
     name: DS.attr('string', {loc: {keyPath: '_name', defaultLanguage: 'ru'}})
     __name: (->
       console.log arguments
