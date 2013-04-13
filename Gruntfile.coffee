@@ -68,6 +68,7 @@ module.exports = (grunt)->
           'handlebars': '../vendor/scripts/handlebars',
           'ember': '../vendor/scripts/ember',
           'ember-data': '../vendor/scripts/ember-data',
+          'ember-history': '../vendor/scripts/ember-history',
           'modernizr.columns': '../vendor/scripts/modernizr/columns',
           'bootstrap.tooltip': '../vendor/scripts/bootstrap/bootstrap-tooltip',
           'screenfull': '../vendor/scripts/screenfull.min',
