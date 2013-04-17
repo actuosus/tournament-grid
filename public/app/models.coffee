@@ -15,6 +15,7 @@ define [
   'cs!./models/game'
   'cs!./models/match'
   'cs!./models/player'
+  'cs!./models/race'
   'cs!./models/report'
   'cs!./models/result'
   'cs!./models/round'

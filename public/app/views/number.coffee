@@ -15,11 +15,15 @@ define [
 
     value: null
 
-    template: Em.Handlebars.compile '{{view.value}}'
+#    template: Em.Handlebars.compile '{{view.value}}'
 
     step: 1
     min: 0
     max: 100
+
+    _valueChanged: (->
+      @$().text(@get 'value') if @$()
+    ).observes('value')
 
     increment: ->
       value = @get 'value'
@@ -53,5 +57,5 @@ define [
 
 
     setValue: (value)->
-      value = parseFloat(value)
+      value = parseFloat(value) if value
       @set('value', value) if @get('value') isnt value

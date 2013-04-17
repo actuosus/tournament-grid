@@ -31,7 +31,10 @@ input[type="number"] {
     -webkit-transition-duration: .3s;
 }
 
-input[type="text"]:invalid {
+input[type="text"]:invalid,
+input[type="url"]:invalid,
+input[type="date"]:invalid,
+input[type="number"]:invalid {
     border: 1px solid #dd0039;
 }
 

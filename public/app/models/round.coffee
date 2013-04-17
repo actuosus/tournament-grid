@@ -31,7 +31,6 @@ define ['cs!../core'],->
 
     treeItemChildren: (-> @get 'matches').property('matches')
 
-
     getDescendant: (child, idx)-> child.get('children').objectAt idx if child
 
     getByPath: (path, root = @)->
@@ -46,6 +45,7 @@ define ['cs!../core'],->
     right: null
 
     matches: DS.hasMany 'App.Match'
+    results: DS.hasMany 'App.Result'
 
     stage: DS.belongsTo 'App.Stage'
     bracket: DS.belongsTo 'App.Bracket'

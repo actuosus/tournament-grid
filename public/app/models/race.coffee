@@ -8,5 +8,6 @@
 define ['cs!../core'],->
   App.Race = DS.Model.extend
     primaryKey: '_id'
-    iconURL: DS.attr 'string'
-    name: DS.attr 'string'
+    identifier: DS.attr 'string'
+    icon_url: DS.attr 'string'
+    title: DS.attr 'string'

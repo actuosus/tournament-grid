@@ -9,6 +9,7 @@
 mongoose = require 'mongoose'
 Schema = mongoose.Schema
 ObjectId = Schema.ObjectId
+RaceSchema = require './race'
 
 ReportSchema = new Schema
   title: type: String
@@ -39,6 +40,8 @@ ReportSchema = new Schema
   match_type: type: String # team, player
   # Game type
   discipline: type: String
+
+  races: [RaceSchema]
 
   noRating: type: Boolean
 

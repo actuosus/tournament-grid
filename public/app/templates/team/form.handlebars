@@ -1,9 +1,9 @@
 <div class="control-row">
-    {{view App.CountrySelectView controllerBinding="App.countriesController" placeholder="Country"}}
+    {{view App.CountrySelectView controllerBinding="App.countriesController" placeholder="Country" required="required" title="The country is required."}}
 </div>
 
 <div class="control-row">
-    <input type="text" name="name" class="name" placeholder="Name" {{bindAttr value="view.name"}}/>
+    <input type="text" name="name" class="name" placeholder="Name" {{bindAttr value="view.name"}} required="required" title="The team name is required."/>
 </div>
 
 <div class="control-row">

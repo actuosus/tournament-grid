@@ -109,6 +109,8 @@ define [
       matchBinding: 'parentView.match'
       max: 99
 
+      mouseEnter: -> @get('parentView').shouldShowLineupPopup = no
+
       valueChanged: (->
         match = @get('match')
         points = @get('value')
@@ -153,11 +155,18 @@ define [
       entrant = @get 'content'
       if entrant
         entrant.set('isHighlighted', yes)
+      @shouldShowLineupPopup = yes
+      Em.run.later =>
+        @showTeamLineupPopup() if @shouldShowLineupPopup
+      , 500
 
-      unless @teamLineupPopup
+    teamLineupPopup: null
+
+    showTeamLineupPopup: ->
+      if not @teamLineupPopup or @teamLineupPopup.isDestroyed
         team = @get('content')
         if team
-          @teamLineupPopup = App.PopupView.create(target: @)
+          @teamLineupPopup = App.PopupView.create(target: @, classNames: ['popup-lineup-grid-item'])
           @teamLineupPopup.get('childViews').push(App.TeamLineupGridItem.create(content: team))
           @teamLineupPopup.append()
       else
@@ -169,6 +178,7 @@ define [
       if entrant
         entrant.set('isHighlighted', no)
 
+      @shouldShowLineupPopup = no
 #      @teamLineupPopup?.hide()
 
     resetButtonView: Em.View.extend

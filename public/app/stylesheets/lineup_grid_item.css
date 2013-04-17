@@ -161,6 +161,12 @@
     margin-right: 8px;
 }
 
+.lineup-grid-item-name-container .count-btn {
+    position: absolute;
+    top: 3px;
+    right: 50px;
+}
+
 .lineup-grid-item-player-row.is-saving {
     opacity: 0.5;
 }
@@ -193,4 +199,13 @@
 .lineup-grid-item-name-container .autocomplete-text-field {
     position: absolute;
     top: 0;
+    z-index: 10;
+}
+
+.popup-lineup-grid-item {
+    padding: 10px;
+}
+
+.popup-lineup-grid-item .lineup-grid-item {
+    margin: 0;
 }

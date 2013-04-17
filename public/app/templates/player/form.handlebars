@@ -1,19 +1,19 @@
 <div class="control-row">
-    {{view App.CountrySelectView controllerBinding="App.countriesController" placeholder="Country" valueBinding="view.country"}}
+    {{view App.CountrySelectView controllerBinding="App.countriesController" placeholder="Country" valueBinding="view.country" title="The country is required." required="required"}}
 </div>
 
 <div class="control-row">
-    <input type="text" name="nickname" class="nickname" placeholder="Nickname" {{bindAttr value="view.nickname"}} />
+    <input type="text" name="nickname" class="nickname" placeholder="Nickname" title="The nickname is required." {{bindAttr value="view.nickname"}} required="required"/>
 </div>
 
 <div class="control-row">
-    {{view App.ComboboxView controllerBinding="App.racesController" placeholder="Race" valueBinding="view.race"}}
+    {{view App.ComboBoxView controllerBinding="App.racesController" placeholder="Race" valueBinding="view.race"}}
 </div>
 
 <div class="control-row">
-    <input type="text" name="first-name" class="first-name" size="10" placeholder="First name" {{bindAttr value="view.firstName"}} />
+    <input type="text" name="first-name" class="first-name" size="10" placeholder="First name" {{bindAttr value="view.firstName"}} required="required"/>
     <input type="text" name="middle-name" class="middle-name" size="10" placeholder="Middle name" {{bindAttr value="view.middleName"}} />
-    <input type="text" name="last-name" class="last-name" size="10" placeholder="Last name" {{bindAttr value="view.lastName"}} />
+    <input type="text" name="last-name" class="last-name" size="10" placeholder="Last name" {{bindAttr value="view.lastName"}} required="required"/>
 </div>
 
 <div class="control-row">

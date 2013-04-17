@@ -1,7 +1,7 @@
 
 <div class="control-row">
     <label for="name">{{loc '_title'}}:</label>
-    {{view App.MultilingualTextField name="name" classNames="name" valueBinding="view.name" languagesBinding="App.languages" selectedLanguage=App.currentLanguage}}
+    {{view App.MultilingualTextField name="name" classNames="name" valueBinding="view.name" languagesBinding="App.languages" selectedLanguage=App.currentLanguage required="required" title="The name is required."}}
 </div>
 
 <div class="control-row">
@@ -16,14 +16,14 @@
 
 <div class="control-row">
     <label for="rating">{{loc '_rating'}}:</label>
-    <input type="number" name="rating" class="rating" size="2" maxlength="4"/>
+    <input type="number" name="rating" class="rating" size="2" maxlength="4" min="0" step="0.1"/>
 </div>
 
 {{#if view.isGridType}}
 <div class="control-section control-section-tournament-grid">
     <div class="control-row">
         <label for="entrants-number">{{loc '_entrants_number'}}:</label>
-        <input type="number" name="entrants-number" class="entrants-number" size="2" maxlength="4"/>
+        <input type="number" name="entrants-number" class="entrants-number" size="2" maxlength="4" min="1" required="required"/>
     </div>
 </div>
 {{/if}}
@@ -32,7 +32,7 @@
 <div class="control-section control-section-group">
     <div class="control-row">
         <label for="group-number">{{loc '_group_number'}}:</label>
-        <input type="number" name="group-number" class="group-number" size="2" maxlength="4"/>
+        <input type="number" name="group-number" class="group-number" size="2" maxlength="4" min="1" required="required"/>
     </div>
 </div>
 {{/if}}
@@ -41,7 +41,7 @@
 <div class="control-section control-section-group">
     <div class="control-row">
         <label for="matches-number">{{loc '_matches_number'}}:</label>
-        <input type="number" name="matches-number" class="matrix-matches-number" size="2" maxlength="4"/>
+        <input type="number" name="matches-number" class="matrix-matches-number" size="2" min="1" maxlength="4" required="required"/>
     </div>
 </div>
 {{/if}}
@@ -50,11 +50,11 @@
 <div class="control-section control-section-group">
     <div class="control-row">
         <label for="entrants-number">{{loc '_entrants_number'}}:</label>
-        <input type="number" name="entrants-number" class="team-entrants-number" size="2" maxlength="4"/>
+        <input type="number" name="entrants-number" class="team-entrants-number" size="2" min="1" maxlength="4" required="required"/>
     </div>
     <div class="control-row">
         <label for="matches-number">{{loc '_matches_number'}}:</label>
-        <input type="number" name="matches-number" class="team-matches-number" size="2" maxlength="4"/>
+        <input type="number" name="matches-number" class="team-matches-number" size="2" min="1" maxlength="4" required="required"/>
     </div>
 </div>
 {{/if}}

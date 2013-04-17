@@ -8,7 +8,7 @@
 define ['cs!../core'],->
   App.EditableLabel = Em.View.extend
     classNames: ['editable-label']
-    classNameBindings: ['isEmpty']
+    classNameBindings: ['isEmpty', 'isEditable']
 #    template: Em.Handlebars.compile '{{view.value}}'
     isEditable: yes
 

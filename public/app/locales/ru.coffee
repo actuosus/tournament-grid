@@ -62,3 +62,8 @@ define
   _place_position: 'Место'
   _single: 'Плей-офф'
   _double: 'Двушка'
+  _country: 'Страна'
+  _count: 'Считать'
+  _dont_count: 'Не считать'
+  _automatic_counting_disabled: 'Автоматический подсчёт выключен'
+  _automatic_counting_enabled: 'Автоматический подсчёт включен'

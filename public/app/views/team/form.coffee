@@ -24,6 +24,10 @@ define [
     focus: ->
       @$('.name').focus()
 
+    isValid: (->
+      @get('element').checkValidity()
+    ).property()
+
     createRecord: ->
       country = @get 'countrySelectView.value'
       transaction = App.store.transaction()
@@ -39,11 +43,11 @@ define [
 
     submit: (event)->
       event.preventDefault()
-      @createRecord()
+      @createRecord()if @get 'isValid'
 
     click: (event)->
       event.preventDefault()
       if $(event.target).hasClass('save-btn')
-        @createRecord()
+        @createRecord()if @get 'isValid'
       if $(event.target).hasClass('cancel-btn')
         @popupView.hide() if @popupView

@@ -36,6 +36,10 @@ define [
     focus: ->
       @$('.nickname').focus()
 
+    isValid: (->
+      @get('element').checkValidity()
+    ).property()
+
     createRecord: ->
       @$('.save-btn').attr('disabled', 'disabled')
 
@@ -59,11 +63,11 @@ define [
 
     submit: (event)->
       event.preventDefault()
-      @createRecord()
+      @createRecord()if @get 'isValid'
 
     click: (event)->
       event.stopPropagation()
       if $(event.target).hasClass('save-btn')
-        @createRecord()
+        @createRecord()if @get 'isValid'
       if $(event.target).hasClass('cancel-btn')
         @popupView.hide() if @popupView

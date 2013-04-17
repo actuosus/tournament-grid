@@ -62,3 +62,8 @@ define
   _place_position: 'Position'
   _single: 'Single-elimination'
   _double: 'Double-elimination'
+  _country: 'Country'
+  _count: 'Count'
+  _dont_count: "Don't count"
+  _automatic_counting_disabled: 'Automatic counting disabled'
+  _automatic_counting_enabled: 'Automatic counting enabled'

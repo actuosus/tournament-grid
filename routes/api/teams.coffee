@@ -74,9 +74,12 @@ exports.delete = (req, res) ->
     res.send()
   else if req.params?._id?
     await Team.findById req.params._id, defer err, team
-    Team.remove _id: req.params._id, (err)->
-      Report.update({_id: team.report_id}, {$pull : {entrants : req.params._id}})
-      res.status 204 unless err
-      res.send()
+    if team
+      Team.remove _id: req.params._id, (err)->
+        Report.update({_id: team.report_id}, {$pull : {entrants : req.params._id}})
+        res.status 204 unless err
+        res.send()
+    else
+      res.send 404, error: "server error"
   else
     res.send 400, error: "server error"

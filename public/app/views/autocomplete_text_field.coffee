@@ -17,6 +17,8 @@ define [
     value: null
     selection: null
     placeholder: null
+    title: null
+    required: null
 
     hasFocus: no
 
@@ -50,8 +52,10 @@ define [
 
     textFieldView: Em.TextField.extend
       classNames: ['text-field']
-#      attributeBindings: ['type']
+      attributeBindings: ['required', 'title']
+      requiredBinding: 'parentView.required'
       lastValue: null
+      titleBinding: 'parentView.title'
       placeholderBinding: 'parentView.placeholder'
 
       shouldSearch: yes
@@ -94,8 +98,13 @@ define [
             @get('parentView').selectPrevious()
 
       keyUp: (event)->
+        parentView = @get 'parentView'
+
         switch event.keyCode
-          when 27 then @$().val('')
+          when 27
+            @$().val('')
+          when 8
+            parentView.set 'selection', null unless @get 'value'
 
       insertNewline: (event)->
         parentView = @get 'parentView'

@@ -35,7 +35,7 @@ define [
     Em.STRINGS = locales[language]
     lang = language
 
-  localize(lang)
+  localize lang
 
   ###
    * Localization Handlebars helper.
@@ -52,7 +52,7 @@ define [
     new Handlebars.SafeString (str || '').loc('')
 
   Em.Handlebars.registerBoundHelper '_loc', (value, options)->
-    console.log arguments
+#    console.log arguments
     if options.contexts and typeof options.contexts[0] is 'string'
       str = options.contexts[0]
     else if typeof value is 'object'
@@ -121,6 +121,9 @@ define [
     country: 'countries'
     match: 'matches'
 
+  DS.RESTAdapter.map 'App.Report',
+    races: embedded: 'always'
+
   DS.JSONTransforms.object =
     serialize: (deserialized)->
       unless Em.isNone(deserialized)
@@ -141,17 +144,17 @@ define [
     serialize: (deserialized)->
       if Em.isNone(deserialized) then null else String(deserialized)
 
-  DS.StateManager.reopen
-    enterState: (transition)->
-      @_super(transition)
-      console.log @, arguments, @get 'currentState'
-
-      record = @record
-      currentState = @get 'currentState'
-
-      switch currentState.name
-        when 'uncommitted'
-          localStorage.setItem 'boo', JSON.stringify record._data
+#  DS.StateManager.reopen
+#    enterState: (transition)->
+#      @_super(transition)
+#      console.log @, arguments, @get 'currentState'
+#
+#      record = @record
+#      currentState = @get 'currentState'
+#
+#      switch currentState.name
+#        when 'uncommitted'
+#          localStorage.setItem 'boo', JSON.stringify record._data
 
   App.store = DS.Store.create
     revision: 11

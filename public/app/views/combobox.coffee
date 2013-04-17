@@ -45,6 +45,8 @@ define ['cs!./autocomplete_text_field'], ->
 
     autocompleteTextFieldView: App.AutocompleteTextField.extend
       controllerBinding: 'parentView.controller'
+      requiredBinding: 'parentView.required'
+      titleBinding: 'parentView.title'
       click: -> @select()
 #    selectView: Em.Select.extend
 #      contentBinding: 'parentView.content'

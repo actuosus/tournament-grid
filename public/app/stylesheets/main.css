@@ -13,7 +13,7 @@
 @import "combobox.css";
 @import "tree.css";
 @import "../../vendor/styles/bootstrap-tooltip.css";
-@import "../../vendor/styles/ember-table.css";
+@import "ember-table.css";
 @import "block_container.css";
 @import "named_container.css";
 /*@import "test-grid.css";*/
@@ -309,4 +309,8 @@
 
 .matches-table-item.is-updating td {
     background-color: rgba(155,0,155,0.2);
+}
+
+.team-standings-table .editable-label {
+    display: inline-block;
 }

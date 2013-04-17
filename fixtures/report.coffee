@@ -54,4 +54,17 @@ module.exports.Report = [
   match_type: 'player'
   stages: ['51121246b54802daae00000f' ]
   entrants: []
+  races: [
+    title: 'Zerg'
+    identifier: 'zerg'
+    icon_url: '/images/icons/races/zerg.png'
+  ,
+    title: 'Protoss'
+    identifier: 'protoss'
+    icon_url: '/images/icons/races/protoss.png'
+  ,
+    title: 'Terran'
+    identifier: 'terran'
+    icon_url: '/images/icons/races/terran.png'
+  ]
 ]

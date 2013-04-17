@@ -129,8 +129,8 @@ define [
     App.report.addObserver 'match_type', initer, initer.reportMatchTypeDefined
 #
     App.get('report').didLoad = ->
-      report = App.get('report')
-      stageTabsView.set('content', report.get('stages'))
+      report = App.get 'report'
+      stageTabsView.set 'content', report.get('stages')
 
     stageSelectorContainerView.appendTo '#content'
 #
@@ -146,10 +146,10 @@ define [
 #
 #    ###
 #
-#    App.NamedContainerView.create(
-#      title: 'Tester'
-#      contentView: App.TesterView.create()
-#    ).appendTo('#content')
+    App.NamedContainerView.create(
+      title: 'Tester'
+      contentView: App.TesterView.create()
+    ).appendTo('#content')
 
 #    App.NamedContainerView.create(
 #      title: '3D'
@@ -185,6 +185,39 @@ define [
         Em.Object.create name:'_matrix'.loc(), id: 'matrix'
         Em.Object.create name:'_team'.loc(), id: 'team'
       ]
+
+    App.racesController = Em.ArrayController.create
+      content: [
+        Em.Object.create name: '_zerg'.loc(), id: 'zerg'
+        Em.Object.create name: '_protoss'.loc(), id: 'protos'
+        Em.Object.create name: '_terrain'.loc(), id: 'terrain'
+      ]
+      search: (options)->
+        result = @get('content').filter (item, idx)->
+          regexp = new RegExp(options.name, 'i')
+          if item.get('name')?.match regexp
+            return yes
+          if item.get('__name')?.match regexp
+            return yes
+          if item.get('englishName')?.match regexp
+            return yes
+        @set 'content.isLoaded', yes
+      menuItemViewClass: Em.View.extend
+        classNames: ['menu-item']
+        classNameBindings: ['isSelected']
+        template: Em.Handlebars.compile(
+#          '<i {{bindAttr class=":country-flag-icon view.content.flagClassName"}}></i>'+
+          '{{view.content.name}}')
+        mouseDown: (event)->
+          event.stopPropagation()
+
+        click: (event)->
+          event.preventDefault()
+          event.stopPropagation()
+          @get('parentView').click(event)
+          @set 'parentView.selection', @get 'content'
+          @set 'parentView.value', @get 'content'
+          @set 'parentView.isVisible', no
 
 #  rootNode = App.Node.create(content: 'root')
 #  rootNode.set('left', App.Node.create(

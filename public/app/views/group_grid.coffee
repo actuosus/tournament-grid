@@ -24,7 +24,7 @@ define [
       contentView: Em.ContainerView.extend
         contentBinding: 'parentView.content'
         classNames: ['lineup-grid-item-name-container']
-        childViews: ['nameView', 'addButtonView', 'removeButtonView', 'loaderView']
+        childViews: ['nameView', 'addButtonView', 'automaticCountingButtonView', 'removeButtonView']
 
         nameView: App.EditableLabel.extend
           isEditableBinding: 'App.isEditingMode'
@@ -52,6 +52,29 @@ define [
             if content.get('content')?.createRecord
               content.get('content')?.createRecord()
 
+        automaticCountingButtonView: Em.View.extend
+          tagName: 'button'
+          classNames: ['btn', 'btn-primary', 'btn-mini', 'count-btn', 'count']
+          attributeBindings: ['title']
+          contentBinding: 'parentView.content'
+          isVisibleBinding: 'App.isEditingMode'
+          automaticCountingDisabledBinding: 'content.automaticCountingDisabled'
+          label: (->
+            if @get('automaticCountingDisabled')
+              '_count'.loc()
+            else
+              '_dont_count'.loc()
+          ).property('automaticCountingDisabled')
+          title: (->
+            if @get('automaticCountingDisabled')
+              '_automatic_counting_disabled'.loc()
+            else
+              '_automatic_counting_enabled'.loc()
+          ).property('automaticCountingDisabled')
+          template: Em.Handlebars.compile '{{view.label}}'
+
+          click: -> @toggleProperty 'automaticCountingDisabled'
+
         removeButtonView: Em.View.extend
           tagName: 'button'
           contentBinding: 'parentView.content'
@@ -68,7 +91,7 @@ define [
         entrantsBinding: 'parentView.content.entrants'
         matches: (->
           actualContent = @get 'parentView.content.matches'
-          App.MatchesController.create content: actualContent
+          App.MatchesController.create content: actualContent, round: @get 'parentView.content'
         ).property 'parentView.content.matches'
         contentBinding: 'parentView.content.matches'
         contentView: App.MatchesGroupTableContainerView.extend

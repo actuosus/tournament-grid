@@ -13,3 +13,7 @@
     -moz-column-width: 268px;
     column-width: 268px;
 }
+
+.csscolumns .team-lineup-grid .lineup-grid .lineup-grid-item {
+    margin: 0 0 29px 0;
+}

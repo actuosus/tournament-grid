@@ -8,6 +8,9 @@
 .editable-label {
     min-width: 1em;
     min-height: 1em;
+
+    -webkit-transition-duration: 0.3s;
+    -webkit-transition-property: box-shadow;
 }
 
 /*.editable-label.is-empty {*/
@@ -18,7 +21,11 @@
     background-color: white;
 }
 
+.editable-label.is-editable {
+    box-shadow: 0 0 1px 1px rgba(0,0,0,0.2);
+}
+
 .editable-label.active {
     background-color: rgba(255,255,255,0.5);
-    box-shadow: 0 0 10px violet;
+    box-shadow: 0 0 1px 1px violet;
 }

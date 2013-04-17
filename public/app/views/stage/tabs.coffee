@@ -55,7 +55,6 @@ define [
             matches: matchesController
       @set 'currentView', contentView
 
-
     setCurrentTabView: (@currentTabView)->
       @currentStage = @currentTabView.get 'content'
 

@@ -15,6 +15,8 @@
     overflow: hidden;
 
     display: inline-block;
+
+    min-width: 6em;
 }
 
 .select .disclosure-button {
@@ -57,10 +59,15 @@
     min-width: 12.3em;
 }
 
+.country-select .text-field {
+    -webkit-transition-duration: 0.3s;
+    -webkit-transition-property: padding-left;
+}
+
 .country-select .current-value {
     z-index: 10;
 }
 
-.country-select .text-field {
+.country-select.has-value .text-field {
     padding-left: 30px;
 }

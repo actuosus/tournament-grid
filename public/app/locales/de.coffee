@@ -62,3 +62,8 @@ define
   _place_position: 'Stellung'
   _single: 'K.-o.-System'
   _double: 'Doppel-K.-o.-System'
+  _country: 'Land'
+  _count: 'Zählen'
+  _dont_count: "Zählen nicht"
+  _automatic_counting_disabled: 'Automatische Zählung deaktiviert'
+  _automatic_counting_enabled: 'Automatische Zählung aktiviert'

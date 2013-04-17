@@ -15,6 +15,8 @@ define [
   'cs!./game/form'
   'cs!./team/form'
   'cs!./stage/form'
+  'cs!./_table/container'
+  'cs!./_table/column'
 ], ->
   App.TesterView = Em.ContainerView.extend
     classNames: ['padded']
@@ -29,6 +31,7 @@ define [
       'gameForm'
       'stageForm'
       'checkbox'
+      'table'
     ]
     countrySelectView: Em.ContainerView.extend
       childViews: ['labelView', 'contentView']
@@ -85,3 +88,29 @@ define [
       classNames: ['control-row']
       labelView: Em.View.extend(tagName: 'h3', template: Em.Handlebars.compile('Checkbox'))
       contentView: Em.Checkbox.extend()
+
+    table: Em.ContainerView.extend
+      childViews: ['labelView', 'contentView']
+      classNames: ['control-row']
+      labelView: Em.View.extend(tagName: 'h3', template: Em.Handlebars.compile('Table'))
+      contentView: App.TableContainerView.extend
+        controller: Ember.computed ->
+          cont = App.TableController.extend
+            columnNames: ['a', 'b']
+
+            columns: Ember.computed ->
+              @get('columnNames').map (key, index) ->
+                App.TableColumn.create(
+                  index: index
+                  columnWidth: 100
+                  headerCellName: key
+                  identifier: key)
+            .property()
+          cont.create(
+            content: [
+              Em.Object.create({a: 1, b: 2})
+              Em.Object.create({a: 3, b: 8})
+              Em.Object.create({a: 2, b: 0})
+            ]
+          )
+        .property()

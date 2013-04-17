@@ -47,8 +47,30 @@ require({
       deps: ['jquery']
     },
 
+    'jquery-ui': {
+      deps: ['jquery']
+    },
+
+    'handlebars': {
+      exports: 'Handlebars'
+    },
+
     'ember': {
-      deps: ['jquery', 'handlebars']
+      deps: ['jquery', 'handlebars'],
+      exports: 'Ember',
+      init: function(jQuery, Handlebars){
+        console.log (this,arguments);
+        if ('undefined' === typeof Ember) {
+          if ('undefined' !== typeof this.Ember) {
+            return this.Ember;
+          }
+          if ('undefined' !== typeof window) {
+            return window.Ember;
+          }
+        } else {
+          return Ember;
+        }
+      }
     },
     'ember-data': {
       deps: ['ember']
@@ -76,6 +98,7 @@ define([
   'jquery.scrollTo',
 //  'jquery.isotope',
   'jquery.cookie',
+  'jquery-ui',
   'transit',
 //  'raphael',
   'moment',
@@ -93,6 +116,6 @@ define([
 //  App.ready()
 })
 
-require(['cs!application'], function(){
-  App.ready()
-});
+//require(['cs!application'], function(){
+//  App.ready()
+//});
