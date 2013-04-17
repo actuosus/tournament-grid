@@ -92,7 +92,7 @@ require({
   }
 });
 
-define([
+require([
   'jquery',
   'jquery.mousewheel',
   'jquery.scrollTo',
@@ -111,11 +111,11 @@ define([
 //  'ember-table',
   'modernizr.columns',
   'cs!./core',
-  'cs!./application'
+  'cs!application'
 ], function(){
 //  App.ready()
 })
 
-require(['cs!application'], function(){
-  App.ready()
-});
+//require(['cs!application'], function(){
+//  App.ready()
+//});
