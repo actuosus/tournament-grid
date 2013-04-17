@@ -7,7 +7,7 @@
 
 define [
   'ember'
-], (Ember)->
+], ()->
   App.TableBodyContainerView = Ember.CollectionView.extend
     tagName: 'table'
     classNames: ['table-body']

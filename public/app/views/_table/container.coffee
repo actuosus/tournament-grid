@@ -11,7 +11,7 @@ define [
   'cs!./header'
   'cs!./body'
   'cs!./footer'
-], (Ember)->
+], ()->
   App.TableContainerView = Ember.ContainerView.extend
     classNames: 'table-container'
     childViews: ['headerView', 'bodyView', 'footerView']

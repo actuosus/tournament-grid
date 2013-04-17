@@ -9,7 +9,7 @@ define [
   'ember'
   'cs!./lazy_item'
   'cs!./cell'
-], (Ember)->
+], ()->
   App.TableRowView = Ember.CollectionView.extend
     tagName: 'tr'
     classNames: ['table-row']

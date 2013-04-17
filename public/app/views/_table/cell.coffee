@@ -7,7 +7,7 @@
 
 define [
   'ember'
-], (Ember)->
+], ()->
   App.TableCellView = Ember.View.extend
     tagName: 'td'
     classNames: ['table-cell']

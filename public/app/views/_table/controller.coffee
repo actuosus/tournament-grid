@@ -8,7 +8,7 @@
 define [
   'ember'
   'cs!./row'
-], (Ember)->
+], ()->
   App.TableRow = Ember.ObjectProxy.extend
     content:  null
     isHovering: no

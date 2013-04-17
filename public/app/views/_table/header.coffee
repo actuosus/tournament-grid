@@ -8,7 +8,7 @@
 define [
   'ember'
   'cs!./header/row'
-], (Ember)->
+], ()->
   App.TableHeaderContainerView = Ember.CollectionView.extend
     tagName: 'table'
     classNames: ['table-header']

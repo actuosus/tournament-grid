@@ -7,6 +7,6 @@
 
 define [
   'ember'
-], (Ember)->
+], ()->
   App.TableFooterContainerView = Ember.CollectionView.extend
     classNames: ['table-footer']
