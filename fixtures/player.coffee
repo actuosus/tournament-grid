@@ -6,7 +6,10 @@
  * Time: 17:49
 ###
 
-module.exports.Player = [
+Faker = require('../lib/Faker')
+countries = require('./country').Country
+
+players = [
   _id: '5107d4cd351fb19719000002'
   nickname: 'LeX'
   first_name: 'Алексей'
@@ -57,3 +60,13 @@ module.exports.Player = [
   country_id: '50fcdaf969f206c106000001'
   team_id: '5107cac6c97716ba1800001d'
 ]
+
+for i in [0..Faker.Helpers.randomNumber(1000)]
+  players.push {
+    nickname: Faker.Internet.userName()
+    first_name: Faker.Name.firstName()
+    last_name: Faker.Name.lastName()
+    country_id: countries[Faker.Helpers.randomNumber(countries.length)]._id
+  }
+
+module.exports.Player = players

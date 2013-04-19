@@ -46,10 +46,12 @@ define [
 #      country = @get 'country'
       country = @get('countrySelectView.autocompleteTextFieldView.selection')
       team = @get 'entrant'
+      report = App.get('report')
       transaction = App.store.transaction()
       player = transaction.createRecord(App.Player)
       player.set 'country', country
       player.set 'team', team
+      player.set 'report', report
       player.set 'nickname', @$('.nickname').val()
       player.set 'firstName', @$('.first-name').val()
       player.set 'middleName', @$('.middle-name').val()

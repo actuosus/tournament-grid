@@ -8,6 +8,7 @@
 
 Team = require('../../models').Team
 Player = require('../../models').Player
+Report = require('../../models').Report
 
 socket = require('../../io').getSocket()
 
@@ -65,6 +66,8 @@ exports.update = (req, res)->
     if p
       await p.update(player, defer err, doc)
       await Team.findByIdAndUpdate player.team_id, {$push: {players: p._id}}, defer updateErr, team
+      await Report.findByIdAndUpdate player.report_id, {$push : {players: p._id}}, defer reportUpdateErr, report
+
       res.send player: p
     else
       res.send 400, error: "server error"
@@ -87,6 +90,7 @@ exports.delete = (req, res) ->
       socket.send {action: 'remove', model: 'Player', _id: req.params._id}
 
       Team.findByIdAndUpdate player.team_id, {$pull: {players: req.params._id}}, (updateErr, numberAffected, rawResponse)->
+        Report.update({_id: player.report_id}, {$pull : {players: req.params._id}}) if player.report_id
         res.status 204 unless updateErr
         res.send()
   else

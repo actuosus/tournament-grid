@@ -1,0 +1,294 @@
+<% extend 'layout.ect' %>
+
+<!-- content -->
+<p class="b-title"><span class="ico ico_players"></span><%- @__ 'Team profile' %>
+    <a class="link link_pencil" href="" title=""><%- @__ 'Add information' %></a>
+</p>
+<!-- profile -->
+
+<div class="b-profile" id="bx_4014386737_23678">
+
+    <ul class="b-profile__top">
+        <li class="item oneLine" onclick="window.location = '/base/teams/virtuspro/'">
+            <img src="/bitrix/cache/s1/virtus/image.show/40w_37h_clip/upload/iblock/f1c/virtus_142x149.png" width="40" height="37" alt="" class="item__img" border="0" title="Virtus.pro*BenQ">
+
+            Организация
+        </li>
+        <li class="item" onclick="window.location = '/base/teams/virtuspro/virtus-pro-cs/'">
+            <img src="/upload/iblock/f2b/cs_go.png" width="37" height="35" alt="" class="item__img" title="Virtus.pro">
+
+            CS-GO				<div class="item__score">[ 0 ] <span class="item__score__down"></span></div>
+        </li>
+        <li class="item active" onclick="window.location = '/base/teams/virtuspro/virtus-pro-sc2/'">
+            <img src="/bitrix/cache/s1/virtus/image.show/38w_37h_clip/upload/iblock/0df/sc2_39x39.png" width="38" height="37" alt="" class="item__img" title="Virtus.pro*BenQ">
+
+            SC2				<div class="item__score">[ 0 ] <span class="item__score__down"></span></div>
+        </li>
+        <li class="item" onclick="window.location = '/base/teams/virtuspro/virtus-pro-dota2/'">
+            <img src="/bitrix/cache/s1/virtus/image.show/36w_37h_clip/upload/iblock/a12/nfs.png" width="36" height="37" alt="" class="item__img" title="Virtus.pro">
+
+            DOTA2				<div class="item__score">[ 0 ] <span class="item__score__down"></span></div>
+        </li>
+        <li class="item" onclick="window.location = '/base/teams/virtuspro/virtus-pro-gametrix-wot/'">
+            <img src="/upload/iblock/d23/wot.png" width="37" height="37" alt="" class="item__img" title="Virtus.pro*Gametrix">
+
+            WOT				<div class="item__score">[ 0 ] <span class="item__score__down"></span></div>
+        </li>
+        <li class="item" onclick="window.location = '/base/teams/virtuspro/virtus-pro-fifa/'">
+            <img src="/upload/iblock/5db/fifa.png" width="37" height="37" alt="" class="item__img" title="Virtus.pro">
+
+            FIFA				<div class="item__score">[ 0 ] <span class="item__score__down"></span></div>
+        </li>
+        <li class="item" onclick="window.location = '/base/teams/virtuspro/virtus-pro-ladies-csgo/'">
+            <img src="/upload/iblock/f2b/cs_go.png" width="37" height="35" alt="" class="item__img" title="Virtus.pro Ladies">
+
+            CS:GO L				<div class="item__score">[ 0 ] <span class="item__score__down"></span></div>
+        </li>
+        <li class="item" onclick="window.location = '/base/teams/virtuspro/virtus-pro-ladies-dota2/'">
+            <img src="/bitrix/cache/s1/virtus/image.show/36w_37h_clip/upload/iblock/a12/nfs.png" width="36" height="37" alt="" class="item__img" title="Virtus.pro Ladies">
+
+            DOTA2 L				<div class="item__score">[ 0 ] <span class="item__score__down"></span></div>
+        </li>
+        <li class="item" onclick="window.location = '/base/teams/virtuspro/virtus-pro-benq-ladies/'">
+            <img src="/bitrix/cache/s1/virtus/image.show/38w_37h_clip/upload/iblock/0df/sc2_39x39.png" width="38" height="37" alt="" class="item__img" title="Virtus.pro*BenQ Ladies">
+
+            SC2 L				<div class="item__score">[ 0 ] <span class="item__score__down"></span></div>
+        </li>
+    </ul>
+    <img src="/upload/iblock/177/virtus_142x149 (1).png" width="142" height="149" alt="" class="b-profile__logo" title="Virtus.pro*BenQ">
+
+
+    <div class="b-profile__about">
+        <p class="title"><%- @doc.name %></p>
+        <p class="where ru"> Образована в 2011 году.</p>
+        <p class="url"><%- @__ 'Official site' %>: <a target="_blank" href="http://www.virtuspro.org">www.virtuspro.org</a></p>
+        <p><%- @doc.description %></p>
+    </div>
+
+    <div class="b-profile__rating">
+        <div class="rating"><%- @__ 'Team rating' %>: <span class="rating__figure">0</span></div>
+        <div class="points">
+            Всего матчей: 						<div class="points__win">
+        </div>
+            <div class="points__drawn">
+            </div>
+            <div class="points__fail">
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- end profile -->
+<div class="b-closingBox">
+    <!-- profileAwards -->
+    <div id="comp_cf93a120f491b8f2ef6edae91b80d045"><!-- profileAwards -->
+        <div class="b-profileBlock b-profileAwards" style="min-height: 30px;" id="bx_2368701140_addaward">
+            <p class="b-profileBlock__title">Награды
+                <small>Награды, полученные игроком</small> </p>
+            <table class="b-awards__table" style="width: 416px;">
+                <colgroup>
+                    <col width="59">
+                    <col width="56">
+                    <col width="260">
+                </colgroup>
+            </table>
+
+            <a href="/base/teams/virtuspro/virtus-pro-sc2/?AWD_CNT=5" onclick="BX.ajax.insertToNode('/base/teams/virtuspro/virtus-pro-sc2/?AWD_CNT=5&amp;bxajaxid=cf93a120f491b8f2ef6edae91b80d045', 'comp_cf93a120f491b8f2ef6edae91b80d045'); return false;" class="start_load_btn"></a>
+        </div>
+        <!-- end profileAwards --></div>	<!-- end profileAwards -->
+
+    <!-- profileTeam -->
+    <div id="comp_94f26645bed3c5f60b1821d9c206a1e7">
+        <div class="b-profileBlock b-profileTeam" id="bx_2489040909_S23678">
+            <p class="b-profileBlock__title"><%- @__ 'The team' %>
+                <small>Список игроков, входящих в состав команды</small>
+            </p>
+
+
+            <table class="b-profileTeam__list">
+                <colgroup>
+                    <col width="63">
+                    <col width="59">
+                    <col width="115">
+                </colgroup>
+                <tbody>
+                <% for player in @doc.players : %>
+                    <tr>
+                        <td></td>
+                        <td class="ru"><!--//<img src="img/games/race/1.jpg" alt="">//--></td>
+                        <td><a href="/base/gamers/<%- player.nickname %>/"><%- player.nickname %></a></td>
+                        <td><%- @__ 'Player' %></td>
+                    </tr>
+                <% end %>
+                </tbody></table>
+
+            <a href="/base/teams/virtuspro/virtus-pro-sc2/?PER_CNT=10" onclick="BX.ajax.insertToNode('/base/teams/virtuspro/virtus-pro-sc2/?PER_CNT=10&amp;bxajaxid=94f26645bed3c5f60b1821d9c206a1e7', 'comp_94f26645bed3c5f60b1821d9c206a1e7'); return false;" class="start_load_btn"></a>
+        </div>
+    </div>	<!-- end profileTeam -->
+</div>
+
+<div class="b-closingBox">
+    <!-- profileMatches -->
+    <div id="comp_d3990c5908f270898cd09a4e147aba33">
+        <div class="b-profileBlock b-profileMatches" style="min-height: 30px;">
+            <p class="b-profileBlock__title"><%- @__ 'Matches of' %> <%- @doc.name %>            <small>История сыгранных матчей команды Virtus.pro*BenQ</small>
+            </p>
+
+            <table class="b-profileMatches__history">
+                <colgroup>
+                    <col width="30">
+                </colgroup>
+                <tbody><tr>
+                    <td>
+                        <img src="/bitrix/cache/s1/virtus/image.show/19w_19h_clip/upload/iblock/bf4/cs.png" width="19" height="19" alt="" class="" border="0" title="Counter-Strike 1.6">
+
+                    </td>
+                    <td class="ru">
+                        <a href="/base/teams/virtuspro/virtus-pro-sc2/" onclick="BX.ajax.insertToNode('/base/teams/virtuspro/virtus-pro-sc2/?bxajaxid=d3990c5908f270898cd09a4e147aba33', 'comp_d3990c5908f270898cd09a4e147aba33'); return false;">Virtus.pro*BenQ</a></td>
+                    <td class="score">[ <span class="score__item">0 : 0</span> ]</td>
+                    <td class="">
+                        <a href="/base/teams/empire/empire-dota2/">Empire</a></td>
+                </tr>
+                <tr>
+                    <td>
+                        <img src="/bitrix/cache/s1/virtus/image.show/19w_19h_clip/upload/iblock/0df/sc2_39x39.png" width="19" height="19" alt="" class="" border="0" title="StarCraft 2">
+
+                    </td>
+                    <td class="ru">
+                        <a href="/base/teams/virtuspro/virtus-pro-sc2/" onclick="BX.ajax.insertToNode('/base/teams/virtuspro/virtus-pro-sc2/?bxajaxid=d3990c5908f270898cd09a4e147aba33', 'comp_d3990c5908f270898cd09a4e147aba33'); return false;">Virtus.pro*BenQ</a></td>
+                    <td class="score">[ <span class="score__item">5 : <b>6</b></span> ]</td>
+                    <td class="">
+                        <a href="/base/teams/empire/empire-dota2/"><b>Empire</b></a></td>
+                </tr>
+                <tr>
+                    <td>
+                        <img src="/bitrix/cache/s1/virtus/image.show/19w_19h_clip/upload/iblock/0df/sc2_39x39.png" width="19" height="19" alt="" class="" border="0" title="StarCraft 2">
+
+                    </td>
+                    <td class="ru">
+                        <a href="/base/teams/virtuspro/virtus-pro-sc2/" onclick="BX.ajax.insertToNode('/base/teams/virtuspro/virtus-pro-sc2/?bxajaxid=d3990c5908f270898cd09a4e147aba33', 'comp_d3990c5908f270898cd09a4e147aba33'); return false;">Virtus.pro*BenQ</a></td>
+                    <td class="score">[ <span class="score__item">0 : <b>7</b></span> ]</td>
+                    <td class="">
+                        <a href="/base/teams/empire/empire-dota2/"><b>Empire</b></a></td>
+                </tr>
+                </tbody></table>
+
+            <a href="/base/teams/virtuspro/virtus-pro-sc2/?MTCH_CNT=10" onclick="BX.ajax.insertToNode('/base/teams/virtuspro/virtus-pro-sc2/?MTCH_CNT=10&amp;bxajaxid=d3990c5908f270898cd09a4e147aba33', 'comp_d3990c5908f270898cd09a4e147aba33'); return false;" class="start_load_btn"></a>
+        </div></div>	<!-- end profileMatches -->
+
+
+    <!-- profileTeam -->
+    <!-- end profileTeam -->
+</div>
+<div class="b-closingBox">
+    <!-- profileNews -->
+    <script type="text/javascript">if (window.location.hash != '' && window.location.hash != '#') top.BX.ajax.history.checkRedirectStart('bxajaxid', '744b6fd39b8c6ef85951103d52f00115')</script><div id="comp_744b6fd39b8c6ef85951103d52f00115"><div class="b-profileBlock b-profileStreams" style="min-height: 30px;">
+
+    <form id="more_frm_stream" action="/base/teams/virtuspro/virtus-pro-sc2/" method="post"><input type="hidden" name="bxajaxid" id="bxajaxid_744b6fd39b8c6ef85951103d52f00115_34320" value="744b6fd39b8c6ef85951103d52f00115"><input type="hidden" name="AJAX_CALL" value="Y">
+        <p class="b-profileBlock__title">Записи игр <!--//<span class="figure">[18]</span>//-->
+            <small>Видеозаписи с самыми яркими моментами игр</small> </p>
+
+        <ul class="b-profileStreams__list">
+        </ul>
+
+    </form>
+</div>
+    <script type="text/javascript">
+        top.bxcompajaxframeonload = function() {
+            top.BX.CaptureEventsGet();
+            top.BX.CaptureEvents(top, 'load');
+            top.BX.evalPack([{'TYPE':'SCRIPT','DATA':'\n'+
+                    'function _processform_34320(){\n'+
+                    '	var obForm = top.BX(\'bxajaxid_744b6fd39b8c6ef85951103d52f00115_34320\').form;\n'+
+                    '	top.BX.bind(obForm, \'submit\', function() {BX.ajax.submitComponentForm(this, \'comp_744b6fd39b8c6ef85951103d52f00115\', true)});\n'+
+                    '	top.BX.removeCustomEvent(\'onAjaxSuccess\', _processform_34320);\n'+
+                    '}\n'+
+                    'if (top.BX(\'bxajaxid_744b6fd39b8c6ef85951103d52f00115_34320\'))\n'+
+                    '	_processform_34320();\n'+
+                    'else\n'+
+                    '	top.BX.addCustomEvent(\'onAjaxSuccess\', _processform_34320);\n'+
+                    ''}]);
+            setTimeout('top.BX.ajax.__runOnload();', 300);
+        }</script>
+    <script type="text/javascript">
+        top.jsUtils.addEvent(window, "load", function() {
+
+            var arMULUserList = new Array('mul_UkNTPn5e');
+            var arMULUserListOnline = new Array();
+
+            for(var i=0; i<arMULUserList.length; i++)
+            {
+                elOnline = document.getElementById(arMULUserList[i]);
+                if(elOnline)
+                {
+                    if (BX.util.in_array(arMULUserList[i], arMULUserListOnline))
+                    {
+                        elOnline.className = "bx-user-info-online";
+                        elOnline.title = "на сайте";
+                    }
+                    else
+                    {
+                        elOnline.className = "bx-user-info-offline";
+                        elOnline.title = "";
+                    }
+
+                }
+
+            }
+        });
+    </script></div><script type="text/javascript">if (top.BX.ajax.history.bHashCollision) top.BX.ajax.history.checkRedirectFinish('bxajaxid', '744b6fd39b8c6ef85951103d52f00115');</script><script type="text/javascript">top.BX.bind(window, 'load', function() {window.AJAX_PAGE_STATE = new top.BX.ajax.component('comp_744b6fd39b8c6ef85951103d52f00115'); top.BX.ajax.history.init(window.AJAX_PAGE_STATE);})</script>	<script type="text/javascript">if (window.location.hash != '' && window.location.hash != '#') top.BX.ajax.history.checkRedirectStart('bxajaxid', 'fa13c7645728f057e9ac46b99ca4dbf0')</script><div id="comp_fa13c7645728f057e9ac46b99ca4dbf0">
+
+    <div class="b-profileBlock b-profileGallery" style="min-height: 30px;">
+
+        <form id="more_frm_photo" action="/base/teams/virtuspro/virtus-pro-sc2/" method="post"><input type="hidden" name="bxajaxid" id="bxajaxid_fa13c7645728f057e9ac46b99ca4dbf0_44588" value="fa13c7645728f057e9ac46b99ca4dbf0"><input type="hidden" name="AJAX_CALL" value="Y">
+            <p class="b-profileBlock__title">Галерея <!--//<span class="figure">[18]</span>//-->
+                <small>Фотографии команды</small> </p>
+
+
+        </form>
+    </div>
+    <script type="text/javascript">
+        top.bxcompajaxframeonload = function() {
+            top.BX.CaptureEventsGet();
+            top.BX.CaptureEvents(top, 'load');
+            top.BX.evalPack([{'TYPE':'SCRIPT','DATA':'\n'+
+                    'function _processform_44588(){\n'+
+                    '	var obForm = top.BX(\'bxajaxid_fa13c7645728f057e9ac46b99ca4dbf0_44588\').form;\n'+
+                    '	top.BX.bind(obForm, \'submit\', function() {BX.ajax.submitComponentForm(this, \'comp_fa13c7645728f057e9ac46b99ca4dbf0\', true)});\n'+
+                    '	top.BX.removeCustomEvent(\'onAjaxSuccess\', _processform_44588);\n'+
+                    '}\n'+
+                    'if (top.BX(\'bxajaxid_fa13c7645728f057e9ac46b99ca4dbf0_44588\'))\n'+
+                    '	_processform_44588();\n'+
+                    'else\n'+
+                    '	top.BX.addCustomEvent(\'onAjaxSuccess\', _processform_44588);\n'+
+                    ''}]);
+            setTimeout('top.BX.ajax.__runOnload();', 300);
+        }</script>
+    <script type="text/javascript">
+        top.jsUtils.addEvent(window, "load", function() {
+
+            var arMULUserList = new Array('mul_nZMZHjGB');
+            var arMULUserListOnline = new Array();
+
+            for(var i=0; i<arMULUserList.length; i++)
+            {
+                elOnline = document.getElementById(arMULUserList[i]);
+                if(elOnline)
+                {
+                    if (BX.util.in_array(arMULUserList[i], arMULUserListOnline))
+                    {
+                        elOnline.className = "bx-user-info-online";
+                        elOnline.title = "на сайте";
+                    }
+                    else
+                    {
+                        elOnline.className = "bx-user-info-offline";
+                        elOnline.title = "";
+                    }
+
+                }
+
+            }
+        });
+    </script></div><script type="text/javascript">if (top.BX.ajax.history.bHashCollision) top.BX.ajax.history.checkRedirectFinish('bxajaxid', 'fa13c7645728f057e9ac46b99ca4dbf0');</script><script type="text/javascript">top.BX.bind(window, 'load', function() {window.AJAX_PAGE_STATE = new top.BX.ajax.component('comp_fa13c7645728f057e9ac46b99ca4dbf0'); top.BX.ajax.history.init(window.AJAX_PAGE_STATE);})</script><!-- end profileNews -->
+</div>

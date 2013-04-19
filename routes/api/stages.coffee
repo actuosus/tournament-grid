@@ -51,7 +51,7 @@ exports.delete = (req, res) ->
     await Stage.findById req.params._id, defer err, stage
 #    await Report.findById stage.report_id, defer err, report
     Stage.remove {_id: req.params._id}, (err)->
-      Report.update({_id: stage.report_id}, {$pull : {stages : req.params._id}})
+      Report.update({_id: stage.report_id}, {$pull : {stages : req.params._id}}) if stage.report_id
       res.status 204 unless err
       res.send()
   else

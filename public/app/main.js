@@ -34,7 +34,7 @@ require({
     'three': '/vendor/scripts/three',
     'screenfull': '/vendor/scripts/screenfull.min',
     'jquery-ui': '/vendor/scripts/jquery-ui-1.10.1.custom.min',
-    'socket.io': 'http://' + document.location.hostname + ':8080/socket.io/socket.io.js'
+    'socket.io': 'http://' + document.location.host + '/socket.io/socket.io.js'
   },
   shim: {
     'jquery.mousewheel': {

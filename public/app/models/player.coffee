@@ -20,6 +20,9 @@ define ['cs!../core'],->
 
     race: DS.belongsTo 'App.GameRace'
 
+    # Just for creation marking
+    report: DS.belongsTo 'App.Report'
+
     countryFlagClassName: (->
       'country-flag-icon-%@'.fmt @get 'country.code'
     ).property('country')

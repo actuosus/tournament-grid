@@ -34,7 +34,10 @@ define [
       nameView: Em.View.extend
         contentBinding: 'parentView.content'
         classNames: ['lineup-grid-item-name']
-        template: Em.Handlebars.compile '{{view.content.name}}'
+        href: (->
+          '/teams/%@'.fmt @get 'content.id'
+        ).property('content')
+        template: Em.Handlebars.compile '<a {{bindAttr href="view.href"}}>{{view.content.name}}</a>'
 
       autocompleteTextFieldView: App.AutocompleteTextField.extend
         placeholder: '_team_name'.loc()
@@ -104,10 +107,17 @@ define [
         template: Em.Handlebars.compile '×'
 
         click: ->
+          # Just removing from report
+          report = App.get('report')
+
           team = @get('content')
           container = @get('parentView.parentView.parentView.content')
-          team.deleteRecord()
-          team.store.commit()
+#          team.deleteRecord()
+#          team.store.commit()
+
+          # Just removing from report
+          report.get('teams')?.removeObject team
+
           if container
             container.removeObject(team)
     )
@@ -169,6 +179,7 @@ define [
           template: Em.Handlebars.compile '×'
 
           click: ->
+            # TODO Should remove from report
             player = @get('content')
             console.log player
             player.deleteRecord()
@@ -190,8 +201,10 @@ define [
         ).property().volatile()
 
         addPlayer: (player)->
+          report = App.get('report')
           team = @get('parentView.parentView.content')
           players = team.get('players')
+          player.set 'report', report
           players.pushObject player
           player.store.commit()
 

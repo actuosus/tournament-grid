@@ -22,9 +22,11 @@ define ['cs!../core'],->
 
     isSelected: no
 
+    # Just for creation marking
     report: DS.belongsTo 'App.Report'
 
     players: DS.hasMany 'App.Player'
+
 #    toString: -> "<Team:#{@get 'name'}>"
 
 #    matches: (-> App.Match.find({team_id: @get '_id'})).property()

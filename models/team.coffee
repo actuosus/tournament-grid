@@ -21,6 +21,8 @@ TeamSchema = new Schema
 
   isPro: type: Boolean
 
+  description: type: String
+
 TeamSchema.plugin socketNotifyPlugin
 
 module.exports = TeamSchema

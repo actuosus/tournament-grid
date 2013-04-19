@@ -21,7 +21,10 @@ define ['cs!../core'],->
     match_type: DS.attr 'string'
 
     stages: DS.hasMany 'App.Stage'
-    entrants: DS.hasMany 'App.Team'
+
+    teams: DS.hasMany 'App.Team'
+    players: DS.hasMany 'App.Player'
+    entrantRefs: DS.hasMany 'App.TeamRef'
 
     races: DS.hasMany 'App.Race'
 

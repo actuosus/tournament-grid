@@ -81,6 +81,11 @@
     margin: 5px 0;
 }
 
+.lineup-grid-item-name a {
+    color: #000000;
+    text-decoration: none;
+}
+
 .lineup-grid-item-real-name {
     display: inline-block;
     margin: 0 7px;

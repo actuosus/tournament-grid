@@ -104,7 +104,7 @@ define [
 #          content.removeObject(proxy) if proxy
 #    App.addObserver 'isEditingMode', teamsController, teamsController.editingModeChanged
 #
-    reportEntrants = App.EntrantsController.create contentBinding: 'App.report.entrants'
+    reportEntrants = App.EntrantsController.create contentBinding: 'App.report.teams'
     lineupView = App.LineupView.create
       classNames: ['team-lineup-grid']
       controller: reportEntrants

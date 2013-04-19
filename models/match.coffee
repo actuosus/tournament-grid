@@ -21,8 +21,13 @@ MatchSchema = new Schema
   type: type: String
   status: type: String
   championship: type: ObjectId, ref: 'Championship'
+
   entrant1_id: type: ObjectId, ref: 'Team' # editable
   entrant2_id: type: ObjectId, ref: 'Team' # editable
+
+  entrant1_ref_id: type: ObjectId, ref: 'TeamRef'
+  entrant2_ref_id: type: ObjectId, ref: 'TeamRef'
+
   entrant1_points: type: Number # editable
   entrant2_points: type: Number # editable
   player1_points: type: Number

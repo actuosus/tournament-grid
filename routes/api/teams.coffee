@@ -45,7 +45,7 @@ exports.create = (req, res) ->
     t.name = team.name
     await t.save defer err, doc
     if team.report_id
-      await Report.findByIdAndUpdate team.report_id, {$push: {entrants: t._id}}, defer updateErr, report
+      await Report.findByIdAndUpdate team.report_id, {$push: {teams: t._id}}, defer updateErr, report
     res.send team: doc
   else
     res.send 400, error: "server error"
@@ -62,6 +62,7 @@ exports.update = (req, res)->
   else if req.body?.team
     team = req.body?.team
     await Team.findByIdAndUpdate req.params._id, { $set: team }, defer err, doc
+    await Report.findByIdAndUpdate team.report_id, {$push : {teams: req.params._id}}, defer reportUpdateErr, report
 #    socket.send {action: 'update', model: 'Team', _id: doc._id}
     res.send team: doc
   else
@@ -82,7 +83,7 @@ exports.delete = (req, res) ->
         # TODO Remove socket hack.
         socket.send {action: 'remove', model: 'Team', _id: req.params._id}
 
-        Report.update({_id: team.report_id}, {$pull : {entrants : req.params._id}})
+        Report.update({_id: team.report_id}, {$pull : {teams: req.params._id}}) if team.report_id
         res.status 204 unless err
         res.send()
     else

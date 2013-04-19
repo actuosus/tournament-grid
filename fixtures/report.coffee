@@ -29,7 +29,7 @@ module.exports.Report = [
   author: '5149b02872267f7b2c00002f'
   match_type: 'team'
   stages: ['51121246b54802daae000008', '51121246b54802daae000009', '51121246b54802daae00000a', '51121246b54802daae00000c', '51121246b54802daae00000b']
-  entrants: ['50fcdf189c68d90f07000001', '50fcdf189c68d90f07000002', '50fcdf189c68d90f07000003', '50fcdf189c68d90f07000004', '5116163383cf2f2534000002', '5107cac6c97716ba1800001d']
+  teams: ['50fcdf189c68d90f07000001', '50fcdf189c68d90f07000002', '50fcdf189c68d90f07000003', '50fcdf189c68d90f07000004', '5116163383cf2f2534000002', '5107cac6c97716ba1800001d']
 ,
   _id: '511211b49709aab1ae000003'
   title: 'When the players, not teams'
@@ -53,7 +53,7 @@ module.exports.Report = [
   author: '5149b02872267f7b2c00002f'
   match_type: 'player'
   stages: ['51121246b54802daae00000f' ]
-  entrants: []
+  teams: []
   races: [
     title: 'Zerg'
     identifier: 'zerg'

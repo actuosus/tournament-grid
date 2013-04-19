@@ -132,8 +132,8 @@ else
   staticDomain = "//#{conf.hostname}:#{port}"
 
 app.locals
-#  node_env: process.env.NODE_ENV
-  node_env: 'production'
+  node_env: process.env.NODE_ENV
+#  node_env: 'production'
 #  staticDomain: '//static.tournament.local:3000'
 #  staticDomain: '//tournament.local:3000'
 #  staticDomain: staticDomain
@@ -222,6 +222,12 @@ app.get '/reports', ensureAuthenticated, routes.reports.list
 app.get '/reports/create', ensureAuthenticated, routes.reports.createForm
 app.post '/reports/create', ensureAuthenticated, routes.reports.create
 app.get '/reports/:_id', ensureAuthenticated, routes.reports.item
+
+app.get '/match/:_id', ensureAuthenticated, routes.matches.item
+
+app.get '/teams/:_id', ensureAuthenticated, routes.teams.item
+
+app.get '/players/:_id', ensureAuthenticated, routes.players.item
 
 app.get '*', (req, res)-> res.status 404; res.render '404.ect'
 

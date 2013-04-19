@@ -33,7 +33,8 @@ ReportSchema = new Schema
 
   author: type: ObjectId, ref: 'User'
 
-  entrants: [type: ObjectId, ref: 'Teams']
+  teams: [type: ObjectId, ref: 'Team']
+  players: [type: ObjectId, ref: 'Player']
 
   stages: [type: ObjectId, ref: 'Stage']
   # Тип матча
