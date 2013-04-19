@@ -10,7 +10,10 @@ define [
 ], ->
   App.EntrantsController = Em.ArrayController.extend
     searchResults: []
+
     search: ->
+      @set 'isLoaded', yes
+
     searchQuery: ''
     # TODO Filter by player name
     searchByPlayer: no

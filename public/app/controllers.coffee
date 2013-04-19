@@ -13,4 +13,7 @@ define [
   'cs!./controllers/entrant'
   'cs!./controllers/players'
   'cs!./controllers/teams'
+  'cs!./controllers/merged_entrants'
+
+  'cs!controllers/socket'
 ], -> console.log 'Controllers loaded.'

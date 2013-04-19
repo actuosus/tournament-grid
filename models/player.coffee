@@ -7,6 +7,7 @@
 ###
 
 mongoose = require 'mongoose'
+socketNotifyPlugin = require '../lib/mongoose'
 Schema = mongoose.Schema
 ObjectId = Schema.ObjectId
 
@@ -20,5 +21,7 @@ PlayerSchema = new Schema
   last_name: type: String
 
   is_captain: type: Boolean
+
+PlayerSchema.plugin socketNotifyPlugin
 
 module.exports = PlayerSchema

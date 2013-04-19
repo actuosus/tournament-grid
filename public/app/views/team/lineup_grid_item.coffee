@@ -11,7 +11,7 @@ define [
   'cs!../editable_label'
 ], ->
   App.TeamLineupGridItem = Em.ContainerView.extend
-    classNames: ['lineup-grid-item']
+    classNames: ['lineup-grid-item', 'team-lineup-grid-item']
     childViews: ['teamNameView', 'playersView', 'addPlayerView']
 
     teamNameView: Em.ContainerView.extend(App.MovingHightlight,
@@ -31,15 +31,10 @@ define [
           'country-flag-icon-%@'.fmt @get 'content.country.code'
         ).property('content.country.code')
 
-      nameView: App.EditableLabel.extend
-        valueBinding: 'parentView.content.name'
+      nameView: Em.View.extend
+        contentBinding: 'parentView.content'
         classNames: ['lineup-grid-item-name']
-        isEditableBinding: 'App.isEditingMode'
-        valueChanged: (->
-          team = @get 'parentView.content'
-          if team
-            team.store.commit()
-        ).observes('value')
+        template: Em.Handlebars.compile '{{view.content.name}}'
 
       autocompleteTextFieldView: App.AutocompleteTextField.extend
         placeholder: '_team_name'.loc()
@@ -177,6 +172,7 @@ define [
             player = @get('content')
             console.log player
             player.deleteRecord()
+            player.store.commit()
 
     addPlayerView: Em.ContainerView.extend
       classNames: ['lineup-grid-item-player-row']
@@ -186,6 +182,12 @@ define [
       contentView: App.AutocompleteTextField.extend
         controllerBinding: 'App.playersController'
         entrantBinding: 'parentView.parentView.content'
+
+        filteredContent: (->
+          content = @get 'content'
+          entrants = @get 'entrant.players'
+          content.filter (item)-> not entrants.contains item
+        ).property().volatile()
 
         addPlayer: (player)->
           team = @get('parentView.parentView.content')

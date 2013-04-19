@@ -74,7 +74,7 @@
     color: #000000;
     max-width: 220px;
     display: inline-block;
-    /*overflow: hidden;*/
+    overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     padding: 0 5px;
@@ -150,7 +150,7 @@
 }
 
 .lineup-grid-item-name-container .country-flag-icon {
-    margin-top: 9px;
+    margin-top: 7px;
     margin-left: 8px;
     margin-right: 8px;
 }
@@ -184,6 +184,7 @@
     text-align: center;
     vertical-align: 2px;
     margin-left: -3px;
+    cursor: default;
 }
 
 .csscolumns .group-lineup-grid {

@@ -57,6 +57,9 @@ define [
     App.set 'countriesController', App.CountriesController.create()
     App.set 'teamsController', App.TeamsController.create()
     App.set 'playersController', App.PlayersController.create()
+
+    App.socketController = App.SocketController.create()
+    App.socketController.connect()
 #
 #    window.teamsController = teamsController
 #
@@ -131,6 +134,7 @@ define [
     App.get('report').didLoad = ->
       report = App.get 'report'
       stageTabsView.set 'content', report.get('stages')
+      App.racesController.set 'content', report.get('races')
 
     stageSelectorContainerView.appendTo '#content'
 #
@@ -192,6 +196,8 @@ define [
         Em.Object.create name: '_protoss'.loc(), id: 'protos'
         Em.Object.create name: '_terrain'.loc(), id: 'terrain'
       ]
+      all: ->
+        @set 'content.isLoaded', yes
       search: (options)->
         result = @get('content').filter (item, idx)->
           regexp = new RegExp(options.name, 'i')
@@ -243,6 +249,6 @@ define [
 #    contentView: treeView
 #  ).appendTo('#content')
 
-  $ -> App.advanceReadiness()
+#  $ -> App.advanceReadiness()
 
 

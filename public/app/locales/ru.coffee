@@ -67,3 +67,5 @@ define
   _dont_count: 'Не считать'
   _automatic_counting_disabled: 'Автоматический подсчёт выключен'
   _automatic_counting_enabled: 'Автоматический подсчёт включен'
+  _show_list: 'Показать список'
+  _hide_list: 'Скрыть список'

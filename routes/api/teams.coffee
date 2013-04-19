@@ -9,6 +9,8 @@
 Team = require('../../models').Team
 Report = require('../../models').Report
 
+socket = require('../../io').getSocket()
+
 random = ->
   func = arguments[Math.floor(Math.random() * arguments.length)]
   func.call() if typeof(func) is 'function'
@@ -60,6 +62,7 @@ exports.update = (req, res)->
   else if req.body?.team
     team = req.body?.team
     await Team.findByIdAndUpdate req.params._id, { $set: team }, defer err, doc
+#    socket.send {action: 'update', model: 'Team', _id: doc._id}
     res.send team: doc
   else
     res.send 400, error: "server error"

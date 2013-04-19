@@ -71,19 +71,12 @@ define [
   Ember.Handlebars.registerBoundHelper 'highlight', (value, options)->
     if options.hash?.partBinding
       part = options.data.view.get options.hash.partBinding
-      re = new RegExp(part, 'i')
-      split = value.split(re)
+      re = new RegExp(part, 'gi')
+      match = value.match(re)
 
-      if part and split.length > 1
-#        console.log split[0].length, part.length
-        originalPart = value.substring split[0].length, split[0].length + part.length
-        value = [
-          split[0]
-          '<span class="highlight">'
-          originalPart
-          '</span>'
-          split[1]
-        ].join('')
+      if part and match
+        value = value.replace re, (substring, position, string)->
+          "<span class=\"highlight\">#{substring}</span>"
       else
         value = Handlebars.Utils.escapeExpression value
     else

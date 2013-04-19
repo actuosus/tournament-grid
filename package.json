@@ -33,7 +33,8 @@
     "passport": "latest",
     "passport-http": "latest",
     "moment": "latest",
-    "i18n": "latest"
+    "i18n": "latest",
+    "socket.io":"latest"
   },
   "devDependencies": {
     "async": "latest",

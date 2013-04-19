@@ -6,26 +6,25 @@
  * Time: 10:00
 ###
 
-module.exports.Team = [
+Faker = require('../lib/Faker')
+countries = require('./country').Country
+
+teams = [
   _id: '50fcdf189c68d90f07000001',
   name: 'Umitara',
   country_id: '50fcdaf969f206c106000005'
-  players: ['5107d4cd351fb19719000002', '5107d4cd351fb19719000003', '5107d4cd351fb19719000004', '5107d4cd351fb19719000005', '5107d4cd351fb19719000006']
 ,
   _id: '50fcdf189c68d90f07000002',
   name: 'Wikipediots',
   country_id: '50fcdaf969f206c106000004'
-  players: ['5107d4cd351fb19719000002', '5107d4cd351fb19719000003', '5107d4cd351fb19719000004', '5107d4cd351fb19719000005', '5107d4cd351fb19719000006']
 ,
   _id: '50fcdf189c68d90f07000003',
   name: 'Stephano',
   country_id: '50fcdaf969f206c106000007'
-  players: ['5107d4cd351fb19719000002', '5107d4cd351fb19719000003', '5107d4cd351fb19719000004', '5107d4cd351fb19719000005', '5107d4cd351fb19719000006']
 ,
   _id: '50fcdf189c68d90f07000004',
   name: 'Bly',
   country_id: '50fcdaf969f206c106000006'
-  players: ['5107d4cd351fb19719000002', '5107d4cd351fb19719000003', '5107d4cd351fb19719000004', '5107d4cd351fb19719000005', '5107d4cd351fb19719000006']
 ,
   _id: '5116163383cf2f2534000002'
   name: 'Very long team name for testing purpose'
@@ -116,7 +115,7 @@ module.exports.Team = [
   _id: '5107cac6c97716ba1800001d'
   name: 'Virtus.pro'
   country_id: '50fcdaf969f206c106000001'#
-  players: ['5107d4cd351fb19719000002', '5107d4cd351fb19719000003', '5107d4cd351fb19719000004', '5107d4cd351fb19719000005', '5107d4cd351fb19719000006']
+  players: ['5107d4cd351fb19719000002', '5107d4cd351fb19719000003', '5107d4cd351fb19719000004', '5107d4cd351fb19719000005', '5107d4cd351fb19719000006', '5107d4cd351fb19719000008']
 ,
   name: 'n!faculty'
   country_id: '50fcdaf969f206c106000008'#
@@ -168,5 +167,12 @@ module.exports.Team = [
 ,
   name: 'Tera-Gaming'
   country_id: '50fcdaf969f206c106000008'#
-
 ]
+
+for i in [0..Faker.Helpers.randomNumber(1000)]
+  teams.push {
+    name: Faker.Company.companyName()
+    country_id: countries[Faker.Helpers.randomNumber(countries.length)]._id
+  }
+
+module.exports.Team = teams

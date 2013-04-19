@@ -9,6 +9,8 @@
 Team = require('../../models').Team
 Player = require('../../models').Player
 
+socket = require('../../io').getSocket()
+
 exports.list = (req, res)->
   setTimeout ->
     query = Player.find({})
@@ -44,6 +46,7 @@ exports.create = (req, res) ->
     await p.save defer err, player
     team.players.push p
     await team.save defer err, team
+#    socket.send {action: 'create', model: 'Player', _id: p._id}
     res.send player: p
   else
     res.send 400, error: "server error"
@@ -79,6 +82,7 @@ exports.delete = (req, res) ->
   else if req.params?._id?
     await Player.findById req.params._id, defer err, player
     Player.findByIdAndRemove req.params._id, (removeErr)->
+#      socket.send {action: 'remove', model: 'Player', _id: req.params._id}
       Team.findByIdAndUpdate player.team_id, {$pull: {players: req.params._id}}, (updateErr, numberAffected, rawResponse)->
         res.status 204 unless updateErr
         res.send()

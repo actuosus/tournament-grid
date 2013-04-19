@@ -18,8 +18,8 @@ define [
     countrySelectViewBinding: 'childViews.firstObject'
 
     nicknameBinding: 'value'
-    firstName: (-> Faker.Name.firstName()).property().volatile()
-    lastName: (-> Faker.Name.lastName()).property().volatile()
+    firstName: null
+    lastName: null
     middleName: ''
     country: null
     isCaptain: no

@@ -11,6 +11,7 @@ conf = new Config
 mongoose = require 'mongoose'
 Schema = mongoose.Schema
 ObjectId = Schema.ObjectId
+socketNotifyPlugin = require '../lib/mongoose'
 
 MatchSchema = new Schema
   name: type: String
@@ -33,5 +34,7 @@ MatchSchema = new Schema
   stage_id: type: ObjectId, ref: 'Stage'
 
   games: [type: ObjectId, ref: 'Game'] # editable
+
+MatchSchema.plugin socketNotifyPlugin
 
 module.exports = MatchSchema

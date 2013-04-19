@@ -1,8 +1,8 @@
 ###
- * teams
+ * merged_entrants
  * @author: actuosus
- * Date: 01/04/2013
- * Time: 06:37
+ * Date: 19/04/2013
+ * Time: 21:21
 ###
 
 define [
@@ -10,17 +10,29 @@ define [
   'cs!../models/team'
   'cs!../views/team/form'
 ], ->
-  App.TeamsController = Em.ArrayController.extend
+  App.MergedEntrantsController = Em.ArrayController.extend
     formView: App.TeamForm
     searchResults: []
     labelValue: 'name'
 
-    contentLoaded: (->
-      @set 'isLoaded', yes
-    ).observes('content.isLoaded')
+    content: []
+    sources: []
+
+    sourceContentChanged: (->
+      console.log 'sourceContentChanged'
+      sources = @get 'sources'
+      content = @get 'content'
+      sources.forEach (source)->
+        console.log source.get('content')
+        source.get('content')?.forEach (item)->
+          content.pushObject item
+#        content.pushObjects = source.get('content')
+    ).observes('sources.@each.isLoaded')
 
     search: (options)->
-      @set 'content', App.Team.find options
+      sources = @get 'sources'
+      sources.forEach (source)->
+        source.search options
 
     menuItemViewClass: Em.ContainerView.extend
       classNames: ['menu-item']

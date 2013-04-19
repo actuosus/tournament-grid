@@ -18,6 +18,8 @@ mongoose = require 'mongoose'
 passport = require 'passport'
 BasicStrategy = require('passport-http').BasicStrategy
 
+socket = require('./io').getSocket conf
+
 moment = require 'moment'
 
 models = require './models'
@@ -130,12 +132,12 @@ else
   staticDomain = "//#{conf.hostname}:#{port}"
 
 app.locals
-  node_env: process.env.NODE_ENV
-#  node_env: 'production'
+#  node_env: process.env.NODE_ENV
+  node_env: 'production'
 #  staticDomain: '//static.tournament.local:3000'
 #  staticDomain: '//tournament.local:3000'
-  staticDomain: staticDomain
-#  staticDomain: ''
+#  staticDomain: staticDomain
+  staticDomain: ''
   moment: moment
   __: -> i18n.__ arguments
   languages: languages
@@ -158,6 +160,7 @@ app.put '/api/matches/:_id', routes.api.matches.update
 
 app.get '/api/players', routes.api.players.list
 app.post '/api/players', routes.api.players.create
+app.get '/api/players/:_id', routes.api.players.item
 app.put '/api/players', routes.api.players.update
 app.put '/api/players/:_id', routes.api.players.update
 app.delete '/api/players/:_id', routes.api.players.delete

@@ -129,6 +129,7 @@ input[type="date"].input-large {
     border-radius: 0 2px 2px 0;
     background-image: -webkit-linear-gradient(top, #ededed, #bfbfbf);
     border: 1px solid #c3c3c3;
+    cursor: default;
 }
 .select .disclosure-icon {
     font-size: 13px;
@@ -864,6 +865,12 @@ input[type="date"].input-large {
 .named-container .add-team-btn {
     top: 27px;
     right: 40px;
+}
+.named-container .add-team-field {
+    position: absolute;
+    right: 48px;
+    top: 14px;
+    width: 140px;
 }
 .games-info-bar {
     list-style-type: none;
@@ -1826,7 +1833,7 @@ input[type="date"].input-large {
     color: #000000;
     max-width: 220px;
     display: inline-block;
-    
+    overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     padding: 0 5px;
@@ -1887,7 +1894,7 @@ input[type="date"].input-large {
     border: 0;
 }
 .lineup-grid-item-name-container .country-flag-icon {
-    margin-top: 9px;
+    margin-top: 7px;
     margin-left: 8px;
     margin-right: 8px;
 }
@@ -1917,6 +1924,7 @@ input[type="date"].input-large {
     text-align: center;
     vertical-align: 2px;
     margin-left: -3px;
+    cursor: default;
 }
 .csscolumns .group-lineup-grid {
     -webkit-column-width: 428px;

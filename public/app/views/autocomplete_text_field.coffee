@@ -50,6 +50,12 @@ define [
     focus: (event)->
       @get('textFieldView').$().focus().select()
 
+    _fetchAutocompleteResults: ()->
+      controller = @get 'parentView.controller'
+      value = @get 'value'
+      if controller and @get('shouldSearch') and value and value isnt @get 'lastValue'
+        controller.search name: value
+
     textFieldView: Em.TextField.extend
       classNames: ['text-field']
       attributeBindings: ['required', 'title']
@@ -114,11 +120,13 @@ define [
           @$().val(parentView.get 'selection.'+labelValue) if parentView.get 'selection.name'
         else
           @$().val(parentView.get 'selection.name') if parentView.get 'selection.name'
-        menuView.set 'isVisible', no
+        menuView?.set 'isVisible', no
         parentView.set 'value', @get 'parentView.selection'
         parentView.insertNewline(event)
 
     insertNewline: Em.K
+
+    showAll: -> @get('controller')?.all()
 
     contentLoaded: (->
       return unless @get 'hasFocus'
@@ -168,7 +176,6 @@ define [
       title: '_add_entrant'.loc()
       template: Em.Handlebars.compile '+'
       click: -> @get('parentView').showAddForm(@)
-
 
     showAddForm: (target)->
       popup = App.PopupView.create target: target

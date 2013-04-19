@@ -16,10 +16,12 @@ define ['cs!./autocomplete_text_field'], ->
 #      'selectView'
       ]
     valueBinding: 'autocompleteTextFieldView.selection'
+
     currentValueView: Em.View.extend
       classNames: ['current-value']
       template: Em.Handlebars.compile '{{view.parentView.currentLabel}}'
       contentBinding: 'parentView.autocompleteTextFieldView.selection'
+
     disclosureButtonView: Em.View.extend
       classNames: ['disclosure-button', 'non-selectable']
       attributeBindings: ['title']
@@ -41,12 +43,14 @@ define ['cs!./autocomplete_text_field'], ->
         if @get('menuView.isVisible')
           @set('menuView.isVisible', no)
         else
+          @get('parentView.autocompleteTextFieldView').showAll()
           @set('menuView.isVisible', yes)
 
     autocompleteTextFieldView: App.AutocompleteTextField.extend
       controllerBinding: 'parentView.controller'
       requiredBinding: 'parentView.required'
       titleBinding: 'parentView.title'
+      placeholderBinding: 'parentView.placeholder'
       click: -> @select()
 #    selectView: Em.Select.extend
 #      contentBinding: 'parentView.content'

@@ -9,6 +9,7 @@
 Config = require '../conf'
 conf = new Config
 mongoose = require 'mongoose'
+socketNotifyPlugin = require '../lib/mongoose'
 Schema = mongoose.Schema
 ObjectId = Schema.ObjectId
 
@@ -19,5 +20,7 @@ TeamSchema = new Schema
   players: [type: ObjectId, ref: 'Player']
 
   isPro: type: Boolean
+
+TeamSchema.plugin socketNotifyPlugin
 
 module.exports = TeamSchema

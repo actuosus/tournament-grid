@@ -23,6 +23,9 @@ define [
           return 1
         if lowerA.indexOf(lowerCased) is lowerB.indexOf(lowerCased)
           return 0
+    all: ->
+      @set 'content', App.countries
+      @set 'content.isLoaded', yes
     search: (options)->
 #        @set 'content', App.Country.find options
       return unless App.countries

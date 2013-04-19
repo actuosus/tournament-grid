@@ -73,6 +73,8 @@ module.exports = (grunt)->
           'bootstrap.tooltip': '../vendor/scripts/bootstrap/bootstrap-tooltip',
           'screenfull': '../vendor/scripts/screenfull.min',
           'jquery-ui': '../vendor/scripts/jquery-ui-1.10.1.custom.min'
+
+          'socket.io': '../../node_modules/socket.io/node_modules/socket.io-client/dist/socket.io'
           }
           name: 'main'
           out: 'public/bundle/app.js'

@@ -32,6 +32,7 @@
     border-radius: 0 2px 2px 0;
     background-image: -webkit-linear-gradient(top, #ededed, #bfbfbf);
     border: 1px solid #c3c3c3;
+    cursor: default;
 }
 
 .select .disclosure-icon {

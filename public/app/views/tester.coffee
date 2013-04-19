@@ -37,7 +37,7 @@ define [
       childViews: ['labelView', 'contentView']
       classNames: ['control-row']
       labelView: Em.View.extend(tagName: 'h3', template: Em.Handlebars.compile('Country selector'))
-      contentView: App.CountrySelectView.extend(controller: App.countriesController)
+      contentView: App.CountrySelectView.extend(controllerBinding: 'App.countriesController')
     autocompleteTextFieldView: Em.ContainerView.extend
       childViews: ['labelView', 'contentView']
       classNames: ['control-row']

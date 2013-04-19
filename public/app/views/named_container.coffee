@@ -72,6 +72,9 @@ define ['spin', 'cs!../core'], (Spinner)->
       ).property 'collapsed'
       click: -> @get('parentView').toggle()
 
+    bottomGradientView: Em.View.extend
+      classNames: ['btn-clean', 'b-profileBlock__toggle-button']
+
     toggle: ->
       if @get 'collapsed'
         @expand()

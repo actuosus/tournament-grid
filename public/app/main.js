@@ -33,7 +33,8 @@ require({
     'bootstrap.tooltip': '/vendor/scripts/bootstrap/bootstrap-tooltip',
     'three': '/vendor/scripts/three',
     'screenfull': '/vendor/scripts/screenfull.min',
-    'jquery-ui': '/vendor/scripts/jquery-ui-1.10.1.custom.min'
+    'jquery-ui': '/vendor/scripts/jquery-ui-1.10.1.custom.min',
+    'socket.io': 'http://' + document.location.hostname + ':8080/socket.io/socket.io.js'
   },
   shim: {
     'jquery.mousewheel': {
@@ -113,7 +114,8 @@ require([
   'cs!./core',
   'cs!application'
 ], function(){
-//  App.ready()
+//  App.ready();
+  App.advanceReadiness();
 })
 
 //require(['cs!application'], function(){

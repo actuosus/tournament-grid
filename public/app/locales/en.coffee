@@ -67,3 +67,5 @@ define
   _dont_count: "Don't count"
   _automatic_counting_disabled: 'Automatic counting disabled'
   _automatic_counting_enabled: 'Automatic counting enabled'
+  _show_list: 'Show list'
+  _hide_list: 'Hide list'

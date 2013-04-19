@@ -63,3 +63,10 @@
     top: 27px;
     right: 40px;
 }
+
+.named-container .add-team-field {
+    position: absolute;
+    right: 48px;
+    top: 14px;
+    width: 140px;
+}

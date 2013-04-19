@@ -49,4 +49,11 @@ module.exports.Player = [
   last_name: 'verYlOngPlayerLastNameForTesting'
   country_id: '514569cef9bbb58f3100001a'
   team_id: '5116163383cf2f2534000002'
+,
+  _id: '5107d4cd351fb19719000008'
+  nickname: 'sneg1'
+  first_name: 'Антон'
+  last_name: ''
+  country_id: '50fcdaf969f206c106000001'
+  team_id: '5107cac6c97716ba1800001d'
 ]
