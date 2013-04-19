@@ -12,8 +12,7 @@ define [
   App.SocketController = Em.Controller.extend
     socket: null
     connect: ->
-      port = 8080
-      @socket = io.connect "#{document.location.hostname}:#{port}"
+      @socket = io.connect document.location.host
       @socket.on 'connect', =>
         @socket.on 'message', (message)->
           switch message.action

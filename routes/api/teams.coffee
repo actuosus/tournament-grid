@@ -79,6 +79,9 @@ exports.delete = (req, res) ->
     await Team.findById req.params._id, defer err, team
     if team
       Team.remove _id: req.params._id, (err)->
+        # TODO Remove socket hack.
+        socket.send {action: 'remove', model: 'Team', _id: req.params._id}
+
         Report.update({_id: team.report_id}, {$pull : {entrants : req.params._id}})
         res.status 204 unless err
         res.send()

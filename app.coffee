@@ -18,7 +18,7 @@ mongoose = require 'mongoose'
 passport = require 'passport'
 BasicStrategy = require('passport-http').BasicStrategy
 
-socket = require('./io').getSocket conf
+IO = require './io'
 
 moment = require 'moment'
 
@@ -236,7 +236,11 @@ grid.init = ->
       throw "Cannot connect to DB (#{err})."
 #  spdy.createServer({}, app).listen app.get('port'), ->
 #    console.log "Express server listening on port #{app.get 'port'}"
-  http.createServer(app).listen app.get('port'), ->
+  server = http.createServer(app)
+  conf.server = server
+  socket = IO.getSocket(conf)
+  socket.start server
+  server.listen app.get('port'), ->
     console.log "Express server listening on port #{app.get 'port'}"
 
 

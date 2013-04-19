@@ -10,11 +10,13 @@ io = require('socket.io')
 socket = null
 
 class IO
-  constructor: (@conf)->
-    @server = io.listen 8080
+  server: null
+
+  start: (express)->
+    @server = io.listen express or 8080
 
   send: (message)->
-    @server.sockets.emit 'message', message
+    @server?.sockets.emit 'message', message
 
 module.exports =
   getSocket: (conf)->

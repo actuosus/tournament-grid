@@ -82,7 +82,10 @@ exports.delete = (req, res) ->
   else if req.params?._id?
     await Player.findById req.params._id, defer err, player
     Player.findByIdAndRemove req.params._id, (removeErr)->
-#      socket.send {action: 'remove', model: 'Player', _id: req.params._id}
+
+      # TODO Remove socket hack.
+      socket.send {action: 'remove', model: 'Player', _id: req.params._id}
+
       Team.findByIdAndUpdate player.team_id, {$pull: {players: req.params._id}}, (updateErr, numberAffected, rawResponse)->
         res.status 204 unless updateErr
         res.send()
