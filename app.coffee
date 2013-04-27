@@ -44,10 +44,9 @@ passport.use new BasicStrategy (username, password, done)->
     return done null, false if not user.validPassword password
     return done null, user
 
-passport.serializeUser (user, done)-> done null, user._id
+passport.serializeUser (user, done)-> done null, user.id
 
 passport.deserializeUser (id, done)->
-#  throw console.log 'deserializeUser'
   models.User.findById id, (err, user)-> done err, user
 
 cors = (req, res, next)->
