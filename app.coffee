@@ -98,7 +98,12 @@ app.configure ->
   # Session support
   app.use express.session(
     secret: 'Is it secure?'
-    store: new RedisStore
+    store: new RedisStore(
+      host: conf._redis.host
+      port: conf._redis.port
+      pass: conf._redis.password
+      db: conf._redis.db
+    )
   )
 
   app.use passport.initialize()
