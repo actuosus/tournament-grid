@@ -98,7 +98,9 @@ define [
         popup.append()
 
       insertNewline: ->
-        @showAddForm(@)
+        player = @get 'value'
+        unless player
+          @showAddForm(@)
 
       valueChanged: (->
         team = @get 'value'
@@ -107,6 +109,7 @@ define [
           teamRef = report.get('teamRefs').createRecord({team: team})
           teamRef.store.commit()
           @set 'textFieldView.value', ''
+          @get('textFieldView').$().val('')
 #          team.set 'report', report
 #          team.store.commit()
       ).observes('value')

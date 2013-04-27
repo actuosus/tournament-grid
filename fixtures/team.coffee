@@ -169,7 +169,7 @@ teams = [
   country_id: '50fcdaf969f206c106000008'#
 ]
 
-for i in [0..Faker.Helpers.randomNumber(1000)]
+for i in [0..Faker.Helpers.randomNumber(200)]
   teams.push {
     name: Faker.Company.companyName()
     country_id: countries[Faker.Helpers.randomNumber(countries.length)]._id

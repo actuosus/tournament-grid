@@ -61,7 +61,7 @@ players = [
   team_id: '5107cac6c97716ba1800001d'
 ]
 
-for i in [0..Faker.Helpers.randomNumber(1000)]
+for i in [0..Faker.Helpers.randomNumber(200)]
   players.push {
     nickname: Faker.Internet.userName()
     first_name: Faker.Name.firstName()
