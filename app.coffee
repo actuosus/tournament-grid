@@ -77,8 +77,6 @@ i18n.configure
 
 # HTTP Server setup
 app.configure ->
-
-  mongoose.set 'debug', yes
   app.set 'port', process.env.PORT or 3000
 
 #  app.set 'view engine', 'jade'
@@ -96,6 +94,7 @@ app.configure ->
   app.use express.methodOverride()
 
   # Session support
+  console.log 'Redis', conf._redis
   app.use express.session(
     secret: 'Is it secure?'
     store: new RedisStore(
@@ -105,7 +104,6 @@ app.configure ->
       db: conf._redis.db
     )
   )
-
   app.use passport.initialize()
   app.use passport.session()
 
@@ -128,6 +126,9 @@ app.configure ->
 #  app.use express.favicon()
 
   app.use cors
+
+app.configure 'development', ->
+  mongoose.set 'debug', yes
 
 app.configure 'production', ->
   app.use express.compress()
