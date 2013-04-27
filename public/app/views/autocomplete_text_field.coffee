@@ -42,6 +42,7 @@ define [
         else
           unless menuView.get 'hasFocus'
             menuView.set 'isVisible', no
+      @notifyPropertyChange('content.isLoaded')
     ).observes('hasFocus')
 
     select: (event)->
@@ -186,12 +187,12 @@ define [
         entrant: @get('entrant')
         didCreate: (entrant)=>
           @set('selection', entrant)
-          popup.hide()
+          popup.hide(entrant)
       popup.set 'formView', form
       popup.set 'contentView', form
       popup.get('childViews').push form
       popup.append()
-
+      popup
 
     cancelButtomView: Em.View.extend
       tagName: 'button'

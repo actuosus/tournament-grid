@@ -69,3 +69,5 @@ define
   _automatic_counting_enabled: 'Automatic counting enabled'
   _show_list: 'Show list'
   _hide_list: 'Hide list'
+  _remove_player: 'Remove player'
+  _remove_team: 'Remove team'

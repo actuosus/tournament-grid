@@ -22,9 +22,10 @@ define ['cs!../core'],->
 
     stages: DS.hasMany 'App.Stage'
 
-    teams: DS.hasMany 'App.Team'
+#    teams: DS.hasMany 'App.Team'
+
+    teamRefs: DS.hasMany 'App.TeamRef'
     players: DS.hasMany 'App.Player'
-    entrantRefs: DS.hasMany 'App.TeamRef'
 
     races: DS.hasMany 'App.Race'
 

@@ -16,9 +16,10 @@ define ['cs!../core'],->
     is_captain: DS.attr 'boolean'
     country: DS.belongsTo 'App.Country'
     team: DS.belongsTo 'App.Team'
+    teamRef: DS.belongsTo 'App.TeamRef'
     matches: DS.hasMany 'App.Match'
 
-    race: DS.belongsTo 'App.GameRace'
+    race: DS.belongsTo 'App.Race'
 
     # Just for creation marking
     report: DS.belongsTo 'App.Report'

@@ -15,5 +15,5 @@ define [
   'cs!./controllers/teams'
   'cs!./controllers/merged_entrants'
 
-  'cs!controllers/socket'
+#  'cs!controllers/socket'
 ], -> console.log 'Controllers loaded.'

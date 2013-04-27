@@ -15,7 +15,7 @@ define [
     childViews: ['teamNameView', 'playersView', 'addPlayerView']
 
     teamNameView: Em.ContainerView.extend(App.MovingHightlight,
-      contentBinding: 'parentView.content'
+      contentBinding: 'parentView.content.team'
       classNames: ['lineup-grid-item-name-container']
       childViews: ['countryFlagView', 'nameView', 'autocompleteTextFieldView', 'removeButtonView']#'editButtonView',
 
@@ -55,7 +55,6 @@ define [
             entrant: @get('entrant')
             createRecord: ->
               country = @get 'countrySelectView.value'
-
               report = App.get('report')
               team.set 'country', country
               team.set 'name', @$('.name').val()
@@ -74,7 +73,8 @@ define [
           popup.append()
 
         valueChanged: (->
-          @set 'parentView.content', @get 'value'
+          report = App.get('report')
+          @set 'parentView.content', App.TeamRef.createRecord({team: @get('value'), report: report})
         ).observes('value')
 
       editButtonView: Em.View.extend
@@ -103,23 +103,16 @@ define [
         isVisibleBinding: 'App.isEditingMode'
         classNames: ['btn-clean', 'remove-btn', 'remove']
         attributeBindings: ['title']
-        title: '_remove'.loc()
+        title: '_remove_team'.loc()
         template: Em.Handlebars.compile '×'
 
         click: ->
-          # Just removing from report
-          report = App.get('report')
+          team = @get 'content'
+          teamRef = App.get('report').get('teamRefs').find (tr)->
+            Em.isEqual tr.get('team'), team
 
-          team = @get('content')
-          container = @get('parentView.parentView.parentView.content')
-#          team.deleteRecord()
-#          team.store.commit()
-
-          # Just removing from report
-          report.get('teams')?.removeObject team
-
-          if container
-            container.removeObject(team)
+          teamRef?.deleteRecord()
+          teamRef?.store.commit()
     )
     playersView: Em.CollectionView.extend
       classNames: ['lineup-grid-item-players']
@@ -176,13 +169,23 @@ define [
           contentBinding: 'parentView.content'
           isVisibleBinding: 'App.isEditingMode'
           classNames: ['btn-clean', 'remove-btn', 'remove']
+          attributeBindings: ['title']
+          title: '_remove_player'.loc()
           template: Em.Handlebars.compile '×'
 
           click: ->
-            # TODO Should remove from report
+            report = App.get('report')
             player = @get('content')
-            console.log player
-            player.deleteRecord()
+            teamRef = App.report.get('teamRefs').find (tr)->
+              tr.get('players').find (item)->
+                item.id is player.id
+            players = teamRef.get('players')
+            # Just removing from team ref
+            players.removeObject player
+#            player.deleteRecord()
+#            player.set 'teamRef', null
+            player.set 'team', teamRef.get('team')
+            player.set 'report', report
             player.store.commit()
 
     addPlayerView: Em.ContainerView.extend
@@ -192,28 +195,34 @@ define [
 
       contentView: App.AutocompleteTextField.extend
         controllerBinding: 'App.playersController'
+        teamRefBinding: 'parentView.parentView.content'
         entrantBinding: 'parentView.parentView.content'
 
         filteredContent: (->
           content = @get 'content'
-          entrants = @get 'entrant.players'
-          content.filter (item)-> not entrants.contains item
+          entrants = @get 'teamRef.players'
+          content?.filter (item)-> not entrants.contains item
         ).property().volatile()
 
         addPlayer: (player)->
           report = App.get('report')
-          team = @get('parentView.parentView.content')
-          players = team.get('players')
-          player.set 'report', report
-          players.pushObject player
-          player.store.commit()
+          teamRef = @get('teamRef')
+          players = teamRef.get('players')
+          players.addObject player
+          player.set 'teamRef', teamRef
+
+          teamRef.store.commit()
+
+          @get('textFieldView')?.$().val('')
 
         insertNewline: ->
           player = @get 'value'
           unless player
             popup = @showAddForm(@)
             popup.onShow = => popup.get('formView')?.focus()
-            popup.onHide = => @focus()
+            popup.onHide = (player)=>
+              @addPlayer player
+              @focus()
           else
             @addPlayer player
 

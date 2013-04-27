@@ -14,16 +14,19 @@ define [
     search: ->
       @set 'isLoaded', yes
 
+    searchPath: 'team.name'
     searchQuery: ''
     # TODO Filter by player name
     searchByPlayer: no
+
     arrangedContent: (->
       content = @get 'content'
       searchQuery = @get 'searchQuery'
+      searchPath = @get 'searchPath'
       if searchQuery
-        reg = new RegExp(searchQuery, 'gi')
+        reg = new RegExp searchQuery, 'gi'
         result = content.filter (item)->
-          name = item.get('name')
+          name = item.get searchPath
           matches = no
           matches = yes if name?.match reg
           matches

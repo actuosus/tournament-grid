@@ -46,6 +46,12 @@ task 'console', 'Interactive console', ->
 
   require 'iced-coffee-script/lib/coffee-script/repl'
 
+task 'db:drop', 'Drops database', (options)->
+  mongoose = require 'mongoose'
+  mongoose.connect conf.mongo, (err)->
+    unless err
+      mongoose.connection.db.dropDatabase (dropErr)->
+        console.log 'Database dropped' unless dropErr
 
 task 'db:seed', 'Seed database with fixtures', (options) ->
   path = require 'path'

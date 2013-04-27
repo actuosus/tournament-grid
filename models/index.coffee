@@ -22,6 +22,7 @@ exports.ResultSchema = require './result'
 exports.RoundSchema = require './round'
 exports.StageSchema = require './stage'
 exports.TeamSchema = require './team'
+exports.TeamRefSchema = require './team_ref'
 
 console.log 'Registering models…'
 
@@ -39,3 +40,4 @@ exports.Result = mongoose.model 'Result', exports.ResultSchema
 exports.Round = mongoose.model 'Round', exports.RoundSchema
 exports.Stage = mongoose.model 'Stage', exports.StageSchema
 exports.Team = mongoose.model 'Team', exports.TeamSchema
+exports.TeamRef = mongoose.model 'TeamRef', exports.TeamRefSchema

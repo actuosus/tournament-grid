@@ -6,7 +6,11 @@
  * Time: 07:18
 ###
 
+mongoose = require 'mongoose'
+Schema = mongoose.Schema
+ObjectId = Schema.ObjectId
 Team = require('../../models').Team
+TeamRef = require('../../models').TeamRef
 Player = require('../../models').Player
 Report = require('../../models').Report
 
@@ -25,54 +29,44 @@ exports.list = (req, res)->
     query.exec (err, docs)-> res.send players: docs
   , Math.round(Math.random() * 1000)
 
+
 exports.item = (req, res)->
   Player.where('_id', req.params._id).findOne().exec (err, doc)->
     res.send player: doc
 
+
 exports.create = (req, res) ->
-  if req.body?.players
-    players = []
-    for player, i in req.body.players
-      await Team.findById player.team_id, defer err, team
-      console.log team, player, i
-      p = new Player player
-      await p.save defer err, players[i]
-      team.players.push p
-      await team.save defer err, team
-      console.log players
-    res.send players: players
-  else if req.body?.player
-    await Team.findById req.body?.player.team_id, defer err, team
-    p = new Player req.body?.player
-    await p.save defer err, player
-    team.players.push p
-    await team.save defer err, team
-#    socket.send {action: 'create', model: 'Player', _id: p._id}
+  if req.body?.player
+    player = req.body.player
+
+    # Always creating player
+    await new Player(player).save defer err, p
+
+    if player.team_ref_id
+      await TeamRef.findByIdAndUpdate player.team_ref_id, {$push: {players: p._id}}, defer err, teamRef
+    else if player.report_id and not player.team_ref_id
+      await TeamRef.findOneAndUpdate {team_id: player.team_id, report_id: player.report_id}, {$push: {players: p._id}}, defer err, teamRef
+    else
+      await Team.findByIdAndUpdate player.team_id, {$push: {players: p._id}}, defer err, team
+  #    socket.send {action: 'create', model: 'Player', _id: p._id}
     res.send player: p
   else
     res.send 400, error: "server error"
 
-exports.update = (req, res)->
-  if req.body?.players
-    players = []
-    for player, i in req.body.players
-      console.log player, i
-      m = new Player player
-      await m.update(player, defer err, players[i])
-    res.send players: players
-  else if req.body?.player
-    player = req.body?.player
-    await Player.findById req.params._id, defer err, p
-    if p
-      await p.update(player, defer err, doc)
-      await Team.findByIdAndUpdate player.team_id, {$push: {players: p._id}}, defer updateErr, team
-      await Report.findByIdAndUpdate player.report_id, {$push : {players: p._id}}, defer reportUpdateErr, report
 
-      res.send player: p
-    else
-      res.send 400, error: "server error"
+exports.update = (req, res)->
+  if req.body?.player
+    player = req.body.player
+    if not player.team_ref_id and player.report_id
+      await Player.findByIdAndUpdate req.params._id, player, defer err, p
+      await TeamRef.findOneAndUpdate {team_id: player.team_id, report_id: player.report_id}, {$pull: {players: p._id}}, defer err, teamRef
+    else if player.team_ref_id
+      await Player.findByIdAndUpdate req.params._id, player, defer err, p
+      await TeamRef.findByIdAndUpdate player.team_ref_id, {$push: {players: p._id}}, defer err, teamRef
+    res.send player: p
   else
     res.send 400, error: "server error"
+
 
 exports.delete = (req, res) ->
   if req.body?.players
@@ -90,7 +84,7 @@ exports.delete = (req, res) ->
       socket.send {action: 'remove', model: 'Player', _id: req.params._id}
 
       Team.findByIdAndUpdate player.team_id, {$pull: {players: req.params._id}}, (updateErr, numberAffected, rawResponse)->
-        Report.update({_id: player.report_id}, {$pull : {players: req.params._id}}) if player.report_id
+        Report.findByIdAndUpdate player.report_id, {$pull : {players: req.params._id}} if player.report_id
         res.status 204 unless updateErr
         res.send()
   else

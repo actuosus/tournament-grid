@@ -10,8 +10,11 @@ require 'iced-coffee-script'
 
 path = require 'path'
 http = require 'http'
+redis = require 'redis'
 #spdy = require 'spdy'
 express = require 'express'
+RedisStore = require('connect-redis')(express)
+
 i18n = require 'i18n'
 
 mongoose = require 'mongoose'
@@ -41,9 +44,11 @@ passport.use new BasicStrategy (username, password, done)->
     return done null, false if not user.validPassword password
     return done null, user
 
-passport.serializeUser (user, done)-> done null, user.id
+passport.serializeUser (user, done)-> done null, user._id
 
-passport.deserializeUser (id, done)-> models.User.findById id, (err, user)-> done err, user
+passport.deserializeUser (id, done)->
+#  throw console.log 'deserializeUser'
+  models.User.findById id, (err, user)-> done err, user
 
 cors = (req, res, next)->
   res.header 'Access-Control-Allow-Origin', '*'
@@ -70,9 +75,10 @@ i18n.configure
   defaultLocale: 'en'
   cookie: 'lang'
 
-
 # HTTP Server setup
 app.configure ->
+
+  mongoose.set 'debug', yes
   app.set 'port', process.env.PORT or 3000
 
 #  app.set 'view engine', 'jade'
@@ -80,20 +86,23 @@ app.configure ->
 
   app.engine '.ect', ectRenderer.render
 
+  # Static files serving
+  #  oneYear = 31557600000
+  app.use express.static path.join(__dirname, 'public')
+
   # Post data support
   app.use express.cookieParser()
   app.use express.bodyParser()
   app.use express.methodOverride()
 
   # Session support
-  app.use express.session secret: 'Is it secure?'
+  app.use express.session(
+    secret: 'Is it secure?'
+    store: new RedisStore
+  )
 
   app.use passport.initialize()
   app.use passport.session()
-
-  # Static files serving
-#  oneYear = 31557600000
-  app.use express.static path.join(__dirname, 'public')
 
   # Logging
   app.use express.logger 'dev'
@@ -189,6 +198,13 @@ app.put '/api/teams/:_id', routes.api.teams.update
 app.delete '/api/teams/:_id', routes.api.teams.delete
 app.delete '/api/teams/bulk', routes.api.teams.delete
 
+app.get '/api/team_refs', routes.api.team_refs.list
+app.post '/api/team_refs', routes.api.team_refs.create
+app.get '/api/team_refs/:_id', routes.api.team_refs.item
+app.put '/api/team_refs/:_id', routes.api.team_refs.update
+app.delete '/api/team_refs/:_id', routes.api.team_refs.delete
+app.delete '/api/team_refs/bulk', routes.api.team_refs.delete
+
 ensureAuthenticated = (req, res, next) ->
 #  console.log 'ensureAuthenticated', req.isAuthenticated()
   return next() if req.isAuthenticated()
@@ -244,8 +260,8 @@ grid.init = ->
 #    console.log "Express server listening on port #{app.get 'port'}"
   server = http.createServer(app)
   conf.server = server
-  socket = IO.getSocket(conf)
-  socket.start server
+#  socket = IO.getSocket(conf)
+#  socket.start server
   server.listen app.get('port'), ->
     console.log "Express server listening on port #{app.get 'port'}"
 

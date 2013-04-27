@@ -34,7 +34,9 @@
     "passport-http": "latest",
     "moment": "latest",
     "i18n": "latest",
-    "socket.io":"latest"
+    "socket.io":"latest",
+    "redis":"latest",
+    "connect-redis":"latest"
   },
   "devDependencies": {
     "async": "latest",

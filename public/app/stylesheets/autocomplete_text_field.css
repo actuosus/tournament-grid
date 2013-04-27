@@ -29,7 +29,6 @@
     right: 3px;
     top: 50%;
     border: 0;
-    background: none;
     width: 16px;
     height: 16px;
     padding: 0;
@@ -39,6 +38,9 @@
     color: gray;
 
     -webkit-appearance: none;
+
+    background-color: white;
+    box-shadow: 0 0 10px white;
 }
 
 .autocomplete-text-field .text-field {
@@ -51,7 +53,7 @@
 }
 
 .autocomplete-text-field .loader {
-    right: 11px;
+    right: -9px;
     position: absolute;
     top: 50%;
 }

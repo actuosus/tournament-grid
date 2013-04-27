@@ -46,17 +46,21 @@ define [
 #      country = @get 'country'
       country = @get('countrySelectView.autocompleteTextFieldView.selection')
       team = @get 'entrant'
+      players = @get 'entrant.players'
       report = App.get('report')
       transaction = App.store.transaction()
       player = transaction.createRecord(App.Player)
       player.set 'country', country
-      player.set 'team', team
-      player.set 'report', report
       player.set 'nickname', @$('.nickname').val()
       player.set 'firstName', @$('.first-name').val()
       player.set 'middleName', @$('.middle-name').val()
       player.set 'lastName', @$('.last-name').val()
       player.set 'is_captain', @get 'isCaptain'
+
+      player.set 'report', report
+#      player.set 'team', team
+      players.addObject player
+
       player.on 'didCreate', => @didCreate player
       player.on 'becameError', =>
         console.log arguments

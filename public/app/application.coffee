@@ -58,8 +58,8 @@ define [
     App.set 'teamsController', App.TeamsController.create()
     App.set 'playersController', App.PlayersController.create()
 
-    App.socketController = App.SocketController.create()
-    App.socketController.connect()
+#    App.socketController = App.SocketController.create()
+#    App.socketController.connect()
 #
 #    window.teamsController = teamsController
 #
@@ -104,15 +104,7 @@ define [
 #          content.removeObject(proxy) if proxy
 #    App.addObserver 'isEditingMode', teamsController, teamsController.editingModeChanged
 #
-    reportEntrants = App.EntrantsController.create contentBinding: 'App.report.teams'
-    lineupView = App.LineupView.create
-      classNames: ['team-lineup-grid']
-      controller: reportEntrants
-      contentBinding: 'controller.arrangedContent'
-#
-    window.lineupView = lineupView
-#
-    lineupContainerView = App.LineupContainerView.create contentView: lineupView
+
 #
 #    $('.link_pencil').click (event)->
 #      event.preventDefault()
@@ -123,18 +115,35 @@ define [
 #      else if stageSelectorContainerView?.$()
 #        $(document.body).scrollTo(stageSelectorContainerView.$(), 500, {offset: {top: -18}})
 
-    initer = Em.Object.create
-      reportMatchTypeDefined: ->
-        report = App.get('report')
-        if report?.get('match_type') is 'team'
-          lineupContainerView.appendTo '#content'
+    App.store.adapter.findMany = (store, type, ids, owner)->
+      root = @rootForType(type)
+      ids = @serializeIds(ids)
 
-    App.report.addObserver 'match_type', initer, initer.reportMatchTypeDefined
-#
+      data = {ids: ids}
+      data.report_id = owner.get('id') if App.Report.detectInstance(owner)
+
+      @ajax @buildURL(root), "GET", {
+        data: data,
+        success: (json)-> Ember.run @, -> @didFindMany(store, type, json)
+      }
+
+
     App.get('report').didLoad = ->
       report = App.get 'report'
       stageTabsView.set 'content', report.get('stages')
       App.racesController.set 'content', report.get('races')
+
+      if report?.get('match_type') is 'team'
+        reportEntrants = App.EntrantsController.create contentBinding: 'App.report.teamRefs'
+        lineupView = App.LineupView.create
+          classNames: ['team-lineup-grid']
+          controller: reportEntrants
+          contentBinding: 'controller.arrangedContent'
+
+        window.lineupView = lineupView
+        lineupContainerView = App.LineupContainerView.create contentView: lineupView
+        lineupContainerView.appendTo '#content'
+
 
     stageSelectorContainerView.appendTo '#content'
 #
@@ -150,10 +159,10 @@ define [
 #
 #    ###
 #
-    App.NamedContainerView.create(
-      title: 'Tester'
-      contentView: App.TesterView.create()
-    ).appendTo('#content')
+#    App.NamedContainerView.create(
+#      title: 'Tester'
+#      contentView: App.TesterView.create()
+#    ).appendTo('#content')
 
 #    App.NamedContainerView.create(
 #      title: '3D'

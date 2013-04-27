@@ -14,7 +14,7 @@ define [
     title: '_the_teams'.loc()
     childViews: [
       'titleView', 'toggleButtonView', 'contentView',
-      'loaderView', 'statusTextView', 'searchBarView',
+      'loaderView', 'statusTextView', #'searchBarView',
       'autocompleteTextFieldView'
     ]
     searchBarView: Em.ContainerView.extend
@@ -53,6 +53,7 @@ define [
       classNames: ['btn-clean', 'add-btn', 'add', 'add-team-btn']
       template: Em.Handlebars.compile '+'
       isVisibleBinding: 'App.isEditingMode'
+
       click: ->
         team = App.Team.createRecord()
         report = App.get('report')
@@ -65,6 +66,17 @@ define [
       controllerBinding: 'App.teamsController'
       isVisibleBinding: 'App.isEditingMode'
 
+      filteredContent: (->
+        content = @get 'content'
+        entrants = App.get 'report.teamRefs'
+        teams = entrants.map (item)-> item.get('team')
+        content?.filter (item)-> not teams.contains item
+      ).property().volatile()
+
+      textValueChanged: (->
+        @set('parentView.contentView.controller.searchQuery', @get 'textFieldView.value')
+      ).observes('textFieldView.value')
+
       showAddForm: (target)->
         autocomplete = @
         team = @get 'parentView.content'
@@ -73,21 +85,12 @@ define [
         form = formView.create
           value: @get('textFieldView').$().val()
           popupView: popup
-#          entrant: @get('entrant')
-#          createRecord: ->
-#            country = @get 'countrySelectView.value'
-#
-#            report = App.get('report')
-#            team.set 'country', country
-#            team.set 'name', @$('.name').val()
-#            team.set 'report', report
-#            team.on 'didCreate', => @didCreate team
-#            team.on 'becameError', =>
-#              console.log arguments
-#            team.store.commit()
           didCreate: (entrant)=>
-#            @set('selection', entrant)
-#            autocomplete.set 'parentView.content', entrant
+            report = App.get('report')
+            report.get('teamRefs').createRecord
+              team: entrant
+              report: report
+#            App.store.commit()
             popup.hide()
         popup.set 'formView', form
         popup.set 'contentView', form
@@ -101,6 +104,9 @@ define [
         team = @get 'value'
         report = App.get('report')
         if team and report
-          team.set 'report', report
-          team.store.commit()
+          teamRef = report.get('teamRefs').createRecord({team: team})
+          teamRef.store.commit()
+          @set 'textFieldView.value', ''
+#          team.set 'report', report
+#          team.store.commit()
       ).observes('value')

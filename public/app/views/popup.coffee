@@ -70,11 +70,11 @@ define ['cs!../core'],->
 
     onHide: Em.K
 
-    show: ->
+    show: (args)->
       if @$()
 #        $(document.body).scrollTo(@$(), 300, {offset:{top: -100}})
-        @$().transition({ scale: 1 }, 300, (=> @onShow()))
+        @$().transition({ scale: 1 }, 300, (=> @onShow(args)))
 
-    hide: ->
+    hide: (args)->
       if @$()
-        @$().transition({ scale: 0 }, 300, (=> @onHide(); @destroy()))
+        @$().transition({ scale: 0 }, 300, (=> @onHide(args); @destroy()))

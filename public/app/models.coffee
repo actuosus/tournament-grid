@@ -21,4 +21,5 @@ define [
   'cs!./models/round'
   'cs!./models/stage'
   'cs!./models/team'
+  'cs!./models/team_ref'
 ]

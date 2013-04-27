@@ -10,6 +10,7 @@ mongoose = require 'mongoose'
 Schema = mongoose.Schema
 ObjectId = Schema.ObjectId
 RaceSchema = require './race'
+TeamRefSchema = require './team_ref'
 
 ReportSchema = new Schema
   title: type: String
@@ -33,8 +34,8 @@ ReportSchema = new Schema
 
   author: type: ObjectId, ref: 'User'
 
-  teams: [type: ObjectId, ref: 'Team']
-  players: [type: ObjectId, ref: 'Player']
+  team_refs: [type: ObjectId, ref: 'TeamRef']
+#  players: [type: ObjectId, ref: 'Player']
 
   stages: [type: ObjectId, ref: 'Stage']
   # Тип матча
@@ -46,9 +47,13 @@ ReportSchema = new Schema
 
   noRating: type: Boolean
 
+ReportSchema.virtual('teams').get ->
+  @team_refs.map (ref)-> ref.team_id
+
+
 ReportSchema.methods.loc = (key, lang)->
-#  console.log key, lang, @[key]
-  if @["_#{key}"]
+#  console.log key, lang, @[key], @["_#{key}"]
+  if @["_#{key}"]?[lang]
     @["_#{key}"][lang]
   else
     @[key]

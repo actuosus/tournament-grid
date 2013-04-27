@@ -69,3 +69,5 @@ define
   _automatic_counting_enabled: 'Автоматический подсчёт включен'
   _show_list: 'Показать список'
   _hide_list: 'Скрыть список'
+  _remove_player: 'Удалить игрока'
+  _remove_team: 'Удалить команду'
