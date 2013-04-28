@@ -75,16 +75,10 @@ define [
 
           click: -> @toggleProperty 'automaticCountingDisabled'
 
-        removeButtonView: Em.View.extend
-          tagName: 'button'
-          contentBinding: 'parentView.content'
-          isVisibleBinding: 'App.isEditingMode'
-          classNames: ['btn-clean', 'remove-btn', 'remove']
-          attributeBindings: ['title']
-          title: '_remove'.loc()
-          template: Em.Handlebars.compile '×'
+        remove: -> @get('content').deleteRecord()
 
-          click: -> @get('content').deleteRecord()
+        removeButtonView: App.RemoveButtonView.extend
+          title: '_remove_group'.loc()
 
       matchesView: App.StangingTableView.extend
         childViews: ['stadingsView', 'contentView']

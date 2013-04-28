@@ -10,6 +10,7 @@ define [
   'cs!../autocomplete_text_field'
   'cs!../editable_label'
   'cs!../player/lineup_grid_item'
+  'cs!../remove_button'
 ], ->
   App.TeamLineupGridItem = Em.ContainerView.extend
     classNames: ['lineup-grid-item', 'team-lineup-grid-item']
@@ -102,33 +103,17 @@ define [
           )
           popup.append()
 
-      removeButtonView: Em.View.extend
-        tagName: 'button'
-        contentBinding: 'parentView.content'
-        isVisibleBinding: 'App.isEditingMode'
-        classNames: ['btn-clean', 'remove-btn', 'remove']
-        attributeBindings: ['title']
+      remove: ->
+        team = @get 'content'
+        teamRef = App.get('report').get('teamRefs').find (tr)->
+          Em.isEqual tr.get('team'), team
+
+        teamRef?.deleteRecord()
+        teamRef?.store.commit()
+
+      removeButtonView: App.RemoveButtonView.extend
         title: '_remove_team'.loc()
-        confirmLabel: '_remove_confirmation'.loc()
-        shouldShowConfirmation: no
-        template: Em.Handlebars.compile '{{#if view.shouldShowConfirmation}}{{view.confirmLabel}} {{/if}}×'
-
-        mouseLeave: ->
-          @set 'shouldShowConfirmation', no
-
-        remove: ->
-          team = @get 'content'
-          teamRef = App.get('report').get('teamRefs').find (tr)->
-            Em.isEqual tr.get('team'), team
-
-          teamRef?.deleteRecord()
-          teamRef?.store.commit()
-
-        click: ->
-          if @get 'shouldShowConfirmation'
-            @remove()
-          else
-            @set 'shouldShowConfirmation', yes
+        remove: -> @get('parentView').remove()
 
     )
     playersView: Em.CollectionView.extend

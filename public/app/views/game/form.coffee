@@ -8,10 +8,10 @@
 define [
   'text!../../templates/game/form.handlebars'
   'cs!../../models/game'
+  'cs!../form'
 ], (template)->
   Em.TEMPLATES.gameForm = Em.Handlebars.compile template
-  App.GameForm = Em.View.extend
-    tagName: 'form'
+  App.GameForm = App.FormView.extend
     classNames: ['game-form']
     templateName: 'gameForm'
     countrySelectViewBinding: 'childViews.firstObject'

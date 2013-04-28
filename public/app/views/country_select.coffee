@@ -10,9 +10,18 @@ define ['cs!./combobox'], ->
     classNames: ['country-select']
     classNameBindings: ['hasValue']
     valueBinding: 'autocompleteTextFieldView.selection'
+
+    valueChanged: (->
+      @set 'autocompleteTextFieldView.selection', @get 'value'
+    ).observes('value')
+
+    selectionChanged: (->
+      @set 'value', @get 'autocompleteTextFieldView.selection'
+    ).observes('autocompleteTextFieldView.selection')
+
     currentValueView: Em.View.extend
       classNames: ['current-value']
-      contentBinding: 'parentView.autocompleteTextFieldView.selection'
+      contentBinding: 'parentView.value'
       template: Em.Handlebars.compile(
         '<i {{bindAttr class=":country-flag-icon view.content.flagClassName"}}></i>'
 #        '{{view.parentView.currentLabel}}'
@@ -20,6 +29,7 @@ define ['cs!./combobox'], ->
     hasValue: (->
       !!@get 'autocompleteTextFieldView.selection'
     ).property('autocompleteTextFieldView.selection')
+
     autocompleteTextFieldView: App.AutocompleteTextField.extend
       placeholder: '_country'.loc()
       requiredBinding: 'parentView.required'
@@ -27,4 +37,3 @@ define ['cs!./combobox'], ->
       childViews: 'textFieldView loaderView statusIconView'.w()
       controllerBinding: 'parentView.controller'
       click: -> @select()
-

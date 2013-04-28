@@ -192,6 +192,7 @@ define [
       popup.set 'contentView', form
       popup.get('childViews').push form
       popup.append()
+      form.focus()
       popup
 
     cancelButtomView: Em.View.extend

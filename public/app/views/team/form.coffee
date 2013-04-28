@@ -9,10 +9,10 @@
 define [
   'text!../../templates/team/form.handlebars'
   'cs!../../core'
+  'cs!../form'
 ], (template)->
   Em.TEMPLATES.teamForm = Em.Handlebars.compile template
-  App.TeamForm = Em.View.extend
-    tagName: 'form'
+  App.TeamForm = App.FormView.extend
     classNames: ['team-form']
     templateName: 'teamForm'
     countrySelectViewBinding: 'childViews.firstObject'

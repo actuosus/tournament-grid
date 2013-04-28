@@ -6,6 +6,7 @@
 ###
 
 define [
+  'cs!./checkbox'
   'cs!./country_select'
   'cs!./autocomplete_text_field'
   'cs!./multilingual_text_field'
@@ -87,7 +88,7 @@ define [
       childViews: ['labelView', 'contentView']
       classNames: ['control-row']
       labelView: Em.View.extend(tagName: 'h3', template: Em.Handlebars.compile('Checkbox'))
-      contentView: Em.Checkbox.extend()
+      contentView: App.CheckboxView.extend()
 
     table: Em.ContainerView.extend
       childViews: ['labelView', 'contentView']

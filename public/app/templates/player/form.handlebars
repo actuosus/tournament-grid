@@ -6,9 +6,11 @@
     <input type="text" name="nickname" class="nickname" placeholder="Nickname" title="The nickname is required." {{bindAttr value="view.nickname"}} required="required"/>
 </div>
 
+{{#if view.shouldShowRaceSelector}}
 <div class="control-row">
     {{view App.ComboBoxView controllerBinding="App.racesController" placeholder="Race" valueBinding="view.race"}}
 </div>
+{{/if}}
 
 <div class="control-row">
     <input type="text" name="first-name" class="first-name" size="10" placeholder="First name" {{bindAttr value="view.firstName"}} required="required" title="The first name is required."/>
@@ -19,7 +21,7 @@
 {{#if view.canBeCaptain}}
 <div class="control-row">
     <label>
-        {{view Ember.Checkbox checkedBinding="view.isCaptain"}}
+        {{view App.CheckboxView checkedBinding="view.isCaptain"}}
         {{loc '_captain'}}
     </label>
 </div>

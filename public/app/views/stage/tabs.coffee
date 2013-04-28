@@ -127,17 +127,15 @@ define [
           contentBinding: 'parentView.content'
           template: Em.Handlebars.compile '{{__name}}'
 
-        removeButtonView: Em.View.extend
-          tagName: 'button'
-          contentBinding: 'parentView.content'
-          isVisibleBinding: 'App.isEditingMode'
-          classNames: ['btn-clean', 'remove-btn', 'remove']
-          attributeBindings: ['title']
-          title: '_remove'.loc()
-          template: Em.Handlebars.compile '×'
+        remove: -> @get('content').deleteRecord()
 
-          click: -> @get('content').deleteRecord()
-#          valueBinding: 'content.name'
+        removeButtonView: App.RemoveButtonView.extend
+          title: '_remove_stage'.loc()
+          remove: -> @get('parentView').remove()
+          click: (event)->
+            event.stopPropagation()
+            @_super()
+
         click: ->
 #          router = @get 'router'
 #          router.transitionTo.apply(router, args(this, router))

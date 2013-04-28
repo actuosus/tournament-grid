@@ -12,13 +12,19 @@ define ['cs!../core'],->
 
     target: null
 
-    childViews: ['arrowBorderView', 'arrowView']
+    childViews: ['arrowBorderView', 'arrowView', 'closeButtonView']
 
     arrowView: Em.View.extend
       classNames: ['popup-arrow']
 
     arrowBorderView: Em.View.extend
       classNames: ['popup-arrow-border']
+
+    closeButtonView: Em.View.extend
+      tagName: 'button'
+      classNames: ['btn-clean', 'popup-close-button']
+      template: Em.Handlebars.compile '×'
+      click: -> @get('parentView').hide()
 
     getContentDimensions: ->
       contentView = @get('contentView')

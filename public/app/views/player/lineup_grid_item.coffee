@@ -5,7 +5,10 @@
  * Time: 10:53
 ###
 
-define ->
+define [
+  'cs!../../core'
+  'cs!../remove_button'
+],->
   App.PlayerLineupGridItemView = Em.ContainerView.extend
     classNames: ['lineup-grid-item-player-row']
     classNameBindings: ['content.isSaving']
@@ -62,37 +65,19 @@ define ->
       title: '_captain'.loc()
       template: Em.Handlebars.compile 'К'
 
-    removeButtonView: Em.View.extend
-      tagName: 'button'
-      contentBinding: 'parentView.content'
-      isVisibleBinding: 'App.isEditingMode'
-      classNames: ['btn-clean', 'remove-btn', 'remove']
-      attributeBindings: ['title']
+    remove: ->
+      report = App.get('report')
+      player = @get('content')
+      teamRef = App.report.get('teamRefs').find (tr)->
+        tr.get('players').find (item)->
+          item.id is player.id
+      players = teamRef.get('players')
+      # Just removing from team ref
+      players.removeObject player
+      player.set 'team', teamRef.get('team')
+      player.set 'report', report
+      player.store.commit()
+
+    removeButtonView: App.RemoveButtonView.extend
       title: '_remove_player'.loc()
-      confirmLabel: '_remove_confirmation'.loc()
-      shouldShowConfirmation: no
-      template: Em.Handlebars.compile '{{#if view.shouldShowConfirmation}}{{view.confirmLabel}} {{/if}}×'
-
-      remove: ->
-        report = App.get('report')
-        player = @get('content')
-        teamRef = App.report.get('teamRefs').find (tr)->
-          tr.get('players').find (item)->
-            item.id is player.id
-        players = teamRef.get('players')
-        # Just removing from team ref
-        players.removeObject player
-        #            player.deleteRecord()
-        #            player.set 'teamRef', null
-        player.set 'team', teamRef.get('team')
-        player.set 'report', report
-        player.store.commit()
-
-      mouseLeave: ->
-        @set 'shouldShowConfirmation', no
-
-      click: ->
-        if @get 'shouldShowConfirmation'
-          @remove()
-        else
-          @set 'shouldShowConfirmation', yes
+      remove: -> @get('parentView').remove()

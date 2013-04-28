@@ -9,10 +9,10 @@
 define [
   'text!../../templates/player/form.handlebars'
   'cs!../../core'
+  'cs!../form'
 ], (template)->
   Em.TEMPLATES.playerForm = Em.Handlebars.compile template
-  App.PlayerForm = Em.View.extend
-    tagName: 'form'
+  App.PlayerForm = App.FormView.extend
     classNames: ['player-form']
     templateName: 'playerForm'
     countrySelectViewBinding: 'childViews.firstObject'
@@ -23,6 +23,8 @@ define [
     middleName: ''
     country: null
     isCaptain: no
+
+    shouldShowRaceSelector: no
 
     canBeCaptain: (->
       console.log 'hasCaptain',@get('entrant.hasCaptain')
@@ -35,8 +37,11 @@ define [
 
     didCreate: Em.K
 
-    didInserElement: ->
-      @set 'country', App.Country.find({name: 'Россия'})
+    willInsertElement: ->
+      # Derived from team
+      team = @get('entrant.team') or @get('entrant')
+      console.log 'country', team?.get('country')
+      @set 'country', team?.get('country')
 
     focus: ->
       @$('.nickname').focus()

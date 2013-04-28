@@ -9,13 +9,13 @@
 define [
   'text!../../templates/stage/form.handlebars'
   'cs!../../core'
+  'cs!../form'
 
   'cs!../multilingual_text_field'
   'cs!../multilingual_text_area'
 ], (template)->
   Em.TEMPLATES.stageForm = Em.Handlebars.compile template
-  App.StageForm = Em.View.extend
-    tagName: 'form'
+  App.StageForm = App.FormView.extend
     classNames: ['stage-form', 'form-vertical']
     templateName: 'stageForm'
 

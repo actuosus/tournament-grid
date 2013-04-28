@@ -28,7 +28,7 @@ input[type="text"]:invalid,
 input[type="url"]:invalid,
 input[type="date"]:invalid,
 input[type="number"]:invalid {
-    border: 1px solid #dd0039;
+    border: 1px solid #C58898;
 }
 
 input[type="text"].input-large,
