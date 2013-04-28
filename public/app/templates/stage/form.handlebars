@@ -23,7 +23,8 @@
 <div class="control-section control-section-tournament-grid">
     <div class="control-row">
         <label for="entrants-number">{{loc '_entrants_number'}}:</label>
-        <input type="number" name="entrants-number" class="entrants-number" size="2" maxlength="4" min="1" required="required"/>
+        <!--<input type="number" name="entrants-number" class="entrants-number" size="2" maxlength="4" min="1" required="required"/>-->
+        {{view App.NumberInputView name="entrants-number" class="entrants-number" size="2" min="1" max="1024" maxlength="4" required="required" value="1"}}
     </div>
 </div>
 {{/if}}

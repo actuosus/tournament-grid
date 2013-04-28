@@ -48,6 +48,8 @@ module.exports = ->
       _redis:
         host: 'localhost'
         hostname: 'localhost'
+        username: ''
+        password: ''
         db: 1
       memcache:
         host: 'localhost'

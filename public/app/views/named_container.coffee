@@ -20,10 +20,12 @@ define ['spin', 'cs!../core'], (Spinner)->
       tagName: 'p'
       classNames: ['b-profileBlock__title']
       classNameBindings: ['collapsed:close']
-      titleBinding: 'parentView.title'
+      attributeBindings: ['title']
+      titleBinding: 'parentView.description'
+      textBinding: 'parentView.title'
       collapsedBinding: 'parentView.collapsed'
 
-      template: Em.Handlebars.compile('{{view.title}}')
+      template: Em.Handlebars.compile('{{view.text}}')
 #      click: -> @get('parentView').toggle()
 
     contentView: Em.View.extend()

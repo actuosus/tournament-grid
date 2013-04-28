@@ -9,6 +9,7 @@ define [
   'cs!../../mixins/moving_highlight'
   'cs!../autocomplete_text_field'
   'cs!../editable_label'
+  'cs!../player/lineup_grid_item'
 ], ->
   App.TeamLineupGridItem = Em.ContainerView.extend
     classNames: ['lineup-grid-item', 'team-lineup-grid-item']
@@ -37,6 +38,10 @@ define [
         href: (->
           '/teams/%@'.fmt @get 'content.id'
         ).property('content')
+        attributeBindings: ['title']
+        title: (->
+          @get('content.id') if App.get('isEditingMode')
+        ).property('App.isEditingMode')
         template: Em.Handlebars.compile '<a {{bindAttr href="view.href"}}>{{view.content.name}}</a>'
 
       autocompleteTextFieldView: App.AutocompleteTextField.extend
@@ -104,15 +109,27 @@ define [
         classNames: ['btn-clean', 'remove-btn', 'remove']
         attributeBindings: ['title']
         title: '_remove_team'.loc()
-        template: Em.Handlebars.compile '×'
+        confirmLabel: '_remove_confirmation'.loc()
+        shouldShowConfirmation: no
+        template: Em.Handlebars.compile '{{#if view.shouldShowConfirmation}}{{view.confirmLabel}} {{/if}}×'
 
-        click: ->
+        mouseLeave: ->
+          @set 'shouldShowConfirmation', no
+
+        remove: ->
           team = @get 'content'
           teamRef = App.get('report').get('teamRefs').find (tr)->
             Em.isEqual tr.get('team'), team
 
           teamRef?.deleteRecord()
           teamRef?.store.commit()
+
+        click: ->
+          if @get 'shouldShowConfirmation'
+            @remove()
+          else
+            @set 'shouldShowConfirmation', yes
+
     )
     playersView: Em.CollectionView.extend
       classNames: ['lineup-grid-item-players']
@@ -124,69 +141,7 @@ define [
         team.set('proxy', false) if team.get('proxy')
       ).observes('content.length')
 
-      itemViewClass: Em.ContainerView.extend
-        classNames: ['lineup-grid-item-player-row']
-        classNameBindings: ['content.isSaving']
-        childViews: ['countryFlagView', 'nameView', 'realNameView', 'captianMarkerView', 'removeButtonView']
-
-        countryFlagView: Em.View.extend
-          tagName: 'i'
-          classNames: ['country-flag-icon', 'team-country-flag-icon']
-          classNameBindings: ['countryFlagClassName', 'hasFlag']
-          attributeBindings: ['title']
-          title: (-> @get 'content.country.name').property('content.country')
-          contentBinding: 'parentView.content'
-          hasFlag: (-> !!@get 'content.country.code').property('content.country')
-          countryFlagClassName: (->
-            'country-flag-icon-%@'.fmt @get 'content.country.code'
-          ).property('content.country.code')
-
-        nameView: Em.View.extend
-          contentBinding: 'parentView.content'
-          classNames: ['lineup-grid-item-name']
-          template: Em.Handlebars.compile '{{view.content.nickname}}'
-
-        realNameView: Em.View.extend
-          contentBinding: 'parentView.content'
-          classNames: ['lineup-grid-item-real-name']
-          isVisibleBinding: 'hasShortName'
-          hasShortName: (->
-            shortName = @get('content.shortName')
-            yes if shortName and shortName isnt ' '
-          ).property('content.shortName')
-          template: Em.Handlebars.compile '({{view.content.shortName}})'
-
-        captianMarkerView: Em.View.extend
-          contentBinding: 'parentView.content'
-          classNames: ['lineup-grid-item-captain-marker']
-          isVisibleBinding: 'content.is_captain'
-          attributeBindings: ['title']
-          title: '_captain'.loc()
-          template: Em.Handlebars.compile 'К'
-
-        removeButtonView: Em.View.extend
-          tagName: 'button'
-          contentBinding: 'parentView.content'
-          isVisibleBinding: 'App.isEditingMode'
-          classNames: ['btn-clean', 'remove-btn', 'remove']
-          attributeBindings: ['title']
-          title: '_remove_player'.loc()
-          template: Em.Handlebars.compile '×'
-
-          click: ->
-            report = App.get('report')
-            player = @get('content')
-            teamRef = App.report.get('teamRefs').find (tr)->
-              tr.get('players').find (item)->
-                item.id is player.id
-            players = teamRef.get('players')
-            # Just removing from team ref
-            players.removeObject player
-#            player.deleteRecord()
-#            player.set 'teamRef', null
-            player.set 'team', teamRef.get('team')
-            player.set 'report', report
-            player.store.commit()
+      itemViewClass: App.PlayerLineupGridItemView
 
     addPlayerView: Em.ContainerView.extend
       classNames: ['lineup-grid-item-player-row']

@@ -27,7 +27,10 @@ define ['cs!../core'],->
 
     players: DS.hasMany 'App.Player'
 
-#    toString: -> "<Team:#{@get 'name'}>"
+#    captain: DS.belongsTo 'App.Player'
+    hasCaptain: (->
+      !!@get('players').findProperty 'is_captain', yes
+    ).property('players.@each.is_captain')
 
 #    matches: (-> App.Match.find({team_id: @get '_id'})).property()
 

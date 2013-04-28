@@ -4,6 +4,7 @@
 @import "global.css";
 @import "extras.css";
 @import "select.css";
+@import "input.css";
 @import "tooltip.css";
 @import "table.css";
 @import "popup.css";
@@ -178,7 +179,7 @@
 
 .matches-group-table .team-name,
 .matches-group-table .team-undefined .team-name {
-    width: 92px;
+    max-width: 90px;
 }
 
 .match-start-date {

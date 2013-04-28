@@ -25,13 +25,13 @@ define [
       @$().text(@get 'value') if @$()
     ).observes('value')
 
-    increment: ->
+    stepUp: ->
       value = @get 'value'
       newValue = value + @get('step')
       if newValue >= @get('min') and newValue <= @get('max')
         @incrementProperty 'value', @get 'step'
 
-    decrement: ->
+    stepDown: ->
       value = @get 'value'
       newValue = value - @get('step')
       if newValue >= @get('min') and newValue <= @get('max')
@@ -41,19 +41,19 @@ define [
       if @get 'isEditable'
         event.preventDefault()
         if event.originalEvent.wheelDelta > 0
-          @increment()
+          @stepUp()
         else
-          @decrement()
+          @stepDown()
 
     keyDown: (event)->
       if @get 'isEditable'
         switch event.keyCode
-          when 40 # down
-            event.preventDefault()
-            @decrement()
           when 38 # up
             event.preventDefault()
-            @increment()
+            @stepUp()
+          when 40 # down
+            event.preventDefault()
+            @stepDown()
 
 
     setValue: (value)->

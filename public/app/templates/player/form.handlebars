@@ -16,12 +16,14 @@
     <input type="text" name="last-name" class="last-name" size="10" placeholder="Last name" {{bindAttr value="view.lastName"}} required="required" title="The last name is required."/>
 </div>
 
+{{#if view.canBeCaptain}}
 <div class="control-row">
     <label>
         {{view Ember.Checkbox checkedBinding="view.isCaptain"}}
         {{loc '_captain'}}
     </label>
 </div>
+{{/if}}
 
 <div class="control-row">
     <button type="submit" class="btn btn-primary save-btn">{{loc '_save'}}</button>

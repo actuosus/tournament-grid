@@ -71,3 +71,6 @@ define
   _hide_list: 'Скрыть список'
   _remove_player: 'Удалить игрока'
   _remove_team: 'Удалить команду'
+  _enter_team_name_to_filter_the_teams_and_search_for_team_to_add: 'Введите название команды чтобы отфильтровать список команд и поискать команду для добавления'
+  _the_teams_that_participate_in_the_report: 'Комаданды, учавствующие в репортаже'
+  _remove_confirmation: 'Удалить?'

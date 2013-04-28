@@ -14,6 +14,11 @@ define ['cs!../core'],->
     match: DS.belongsTo 'App.Match'
 
     players: DS.hasMany 'App.Player'
+
+    hasCaptain: (->
+      console.log 'Finding the captain', @get('players').findProperty 'isCaptain', yes
+      !!@get('players').findProperty 'isCaptain', yes
+    ).property('players.@each.isCaptain')
 #    captain:  DS.belongsTo 'App.Player'
 
   App.TeamRef.toString = -> 'TeamRef'

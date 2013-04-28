@@ -12,6 +12,7 @@ define [
 ], ->
   App.LineupContainerView = App.NamedContainerView.extend
     title: '_the_teams'.loc()
+    description: '_the_teams_that_participate_in_the_report'.loc()
     childViews: [
       'titleView', 'toggleButtonView', 'contentView',
       'loaderView', 'statusTextView', #'searchBarView',
@@ -65,6 +66,8 @@ define [
       placeholder: '_team_name'.loc()
       controllerBinding: 'App.teamsController'
       isVisibleBinding: 'App.isEditingMode'
+      attributeBindings: ['title']
+      title: '_enter_team_name_to_filter_the_teams_and_search_for_team_to_add'.loc()
 
       filteredContent: (->
         content = @get 'content'

@@ -12,31 +12,7 @@
     user-select: none;
 }
 
-input[type="text"],
-input[type="url"],
-input[type="date"],
-input[type="number"] {
-    min-height: 21px;
-    -webkit-appearance: none;
-    border: 1px solid #c3c3c3;
-    border-radius: 2px;
-    padding-left: 10px;
 
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 13px;
-    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
-    color: #323232;
-
-    -webkit-transition-property: outline;
-    -webkit-transition-duration: .3s;
-}
-
-input[type="text"]:invalid,
-input[type="url"]:invalid,
-input[type="date"]:invalid,
-input[type="number"]:invalid {
-    border: 1px solid #dd0039;
-}
 
 textarea {
     min-height: 20px;
@@ -52,11 +28,4 @@ textarea {
 
     -webkit-transition-property: outline;
     -webkit-transition-duration: .3s;
-}
-
-input[type="text"].input-large,
-input[type="url"].input-large,
-input[type="date"].input-large {
-    min-height: 32px;
-    border-radius: 1px;
 }

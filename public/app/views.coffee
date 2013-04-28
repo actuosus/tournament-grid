@@ -14,6 +14,7 @@ define [
   'cs!./views/group_grid'
 #  'cs!./views/table'
   'cs!./views/popup'
+  'cs!./views/number_input'
   'cs!./views/autocomplete_text_field'
   'cs!./views/multilingual_text_field'
   'cs!./views/multilingual_text_area'

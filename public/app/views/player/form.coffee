@@ -24,6 +24,11 @@ define [
     country: null
     isCaptain: no
 
+    canBeCaptain: (->
+      console.log 'hasCaptain',@get('entrant.hasCaptain')
+      !@get('entrant.hasCaptain')
+    ).property('entrant.hasCaptain')
+
     isCaptainChanged: (->
       console.log 'isCaptain', @get 'isCaptain'
     ).observes('isCaptain')
@@ -55,7 +60,7 @@ define [
       player.set 'firstName', @$('.first-name').val()
       player.set 'middleName', @$('.middle-name').val()
       player.set 'lastName', @$('.last-name').val()
-      player.set 'is_captain', @get 'isCaptain'
+      player.set 'isCaptain', @get 'isCaptain'
 
       player.set 'report', report
 #      player.set 'team', team

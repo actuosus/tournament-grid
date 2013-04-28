@@ -44,7 +44,7 @@ passport.use new BasicStrategy (username, password, done)->
     return done null, false if not user.validPassword password
     return done null, user
 
-passport.serializeUser (user, done)-> done null, user.id
+passport.serializeUser (user, done)-> done null, user._id
 
 passport.deserializeUser (id, done)->
   models.User.findById id, (err, user)-> done err, user
@@ -94,7 +94,15 @@ app.configure ->
 
   # Session support
   console.log 'Redis', conf._redis
-  app.use express.session(secret: 'Is it secure?')
+  app.use express.session(
+    secret: 'Is it secure?'
+    store: new RedisStore(
+      host: conf._redis.host
+      port: conf._redis.port
+      pass: conf._redis.password
+      db: conf._redis.db
+    )
+  )
   app.use passport.initialize()
   app.use passport.session()
 
@@ -120,15 +128,6 @@ app.configure ->
 
 app.configure 'development', ->
   mongoose.set 'debug', yes
-  app.use express.session(
-    secret: 'Is it secure?'
-    store: new RedisStore(
-      host: conf._redis.host
-      port: conf._redis.port
-      pass: conf._redis.password
-      db: conf._redis.db
-    )
-  )
 
 app.configure 'production', ->
   app.use express.compress()

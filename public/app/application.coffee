@@ -159,10 +159,10 @@ define [
 #
 #    ###
 #
-#    App.NamedContainerView.create(
-#      title: 'Tester'
-#      contentView: App.TesterView.create()
-#    ).appendTo('#content')
+    App.NamedContainerView.create(
+      title: 'Tester'
+      contentView: App.TesterView.create()
+    ).appendTo('#content')
 
 #    App.NamedContainerView.create(
 #      title: '3D'
