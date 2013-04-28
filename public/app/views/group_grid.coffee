@@ -12,6 +12,7 @@ define [
   'cs!./editable_label',
   'cs!./multilingual_editable_label',
   'cs!./match/group_table_container'
+  'cs!./remove_button'
   'cs!../controllers/matches'
 ], ->
   App.GroupGridView = App.GridView.extend
@@ -79,6 +80,7 @@ define [
 
         removeButtonView: App.RemoveButtonView.extend
           title: '_remove_group'.loc()
+          remove: -> @get('parentView').remove()
 
       matchesView: App.StangingTableView.extend
         childViews: ['stadingsView', 'contentView']
