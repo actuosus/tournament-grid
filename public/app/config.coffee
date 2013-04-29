@@ -6,7 +6,10 @@
 ###
 
 define ->
-  defaultGridConfig =
+  defaults =
+    api:
+      host: 'future-is-here.herokuapp.com'
+      namespace: 'api'
     apiNamespace: 'api'
     languages: ['ru', 'en', 'de']
-  $.extend defaultGridConfig, window.gridConfig
+  $.extend defaults, window.gridConfig

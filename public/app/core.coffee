@@ -155,6 +155,7 @@ define [
       bulkCommit: no
       namespace: config.apiNamespace
 
+  App.store.adapter.url = "//#{config.api.host}"
   App.store.adapter.serializer.primaryKey = -> '_id'
 #  App.store.adapter.serializer.keyForAttributeName = (type, name)->
 ##    console.log arguments
