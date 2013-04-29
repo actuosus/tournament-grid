@@ -44,6 +44,8 @@ define [
     if event.ctrlKey
       if event.shiftKey
         switch event.keyCode
+          when 65 # a
+            App.toggleConfig()
           when 69 # e
             App.set 'isEditingMode', not App.get('isEditingMode')
           when 90 # z

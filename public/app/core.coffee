@@ -153,9 +153,10 @@ define [
     revision: 11
     adapter: DS.RESTAdapter.create
       bulkCommit: no
-      namespace: config.apiNamespace
 
-  App.store.adapter.url = "//#{config.api.host}"
+  App.store.adapter.url = config.api.host
+  App.store.adapter.namespace = config.api.namespace
+
   App.store.adapter.serializer.primaryKey = -> '_id'
 #  App.store.adapter.serializer.keyForAttributeName = (type, name)->
 ##    console.log arguments
@@ -170,6 +171,29 @@ define [
 #    value = this.deserializeValue(value, attributeType);
 #
 #    record.materializeAttribute(attributeName, value);
+
+  App.config =
+    local:
+      api:
+        host: ''
+        namespace: 'api'
+    remote: config
+
+  App.currentConfig = 'local'
+
+  App.toggleConfig = ->
+    if App.currentConfig is 'local'
+      App.currentConfig = 'remote'
+    else
+      App.currentConfig = 'local'
+    switch App.currentConfig
+      when 'local'
+        App.store.adapter.url = App.config.local.api.host
+        App.store.adapter.namespace = App.config.local.api.namespace
+      when 'remote'
+        App.store.adapter.url = App.config.remote.api.host
+        App.store.adapter.namespace = App.config.remote.api.namespace
+
 
   # Localization configuration
   App.languages = Em.ArrayController.create content: config.languages

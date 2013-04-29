@@ -164,7 +164,12 @@
 <!--<script data-main="/app/main.js" src="/vendor/scripts/require.js"></script>-->
 
 <script type="text/javascript" id="grid-config">
-    window.gridConfig = {
+    window.grid = {};
+    window.grid.config = {
+//        api: {
+//           host: '<%- @staticHost %>',
+//           namespace: 'api'
+//        },
         languages: <%- JSON.stringify(@languages) %>
 
     };
