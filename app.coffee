@@ -157,6 +157,15 @@ app.locals
   __: -> i18n.__ arguments
   languages: languages
 
+# CORS for all URLs.
+app.options '*', (req, res)->
+  res.header 'Access-Control-Allow-Origin', '*'
+  res.header 'Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS'
+  res.header 'Access-Control-Allow-Headers', 'accept, origin, content-type, referer, cache-control, pragma, user-agent'
+  res.header 'Access-Control-Max-Age', 1728000
+  res.header 'Content-Length', 0
+  res.send 204
+
 app.post '/api/logs', routes.api.logs.create
 
 app.get '/api/championships', routes.api.championships.list
@@ -250,15 +259,6 @@ app.get '/match/:_id', ensureAuthenticated, routes.matches.item
 app.get '/teams/:_id', ensureAuthenticated, routes.teams.item
 
 app.get '/players/:_id', ensureAuthenticated, routes.players.item
-
-# CORS for all URLs.
-app.options '*', (req, res)->
-  res.header 'Access-Control-Allow-Origin', '*'
-  res.header 'Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS'
-  res.header 'Access-Control-Allow-Headers', 'accept, origin, content-type, referer, cache-control, pragma, user-agent'
-  res.header 'Access-Control-Max-Age', 1728000
-  res.header 'Content-Length', 0
-  res.send 204
 
 app.get '*', (req, res)-> res.status 404; res.render '404.ect'
 
