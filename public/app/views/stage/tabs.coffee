@@ -127,11 +127,11 @@ define [
           contentBinding: 'parentView.content'
           template: Em.Handlebars.compile '{{__name}}'
 
-        remove: -> @get('content').deleteRecord()
+        deleteRecord: -> @get('content').deleteRecord()
 
         removeButtonView: App.RemoveButtonView.extend
           title: '_remove_stage'.loc()
-          remove: -> @get('parentView').remove()
+          remove: -> @get('parentView').deleteRecord()
           click: (event)->
             event.stopPropagation()
             @_super()

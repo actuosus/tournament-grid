@@ -23,10 +23,16 @@ define [
       sources = @get 'sources'
       content = @get 'content'
       sources.forEach (source)->
-        console.log source.get('content')
-        source.get('content')?.forEach (item)->
-          content.pushObject item
-#        content.pushObjects = source.get('content')
+#        console.log source.get('content'), source.get('content.isLoaded')
+        if source.get('content.isLoaded')
+          source.get('content')?.forEach (item)->
+            console.log item
+            if App.TeamRef.detect item
+              item = item.get 'team'
+            content.pushObject item
+  #        content.pushObjects = source.get('content')
+      console.log 'content', @get('content')
+      @set 'content.isLoaded', yes
     ).observes('sources.@each.isLoaded')
 
     search: (options)->

@@ -34,6 +34,10 @@
     column-break-inside: avoid;
 }
 
+.lineup-grid-item.is-dirty {
+    background-color: red;
+}
+
 .lineup-grid-item td {
     /*background-color: white;*/
     position: relative;
@@ -148,6 +152,10 @@
 .lineup-grid-item-player-row:hover {
     background-color: #f2f2f2;
     /*box-shadow: inset 0 0 7px rgba(0,0,0,0.75);*/
+}
+
+.lineup-grid-item-player-row.is-dirty {
+    background-color: red;
 }
 
 .lineup-grid-item-player-row .autocomplete-text-field .text-field {

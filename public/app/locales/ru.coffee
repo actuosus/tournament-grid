@@ -74,3 +74,7 @@ define
   _enter_team_name_to_filter_the_teams_and_search_for_team_to_add: 'Введите название команды чтобы отфильтровать список команд и поискать команду для добавления'
   _the_teams_that_participate_in_the_report: 'Комаданды, учавствующие в репортаже'
   _remove_confirmation: 'Удалить?'
+  _are_you_sure_to_move: 'Точно переместить?'
+  _yes: 'Да'
+  _no: 'Нет'
+  _move_player_to_from: 'Переместить игрока %@ из команды %@ в команду %@?'

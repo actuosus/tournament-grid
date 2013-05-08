@@ -1,0 +1,21 @@
+/**
+ * modal
+ * @author: actuosus
+ * Date: 06/05/2013
+ * Time: 16:31
+ */
+
+.modal {
+    position: absolute;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.75);
+    padding: 20px;
+    background: #fff;
+    border: 1px solid #afafaf;
+    z-index: 100;
+    /*min-width: 200px;*/
+    /*min-height: 200px;*/
+}
+
+.buttons .btn {
+    margin-right: 10px;
+}

@@ -37,7 +37,7 @@ define [
 #  App.ApplicationView = Em.View.extend
 #    templateName : 'application'
 
-  App.set 'isEditingMode', no
+  App.set 'isEditingMode', yes
 
   $(document.body).keydown (event)->
     console.log event.keyCode
@@ -136,7 +136,9 @@ define [
       App.racesController.set 'content', report.get('races')
 
       if report?.get('match_type') is 'team'
-        reportEntrants = App.EntrantsController.create contentBinding: 'App.report.teamRefs'
+        reportEntrants = App.EntrantsController.create
+          sortProperties: ['team.name']
+          contentBinding: 'App.report.teamRefs'
         lineupView = App.LineupView.create
           classNames: ['team-lineup-grid']
           controller: reportEntrants
@@ -161,10 +163,10 @@ define [
 #
 #    ###
 #
-    App.NamedContainerView.create(
-      title: 'Tester'
-      contentView: App.TesterView.create()
-    ).appendTo('#content')
+#    App.NamedContainerView.create(
+#      title: 'Tester'
+#      contentView: App.TesterView.create()
+#    ).appendTo('#content')
 
 #    App.NamedContainerView.create(
 #      title: '3D'

@@ -11,7 +11,8 @@ define [
   App.EntrantsController = Em.ArrayController.extend
     searchResults: []
 
-    search: ->
+    search: (options)->
+      @set 'searchQuery', options.name
       @set 'isLoaded', yes
 
     searchPath: 'team.name'
@@ -23,6 +24,7 @@ define [
       content = @get 'content'
       searchQuery = @get 'searchQuery'
       searchPath = @get 'searchPath'
+#      console.log searchQuery
       if searchQuery
         reg = new RegExp searchQuery, 'gi'
         result = content.filter (item)->

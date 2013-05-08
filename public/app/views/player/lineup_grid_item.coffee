@@ -11,8 +11,10 @@ define [
 ],->
   App.PlayerLineupGridItemView = Em.ContainerView.extend
     classNames: ['lineup-grid-item-player-row']
-    classNameBindings: ['content.isSaving']
+    classNameBindings: ['content.isSaving', 'content.isDirty']
     childViews: ['countryFlagView', 'nameView', 'realNameView', 'captianMarkerView', 'removeButtonView']
+
+    teamRefBinding: 'parentView.teamRef'
 
     countryFlagView: Em.View.extend
       tagName: 'i'
@@ -65,12 +67,13 @@ define [
       title: '_captain'.loc()
       template: Em.Handlebars.compile 'К'
 
-    remove: ->
+    deleteRecord: ->
       report = App.get('report')
       player = @get('content')
-      teamRef = App.report.get('teamRefs').find (tr)->
-        tr.get('players').find (item)->
-          item.id is player.id
+#      teamRef = App.report.get('teamRefs').find (tr)->
+#        tr.get('players').find (item)->
+#          item.id is player.id
+      teamRef = @get 'teamRef'
       players = teamRef.get('players')
       # Just removing from team ref
       players.removeObject player
@@ -80,4 +83,4 @@ define [
 
     removeButtonView: App.RemoveButtonView.extend
       title: '_remove_player'.loc()
-      remove: -> @get('parentView').remove()
+      remove: -> @get('parentView').deleteRecord()

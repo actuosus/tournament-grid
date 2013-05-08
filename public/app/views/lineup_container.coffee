@@ -15,7 +15,7 @@ define [
     description: '_the_teams_that_participate_in_the_report'.loc()
     childViews: [
       'titleView', 'toggleButtonView', 'contentView',
-      'loaderView', 'statusTextView', #'searchBarView',
+      'loaderView', 'statusTextView', 'searchBarView',
       'autocompleteTextFieldView'
     ]
     searchBarView: Em.ContainerView.extend
@@ -64,21 +64,29 @@ define [
     autocompleteTextFieldView: App.AutocompleteTextField.extend
       classNames: ['add-team-field']
       placeholder: '_team_name'.loc()
-      controllerBinding: 'App.teamsController'
+      controller: (->
+        App.MergedEntrantsController.create({
+          sources: [
+#            App.teamsController,
+            App.EntrantsController.create({
+              contentBinding: 'App.report.teamRefs'})
+          ]
+        })
+      ).property()
       isVisibleBinding: 'App.isEditingMode'
       attributeBindings: ['title']
       title: '_enter_team_name_to_filter_the_teams_and_search_for_team_to_add'.loc()
 
-      filteredContent: (->
-        content = @get 'content'
-        entrants = App.get 'report.teamRefs'
-        teams = entrants.map (item)-> item.get('team')
-        content?.filter (item)-> not teams.contains item
-      ).property().volatile()
+#      filteredContent: (->
+#        content = @get 'content'
+#        entrants = App.get 'report.teamRefs'
+#        teams = entrants.map (item)-> item.get('team')
+#        content?.filter (item)-> not teams.contains item
+#      ).property().volatile()
 
-      textValueChanged: (->
-        @set('parentView.contentView.controller.searchQuery', @get 'textFieldView.value')
-      ).observes('textFieldView.value')
+#      textValueChanged: (->
+#        @set('parentView.contentView.controller.searchQuery', @get 'textFieldView.value')
+#      ).observes('textFieldView.value')
 
       showAddForm: (target)->
         autocomplete = @

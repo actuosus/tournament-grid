@@ -12,12 +12,18 @@ define ['cs!../core'],->
 #    template: Em.Handlebars.compile '{{view.value}}'
     isEditable: yes
 
+    valueType: 'text'
+
     value: null
 
     isEmpty: (-> !@get('value')).property('value')
 
     didInsertElement: ->
-      @$().text(@get 'value')
+      switch @get 'valueType'
+        when 'text'
+          @$().text(@get 'value')
+        when 'html'
+          @$().html(@get 'value')
 
     isEditableChanged: (->
       unless @get 'isEditable'
@@ -44,15 +50,25 @@ define ['cs!../core'],->
 
     focusOut: ->
       if @get 'isEditable'
-        text = @$().text()
-        @setValue (text)
+        switch @get 'valueType'
+          when 'text'
+            value = @$().text()
+          when 'html'
+            value = @$().html()
+
+        @setValue (value)
         @$().removeAttr 'contentEditable'
 
     setValue: (value)->
       @set('value', value) if @get('value') isnt value
 
     _valueChanged: (->
-      @$().text(@get 'value') if @$()
+      if @$()
+        switch @get 'valueType'
+          when 'text'
+            @$().text(@get 'value')
+          when 'html'
+            @$().html(@get 'value')
     ).observes('value')
 
 

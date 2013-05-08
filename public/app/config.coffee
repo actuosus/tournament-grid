@@ -8,7 +8,7 @@
 define ->
   defaults =
     api:
-      host: '//virtus-pro.herokuapp.com'
+#      host: '//virtus-pro.herokuapp.com'
       namespace: 'api'
     languages: ['ru', 'en', 'de']
   $.extend defaults, window.grid.config

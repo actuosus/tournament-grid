@@ -11,9 +11,11 @@ define [
   'cs!../editable_label'
   'cs!../player/lineup_grid_item'
   'cs!../remove_button'
+  'cs!./ask_move_form'
 ], ->
   App.TeamLineupGridItem = Em.ContainerView.extend
     classNames: ['lineup-grid-item', 'team-lineup-grid-item']
+    classNameBindings: ['content.isDirty']
     childViews: ['teamNameView', 'playersView', 'addPlayerView']
 
     teamNameView: Em.ContainerView.extend(App.MovingHightlight,
@@ -103,7 +105,7 @@ define [
           )
           popup.append()
 
-      remove: ->
+      deleteRecord: ->
         team = @get 'content'
         teamRef = App.get('report').get('teamRefs').find (tr)->
           Em.isEqual tr.get('team'), team
@@ -113,18 +115,13 @@ define [
 
       removeButtonView: App.RemoveButtonView.extend
         title: '_remove_team'.loc()
-        remove: -> @get('parentView').remove()
+        remove: -> @get('parentView').deleteRecord()
 
     )
     playersView: Em.CollectionView.extend
       classNames: ['lineup-grid-item-players']
+      teamRefBinding: 'parentView.content'
       contentBinding: 'parentView.content.players'
-
-      contentChanged: (->
-        console.log 'players changed'
-        team = @get 'parentView.content'
-        team.set('proxy', false) if team.get('proxy')
-      ).observes('content.length')
 
       itemViewClass: App.PlayerLineupGridItemView
 
@@ -146,8 +143,32 @@ define [
 
         addPlayer: (player)->
           report = App.get('report')
+          reportPlayers = report.get 'players'
           teamRef = @get('teamRef')
           players = teamRef.get('players')
+
+          # Moving existing player
+          if reportPlayers.contains player
+            console.log '_move_player_to_from'.loc player.get('nickname'), player.get('teamRef.team.name'), teamRef.get('team.name')
+            modalView = App.ModalView.create
+              target: @get 'parentView.parentView'
+            askMoveForm = App.AskMoveForm.create
+              description: '_move_player_to_from'.loc player.get('nickname'), player.get('teamRef.team.name'), teamRef.get('team.name')
+            askMoveForm.on 'no', -> modalView.hide()
+            askMoveForm.on 'yes', ->
+              oldTeamRef = player.get('teamRef')
+              oldTeamRef.get('players').removeObject(player)
+
+              players.addObject player
+              player.set 'teamRef', teamRef
+              player.set 'report', report
+              teamRef.store.commit()
+
+              modalView.hide()
+            modalView.get('childViews').push askMoveForm
+            modalView.append()
+            return
+
           players.addObject player
           player.set 'teamRef', teamRef
 

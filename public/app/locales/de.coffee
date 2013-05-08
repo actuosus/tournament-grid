@@ -74,3 +74,6 @@ define
   _enter_team_name_to_filter_the_teams_and_search_for_team_to_add: 'Enter team name to filter the teams and search for team to add'
   _the_teams_that_participate_in_the_report: 'The teams that participate in the report'
   _remove_confirmation: 'Entfernen?'
+  _are_you_sure_to_move: 'Are you sure to move?'
+  _yes: 'Yes'
+  _no: 'No'

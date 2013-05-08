@@ -57,11 +57,26 @@ exports.create = (req, res) ->
 exports.update = (req, res)->
   if req.body?.player
     player = req.body.player
+    await Player.findByIdAndUpdate req.params._id, player, defer err, p
     if not player.team_ref_id and player.report_id
-      await Player.findByIdAndUpdate req.params._id, player, defer err, p
+      # Removing from team ref
       await TeamRef.findOneAndUpdate {team_id: player.team_id, report_id: player.report_id}, {$pull: {players: p._id}}, defer err, teamRef
+    else if player.team_ref_id and player.report_id
+      # It's moving from another team ref
+      await TeamRef.find({report_id: player.report_id}).exec defer err, teamRefs
+      if teamRefs
+        teamRefs.forEach (teamRef)->
+          playerIndexes = []
+          teamRef.players.forEach (item, idx)->
+            playerIndexes.push idx if item.toString() is req.params._id
+          if playerIndexes.length
+            playerIndexes.forEach (idx)-> teamRef.players.splice(idx, 1)
+            teamRef.save()
+#      await TeamRef.findOneAndUpdate {team_id: player.team_id, report_id: player.report_id}, {$pull: {players: p._id}}, defer err, oldTeamRef
+
+      await TeamRef.findByIdAndUpdate player.team_ref_id, {$push: {players: p._id}}, defer err, newTeamRef
     else if player.team_ref_id
-      await Player.findByIdAndUpdate req.params._id, player, defer err, p
+      # Just adding to team ref
       await TeamRef.findByIdAndUpdate player.team_ref_id, {$push: {players: p._id}}, defer err, teamRef
     res.send player: p
   else

@@ -162,7 +162,7 @@ define [
           @set('menuView.content', content)
           @set('menuView.isVisible', yes)
       if @addButtomView?.isInstance
-        unless content.length
+        unless content?.length
           @addButtomView.set 'isVisible', yes
         else
           @addButtomView.set 'isVisible', no

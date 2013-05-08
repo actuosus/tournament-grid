@@ -25,7 +25,18 @@ define ['cs!../core'],->
 #    teams: DS.hasMany 'App.Team'
 
     teamRefs: DS.hasMany 'App.TeamRef'
-    players: DS.hasMany 'App.Player'
+
+    players: (->
+      teamRefs = @get 'teamRefs'
+      result = []
+      teamRefs.forEach (ref)->
+        players = ref.get 'players'
+        players.forEach (player)->
+          # TODO Refine relations
+          player.set('teamRef', ref)
+          result.push player
+      result
+    ).property('teamRefs.@each').volatile()
 
     races: DS.hasMany 'App.Race'
 
