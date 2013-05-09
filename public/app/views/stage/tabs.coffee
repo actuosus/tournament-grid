@@ -14,10 +14,10 @@ define [
   'cs!../match/grid_item'
   'cs!../../controllers/matches'
   'cs!./form'
+  'cs!../tab'
 ],->
-  App.StageTabsView = Em.ContainerView.extend
+  App.StageTabsView = App.TabView.extend
     classNames: ['stage-view']
-    childViews: ['tabBarView', 'contentView']
 
     content: null
     currentStage: null
@@ -27,9 +27,12 @@ define [
 
     setViewForStage: (stage)->
       switch @currentStage.get 'visual_type'
-        when 'single', 'double', 'grid'
+        when 'single', 'grid'
           @currentStage.get('matches')
-          contentView = App.TournamentGridView.create content: @currentStage
+          contentView = App.NewTournamentGridView.create()
+        when 'double'
+          contentView = App.NewDoubleTournamentGridView.create
+            entrantsNumber: @currentStage.get('entrantsNumber')
         when 'group'
           contentView = App.GroupGridView.create
             content: @currentStage.get 'rounds'

@@ -43,7 +43,10 @@ define [
       filteredContent: (->
         content = @get 'content'
         entrants = @get 'parentView.match.round.stage.entrants'
-        content.filter (item)-> not entrants.contains item
+        if entrants
+          content.filter (item)-> not entrants.contains item
+        else
+          content
       ).property().volatile()
 
       contentFilter: (content)->
@@ -60,7 +63,6 @@ define [
         newTeam.set 'identifier', identifier
         @set 'parentView.content', newTeam
         match = @get 'parentView.parentView.match'
-        console.debug 'Match', match
         if match
 #          match.get('entrants')[@get 'parentView.contentIndex'] = newTeam
           match.set "entrant#{@get('parentView.contentIndex')+1}", newTeam
@@ -94,7 +96,6 @@ define [
 
     points: (->
       contentIndex = @get('contentIndex')
-      console.log @get('match'), contentIndex
       @get("match.entrant#{contentIndex+1}_points")
     ).property('match.entrant1_points', 'match.entrant2_points')
 

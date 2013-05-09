@@ -7,4 +7,7 @@
 
 define ['cs!../core'],->
   App.DateField = Em.TextField.extend
-    type: 'date'
+#    type: 'date'
+    didInsertElement: ->
+      @$().datepicker( $.datepicker.regional[App.get('currentLanguage')])
+      @$().datepicker 'option', 'dateFormat', 'dd.mm.yy'

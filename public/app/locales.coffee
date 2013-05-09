@@ -9,5 +9,9 @@ define [
   'cs!./locales/ru'
   'cs!./locales/en'
   'cs!./locales/de'
+
+  'jquery.ui.datepicker-ru'
+  'jquery.ui.datepicker-it'
+  'jquery.ui.datepicker-de'
 ], (ru,en,de)->
   {ru: ru, en: en, de: de}

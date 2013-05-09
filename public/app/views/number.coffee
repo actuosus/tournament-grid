@@ -38,7 +38,7 @@ define [
         @incrementProperty 'value', -@get 'step'
 
     mouseWheel: (event)->
-      if @get 'isEditable'
+      if @get('isEditable') and @get('hasFocus')
         event.preventDefault()
         if event.originalEvent.wheelDelta > 0
           @stepUp()

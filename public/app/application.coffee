@@ -37,7 +37,7 @@ define [
 #  App.ApplicationView = Em.View.extend
 #    templateName : 'application'
 
-  App.set 'isEditingMode', yes
+  App.set 'isEditingMode', no
 
   $(document.body).keydown (event)->
     console.log event.keyCode
@@ -171,6 +171,29 @@ define [
 #    App.NamedContainerView.create(
 #      title: '3D'
 #      contentView: App.Tournament3DGridView.create(content: App.get('report.stages'))
+#    ).appendTo('#content')
+
+#    App.entrantsNumber = 8
+
+#    window.newTournamentGridView = App.NewTournamentGridView.create
+#      entrantsNumberBinding: 'App.entrantsNumber'
+#    App.NamedContainerView.create(
+#      title: 'Tournament grid'
+#      contentView: window.newTournamentGridView
+#    ).appendTo('#content')
+#
+#    window.newTournamentSingleGridView = App.NewTournamentGridView.create
+#      entrantsNumberBinding: 'App.entrantsNumber'
+#    App.NamedContainerView.create(
+#      title: 'Single grid'
+#      contentView: window.newTournamentSingleGridView
+#    ).appendTo('#content')
+#
+#    window.newTournamentDoubleGridView = App.NewDoubleTournamentGridView.create
+#      entrantsNumberBinding: 'App.entrantsNumber'
+#    App.NamedContainerView.create(
+#      title: 'Double grid'
+#      contentView: window.newTournamentDoubleGridView
 #    ).appendTo('#content')
 
     App.peroids = Em.ArrayController.create

@@ -77,3 +77,5 @@ define
   _are_you_sure_to_move: 'Are you sure to move?'
   _yes: 'Yes'
   _no: 'No'
+  _winner: 'Winner'
+  _loser: 'Loser'

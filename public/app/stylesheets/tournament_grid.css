@@ -5,11 +5,15 @@
  * Time: 02:32
  */
 
-.tournament-grid-container {
+.tournament-grid-wrapper {
     width: 885px;
-    padding: 20px;
+    padding: 10px;
     overflow-y: scroll;
     position: relative;
+}
+
+.tournament-grid-container {
+
 }
 
 .tournament-grid-container .fullscreen-btn {
@@ -18,8 +22,24 @@
     right: 20px;
 }
 
+.tournament-grid-container .toolbox {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
 .tournament-grid {
     overflow: hidden;
+    padding: 10px;
+}
+
+.tournament-grid-container .brackets,
+.tournament-grid-container .finals {
+    float: left;
+}
+
+.tournament-grid-container .finals {
+    margin-top: 35px;
 }
 
 .tournament-round-container {
@@ -107,11 +127,17 @@
 }
 
 .tournament-match.is-final {
-    top: -15px;
+    top: 25px;
+}
+
+.tournament-bracket-container {
+    /*overflow: hidden;*/
+    /*padding: 10px;*/
+    clear: left;
 }
 
 .tournament-bracket {
-    overflow: hidden;
+    /*float: right;*/
 }
 
 .tournament-bracket-name {

@@ -36,6 +36,7 @@ module.exports.Stage = [
     de: 'K.-o.-System'
   report_id: '511211b49709aab1ae000002'
   visual_type: 'single'
+  entrants_number: '4'
   rounds: ['50fd4a58cbbf53a72a000002', '50fd4a58cbbf53a72a000003', '50fd4a58cbbf53a72a000004']
 ,
   _id: '51121246b54802daae00000c'
@@ -46,6 +47,7 @@ module.exports.Stage = [
     de: 'Doppel-K.-o.-System'
   report_id: '511211b49709aab1ae000002'
   visual_type: 'double'
+  entrants_number: '4'
   rounds: ['50fd4a58cbbf53a72a000002', '50fd4a58cbbf53a72a000003', '50fd4a58cbbf53a72a000004']
 ,
   _id: '51121246b54802daae00000b'

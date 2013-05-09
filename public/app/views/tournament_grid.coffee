@@ -30,7 +30,6 @@ define [
       screenfull.isFullscreen
     ).property().volatile()
 
-
     bracketsView: Em.CollectionView.extend
       classNames: ['tournament-bracket-container']
       contentBinding: 'parentView.content.brackets'

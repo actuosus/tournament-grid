@@ -74,6 +74,10 @@ module.exports = (grunt)->
           'screenfull': '../vendor/scripts/screenfull.min',
           'jquery-ui': '../vendor/scripts/jquery-ui-1.10.1.custom.min'
 
+          'jquery.ui.datepicker-ru': '../vendor/scripts/jquery.ui.datepicker-ru',
+          'jquery.ui.datepicker-it': '../vendor/scripts/jquery.ui.datepicker-it',
+          'jquery.ui.datepicker-de': '../vendor/scripts/jquery.ui.datepicker-de',
+
           'socket.io': '../../node_modules/socket.io/node_modules/socket.io-client/dist/socket.io'
           }
           name: 'main'

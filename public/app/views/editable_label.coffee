@@ -28,6 +28,7 @@ define ['cs!../core'],->
     isEditableChanged: (->
       unless @get 'isEditable'
         @$().removeAttr 'contentEditable'
+        @$().removeAttr 'tabIndex'
     ).observes('isEditable')
 
     click: ->
@@ -45,10 +46,12 @@ define ['cs!../core'],->
       if @get 'isEditable'
         @$().removeClass('active')
 
-#    focusIn: ->
+    focusIn: ->
+      @set 'hasFocus', yes
 #      @$().select()
 
     focusOut: ->
+      @set 'hasFocus', no
       if @get 'isEditable'
         switch @get 'valueType'
           when 'text'

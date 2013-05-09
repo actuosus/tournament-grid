@@ -16,6 +16,7 @@
 @import "combobox.css";
 @import "tree.css";
 @import "../../vendor/styles/bootstrap-tooltip.css";
+@import "../../vendor/styles/jquery-ui.css";
 @import "ember-table.css";
 @import "block_container.css";
 @import "named_container.css";
@@ -36,6 +37,8 @@
 @import "multilingual-field.css";
 @import "match-filter-form.css";
 @import "editable-label.css";
+
+@import "ui-datepicker.css";
 
 .icon-remove {
     font-style: normal;

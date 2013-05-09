@@ -1,0 +1,12 @@
+/**
+ * ui-datepicker
+ * @author: actuosus
+ * Date: 08/05/2013
+ * Time: 20:43
+ */
+
+.ui-datepicker {
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.75);
+    background: #fff;
+    border: 1px solid #afafaf;
+}

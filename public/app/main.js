@@ -33,7 +33,11 @@ require({
     'bootstrap.tooltip': '/vendor/scripts/bootstrap/bootstrap-tooltip',
     'three': '/vendor/scripts/three',
     'screenfull': '/vendor/scripts/screenfull.min',
-    'jquery-ui': '/vendor/scripts/jquery-ui-1.10.1.custom.min',
+//    'jquery-ui': '/vendor/scripts/jquery-ui-1.10.1.custom.min',
+    'jquery.ui.datepicker-ru': '/vendor/scripts/jquery.ui.datepicker-ru',
+    'jquery.ui.datepicker-it': '/vendor/scripts/jquery.ui.datepicker-it',
+    'jquery.ui.datepicker-de': '/vendor/scripts/jquery.ui.datepicker-de',
+    'jquery-ui': 'http://code.jquery.com/ui/1.10.3/jquery-ui',
     'socket.io': 'http://' + document.location.host + '/socket.io/socket.io.js'
   },
   shim: {

@@ -12,6 +12,8 @@ define [
   'cs!./views/select'
   'cs!./views/grid'
   'cs!./views/group_grid'
+  'cs!./views/tournament/grid'
+  'cs!./views/tournament/double_grid'
 #  'cs!./views/table'
   'cs!./views/popup'
   'cs!./views/modal'

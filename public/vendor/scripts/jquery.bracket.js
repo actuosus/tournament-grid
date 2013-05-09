@@ -89,10 +89,10 @@
         var width = parseInt($('.round:first').css('margin-right'))/2
         var drop = true;
         // drop:
-        // [team]¨\
+        // [team]ï¿½\
         //         \_[team]
         // !drop:
-        //         /¨[team]
+        //         /ï¿½[team]
         // [team]_/
         if (height < 0) {
           drop = false;
@@ -721,7 +721,7 @@
               else { /* match with dropped */
                 var winnerMatch = m
                 /* To maximize the time it takes for two teams to play against
-                 * eachother twice, WB losers are assigned in reverse order
+                 * each other twice, WB losers are assigned in reverse order
                  * every second round of LB */
                 if (r%2 === 0)
                   winnerMatch = matches - m - 1

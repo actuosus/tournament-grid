@@ -34,7 +34,12 @@ define [
 
     isGridType: (->
       visualType = @get 'visualType.id'
-      yes if visualType is 'single' or visualType is 'double' or visualType is 'grid'
+      yes if visualType is 'single' or visualType is 'grid'
+    ).property('visualType')
+
+    isDoubleType: (->
+      visualType = @get 'visualType.id'
+      yes if visualType is 'double'
     ).property('visualType')
 
     isMatrixType: (->
@@ -49,16 +54,16 @@ define [
 
     createRecord: ->
       @$('.save-btn').attr('disabled', 'disabled')
-      entransNumber = parseInt(@$('.entrants-number').val(), 10)
+      entrantsNumber = parseInt(@$('.entrants-number input').val(), 10)
       report = @get 'report'
 
       switch @get 'visualType.id'
         when 'grid', 'single'
-          stage = report.createStageByEntrants entransNumber
+          stage = report.createStageByEntrants entrantsNumber
         when 'double'
           stage = report.get('stages').createRecord()
-          stage.createWinnerBracket null, entransNumber
-          stage.createLoserBracket null, entransNumber
+          stage.createWinnerBracket null, entrantsNumber
+          stage.createLoserBracket null, entrantsNumber
         when 'group'
           stage = report.createStageByRoundsNumber parseInt(@$('.group-number').val(), 10)
         when 'matrix'
@@ -70,6 +75,7 @@ define [
       stage.set 'report', report
       stage.set 'name', @get 'name'
       stage.set 'rating', @get 'rating'
+      stage.set 'entrantsNumber', entrantsNumber
 #      stage.set 'description', @$('.description').val()
       stage.set 'description', @get 'description'
       stage.set 'visual_type', @get 'visualType.id'
