@@ -40,11 +40,11 @@ define ['cs!./autocomplete_text_field'], ->
                                       {{/if}}
                                        """)
       click: ->
-        if @get('menuView.isVisible')
-          @set('menuView.isVisible', no)
-        else
-          @get('parentView.autocompleteTextFieldView').showAll()
-          @set('menuView.isVisible', yes)
+#        if @get('menuView.isVisible')
+#          @set('menuView.isVisible', no)
+#        else
+        @get('parentView.autocompleteTextFieldView').showAll()
+#          @set('menuView.isVisible', yes)
 
     autocompleteTextFieldView: App.AutocompleteTextField.extend
       controllerBinding: 'parentView.controller'

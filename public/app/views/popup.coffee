@@ -12,6 +12,8 @@ define ['cs!../core'],->
 
     target: null
 
+    showCloseButton: no
+
     childViews: ['arrowBorderView', 'arrowView', 'closeButtonView']
 
     arrowView: Em.View.extend
@@ -24,6 +26,7 @@ define ['cs!../core'],->
       tagName: 'button'
       classNames: ['btn-clean', 'popup-close-button']
       template: Em.Handlebars.compile '×'
+      isVisibleBinding: 'parentView.showCloseButton'
       click: -> @get('parentView').hide()
 
     getContentDimensions: ->

@@ -22,6 +22,7 @@ define [
     lastName: null
     middleName: ''
     country: null
+
     isCaptain: no
 
     shouldShowRaceSelector: no
@@ -55,7 +56,7 @@ define [
 
 #      country = @get 'country'
       country = @get('countrySelectView.autocompleteTextFieldView.selection')
-      team = @get 'entrant'
+      team = @get 'entrant.team'
       players = @get 'entrant.players'
       report = App.get('report')
       transaction = App.store.transaction()
@@ -67,12 +68,13 @@ define [
       player.set 'lastName', @$('.last-name').val()
       player.set 'isCaptain', @get 'isCaptain'
 
-      player.set 'report', report
-#      player.set 'team', team
-      players.addObject player
+#      player.set 'report', report
+      player.set 'team', team
+#      players.addObject player
 
       player.on 'didCreate', => @didCreate player
       player.on 'becameError', =>
+        @$('.save-btn').removeAttattr('disabled')
         console.log arguments
         player.destroy()
       transaction.commit()

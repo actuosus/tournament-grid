@@ -26,6 +26,7 @@ define [
     all: ->
       @set 'content', App.countries
       @set 'content.isLoaded', yes
+      @notifyPropertyChange('content.isLoaded')
     search: (options)->
 #        @set 'content', App.Country.find options
       return unless App.countries

@@ -6,6 +6,7 @@
  * Time: 02:59
 ###
 
+_ = require 'lodash'
 mongoose = require 'mongoose'
 socketNotifyPlugin = require '../lib/mongoose'
 Schema = mongoose.Schema
@@ -21,6 +22,14 @@ PlayerSchema = new Schema
   last_name: type: String
 
   is_captain: type: Boolean
+
+  # Extras
+  gender: type: String, 'enum': ['male', 'female', 'undefined'], 'default': 'undefined'
+  birthdate: type: Date
+  about: type: String
+
+PlayerSchema.virtual('fullName').get ->
+  _.compact([@first_name, @last_name]).join(' ')
 
 PlayerSchema.plugin socketNotifyPlugin
 

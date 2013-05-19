@@ -29,6 +29,8 @@ define [
     ).property()
 
     createRecord: ->
+      @$('.save-btn').attr('disabled', 'disabled')
+
       country = @get 'countrySelectView.value'
       transaction = App.store.transaction()
       report = App.get('report')
@@ -38,6 +40,7 @@ define [
       team.set 'report', report
       team.on 'didCreate', => @didCreate team
       team.on 'becameError', =>
+        @$('.save-btn').removeAttattr('disabled')
         console.log arguments
       transaction.commit()
 

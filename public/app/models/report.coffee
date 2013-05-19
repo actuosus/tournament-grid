@@ -32,11 +32,11 @@ define ['cs!../core'],->
       teamRefs.forEach (ref)->
         players = ref.get 'players'
         players.forEach (player)->
-          # TODO Refine relations
-          player.set('teamRef', ref)
+#          # TODO Refine relations. This is kinda hacky.
+          player._teamRef = ref
           result.push player
       result
-    ).property('teamRefs.@each').volatile()
+    ).property().volatile()
 
     races: DS.hasMany 'App.Race'
 

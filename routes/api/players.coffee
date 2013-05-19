@@ -46,6 +46,8 @@ exports.create = (req, res) ->
       await TeamRef.findByIdAndUpdate player.team_ref_id, {$push: {players: p._id}}, defer err, teamRef
     else if player.report_id and not player.team_ref_id
       await TeamRef.findOneAndUpdate {team_id: player.team_id, report_id: player.report_id}, {$push: {players: p._id}}, defer err, teamRef
+    else if req.query.report_id and not player.team_ref_id
+      await TeamRef.findOneAndUpdate {team_id: player.team_id, report_id: req.query.report_id}, {$push: {players: p._id}}, defer err, teamRef
     else
       await Team.findByIdAndUpdate player.team_id, {$push: {players: p._id}}, defer err, team
   #    socket.send {action: 'create', model: 'Player', _id: p._id}
@@ -57,7 +59,7 @@ exports.create = (req, res) ->
 exports.update = (req, res)->
   if req.body?.player
     player = req.body.player
-    await Player.findByIdAndUpdate req.params._id, player, defer err, p
+
     if not player.team_ref_id and player.report_id
       # Removing from team ref
       await TeamRef.findOneAndUpdate {team_id: player.team_id, report_id: player.report_id}, {$pull: {players: p._id}}, defer err, teamRef
@@ -68,7 +70,7 @@ exports.update = (req, res)->
         teamRefs.forEach (teamRef)->
           playerIndexes = []
           teamRef.players.forEach (item, idx)->
-            playerIndexes.push idx if item.toString() is req.params._id
+            playerIndexes.push idx if item._id.toString() is req.params._id
           if playerIndexes.length
             playerIndexes.forEach (idx)-> teamRef.players.splice(idx, 1)
             teamRef.save()
@@ -78,7 +80,28 @@ exports.update = (req, res)->
     else if player.team_ref_id
       # Just adding to team ref
       await TeamRef.findByIdAndUpdate player.team_ref_id, {$push: {players: p._id}}, defer err, teamRef
-    res.send player: p
+    else if player.team_id and req.query.report_id
+      # Remove old reference first
+      await TeamRef.find({report_id: req.query.report_id}).exec defer err, teamRefs
+      if teamRefs
+        teamRefs.forEach (teamRef)->
+          playerIndexes = []
+          teamRef.players.forEach (item, idx)->
+            playerIndexes.push idx if item.toString() is req.params._id
+          if playerIndexes.length
+            playerIndexes.forEach (idx)-> teamRef.players.splice(idx, 1)
+            teamRef.save()
+      # Adding to the new team reference
+      if teamRefs
+        teamRefs.forEach (teamRef)->
+          playerIndexes = []
+          console.log teamRef.team_id.toString(), player.team_id
+          if teamRef.team_id.toString() is player.team_id
+            console.log teamRef.players
+            teamRef.players.push req.params._id
+            teamRef.save()
+    # TODO Hacky
+    res.send player: player
   else
     res.send 400, error: "server error"
 

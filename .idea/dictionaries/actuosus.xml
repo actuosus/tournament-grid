@@ -1,9 +1,18 @@
 <component name="ProjectDictionaryState">
   <dictionary name="actuosus">
     <words>
+      <w>async</w>
+      <w>coffeelint</w>
+      <w>cssmin</w>
+      <w>datepicker</w>
       <w>deps</w>
+      <w>github</w>
+      <w>lodash</w>
       <w>modernizr</w>
       <w>mousewheel</w>
+      <w>requirejs</w>
+      <w>spdy</w>
+      <w>timepicker</w>
       <w>выйграно</w>
       <w>инфо</w>
       <w>команды</w>

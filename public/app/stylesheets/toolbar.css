@@ -1,0 +1,12 @@
+/**
+ * toolbar
+ * @author: actuosus
+ * Date: 09/05/2013
+ * Time: 21:31
+ */
+
+.toolbar {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}

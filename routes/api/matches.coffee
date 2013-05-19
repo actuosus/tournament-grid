@@ -56,3 +56,8 @@ exports.update = (req, res)->
     res.send match: doc
   else
     res.send 400, error: "server error"
+
+exports.delete = (req, res) ->
+  Match.findByIdAndRemove req.params._id, (err)->
+    res.status 204 unless err
+    res.send()

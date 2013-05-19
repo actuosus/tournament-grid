@@ -6,17 +6,17 @@
 ###
 
 define [
-  'text!../../templates/stage/form.handlebars'
+  'text!../../templates/match/form.handlebars'
   'cs!../../core'
   'cs!../form'
 
   'cs!../multilingual_text_field'
   'cs!../multilingual_text_area'
 ], (template)->
-  Em.TEMPLATES.stageForm = Em.Handlebars.compile template
+  Em.TEMPLATES.matchForm = Em.Handlebars.compile template
   App.MatchForm = App.FormView.extend
     classNames: ['stage-form', 'form-vertical']
-    templateName: 'stageForm'
+    templateName: 'matchForm'
 
     visualType: 'grid'
 
@@ -88,3 +88,10 @@ define [
     submit: (event)->
       event.preventDefault()
       @createRecord()
+
+    click: (event)->
+      event.preventDefault()
+      if $(event.target).hasClass('save-btn')
+        @createRecord()
+      if $(event.target).hasClass('cancel-btn')
+        @popupView.hide() if @popupView

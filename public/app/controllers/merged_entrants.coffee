@@ -18,33 +18,49 @@ define [
     content: []
     sources: []
 
-    sourceContentChanged: (->
-      console.log 'sourceContentChanged'
-      sources = @get 'sources'
-      content = @get 'content'
-      sources.forEach (source)->
-#        console.log source.get('content'), source.get('content.isLoaded')
-        if source.get('content.isLoaded')
-          source.get('content')?.forEach (item)->
-            console.log item
-            if App.TeamRef.detect item
-              item = item.get 'team'
-            content.pushObject item
-  #        content.pushObjects = source.get('content')
-      console.log 'content', @get('content')
-      @set 'content.isLoaded', yes
-    ).observes('sources.@each.isLoaded')
-
     search: (options)->
       sources = @get 'sources'
-      sources.forEach (source)->
-        source.search options
+      @set 'content', []
+      @set 'arrangedContent.isLoaded', no
+      @set 'arrangedContent.isUpdating', yes
+      sources.forEach (source)-> source.search options
+#      @notifyPropertyChange 'arrangedContent'
+
+    arrayDidChange: (content, start, removed, added)->
+#      console.log content, start, removed, added
+#      console.log content.type, start, added
+      idx = start
+      while idx < start+added
+        @get('content').pushObject content.objectAtContent idx
+        idx++
+      @set 'arrangedContent.isLoaded', @get('sources').every (item)-> item.get('content.isLoaded')
+      @set 'arrangedContent.isUpdating', no
+
+    arrayWillChange: (content, start, removedCount)->
+#      console.log content.type, start, removedCount
+
+    sourceContentChanged: (->
+      sources = @get 'sources'
+      #      content = @get 'content'
+      sources.forEach (source)=>
+        source.get('arrangedContent').addArrayObserver @
+    ).observes('sources.@each.arrangedContent')
 
     menuItemViewClass: Em.ContainerView.extend
       classNames: ['menu-item']
-      classNameBindings: ['isSelected']
+      classNameBindings: ['isSelected', 'isTeamRef']
       attributeBindings: ['title']
-      titleBinding: 'content._id'
+      isTeamRef: (->
+        App.TeamRef.detectInstance @get 'content'
+      ).property('content')
+      team: (->
+        content = @get 'content'
+        if App.TeamRef.detectInstance content
+          content.get 'team'
+        else
+          content
+      ).property('content')
+      titleBinding: 'team._id'
       childViews: ['countryFlagView', 'nameView']
 
       countryFlagView: Em.View.extend
@@ -52,7 +68,7 @@ define [
         classNames: ['country-flag-icon', 'team-country-flag-icon']
         classNameBindings: ['countryFlagClassName', 'hasFlag']
         attributeBindings: ['title']
-        contentBinding: 'parentView.content'
+        contentBinding: 'parentView.team'
         title: (-> @get 'content.country.name').property('content.country')
         hasFlag: (-> !!@get 'content.country.code').property('content.country')
         countryFlagClassName: (->
@@ -60,14 +76,35 @@ define [
         ).property('content.country.code')
 
       nameView: Em.View.extend
-        contentBinding: 'parentView.content'
+        contentBinding: 'parentView.team'
         classNames: ['lineup-grid-item-name']
         template: Em.Handlebars.compile '{{view.content.name}}'
+
+      showAddingNotify: ->
+        modalView = App.ModalView.create
+          target: @get 'parentView.autocompleteView'
+        modalView.on 'ok', -> @hide()
+        modalView.pushObject Em.ContainerView.create(
+          childViews: ['contentView', 'buttonsView']
+          contentView: Em.View.create(template: Em.Handlebars.compile('Команда уже добавлена'))
+          buttonsView: Em.ContainerView.create
+            classNames: ['buttons']
+            childViews: ['okButton']
+            okButton: Em.View.create
+              classNames: ['btn', 'btn-primary']
+              tagName: 'button'
+              template: Em.Handlebars.compile "{{loc '_ok'}}"
+              click: -> @get('parentView.parentView.parentView').trigger('ok')
+        )
+        modalView.append()
 
       click: (event)->
         event.preventDefault()
         event.stopPropagation()
-        @get('parentView').click(event)
-        @set 'parentView.selection', @get 'content'
-        @set 'parentView.value', @get 'content'
-        @set 'parentView.isVisible', no
+        unless @get 'isTeamRef'
+          @get('parentView').click(event)
+          @set 'parentView.selection', @get 'team'
+          @set 'parentView.value', @get 'team'
+          @set 'parentView.isVisible', no
+        else
+          @showAddingNotify()

@@ -6,13 +6,13 @@
 </p>
 <!-- profile -->
 
-<div class="b-profile" id="bx_4014386737_23678">
+<div class="b-profile">
 
     <ul class="b-profile__top">
         <li class="item oneLine" onclick="window.location = '/base/teams/virtuspro/'">
             <img src="/bitrix/cache/s1/virtus/image.show/40w_37h_clip/upload/iblock/f1c/virtus_142x149.png" width="40" height="37" alt="" class="item__img" border="0" title="Virtus.pro*BenQ">
 
-            Организация
+            <%- @__ 'Organization' %>
         </li>
         <li class="item" onclick="window.location = '/base/teams/virtuspro/virtus-pro-cs/'">
             <img src="/upload/iblock/f2b/cs_go.png" width="37" height="35" alt="" class="item__img" title="Virtus.pro">
@@ -60,8 +60,10 @@
 
     <div class="b-profile__about">
         <p class="title"><%- @doc.name %></p>
-        <p class="where ru"> Образована в 2011 году.</p>
+        <p class="where <% if @doc.country_id: %><%- @doc.country_id.code %><% end %>"> Образована в 2011 году.</p>
+        <% if @doc.site : %>
         <p class="url"><%- @__ 'Official site' %>: <a target="_blank" href="http://www.virtuspro.org">www.virtuspro.org</a></p>
+        <% end %>
         <p><%- @doc.description %></p>
     </div>
 
@@ -83,7 +85,7 @@
     <!-- profileAwards -->
     <div id="comp_cf93a120f491b8f2ef6edae91b80d045"><!-- profileAwards -->
         <div class="b-profileBlock b-profileAwards" style="min-height: 30px;" id="bx_2368701140_addaward">
-            <p class="b-profileBlock__title">Награды
+            <p class="b-profileBlock__title"><%- @__ 'Awards' %>
                 <small>Награды, полученные игроком</small> </p>
             <table class="b-awards__table" style="width: 416px;">
                 <colgroup>

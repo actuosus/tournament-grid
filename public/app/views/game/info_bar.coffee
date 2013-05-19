@@ -6,7 +6,11 @@
  * Time: 05:30
 ###
 
-define ['cs!./form'], ->
+define [
+  'cs!./form'
+  'cs!../match/form'
+  'cs!../remove_button'
+], ->
   App.GamesInfoBarView = Em.View.extend
     tagName: 'ul'
     classNames: ['games-info-bar']
@@ -26,15 +30,25 @@ define ['cs!./form'], ->
       <li class="games-create-button" {{bindAttr title="view.addButtonTitle"}}><button class="btn-clean create-btn">+</button></li>
       {{/if}}
       """
+
     addButtonTitle: (-> '_add_game'.loc()).property()
 
     click: (event)->
       if $(event.target).hasClass('games-create-button') or $(event.target).hasClass 'create-btn'
         popup = App.PopupView.create target: @
-        popup.get('childViews').push(
-                                      App.GameForm.create
-                                        popupView: popup
-                                        match: @get('parentView.content')
-                                        didCreate: => popup.hide()
-                                    )
+        popup.pushObject(
+          App.GameForm.create
+            popupView: popup
+            match: @get('parentView.content')
+            didCreate: => popup.hide()
+        )
+        popup.append()
+      if $(event.target).hasClass('games-info-bar-label')
+        popup = App.PopupView.create target: @
+        popup.pushObject(
+          App.MatchForm.create
+            popupView: popup
+            match: @get('parentView.content')
+            didCreate: => popup.hide()
+        )
         popup.append()

@@ -42,6 +42,7 @@ define [
           when 1
             roundName = '_semifinal'.loc()
         round = Em.Object.create
+          index: roundsCount - i
           itemIndex: i
           name: roundName
           parentReference: 'stage'
@@ -53,6 +54,7 @@ define [
             leftPath = "#{roundsCount-i-1}.#{j*2}"
             rightPath = "#{roundsCount-i-1}.#{j*2+1}"
           match = Em.Object.create
+            index: j
             itemIndex: j
             date: new Date()
             leftPath: leftPath

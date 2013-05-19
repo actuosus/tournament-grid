@@ -17,6 +17,7 @@
 @import "tree.css";
 @import "../../vendor/styles/bootstrap-tooltip.css";
 @import "../../vendor/styles/jquery-ui.css";
+@import "../../vendor/styles/jquery-ui-timepicker-addon.css";
 @import "ember-table.css";
 @import "block_container.css";
 @import "named_container.css";
@@ -39,6 +40,9 @@
 @import "editable-label.css";
 
 @import "ui-datepicker.css";
+@import "ui-widget.css";
+
+@import "toolbar.css";
 
 .icon-remove {
     font-style: normal;
@@ -196,6 +200,20 @@
     overflow: hidden;
 }
 
+input.match-start-date {
+    font-size: 11px;
+    float: left;
+    max-width: 80px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    min-height: 15px;
+    border: 0;
+    box-shadow: none;
+    padding: 0;
+    background-color: transparent;
+}
+
 .match-info-bar {
     float: right;
 }
@@ -319,4 +337,12 @@
 
 .team-standings-table .editable-label {
     display: inline-block;
+}
+
+.grid-container {
+    position: relative;
+}
+
+.menu-item .lineup-grid-item-name {
+    margin: 2px 0;
 }

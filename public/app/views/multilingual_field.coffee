@@ -67,9 +67,11 @@ define ['cs!../mixins/translatable', 'cs!./language_menu'], ->
 
     fieldView: Em.TextField.extend
       classNames: ['text-field']
+      attributeBindings: ['required']
       nameBinding: 'parentView.name'
       placeholderBinding: 'parentView.placeholder'
       valueBinding: 'parentView.value'
+      requiredBinding: 'parentView.required'
 
       valueChanged: (->
         value = @get 'value'

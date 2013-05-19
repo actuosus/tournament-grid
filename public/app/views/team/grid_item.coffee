@@ -21,6 +21,7 @@ define [
 
     matchBinding: 'parentView.match'
     isUpdatingBinding: 'match.isUpdating'
+    pointsIsVisible: yes
 
     teamUndefined: (-> !@get('content')).property('content')
 
@@ -38,6 +39,7 @@ define [
 
     autocompleteView: App.AutocompleteTextField.extend
       isVisible: no
+
       controllerBinding: 'App.teamsController'
 
       filteredContent: (->
@@ -106,6 +108,7 @@ define [
       contentIndexBinding: 'parentView.contentIndex'
       valueBinding: 'parentView.points'
       isEditableBinding: 'parentView.isEditable'
+      isVisibleBinding: 'parentView.pointsIsVisible'
 #      template: Em.Handlebars.compile '{{view.parentView.points}}'
       matchBinding: 'parentView.match'
       max: 99
@@ -156,10 +159,10 @@ define [
       entrant = @get 'content'
       if entrant
         entrant.set('isHighlighted', yes)
-      @shouldShowLineupPopup = yes
-      Em.run.later =>
-        @showTeamLineupPopup() if @shouldShowLineupPopup
-      , 500
+#      @shouldShowLineupPopup = yes
+#      Em.run.later =>
+#        @showTeamLineupPopup() if @shouldShowLineupPopup
+#      , 500
 
     teamLineupPopup: null
 
@@ -167,8 +170,8 @@ define [
       if not @teamLineupPopup or @teamLineupPopup.isDestroyed
         team = @get('content')
         if team
-          @teamLineupPopup = App.PopupView.create(target: @, classNames: ['popup-lineup-grid-item'])
-          @teamLineupPopup.get('childViews').push(App.TeamLineupGridItem.create(content: team))
+          @teamLineupPopup = App.PopupView.create(target: @, classNames: ['popup-lineup-grid-item'], showCloseButton: yes)
+          @teamLineupPopup.pushObject(App.TeamLineupGridItem.create(content: team))
           @teamLineupPopup.append()
       else
         @teamLineupPopup.show()
@@ -179,7 +182,7 @@ define [
       if entrant
         entrant.set('isHighlighted', no)
 
-      @shouldShowLineupPopup = no
+#      @shouldShowLineupPopup = no
 #      @teamLineupPopup?.hide()
 
     resetButtonView: Em.View.extend

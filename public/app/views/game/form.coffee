@@ -16,8 +16,12 @@ define [
     templateName: 'gameForm'
     countrySelectViewBinding: 'childViews.firstObject'
 
-    title: (-> Faker.Company.catchPhrase() ).property().volatile()
-    link: (-> 'http://' + Faker.Internet.domainName() + '/').property().volatile()
+    title: null
+    link: null
+
+    isValid: (->
+      @get('element').checkValidity()
+    ).property()
 
     didCreate: Em.K
 
@@ -41,11 +45,11 @@ define [
 
     submit: (event)->
       event.preventDefault()
-      @createRecord()
+      @createRecord()if @get 'isValid'
 
     click: (event)->
       event.preventDefault()
       if $(event.target).hasClass('save-btn')
-        @createRecord()
+        @createRecord()if @get 'isValid'
       if $(event.target).hasClass('cancel-btn')
         @popupView.hide() if @popupView

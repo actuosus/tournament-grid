@@ -48,7 +48,7 @@ define ['cs!../core'], ->
 #        toggleButtonAppendViewBinding.prototype.toggleButtonView = @get 'toggleButtonView'
       if toggleButtonTarget.isInstance
         toggleButtonView = @get('toggleButtonView').create(collapseTarget: @)
-        toggleButtonTarget.get('childViews').pushObject toggleButtonView
+        toggleButtonTarget.pushObject toggleButtonView
 
     didInsertElement: -> @$().hide() if @get 'collapsed'
 

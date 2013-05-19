@@ -41,13 +41,23 @@ define ['cs!../core'],->
       currentStatus
     ).property('date', 'entrant1_points', 'entrant2_points')
 
+    open: ->
+      console.log 'Opening match'
+      @set 'status', 'opened'
+      @store.commit()
+
+    close: ->
+      console.log 'Closing match'
+      @set 'status', 'closed'
+      @store.commit()
 
     url: DS.attr 'string'
 
     isLocked: no
     isSelected: no
+    status: DS.attr 'string', {defaultValue: 'opened'}
 
-    name: DS.attr 'string'
+    title: DS.attr 'string'
     description: DS.attr 'string'
     date: DS.attr 'date'
 

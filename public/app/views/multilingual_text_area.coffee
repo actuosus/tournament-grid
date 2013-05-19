@@ -11,11 +11,13 @@ define ['cs!./multilingual_field'], ->
 
     fieldView: Em.TextArea.extend
       classNames: ['text-area']
+      attributeBindings: ['required']
       nameBinding: 'parentView.name'
       placeholderBinding: 'parentView.placeholder'
       valueBinding: 'parentView.value'
       rowsBinding: 'parentView.rows'
       colsBinding: 'parentView.cols'
+      requiredBinding: 'parentView.required'
       valueChanged: (->
         value = @get 'value'
         if @$()

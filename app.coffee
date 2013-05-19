@@ -34,7 +34,7 @@ conf = new Config()
 ECT = require 'ect'
 ectRenderer = ECT watch: true, root: __dirname + '/views'
 
-grid = module.exports = {}
+grid = module.exports = models: models
 app = module.exports.app = express()
 
 passport.use new BasicStrategy (username, password, done)->
@@ -67,6 +67,11 @@ processRandom = (req, res, next)->
   else
     next()
 
+rangedRandom = (min = 0, max = 255)-> Math.floor(Math.random() * (max - min + 1)) + min
+
+waiter = (req, res, next)->
+  setTimeout next, rangedRandom 500, 3000
+
 languages = ['ru', 'en', 'de', 'it']
 
 i18n.configure
@@ -94,16 +99,16 @@ app.configure ->
 
   # Session support
   console.log 'Redis', conf._redis
-#  app.use express.session(
-#    secret: 'Is it secure?'
-#    store: new RedisStore(
-#      host: conf._redis.host
-#      port: conf._redis.port
-#      pass: conf._redis.password
-#      db: conf._redis.db
-#    )
-#  )
-  app.use express.session secret: 'Is it secure?'
+  app.use express.session(
+    secret: 'Is it secure?'
+    store: new RedisStore(
+      host: conf._redis.host
+      port: conf._redis.port
+      pass: conf._redis.password
+      db: conf._redis.db
+    )
+  )
+#  app.use express.session secret: 'Is it secure?'
   app.use passport.initialize()
   app.use passport.session()
 
@@ -129,9 +134,20 @@ app.configure ->
 
 app.configure 'development', ->
   mongoose.set 'debug', yes
+  # Error handling
+  app.use express.errorHandler dumpExceptions: yes, showStack: yes
+
+#  app.use (req, res, next)->
+#    if req.url.match /api/
+#      waiter req, res, next
+#    else
+#      next()
 
 app.configure 'production', ->
+  # Compression
   app.use express.compress()
+  # Error handling
+  app.use express.errorHandler()
   # Static files serving
   oneYear = 31557600000
   app.use express.static path.join(__dirname, 'public'), {maxAge: oneYear}
@@ -181,6 +197,7 @@ app.get '/api/matches', routes.api.matches.list
 app.post '/api/matches', routes.api.matches.create
 app.put '/api/matches', routes.api.matches.update
 app.put '/api/matches/:_id', routes.api.matches.update
+app.delete '/api/matches/:_id', routes.api.matches.delete
 
 app.get '/api/players', routes.api.players.list
 app.post '/api/players', routes.api.players.create
@@ -264,35 +281,25 @@ app.get '*', (req, res)-> res.status 404; res.render '404.ect'
 
 
 # Initialization
-grid.init = ->
-  #mongoose.set 'debug', yes
-  mongoose.connect conf.mongo, {}, (err, db)->
-    unless err
-      console.log "DB connection initialized."
-    else
-      throw "Cannot connect to DB (#{err})."
+grid.init = (cb)->
 #  spdy.createServer({}, app).listen app.get('port'), ->
-#    console.log "Express server listening on port #{app.get 'port'}"
-  server = http.createServer(app)
-  conf.server = server
+#    console.log "Express SPDY server listening on port #{app.get 'port'}"
+  grid.server = http.createServer(app)
+  conf.server = grid.server
 #  socket = IO.getSocket(conf)
 #  socket.start server
-  server.listen app.get('port'), ->
-    console.log "Express server listening on port #{app.get 'port'}"
+  grid.server.listen app.get('port'), ->
+    console.log "Express HTTP server listening on port #{app.get 'port'}"
+    grid.mongoose = mongoose.connect conf.mongo, {}, (err, db)->
+      unless err
+        console.log "DB connection initialized."
+      else
+        throw "Cannot connect to DB (#{err})."
 
+      # Run callback if provided
+      cb() if cb
 
-# 1/32, 1/16 могут быть таблицей
-# Инфо 1 2 3
-
-# Сортировка
-
-# Игры
-# Выйграно
-# Ничья
-# Проиграно
-# Очки (редактируются)
-# Разница (редактируются)
-
-# Возможен фиктивный матч
-
-# Добавить нотификацию, если была выбрана команда не из списка
+grid.teardown = (cb)->
+  grid.mongoose.disconnect ->
+    grid.server.close ->
+      cb() if cb

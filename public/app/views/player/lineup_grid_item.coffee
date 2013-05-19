@@ -21,8 +21,8 @@ define [
       classNames: ['country-flag-icon', 'team-country-flag-icon']
       classNameBindings: ['countryFlagClassName', 'hasFlag']
       attributeBindings: ['title']
-      title: (-> @get 'content.country.name').property('content.country')
       contentBinding: 'parentView.content'
+      titleBinding: 'content.country.name'
       hasFlag: (-> !!@get 'content.country.code').property('content.country')
       countryFlagClassName: (->
         'country-flag-icon-%@'.fmt @get 'content.country.code'
@@ -44,10 +44,13 @@ define [
       contentBinding: 'parentView.content'
       classNames: ['lineup-grid-item-name']
       attributeBindings: ['title']
+      href: (->
+        '/players/%@'.fmt @get 'content.id'
+      ).property('content.id')
       title: (->
         @get('content.id') if App.get('isEditingMode')
       ).property('App.isEditingMode')
-      template: Em.Handlebars.compile '{{view.content.nickname}}'
+      template: Em.Handlebars.compile '<a target="_blank" {{bindAttr href="view.href"}}>{{view.content.nickname}}</a>'
 
     realNameView: Em.View.extend
       contentBinding: 'parentView.content'
@@ -55,14 +58,17 @@ define [
       isVisibleBinding: 'hasShortName'
       hasShortName: (->
         shortName = @get('content.shortName')
-        yes if shortName and shortName isnt ' '
+        yes if shortName and shortName isnt ''
       ).property('content.shortName')
       template: Em.Handlebars.compile '({{view.content.shortName}})'
 
     captianMarkerView: Em.View.extend
       contentBinding: 'parentView.content'
+      teamRefBinding: 'parentView.teamRef'
       classNames: ['lineup-grid-item-captain-marker']
-      isVisibleBinding: 'content.isCaptain'
+      isVisible: (->
+        Em.isEqual @get('teamRef.captain'), @get('content')
+      ).property('teamRef.captain')
       attributeBindings: ['title']
       title: '_captain'.loc()
       template: Em.Handlebars.compile 'К'
@@ -84,3 +90,8 @@ define [
     removeButtonView: App.RemoveButtonView.extend
       title: '_remove_player'.loc()
       remove: -> @get('parentView').deleteRecord()
+
+    doubleClick: ->
+      teamRef = @get 'teamRef'
+      teamRef.set 'captain', @get 'content'
+      teamRef.store.commit()

@@ -58,8 +58,11 @@ define [
       report = @get 'report'
 
       switch @get 'visualType.id'
-        when 'grid', 'single'
+        when 'grid'
           stage = report.createStageByEntrants entrantsNumber
+        when 'single'
+          stage = report.get('stages').createRecord()
+          stage.createWinnerBracket null, entrantsNumber
         when 'double'
           stage = report.get('stages').createRecord()
           stage.createWinnerBracket null, entrantsNumber

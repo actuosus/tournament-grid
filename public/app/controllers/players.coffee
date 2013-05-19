@@ -14,6 +14,7 @@ define [
     formView: App.PlayerForm
     searchResults: []
     labelValue: 'nickname'
+
     search: (options)->
       searchOptions = {}
       if options.name

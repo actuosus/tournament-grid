@@ -8,8 +8,9 @@
 .menu {
     position: absolute;
     width: 205px;
-    background: white;
     z-index: 200;
+    /* Weird but with bg color box-shadow is not visible */
+    background-color: white;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.75);
     max-height: 200px;
     overflow-y: auto;
@@ -39,4 +40,10 @@
 
 .menu-item .highlight {
     font-weight: bold;
+}
+
+
+.menu-item.is-team-ref,
+.menu-item.is-team-ref .lineup-grid-item-name {
+    font-weight: normal;
 }

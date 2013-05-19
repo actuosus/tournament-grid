@@ -24,6 +24,7 @@
     }
   ],
   "dependencies": {
+    "lodash": "latest",
     "express": "latest",
     "jade": "latest",
     "ect": "latest",
@@ -40,12 +41,10 @@
   },
   "devDependencies": {
     "async": "latest",
-    "openifyit-commons": "latest",
-    "openifyit-mongoose-fixtures": "latest",
-    "superagent": "latest",
     "mocha": "latest",
+    "chai": "latest",
+    "superagent": "latest",
     "should": "latest",
-    "supervisor": "latest",
 
     "grunt": "latest",
     "grunt-contrib-requirejs": "latest",

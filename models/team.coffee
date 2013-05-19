@@ -23,6 +23,9 @@ TeamSchema = new Schema
 
   description: type: String
 
+  # Extras
+  site: type: String
+
 TeamSchema.plugin socketNotifyPlugin
 
 module.exports = TeamSchema

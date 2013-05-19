@@ -19,3 +19,7 @@
 .buttons .btn {
     margin-right: 10px;
 }
+
+.modal.team {
+    width: 200px;
+}

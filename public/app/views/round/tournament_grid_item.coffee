@@ -9,6 +9,7 @@ define [
   'cs!../team/grid_item_container'
   'cs!../game/info_bar'
   'cs!../date_field'
+  'cs!../match/grid_item'
 ], ->
   App.RoundGridItemView = Em.ContainerView.extend
     classNames: ['tournament-round-container']
@@ -39,7 +40,9 @@ define [
         roundsBinding: 'parentView.parentView.parentView.content'
         entrantsNumberBinding: 'parentView.entrantsNumber'
 
-        titleBinding: 'content.description'
+        title: (-> "#{@get('content.round.index')}:#{@get('content.index')}").property('content')
+
+#        titleBinding: 'content.description'
 
         mouseEnter: ->
           node = @get 'content'
@@ -173,14 +176,23 @@ define [
             if match
               match.transaction.commit()
 
-        dateView: App.EditableLabel.extend
+        dateView: App.DateField.extend
           classNames: ['match-start-date']
           contentBinding: 'parentView.content.date'
+          attributeBindings: ['title']
           isEditableBinding: 'App.isEditingMode'
 
-          value: (->
-            moment(@get 'content.date').format('DD.MM.YY')
+          title: (->
+            moment(@get 'content').format('DD.MM.YY HH:mm:ss')
           ).property('content')
+
+          value: (->
+            moment(@get 'content').format('DD.MM.YY')
+          ).property('content')
+
+          rawDateChanged: (->
+            @set 'content', @get 'rawDate'
+          ).observes('rawDate')
 
         infoBarView: App.GamesInfoBarView.extend
           contentBinding: 'parentView.content.games'
@@ -197,3 +209,6 @@ define [
 
           itemViewClass: App.TeamGridItemContainerView.extend
             matchBinding: 'parentView.match'
+            pointsIsVisible: (->
+              !@get('match.isFinal')
+            ).property()

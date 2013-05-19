@@ -11,8 +11,10 @@ define ['cs!./multilingual_field'], ->
 
     fieldView: Em.TextField.extend
       classNames: ['text-field']
+      attributeBindings: ['required']
       nameBinding: 'parentView.name'
       placeholderBinding: 'parentView.placeholder'
+      requiredBinding: 'parentView.required'
       valueBinding: 'parentView.value'
       valueChanged: (->
         value = @get 'value'

@@ -40,8 +40,8 @@ exports.create = (req, res) ->
   if req.body?.team
     team = req.body.team
     await new Team(team).save defer err, t
-    await new TeamRef({team_id: t._id, report_id: team.report_id}).save defer teamRefErr, teamRef if team.report_id
-    await Report.findByIdAndUpdate team.report_id, {$push: {team_refs: teamRef._id}}, defer updateErr, report if teamRef
+#    await new TeamRef({team_id: t._id, report_id: team.report_id}).save defer teamRefErr, teamRef if team.report_id
+#    await Report.findByIdAndUpdate team.report_id, {$push: {team_refs: teamRef._id}}, defer updateErr, report if teamRef
     res.send team: t
   else
     res.send 400, error: "server error"
@@ -62,18 +62,21 @@ exports.update = (req, res)->
     team = teamClone
     console.log 'Body', team, teamClone
 #    socket.send {action: 'update', model: 'Team', _id: doc._id}
-    if team.report_id
-      console.log "Pushing team #{req.params._id} to report #{team.report_id}"
-      Report.findById team.report_id, (reportErr, report)->
-        report.team_refs.push team_id: doc._id, players: doc.players
-        report.save()
-    else
-      console.log 'No report', doc
-      if req.body?.report_id
-        Report.findById req.body.report_id, (reportErr, report)->
-          report.team_refs.filter((ref)-> ref.team_id.toString() is req.params._id).forEach (item)->
-            report.team_refs.id(item._id).remove()
-          report.save()
+#    if team.report_id
+#      console.log "Pushing team #{req.params._id} to report #{team.report_id}"
+#      Report.findById team.report_id, (reportErr, report)->
+#        console.log doc._id
+#        await TeamRef.create team_id: doc._id, players: doc.players, defer teamRefErr, teamRef
+#        report.team_refs.push teamRef._id
+#        report.save()
+#    else
+
+#    console.log 'No report', doc
+#    if req.body?.report_id
+#      Report.findById req.body.report_id, (reportErr, report)->
+#        report.team_refs.filter((ref)-> ref.team_id.toString() is req.params._id).forEach (item)->
+#          report.team_refs.id(item._id).remove()
+#        report.save()
 
 #        socket.send {action: 'update', model: 'Report', _id: doc.report_id}
     res.send team: doc

@@ -8,7 +8,7 @@
 
 module.exports.Match = [
   _id: '50fd102c3612183b15000001',
-  name: 'Umitara vs Wikipediots',
+  title: 'Umitara vs Wikipediots',
   entrant1_id: '50fcdf189c68d90f07000001',
   entrant2_id: '50fcdf189c68d90f07000002',
   entrant1_points: 6,
@@ -19,7 +19,7 @@ module.exports.Match = [
   description: 'Дополнительно описание, которе вбивается'
 ,
   _id: '50fd102c3612183b15000002',
-  name: 'Stephano vs Bly',
+  title: 'Stephano vs Bly',
   entrant1_id: '50fcdf189c68d90f07000003',
   entrant2_id: '50fcdf189c68d90f07000004',
   entrant1_points: 0,
@@ -31,7 +31,7 @@ module.exports.Match = [
   games: ['5111afa9c3a093c8a1000002', '5111afa9c3a093c8a1000003', '5111afa9c3a093c8a1000004']
 ,
   _id: '50fd102c3612183b15000003',
-  name: 'Umitara vs Bly',
+  title: 'Umitara vs Bly',
   entrant1_id: '50fcdf189c68d90f07000001',
   entrant2_id: '50fcdf189c68d90f07000004',
   entrant1_points: 6,
@@ -42,7 +42,7 @@ module.exports.Match = [
   description: 'Короткое описание основного текста, для того'
 ,
   _id: '50fd102c3612183b15000004',
-  name: 'Umitara vs Wikipediots',
+  title: 'Umitara vs Wikipediots',
   entrant1_id: '50fcdf189c68d90f07000001',
   entrant2_id: '50fcdf189c68d90f07000002',
   entrant1_points: 6,
@@ -53,7 +53,7 @@ module.exports.Match = [
   description: 'Очень красивый и хороший матч, советую'
 ,
   _id: '50fd102c3612183b15000005',
-  name: 'Stephano vs Bly',
+  title: 'Stephano vs Bly',
   entrant1_id: '50fcdf189c68d90f07000003',
   entrant2_id: '50fcdf189c68d90f07000004',
   entrant1_points: 0,
@@ -64,7 +64,7 @@ module.exports.Match = [
   description: 'Дополнительно описание, которе вбивается'
 ,
   _id: '50fd102c3612183b15000006',
-  name: 'Stephano vs Wikipediots',
+  title: 'Stephano vs Wikipediots',
   entrant1_id: '50fcdf189c68d90f07000003',
   entrant2_id: '50fcdf189c68d90f07000002',
   entrant1_points: 2,
@@ -75,7 +75,7 @@ module.exports.Match = [
   description: 'Еще какое-то описание, дополняющее текст'
 ,
   _id: '50fd102c3612183b15000007',
-  name: 'Bly vs Wikipediots',
+  title: 'Bly vs Wikipediots',
   entrant1_id: '50fcdf189c68d90f07000004',
   entrant2_id: '50fcdf189c68d90f07000002',
   entrant1_points: 1,
@@ -86,7 +86,7 @@ module.exports.Match = [
   description: 'Короткое описание основного текста, для того'
 ,
   _id: '51142bdc323f4b360c000002',
-  name: 'Umitara vs Wikipediots',
+  title: 'Umitara vs Wikipediots',
   entrant1_id: '50fcdf189c68d90f07000001',
   entrant2_id: '50fcdf189c68d90f07000002',
   entrant1_points: 6,
@@ -97,7 +97,7 @@ module.exports.Match = [
   description: 'Дополнительно описание, которе вбивается'
 ,
   _id: '51142bdc323f4b360c000003',
-  name: 'Stephano vs Bly',
+  title: 'Stephano vs Bly',
   entrant1_id: '50fcdf189c68d90f07000003',
   entrant2_id: '50fcdf189c68d90f07000004',
   entrant1_points: 0,
@@ -109,7 +109,7 @@ module.exports.Match = [
   games: ['5111afa9c3a093c8a1000002', '5111afa9c3a093c8a1000003', '5111afa9c3a093c8a1000004']
 ,
   _id: '51142bdc323f4b360c000004',
-  name: 'Umitara vs Bly',
+  title: 'Umitara vs Bly',
   entrant1_id: '50fcdf189c68d90f07000001',
   entrant2_id: '50fcdf189c68d90f07000004',
   entrant1_points: 6,
@@ -120,7 +120,7 @@ module.exports.Match = [
   description: 'Короткое описание основного текста, для того'
 ,
   _id: '51142bdc323f4b360c000005',
-  name: 'Umitara vs Wikipediots',
+  title: 'Umitara vs Wikipediots',
   entrant1_id: '50fcdf189c68d90f07000001',
   entrant2_id: '50fcdf189c68d90f07000002',
   entrant1_points: 6,
@@ -131,7 +131,7 @@ module.exports.Match = [
   description: 'Очень красивый и хороший матч, советую'
 ,
   _id: '51142bdc323f4b360c000006',
-  name: 'Stephano vs Bly',
+  title: 'Stephano vs Bly',
   entrant1_id: '50fcdf189c68d90f07000003',
   entrant2_id: '50fcdf189c68d90f07000004',
   entrant1_points: 0,
@@ -142,7 +142,7 @@ module.exports.Match = [
   description: 'Дополнительно описание, которе вбивается'
 ,
   _id: '51142bdc323f4b360c000007',
-  name: 'Stephano vs Wikipediots',
+  title: 'Stephano vs Wikipediots',
   entrant1_id: '50fcdf189c68d90f07000003',
   entrant2_id: '50fcdf189c68d90f07000002',
   entrant1_points: 2,
@@ -153,7 +153,7 @@ module.exports.Match = [
   description: 'Еще какое-то описание, дополняющее текст'
 ,
   _id: '51142bdc323f4b360c000008',
-  name: 'Bly vs Wikipediots',
+  title: 'Bly vs Wikipediots',
   entrant1_id: '50fcdf189c68d90f07000004',
   entrant2_id: '50fcdf189c68d90f07000002',
   entrant1_points: 1,
@@ -164,7 +164,7 @@ module.exports.Match = [
   description: 'Короткое описание основного текста, для того'
 ,
   _id: '51142bdc323f4b360c00000f',
-  name: 'Bly vs Wikipediots',
+  title: 'Bly vs Wikipediots',
   entrant1_id: '50fcdf189c68d90f07000004',
   entrant2_id: '50fcdf189c68d90f07000002',
   entrant1_points: 2,
@@ -175,7 +175,7 @@ module.exports.Match = [
   description: 'Пример ничьи'
 ,
   _id: '51142bdc323f4b360c000009',
-  name: 'LeX vs evil',
+  title: 'LeX vs evil',
   entrant1_id: '5107d4cd351fb19719000002',
   entrant2_id: '5107d4cd351fb19719000003',
   entrant1_points: 4,
@@ -186,7 +186,7 @@ module.exports.Match = [
   description: 'Короткое описание основного текста, для того'
 ,
   _id: '51142bdc323f4b360c000010',
-  name: 'LeX vs evil',
+  title: 'LeX vs evil',
   entrant1_id: '5107d4cd351fb19719000002',
   entrant2_id: '5107d4cd351fb19719000003',
   entrant1_points: 4,
@@ -197,7 +197,7 @@ module.exports.Match = [
   description: 'Короткое описание основного текста, для того'
 ,
   _id: '51142bdc323f4b360c000011',
-  name: 'LeX vs evil',
+  title: 'LeX vs evil',
   entrant1_id: '5107d4cd351fb19719000002',
   entrant2_id: '5107d4cd351fb19719000003',
   entrant1_points: 4,
@@ -208,7 +208,7 @@ module.exports.Match = [
   description: 'Короткое описание основного текста, для того'
 ,
   _id: '51142bdc323f4b360c000012',
-  name: 'LeX vs evil',
+  title: 'LeX vs evil',
   entrant1_id: '5107d4cd351fb19719000002',
   entrant2_id: '5107d4cd351fb19719000003',
   entrant1_points: 4,

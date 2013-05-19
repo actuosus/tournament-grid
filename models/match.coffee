@@ -14,12 +14,12 @@ ObjectId = Schema.ObjectId
 socketNotifyPlugin = require '../lib/mongoose'
 
 MatchSchema = new Schema
-  name: type: String
+  title: type: String
   description: type: String # editable
   date: type: Date # editable
   map_type: type: String # editable
   type: type: String
-  status: type: String
+  status: type: String, default: 'opened'
   championship: type: ObjectId, ref: 'Championship'
 
   entrant1_id: type: ObjectId, ref: 'Team' # editable

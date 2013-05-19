@@ -120,9 +120,9 @@ define ['cs!../core'],->
 #          console.log matchesLength - matchIndex - 2
 #          match.set('itemIndex', matchesLength - matchIndex - 2)
           matches.push match
-      @notifyPropertyChange 'matches'
+#      @notifyPropertyChange 'matches'
       matches
-    ).property().volatile() #'rounds.@each.isLoaded'
+    ).property('rounds.@each.isLoaded').volatile() #'rounds.@each.isLoaded'
 
     checkRounds: (->
       rounds = @get 'rounds'

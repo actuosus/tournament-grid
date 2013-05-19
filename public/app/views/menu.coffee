@@ -26,8 +26,6 @@ define ['cs!../core'],->
         previouslySelected.forEach (item)-> item.set 'isSelected', no
       selected =  @get('content').objectAt(index)
       selectedView = childViews.objectAt(index)
-      console.log selected
-
       if @$() and selectedView?.$()
         @$().scrollTo(selectedView.$())
       selectedView.set('isSelected', yes) if selected

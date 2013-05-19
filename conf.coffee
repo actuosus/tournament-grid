@@ -32,12 +32,19 @@ module.exports = ->
       }
     when 'test'
       return {
-      hostname: 'tournament.local'
+#      hostname: 'tournament.local'
+      hostname: '0.0.0.0'
       port: 3001,
       mongo: 'mongodb://localhost/tournament_grid_test'
       memcache:
         host: 'localhost'
         port: 11211
+      _redis:
+        host: 'localhost'
+        hostname: 'localhost'
+        username: ''
+        password: ''
+        db: 1
       secret: ''
       }
     else

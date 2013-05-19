@@ -19,8 +19,6 @@ players = [
 ,
   _id: '5107d4cd351fb19719000003'
   nickname: 'evil'
-  first_name: ''
-  last_name: ''
   country_id: '50fcdaf969f206c106000009'
   team_id: '5107cac6c97716ba1800001d'
 ,
@@ -34,15 +32,11 @@ players = [
 ,
   _id: '5107d4cd351fb19719000005'
   nickname: 'hooch'
-  first_name: ''
-  last_name: ''
   country_id: '50fcdaf969f206c106000001'
   team_id: '5107cac6c97716ba1800001d'
 ,
   _id: '5107d4cd351fb19719000006'
   nickname: 'xaoc'
-  first_name: ''
-  last_name: ''
   country_id: '50fcdaf969f206c106000009'
   team_id: '5107cac6c97716ba1800001d'
 ,
@@ -56,7 +50,6 @@ players = [
   _id: '5107d4cd351fb19719000008'
   nickname: 'sneg1'
   first_name: 'Антон'
-  last_name: ''
   country_id: '50fcdaf969f206c106000001'
   team_id: '5107cac6c97716ba1800001d'
 ]

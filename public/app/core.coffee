@@ -206,4 +206,7 @@ define [
 
   App.languageObserver = App.LanguageObserver.create()
 
+  App.animation =
+    duration: 300
+
   App

@@ -26,18 +26,21 @@ exports.TeamRefSchema = require './team_ref'
 
 console.log 'Registering models…'
 
-exports.User = mongoose.model 'User', exports.UserSchema
-exports.Log = mongoose.model 'Log', exports.LogSchema
+try
+  exports.User = mongoose.model 'User', exports.UserSchema
+  exports.Log = mongoose.model 'Log', exports.LogSchema
 
-exports.Championship = mongoose.model 'Championship', exports.ChampionshipSchema
-exports.Country = mongoose.model 'Country', exports.CountrySchema
-exports.Game = mongoose.model 'Game', exports.GameSchema
-exports.Match = mongoose.model 'Match', exports.MatchSchema
-exports.Player = mongoose.model 'Player', exports.PlayerSchema
-exports.Race = mongoose.model 'Race', exports.RaceSchema
-exports.Report = mongoose.model 'Report', exports.ReportSchema
-exports.Result = mongoose.model 'Result', exports.ResultSchema
-exports.Round = mongoose.model 'Round', exports.RoundSchema
-exports.Stage = mongoose.model 'Stage', exports.StageSchema
-exports.Team = mongoose.model 'Team', exports.TeamSchema
-exports.TeamRef = mongoose.model 'TeamRef', exports.TeamRefSchema
+  exports.Championship = mongoose.model 'Championship', exports.ChampionshipSchema
+  exports.Country = mongoose.model 'Country', exports.CountrySchema
+  exports.Game = mongoose.model 'Game', exports.GameSchema
+  exports.Match = mongoose.model 'Match', exports.MatchSchema
+  exports.Player = mongoose.model 'Player', exports.PlayerSchema
+  exports.Race = mongoose.model 'Race', exports.RaceSchema
+  exports.Report = mongoose.model 'Report', exports.ReportSchema
+  exports.Result = mongoose.model 'Result', exports.ResultSchema
+  exports.Round = mongoose.model 'Round', exports.RoundSchema
+  exports.Stage = mongoose.model 'Stage', exports.StageSchema
+  exports.Team = mongoose.model 'Team', exports.TeamSchema
+  exports.TeamRef = mongoose.model 'TeamRef', exports.TeamRefSchema
+catch e
+  console.log 'Some troubles with registering', e

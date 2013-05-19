@@ -42,6 +42,7 @@ module.exports = (grunt)->
         options:
 #          useSourceUrl: yes
 #          optimize: 'uglify2'
+          optimize: 'none'
 #          generateSourceMaps: yes
 #          preserveLicenseComments: no
           locale: "en-us",
@@ -51,34 +52,39 @@ module.exports = (grunt)->
 #          appDir: 'public/app'
 #          dir: 'public/bundle'
           paths: {
-          'moment': '../vendor/scripts/moment',
-          'jquery': '../vendor/scripts/jquery',
-          'jquery.mousewheel': '../vendor/scripts/jquery.mousewheel',
-          'jquery.cookie': '../vendor/scripts/jquery.cookie',
-          'jquery.isotope': '../vendor/scripts/jquery.isotope',
-          'jquery.scrollTo': '../vendor/scripts/jquery.scrollTo.min',
-          'Faker': '../vendor/scripts/Faker',
-          'raphael': '../vendor/scripts/raphael',
-          'spin': '../vendor/scripts/spin',
-          'cs': '../vendor/scripts/cs',
-          'text': '../vendor/scripts/text',
-          'coffee-script': '../vendor/scripts/coffee-script',
-#          'iced-coffee-script': '../vendor/scripts/coffee-script-iced-large',
-          'transit': '../vendor/scripts/jquery.transit.min',
-          'handlebars': '../vendor/scripts/handlebars',
-          'ember': '../vendor/scripts/ember',
-          'ember-data': '../vendor/scripts/ember-data',
-          'ember-history': '../vendor/scripts/ember-history',
-          'modernizr.columns': '../vendor/scripts/modernizr/columns',
-          'bootstrap.tooltip': '../vendor/scripts/bootstrap/bootstrap-tooltip',
-          'screenfull': '../vendor/scripts/screenfull.min',
-          'jquery-ui': '../vendor/scripts/jquery-ui-1.10.1.custom.min'
+            'jquery': '../vendor/scripts/jquery',
+            'jquery.mousewheel': '../vendor/scripts/jquery.mousewheel',
+            'jquery.isotope': '../vendor/scripts/jquery.isotope',
+            'jquery.cookie': '../vendor/scripts/jquery.cookie',
+            'jquery.scrollTo': '../vendor/scripts/jquery.scrollTo.min',
+            'moment': '../vendor/scripts/moment',
+            'Faker': '../vendor/scripts/Faker',
+            'raphael': '../vendor/scripts/raphael',
+            'spin': '../vendor/scripts/spin',
+            'cs': '../vendor/scripts/cs',
+            'text': '../vendor/scripts/text',
+            'coffee-script': '../vendor/scripts/coffee-script',
+            'iced-coffee-script': '../vendor/scripts/coffee-script-iced-large',
+            'transit': '../vendor/scripts/jquery.transit.min',
+            'handlebars': '../vendor/scripts/handlebars-1.0.0-rc.3',
+            'ember': '../vendor/scripts/ember-1.0.0-rc.3',
+            'ember-data': '../vendor/scripts/ember-data',
+            'ember-history': '../vendor/scripts/ember-history',
+            'ember-table': '../vendor/scripts/ember-table',
+            'modernizr.columns': '../vendor/scripts/modernizr/columns',
+            'bootstrap.tooltip': '../vendor/scripts/bootstrap/bootstrap-tooltip',
+            'three': '../vendor/scripts/three',
+            'screenfull': '../vendor/scripts/screenfull.min',
+            'jquery-ui': '../vendor/scripts/jquery-ui-1.10.1.custom.min',
+            'jquery.ui.datepicker-ru': '../vendor/scripts/jquery.ui.datepicker-ru',
+            'jquery.ui.datepicker-it': '../vendor/scripts/jquery.ui.datepicker-it',
+            'jquery.ui.datepicker-de': '../vendor/scripts/jquery.ui.datepicker-de',
+            'jquery.ui.timepicker': '../vendor/scripts/jquery-ui-timepicker-addon',
+            'jquery.ui.timepicker-ru': '../vendor/scripts/jquery-ui-timepicker-ru',
+            'jquery.ui.timepicker-it': '../vendor/scripts/jquery-ui-timepicker-it',
+            'jquery.ui.timepicker-de': '../vendor/scripts/jquery-ui-timepicker-de',
 
-          'jquery.ui.datepicker-ru': '../vendor/scripts/jquery.ui.datepicker-ru',
-          'jquery.ui.datepicker-it': '../vendor/scripts/jquery.ui.datepicker-it',
-          'jquery.ui.datepicker-de': '../vendor/scripts/jquery.ui.datepicker-de',
-
-          'socket.io': '../../node_modules/socket.io/node_modules/socket.io-client/dist/socket.io'
+            'socket.io': '../../node_modules/socket.io/node_modules/socket.io-client/dist/socket.io'
           }
           name: 'main'
           out: 'public/bundle/app.js'

@@ -37,10 +37,10 @@ define [
 #  App.ApplicationView = Em.View.extend
 #    templateName : 'application'
 
-  App.set 'isEditingMode', no
+  App.set 'isEditingMode', yes
 
   $(document.body).keydown (event)->
-    console.log event.keyCode
+#    console.log event.keyCode
     if event.ctrlKey
       if event.shiftKey
         switch event.keyCode
@@ -52,7 +52,9 @@ define [
             History.undo()
 
   App.ready = ->
+    $('#content').empty()
 
+    Em.run ->
     App.set 'report', App.Report.find window.currentReportId
 #
     App.set 'entrantsController', App.EntrantsController.create()
@@ -76,23 +78,6 @@ define [
     stageSelectorContainerView = App.NamedContainerView.create
       title: '_tournament_results_table'.loc()
       contentView: stageTabsView
-      countriesIsUpdating: (controller)->
-        console.log 'countriesIsUpdating', controller.get('content.isUpdating'), controller.get('content.isLoaded')
-        unless controller.get('content.isUpdating')
-          @set 'loaderView.isVisible', no
-          @set 'statusTextView.value', ''
-        else
-          @set 'loaderView.isVisible', yes
-          @set 'statusTextView.value', 'Countries loading…'
-#    App.anotherCountriesController.addObserver(
-#                    'content.isUpdating',
-#                    stageSelectorContainerView,
-#                    stageSelectorContainerView.countriesIsUpdating
-#                  )
-#
-#    App.anotherCountriesController.set('content', App.Country.find())
-#
-#
 #
 #    teamsController = Em.ArrayController.create
 #      contentBinding: 'App.report.entrants'
@@ -117,36 +102,60 @@ define [
 #      else if stageSelectorContainerView?.$()
 #        $(document.body).scrollTo(stageSelectorContainerView.$(), 500, {offset: {top: -18}})
 
-    App.store.adapter.findMany = (store, type, ids, owner)->
-      root = @rootForType(type)
-      ids = @serializeIds(ids)
-
-      data = {ids: ids}
-      data.report_id = owner.get('id') if App.Report.detectInstance(owner)
-
-      @ajax @buildURL(root), "GET", {
-        data: data,
-        success: (json)-> Ember.run @, -> @didFindMany(store, type, json)
-      }
-
-
     App.get('report').didLoad = ->
       report = App.get 'report'
       stageTabsView.set 'content', report.get('stages')
       App.racesController.set 'content', report.get('races')
 
       if report?.get('match_type') is 'team'
-        reportEntrants = App.EntrantsController.create
-          sortProperties: ['team.name']
+        reportEntrants = App.ReportEntrantsController.create
           contentBinding: 'App.report.teamRefs'
+#        reportEntrants = App.EntrantsController.create
+#          sortProperties: ['team.name']
+#          contentBinding: 'App.report.teamRefs'
         lineupView = App.LineupView.create
           classNames: ['team-lineup-grid']
           controller: reportEntrants
           contentBinding: 'controller.arrangedContent'
+#          contentBinding: 'App.report.teamRefs'
 
         window.lineupView = lineupView
         lineupContainerView = App.LineupContainerView.create contentView: lineupView
         lineupContainerView.appendTo '#content'
+
+        unless window.stageView.get('currentStage')
+          window.stageView.get('controller')?.transitionTo 'stage', App.get('report.stages.firstObject')
+#          window.stageView.set('currentStage', report.get('stages.firstObject'))
+#          window.stageView.get('currentStage').addObserver 'data', window.stageView, window.stageView.currentStageDidLoad
+
+#      App.store.adapter.findMany = (store, type, ids, owner)->
+#        root = @rootForType(type)
+#        ids = @serializeIds(ids)
+#
+#        data = {ids: ids}
+#        data.report_id = owner.get('id') if App.Report.detectInstance(owner)
+#
+#        @ajax @buildURL(root), "GET", {
+#          data: data,
+#          success: (json)-> Ember.run @, -> @didFindMany(store, type, json)
+#        }
+      App.store.adapter.ajax = (url, type, hash)->
+        hash.url = url
+        hash.type = type
+        hash.dataType = 'json'
+        hash.contentType = 'application/json; charset=utf-8'
+        hash.context = @
+
+        if hash.data
+          if type isnt 'GET'
+            hash.url += "?report_id=#{report.get 'id'}"
+            hash.data = JSON.stringify hash.data
+          else
+            hash.data.report_id = report.get 'id'
+        else
+          hash.url += "?report_id=#{report.get 'id'}"
+
+        jQuery.ajax hash
 
 
     stageSelectorContainerView.appendTo '#content'
@@ -284,7 +293,5 @@ define [
 #    title: 'Tree'
 #    contentView: treeView
 #  ).appendTo('#content')
-
-#  $ -> App.advanceReadiness()
 
 

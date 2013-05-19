@@ -13,14 +13,13 @@ define [
 
     search: (options)->
       @set 'searchQuery', options.name
-      @set 'isLoaded', yes
 
     searchPath: 'team.name'
     searchQuery: ''
     # TODO Filter by player name
     searchByPlayer: no
 
-    arrangedContent: (->
+    searchQueryChanged: (->
       content = @get 'content'
       searchQuery = @get 'searchQuery'
       searchPath = @get 'searchPath'
@@ -34,5 +33,7 @@ define [
           matches
       else
         result = content
-      result
-    ).property('content', 'searchQuery')
+      @get('the').pushObjects result
+    ).observes('content', 'arrangedContent', 'searchQuery')
+
+    arrangedContent: Em.computed.alias 'the'

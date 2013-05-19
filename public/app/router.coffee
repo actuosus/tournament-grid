@@ -13,13 +13,13 @@ define [
 ], ->
   App.Router.map ->
     @resource 'stages', ->
-#      @route 'new'
+      @route 'new'
       @resource 'stage', path: '/:stage_id'
 #        @resource 'matches', ->
 #          @route 'new'
 #
 #  App.IndexRoute = Ember.Route.extend
-#    redirect: -> @transitionTo 'stages'
+#    redirect: -> @transitionTo 'stage', App.get('report.stages.firstObject')
 #
 ##  App.ReportRoute = Ember.Route.extend
 #
@@ -30,15 +30,20 @@ define [
 ##      controller = @controllerFor('stage')
 ##      console.log controller
 ##      @render 'stages'
-#
-#  App.StageRoute = Ember.Route.extend
-#    setupController: (controller, model)->
-#      console.log controller, model
-#      controller.set 'content', model
-##    renderTemplate: ()->
-##      controller = @controllerFor('stage')
-##      console.log controller
-##      @render 'stage'
-#    model: (params)->
-#      console.log 'Model for', params
-#      App.Stage.find params.stage_id
+
+  App.ApplicationRoute = Em.Route.extend
+    setupController: (controller, model)->
+      window.stageView.set('controller', controller)
+
+  App.StageRoute = Ember.Route.extend
+    setupController: (controller, model)->
+      console.log controller, model
+
+      window.stageView.set('controller', controller)
+
+      window.stageView.set('currentStage', model)
+      window.stageView.get('currentStage').addObserver 'data', window.stageView, window.stageView.currentStageDidLoad
+
+    model: (params)->
+      console.log 'Model for', params
+      App.Stage.find params.stage_id

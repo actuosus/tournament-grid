@@ -16,6 +16,6 @@ TeamRefSchema = new Schema
   report_id: type: ObjectId, ref: 'Report'
   match_id: type: ObjectId, ref: 'Match'
   players: [type: ObjectId, ref: 'Player']
-  captain: type: ObjectId, ref: 'Player'
+  captain_id: type: ObjectId, ref: 'Player'
 
 module.exports = TeamRefSchema

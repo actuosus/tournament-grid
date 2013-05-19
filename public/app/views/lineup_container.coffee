@@ -15,7 +15,7 @@ define [
     description: '_the_teams_that_participate_in_the_report'.loc()
     childViews: [
       'titleView', 'toggleButtonView', 'contentView',
-      'loaderView', 'statusTextView', 'searchBarView',
+      'toolbarView', 'searchBarView',
       'autocompleteTextFieldView'
     ]
     searchBarView: Em.ContainerView.extend
@@ -49,27 +49,18 @@ define [
           @set('parentView.parentView.contentView.controller.searchQuery', @get 'value')
         ).observes('value')
 
-    addEntrantButtonView: Em.View.extend
-      tagName: 'button'
-      classNames: ['btn-clean', 'add-btn', 'add', 'add-team-btn']
-      template: Em.Handlebars.compile '+'
-      isVisibleBinding: 'App.isEditingMode'
-
-      click: ->
-        team = App.Team.createRecord()
-        report = App.get('report')
-        team.set 'name', @$('.name').val()
-        team.set 'report', report
-
     autocompleteTextFieldView: App.AutocompleteTextField.extend
       classNames: ['add-team-field']
       placeholder: '_team_name'.loc()
+#      controllerBinding: 'App.teamsController'
       controller: (->
         App.MergedEntrantsController.create({
           sources: [
-#            App.teamsController,
+            App.teamsController,
             App.EntrantsController.create({
-              contentBinding: 'App.report.teamRefs'})
+              contentBinding: 'App.report.teamRefs'
+              arrangedContent: Em.ArrayProxy.create(type: App.TeamRef, content: [])
+            })
           ]
         })
       ).property()
@@ -77,12 +68,13 @@ define [
       attributeBindings: ['title']
       title: '_enter_team_name_to_filter_the_teams_and_search_for_team_to_add'.loc()
 
-#      filteredContent: (->
-#        content = @get 'content'
-#        entrants = App.get 'report.teamRefs'
-#        teams = entrants.map (item)-> item.get('team')
-#        content?.filter (item)-> not teams.contains item
-#      ).property().volatile()
+      filteredContent: (->
+        console.log 'should refilter content'
+        content = @get 'content'
+        entrants = App.get 'report.teamRefs'
+        teams = entrants.map (item)-> item.get('team')
+        content?.filter (item)-> App.TeamRef.detectInstance(item) or not teams.contains item
+      ).property('content.isLoaded', 'content.length', 'App.report.teamRefs.content.length')
 
 #      textValueChanged: (->
 #        @set('parentView.contentView.controller.searchQuery', @get 'textFieldView.value')
@@ -98,26 +90,33 @@ define [
           popupView: popup
           didCreate: (entrant)=>
             report = App.get('report')
-            report.get('teamRefs').createRecord
+            teamRef = report.get('teamRefs').createRecord
               team: entrant
               report: report
+
 #            App.store.commit()
+            Em.run.later ->
+              teamRef.store.commit()
+            , 2000
             popup.hide()
         popup.set 'formView', form
         popup.set 'contentView', form
-        popup.get('childViews').push form
+        popup.pushObject form
         popup.append()
 
-      insertNewline: ->
-        player = @get 'value'
-        unless player
-          @showAddForm(@)
+#      insertNewline: ->
+#        player = @get 'value'
+#        unless player
+#          @showAddForm(@)
 
       valueChanged: (->
         team = @get 'value'
         report = App.get('report')
-        if team and report
-          teamRef = report.get('teamRefs').createRecord({team: team})
+        if App.Team.detectInstance(team) and report
+          teamRefs = report.get('teamRefs')
+          entrants = teamRefs.map (ref)-> ref.get('team')
+          return if entrants.contains team
+          teamRef = teamRefs.createRecord({team: team})
           teamRef.store.commit()
           @set 'textFieldView.value', ''
           @get('textFieldView').$().val('')

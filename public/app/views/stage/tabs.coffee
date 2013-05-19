@@ -11,7 +11,7 @@ define [
   'cs!../group_grid'
   'cs!../grid'
   'cs!../standing_table'
-  'cs!../match/grid_item'
+  'cs!../match/grid_container'
   'cs!../../controllers/matches'
   'cs!./form'
   'cs!../tab'
@@ -22,14 +22,14 @@ define [
     content: null
     currentStage: null
 
-    currentStageDidLoad: ->
-      @setViewForStage @currentStage
+    currentStageDidLoad: -> @setViewForStage @currentStage
 
     setViewForStage: (stage)->
       switch @currentStage.get 'visual_type'
         when 'single', 'grid'
           @currentStage.get('matches')
-          contentView = App.NewTournamentGridView.create()
+          contentView = App.NewTournamentGridView.create
+            entrantsNumber: @currentStage.get('entrantsNumber')
         when 'double'
           contentView = App.NewDoubleTournamentGridView.create
             entrantsNumber: @currentStage.get('entrantsNumber')
@@ -38,15 +38,10 @@ define [
             content: @currentStage.get 'rounds'
             entrants: @currentStage.get 'entrants'
         when 'matrix'
-#          console.log @currentStage.get('matches'), @currentStage.get('matches.length')
-          matchesController = App.MatchesController.create(content: @currentStage.get('matches'))
-          contentView = App.GridView.create
-            classNames: ['match-grid']
-            itemViewClass: App.MatchGridItemView
+          matchesController = App.MatchesController.create(stage: @currentStage, contentBinding: 'stage.matches')
+          contentView = App.MatchGridContainer.create
             stage: @currentStage
-#            content: @currentStage.get('matches')
             content: matchesController
-#            contentBinding: 'stage.matches'
         when 'team'
           teamsController = Em.ArrayController.create
             content: @currentStage.get('entrants')
@@ -61,16 +56,18 @@ define [
     setCurrentTabView: (@currentTabView)->
       @currentStage = @currentTabView.get 'content'
 
-      @get('container').lookup('router:main').transitionTo('stages')
+      @get('controller.container').lookup('router:main').transitionTo('stage', @currentStage)
 
-      console.log '@currentStage', @currentStage, @currentStage.get 'visual_type'
+#      console.log '@currentStage', @currentStage, @currentStage.get 'visual_type'
 #      @currentStage.on 'didLoad', @currentStageDidLoad.bind(@)
       @currentStage.addObserver 'data', @, @currentStageDidLoad
       @setViewForStage @currentStage
 
+    contentView: Em.View.extend()
 
     tabBarView: Em.View.extend
       classNames: ['i-listsTabs', 'i-listsTabs_bd']
+      contentBinding: 'parentView.content'
       template: Em.Handlebars.compile '''
                                       <ul class="b-listsTabs">
                                       {{#each view.content}}
@@ -79,13 +76,8 @@ define [
                                       {{#if App.isEditingMode}}
                                       <li class="item add"><button class="btn-clean add">+</button></li>
                                       {{/if}}
-
                                       </ul>
                                       '''
-
-      didInsertElement: ->
-        @_super()
-        @selectChildView @get('childViews.firstObject.childViews.firstObject')
 
       click: (event)->
         if $(event.target).hasClass('add')
@@ -93,7 +85,7 @@ define [
 
       selectChildView: (childView)->
         @get('childViews').forEach (child)=>
-          properChild = child.get('childViews').objectAt 0
+          properChild = child #.get('childViews').objectAt 0
           if Em.isEqual(properChild , childView)
             @get('parentView').setCurrentTabView properChild
             properChild.$().addClass('active')
@@ -104,31 +96,36 @@ define [
       itemViewClass: Em.ContainerView.extend
         tagName: 'li'
         classNames: ['item']
-        classNameBindings: ['isEditing', 'content.isUpdating']
+        classNameBindings: ['isEditing', 'content.isUpdating', 'active']#
         isEditingBinding: 'App.isEditingMode'
         childViews: ['nameView', 'removeButtonView']
         languages: App.languages
         attributeBindings: ['title']
 
-#        active: (->
-#          router = @get 'router'
-#          params = resolvedPaths @parameters
-#          currentWithIndex = @currentWhen + '.index'
-#          isActive = router.isActive.apply(router, [this.currentWhen].concat(params)) or
-#            router.isActive.apply(router, [currentWithIndex].concat(params))
-#
-#          @get 'activeClass' if isActive
-#        ).property('namedRoute', 'router.url')
+        currentWhen: 'stage'
 
-#        router: (->
-#          @get('controller').container.lookup('router:main')
-#        ).property()
+        contentChanged: (->
+          console.log 'stage item content'
+        ).observes('content.isLoaded')
+
+        active: (->
+          router = @get 'router'
+          content = @get 'content'
+          return unless router
+          currentWithIndex = @currentWhen + '.index'
+          router.isActive.apply(router, [@currentWhen].concat(content)) or
+            router.isActive.apply(router, [currentWithIndex].concat(content))
+        ).property('namedRoute', 'router.url')
+#
+        router: (->
+          @get('controller.container')?.lookup('router:main')
+        ).property()
 
         titleBinding: 'content.description'
 
         nameView: Em.View.extend
           contentBinding: 'parentView.content'
-          template: Em.Handlebars.compile '{{__name}}'
+          template: Em.Handlebars.compile '{{view.content.name}}'
 
         deleteRecord: -> @get('content').deleteRecord()
 
@@ -140,9 +137,6 @@ define [
             @_super()
 
         click: ->
-#          router = @get 'router'
-#          router.transitionTo.apply(router, args(this, router))
-
+          router = @get 'router'
+          router.transitionTo 'stage', @get 'content'
           @get('parentView').selectChildView(@)
-      contentBinding: 'parentView.content'
-    contentView: Em.View.extend()

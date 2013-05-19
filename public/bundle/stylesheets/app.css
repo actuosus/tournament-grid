@@ -329,6 +329,9 @@ input[type="date"].input-large {
 .buttons .btn {
     margin-right: 10px;
 }
+.modal.team {
+    width: 200px;
+}
 .checkbox {
     display: inline-block;
     width: 16px;
@@ -534,8 +537,9 @@ input[type="date"].input-large {
 .menu {
     position: absolute;
     width: 205px;
-    background: white;
     z-index: 200;
+    
+    background-color: white;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.75);
     max-height: 200px;
     overflow-y: auto;
@@ -558,6 +562,10 @@ input[type="date"].input-large {
 }
 .menu-item .highlight {
     font-weight: bold;
+}
+.menu-item.is-team-ref,
+.menu-item.is-team-ref .lineup-grid-item-name {
+    font-weight: normal;
 }
 .combobox .autocomplete-text-field {
     position: absolute;
@@ -1793,6 +1801,15 @@ body .ui-tooltip {
     filter: Alpha(Opacity=30);
     border-radius: 8px;
 }
+.ui-timepicker-div .ui-widget-header { margin-bottom: 8px; }
+.ui-timepicker-div dl { text-align: left; }
+.ui-timepicker-div dl dt { height: 25px; margin-bottom: -25px; }
+.ui-timepicker-div dl dd { margin: 0 10px 10px 65px; }
+.ui-timepicker-div td { font-size: 90%; }
+.ui-tpicker-grid-label { background: none; border: none; margin: 0; padding: 0; }
+.ui-timepicker-rtl{ direction: rtl; }
+.ui-timepicker-rtl dl { text-align: right; }
+.ui-timepicker-rtl dl dd { margin: 0 65px 10px 10px; }
 .presentation-container {
     width: 800px;
     height: 600px;
@@ -3004,6 +3021,8 @@ body .ui-tooltip {
     width: 268px;
     height: 191px;
     margin: 10px;
+    -webkit-transition-duration: 0.3s;
+    -webkit-transition-property: box-shadow;
 }
 .csscolumns .lineup-grid {
     -webkit-column-gap: 29px;
@@ -3025,8 +3044,9 @@ body .ui-tooltip {
     -moz-column-break-inside: avoid;
     column-break-inside: avoid;
 }
+    
 .lineup-grid-item.is-dirty {
-    background-color: red;
+    background-color: rgba(255,255,0,0.2);
 }
 .lineup-grid-item td {
     
@@ -3067,8 +3087,8 @@ body .ui-tooltip {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    padding: 0 5px;
-    margin: 5px 0;
+    
+    margin: 7px 0;
 }
 .lineup-grid-item-name a {
     color: #000000;
@@ -3088,14 +3108,17 @@ body .ui-tooltip {
     margin-top: -6px;
 }
 .lineup-grid-item-name-container {
-    background-color: #e5e5e5;
+    background-color: #e1e2e2;
     border: 1px solid #bababa;
     border-bottom: 3px solid #e9550d;
-    height: 25px;
+    height: 28px;
     position: relative;
     overflow: hidden;
     -webkit-transition-duration: 0.3s;
     -webkit-transition-property: background-color;
+}
+.is-dirty .lineup-grid-item-name-container {
+    background-color: #e2dbad;
 }
 .lineup-grid-item-name-container .loader {
     top: 2px;
@@ -3126,15 +3149,13 @@ body .ui-tooltip {
     
 }
 .lineup-grid-item-player-row.is-dirty {
-    background-color: red;
+    background-color: rgba(255,255,0, 0.2);
 }
 .lineup-grid-item-player-row .autocomplete-text-field .text-field {
     border: 0;
 }
 .lineup-grid-item-name-container .country-flag-icon {
-    margin-top: 7px;
-    margin-left: 8px;
-    margin-right: 8px;
+    margin: 9px 8px 0 8px;
 }
 .lineup-grid-item-player-row .country-flag-icon {
     margin-top: 6px;
@@ -3146,8 +3167,14 @@ body .ui-tooltip {
     top: 3px;
     right: 50px;
 }
+.lineup-grid-item-name-container .remove-btn {
+    margin-top: -5px;
+}
 .lineup-grid-item-player-row.is-saving {
     opacity: 0.5;
+}
+.lineup-grid-item-player-row.is-selected {
+    background-color: #e9550d;
 }
 .lineup-grid-item-captain-marker {
     width: 10px;
@@ -3189,20 +3216,19 @@ body .ui-tooltip {
     -moz-user-select: none;
     -o-user-select: none;
 }
-.csscolumns .match-grid {
     
     
     
-    -webkit-column-width: 158px;
-    -moz-column-width: 158px;
-    column-width: 158px;
-    -webkit-column-gap: 29px;
-    -moz-column-gap: 29px;
-    column-gap: 29px;
-}
+    
+    
+    
 .match-grid-item {
     width: 158px;
     height: 80px;
+    -webkit-transition: background-color 0.3s ease-in-out;
+}
+.match-grid-item.is-dirty {
+    background-color: rgba(255,255,0,0.2);
 }
 .grid .match-grid-item {
     float: left;
@@ -3210,39 +3236,28 @@ body .ui-tooltip {
     
     position: relative;
 }
-.csscolumns .match-grid .match-grid-item {
-    float: none;
-    margin-right: 0;
-    -webkit-column-break-inside: avoid;
-    -moz-column-break-inside: avoid;
-    column-break-inside: avoid;
-}
+    
+    
+    
+    
+    
 .match-grid-item-edit-controls {
     position: absolute;
-    top: 50%;
-    right: -10px;
-    margin-top: -2px;
-    background: black;
-    width: 12px;
-    height: 30px;
+    left: 156px;
+    top: 16px;
+    width: 63px;
     border-bottom: 0;
     line-height: 21px;
     vertical-align: top;
     border-top-right-radius: 3px;
     border-bottom-right-radius: 3px;
+    background-color: white;
+    z-index: 2;
+    box-shadow: 4px 0 10px rgba(0,0,0,0.5);
+    padding: 4px;
 }
-.match-grid-item-edit-controls .remove-btn {
-    top: 8px;
-}
-.match-grid-item-edit-controls .edit-btn {
-    position: absolute;
-    bottom: 2px;
-    height: 18px;
-}
-.match-grid-item .save-btn {
-    position: absolute;
-    top: -5px;
-    left: 60px;
+.match-grid-item-edit-controls .btn {
+    margin-bottom: 2px;
 }
 .team-standings-table-item .name {
     border-right: 1px solid #dddddd;
@@ -3407,6 +3422,63 @@ body .ui-tooltip {
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.75);
     background: #fff;
     border: 1px solid #afafaf;
+    border-radius: 0;
+    padding: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    z-index: 2 !important;
+}
+.ui-widget button {
+    display: inline-block;
+    position: relative;
+    height: 24px;
+    padding: 0 13px;
+    background-image: -webkit-linear-gradient(top, #f1f1f1 0%, #dbdbdb 100%);
+    cursor: pointer;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10px;
+    text-align: center;
+    border-radius: 2px;
+    border: 1px solid #b0b0b0;
+    color: #434343;
+    box-shadow: inset 0 1px rgba(255, 255, 255, 0.75);
+    -webkit-transition-property: background-image;
+    -webkit-transition-duration: 0.3s;
+}
+.ui-widget button:hover {
+    background-image: -webkit-linear-gradient(top, #fbfbfb 0%, #e5e5e5 100%);
+}
+.ui-widget button:active {
+    background-image: -webkit-linear-gradient(top, #d7d7d7 0%, #c1c1c1 100%);
+}
+.ui-widget button:disabled {
+    border: 1px solid #cecece;
+    color: #616161;
+    text-shadow: none;
+}
+.ui-widget button.ui-priority-primary {
+    color: white;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
+    box-shadow: inset 0 1px rgba(255, 255, 255, 0.25), 0 1px 2px rgba(0, 0, 0, 0.25);
+    font-weight: bold;
+    background-image: -webkit-linear-gradient(top, #2993dd 0%, #217fd4 100%);
+    border-color: #1a5a95;
+}
+.ui-widget button.ui-priority-primary:hover {
+    background-image: -webkit-linear-gradient(top, #46bafd 0%, #34aafe 100%);
+    border-color: #227cd1;
+}
+.ui-widget button.ui-priority-primary:active {
+    background-image: -webkit-linear-gradient(top, #15528f 0%, #1e68a2 100%);
+    border-color: #144167;
+}
+.ui-widget button.ui-priority-primary:disabled {
+    background-image: -webkit-linear-gradient(top, #d4d4d4 0%, #cacaca 100%);
+    border-color: #a7a7a7;
+}
+.toolbar {
+    position: absolute;
+    right: 10px;
+    top: 10px;
 }
 .icon-remove {
     font-style: normal;
@@ -3534,6 +3606,19 @@ body .ui-tooltip {
     text-overflow: ellipsis;
     overflow: hidden;
 }
+input.match-start-date {
+    font-size: 11px;
+    float: left;
+    max-width: 80px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    min-height: 15px;
+    border: 0;
+    box-shadow: none;
+    padding: 0;
+    background-color: transparent;
+}
 .match-info-bar {
     float: right;
 }
@@ -3629,4 +3714,10 @@ body .ui-tooltip {
 }
 .team-standings-table .editable-label {
     display: inline-block;
+}
+.grid-container {
+    position: relative;
+}
+.menu-item .lineup-grid-item-name {
+    margin: 2px 0;
 }

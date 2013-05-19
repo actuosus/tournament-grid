@@ -24,6 +24,9 @@ define [
 
     contentBinding: 'controller.arrangedContent'
 
+    ###
+      * Allow to filter content
+    ###
     filteredContent: (-> @get 'content').property().volatile()
 
     selectNext: ->
@@ -127,18 +130,25 @@ define [
 
     insertNewline: Em.K
 
-    showAll: -> @get('controller')?.all()
+    showAll: ->
+      @set 'hasFocus', yes
+#      @notifyPropertyChange 'hasFocus'
+      @get('controller')?.all()
+#    showAll: -> @notifyPropertyChange 'content.isLoaded'
+
+#    contentIsUpdating: (->
+#      return unless @get 'hasFocus'
+#      if not @get('content.isUpdating') and @get('content.isLoaded')
+#        @loaderView.set 'isVisible', no
+#      else
+#        @loaderView.set 'isVisible', yes
+#    ).observes('content.isLoaded', 'content.isUpdating')
 
     contentLoaded: (->
       return unless @get 'hasFocus'
       content = @get 'filteredContent'
-      unless @get 'content.isLoaded'
-        @addButtomView.set 'isVisible', no
-        @loaderView.set('isVisible', yes)
-#        @cancelButtomView.set('isVisible', yes)
-      else
-        @loaderView.set('isVisible', no)
-#        @cancelButtomView.set('isVisible', no)
+      console.log 'content.isLoaded', @get 'content.isLoaded'
+      if @get 'content.isLoaded'
         unless @get 'menuView'
           menuView = App.MenuView.create
             content: content
@@ -166,7 +176,7 @@ define [
           @addButtomView.set 'isVisible', yes
         else
           @addButtomView.set 'isVisible', no
-    ).observes 'content.isLoaded'
+    ).observes 'content.isLoaded', 'filteredContent'
 
     loaderView: App.LoaderView.extend()
 
@@ -186,13 +196,12 @@ define [
         popupView: popup
         entrant: @get('entrant')
         didCreate: (entrant)=>
-          @set('selection', entrant)
+          @set('value', entrant)
           popup.hide(entrant)
       popup.set 'formView', form
       popup.set 'contentView', form
-      popup.get('childViews').push form
+      popup.get('childViews').pushObject form
       popup.append()
-      form.focus()
       popup
 
     cancelButtomView: Em.View.extend

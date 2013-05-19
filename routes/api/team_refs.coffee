@@ -43,28 +43,9 @@ exports.create = (req, res) ->
 
 
 exports.update = (req, res)->
-  if req.body?.team
-    team = req.body.team
-    teamClone = util._extend {}, team
-    await Team.findByIdAndUpdate req.params._id, { $set: team }, defer err, doc
-    team = teamClone
-    console.log 'Body', team, teamClone
-    #    socket.send {action: 'update', model: 'Team', _id: doc._id}
-    if team.report_id
-      console.log "Pushing team #{req.params._id} to report #{team.report_id}"
-      Report.findById team.report_id, (reportErr, report)->
-        console.log report
-#        report.teamRefs.push team_id: doc._id, players: doc.players
-#        report.save()
-    else
-      console.log 'No report', doc
-      if req.body?.report_id
-        Report.findById req.body.report_id, (reportErr, report)->
-          report.team_refs.filter((ref)-> ref.team_id.toString() is req.params._id).forEach (item)->
-            report.team_refs.id(item._id).remove()
-          report.save()
-
-    #        socket.send {action: 'update', model: 'Report', _id: doc.report_id}
+  if req.body?.team_ref
+    teamRef = req.body.team_ref
+    await TeamRef.findByIdAndUpdate req.params._id, teamRef, defer err, doc
     res.send team_ref: doc
   else
     res.send 400, error: "server error"
