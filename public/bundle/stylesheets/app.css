@@ -316,6 +316,13 @@ input[type="date"].input-large {
     background-color: black;
     border: 2px solid white;
 }
+.small-popup {
+    color: white;
+    background-color: black;
+    border-radius: 4px;
+    border: 0;
+    padding: 10px;
+}
 .modal {
     position: absolute;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.75);
@@ -2253,6 +2260,10 @@ body .ui-tooltip {
     white-space: nowrap;
     text-overflow: ellipsis;
 }
+.team-name a {
+    color: black;
+    text-decoration: none;
+}
 .team-undefined .team-name {
     width: 107px;
     border: 1px dashed #858586;
@@ -2938,10 +2949,9 @@ body .ui-tooltip {
 .tournament-match.is-selected .team-grid-item {
     box-shadow: 0 0 10px #ff6c00;
 }
-.tournament-match .save-btn {
-    position: absolute;
-    top: -5px;
-    left: 60px;
+.tournament-match .match-grid-item-edit-controls {
+    left: 156px;
+    top: 15px;
 }
 .connector {
     position: absolute;
@@ -3228,13 +3238,21 @@ body .ui-tooltip {
     -webkit-transition: background-color 0.3s ease-in-out;
 }
 .match-grid-item.is-dirty {
+    border-radius: 3px;
     background-color: rgba(255,255,0,0.2);
+}
+.match-grid-item.is-past .match-start-date {
+    color: #afb0b0;
 }
 .grid .match-grid-item {
     float: left;
     margin-right: 43px;
     
     position: relative;
+}
+.grid .match-grid-item {
+    padding: 5px;
+    height: 67px;
 }
     
     
@@ -3243,8 +3261,8 @@ body .ui-tooltip {
     
 .match-grid-item-edit-controls {
     position: absolute;
-    left: 156px;
-    top: 16px;
+    left: 161px;
+    top: 20px;
     width: 63px;
     border-bottom: 0;
     line-height: 21px;
@@ -3259,6 +3277,25 @@ body .ui-tooltip {
 .match-grid-item-edit-controls .btn {
     margin-bottom: 2px;
 }
+.matches-table-item {
+    position: relative;
+}
+.match-table-item .autocomplete-text-field {
+    max-height: 21px;
+}
+.matches-table-item .team-grid-item {
+    border: 0;
+    background-color: transparent;
+}
+.matches-table-item td {
+    position: relative;
+}
+.matches-table-item.is-dirty td {
+    background-color: rgba(255,255,0,0.2);
+}
+.matches-table-item.is-updating td {
+    background-color: rgba(155,0,155,0.2);
+}
 .team-standings-table-item .name {
     border-right: 1px solid #dddddd;
 }
@@ -3270,6 +3307,7 @@ body .ui-tooltip {
     cursor: pointer;
     -webkit-transition-property: color, background-color;
     -webkit-transition-duration: .3s;
+    text-decoration: none;
 }
 .team-standings-table-item .name a:hover {
     color: #3291dc;
@@ -3419,13 +3457,12 @@ body .ui-tooltip {
     box-shadow: 0 0 1px 1px violet;
 }
 .ui-datepicker {
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.75);
+    
     background: #fff;
-    border: 1px solid #afafaf;
+    border: 0;
     border-radius: 0;
-    padding: 20px;
+    padding: 0;
     font-family: Arial, Helvetica, sans-serif;
-    z-index: 2 !important;
 }
 .ui-widget button {
     display: inline-block;
@@ -3526,6 +3563,9 @@ body .ui-tooltip {
 .matches-table-container-header .toggle-btn {
     top: 7px;
 }
+.matches-table-container-header .toggle-btn-collapsed {
+    background-position-y: 2px;
+}
 .matches-table-title {
     padding: 5px 8px;
 }
@@ -3539,6 +3579,7 @@ body .ui-tooltip {
     padding: 4px 2px !important;
 }
 .matches-table-points .points-label {
+    font-weight: bold;
     padding: 0 3px;
 }
 .matches-table-map-type {
@@ -3591,6 +3632,15 @@ body .ui-tooltip {
     float: right;
     margin-left: 10px;
 }
+.matches-table-team1 .team-name {
+    float: right;
+}
+.matches-table-team1 .remove-btn {
+    left: 6px;
+    top: 50%;
+    margin-top: -6px;
+    right: auto;
+}
 .matches-group-table {
     border: 0;
 }
@@ -3605,6 +3655,8 @@ body .ui-tooltip {
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
+    min-width: 40px;
+    min-height: 1em;
 }
 input.match-start-date {
     font-size: 11px;
@@ -3696,22 +3748,6 @@ input.match-start-date {
 .group-lineup-grid .lineup-grid-item-name-container {
     padding: 0 8px;
 }
-.matches-table-item {
-    position: relative;
-}
-.matches-table-item .team-grid-item {
-    border: 0;
-    background-color: transparent;
-}
-.matches-table-item td {
-    position: relative;
-}
-.matches-table-item.is-dirty td {
-    background-color: rgba(255,0,0,0.2);
-}
-.matches-table-item.is-updating td {
-    background-color: rgba(155,0,155,0.2);
-}
 .team-standings-table .editable-label {
     display: inline-block;
 }
@@ -3720,4 +3756,24 @@ input.match-start-date {
 }
 .menu-item .lineup-grid-item-name {
     margin: 2px 0;
+}
+.team-cell {
+    overflow: hidden;
+}
+.lineup-list-name-container {
+    border-bottom: 3px solid #f35900;
+    padding-bottom: 2px;
+}
+.lineup-list-name-container a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+.team-lineup-popup-players-item {
+    padding: 4px 0;
+}
+.team-lineup-popup-players-item-name {
+    margin-top: 2px;
+    margin-left: 4px;
+    font-size: 11px;
 }

@@ -29,7 +29,7 @@ exports.list = (req, res)->
 
 
 exports.item = (req, res)->
-  Team.where('_id', req.params._id).findOne().exec (err, doc)->
+  Team.findById req.params._id, (err, doc)->
     if doc
       res.send team: doc
     else

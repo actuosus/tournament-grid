@@ -13,11 +13,12 @@ define [
   ###
   Represents team model in grid. Also can be used standalone.
   ###
-  App.TeamGridItemView = Em.ContainerView.extend App.MovingHightlight,
+  App.TeamGridItemView = Em.ContainerView.extend App.MovingHightlight, App.Editing,
     classNames: ['team-grid-item']
     classNameBindings: ['winnerClassName', 'isEditing', 'teamUndefined', 'isUpdating']
-    childViews: '''countryFlagView nameView
-     autocompleteView pointsView resetButtonView'''.w()
+    childViews: ['countryFlagView', 'nameView', 'pointsView']
+
+    editingChildViews: ['autocompleteView', 'resetButtonView']
 
     matchBinding: 'parentView.match'
     isUpdatingBinding: 'match.isUpdating'
@@ -25,17 +26,8 @@ define [
 
     teamUndefined: (-> !@get('content')).property('content')
 
-    countryFlagView: Em.View.extend
-      tagName: 'i'
-      classNames: ['country-flag-icon', 'team-country-flag-icon']
-      classNameBindings: ['countryFlagClassName', 'hasFlag']
-      attributeBindings: ['title']
-      title: (-> @get 'content.country.name').property('content.country')
+    countryFlagView: App.CountryFlagView.extend
       contentBinding: 'parentView.content'
-      hasFlag: (-> !!@get 'content.country.code').property('content.country')
-      countryFlagClassName: (->
-        'country-flag-icon-%@'.fmt @get 'content.country.code'
-      ).property('content.country.code')
 
     autocompleteView: App.AutocompleteTextField.extend
       isVisible: no
@@ -88,7 +80,10 @@ define [
     nameView: Em.View.extend
       classNames: ['team-name']
       contentBinding: 'parentView.content'
-      template: Em.Handlebars.compile '{{view.content.name}}'
+#      href: (->
+#        "/teams/#{@get 'content.id'}"
+#      ).property('content')
+      template: Em.Handlebars.compile '{{view.content.name}}'#<a {{bindAttr href="view.href"}} target="_blank">
 
       click: ->
         if @get('parentView.isEditable')
@@ -135,8 +130,11 @@ define [
 #          @$().blur => @$().unbind('keyup').css {'-webkit-user-modify': 'none'}
 #          @$().focus().select()
 #
+
     isEditing: no,
     isEditableBinding: 'App.isEditingMode'
+
+    _isEditingBinding: 'App.isEditingMode'
 
     isWinner: (->
       @get('parentView.match.winner.clientId') is @get('content.clientId')

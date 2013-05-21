@@ -1,6 +1,6 @@
 <% extend 'layout.ect' %>
 
-<p class="b-title b-title_bump"><span class="ico ico_players"></span>Матч</p>
+<p class="b-title b-title_bump"><span class="ico ico_players"></span><%- @__ 'Match' %></p>
 
 <div class="b-profile" id="bx_887404810_31826">
     <div class="b-tournament">
@@ -9,7 +9,7 @@
 
             </a></div>
 
-            <h2 class="title">Virtus.pro*BenQ</h2>
+            <h2 class="title"><% if @doc.entrant1_id : %><%- @doc.entrant1_id.name %><% end %></h2>
             <p class="teamTitle">Состав команды:</p>
 
             <ul class="b-tournament__team">
@@ -34,7 +34,7 @@
             <div class="logo"><a href="/base/teams/empire/empire-dota2/">			<img src="/bitrix/cache/s1/virtus/image.show/142w_149h_clipBOTH/upload/iblock/013/5155421_medium.jpg" width="142" height="149" alt="" class="logo__img" border="0" title="Empire">
 
             </a></div>
-            <h2 class="title">Empire</h2>
+            <h2 class="title"><% if @doc.entrant2_id : %><%- @doc.entrant2_id.name %><% end %></h2>
             <p class="teamTitle">Состав команды:</p>
 
             <ul class="b-tournament__team">
@@ -60,9 +60,9 @@
 
                 World Cyber Games</div>
             <div class="status">test_mix  <span class="status__item">
-            Прошедший            </span> 28.03.2013 05:49</div>
+            Прошедший            </span> <%- @moment(@doc.date).format('DD.MM.YYYY hh:mm') %></div>
 
-            <div class="tournamentScore">[ <b class="tournamentScore__item">0:7</b> ]</div>
+            <div class="tournamentScore">[ <b class="tournamentScore__item"><%- @doc.entrant1_points %>:<%- @doc.entrant2_points %></b> ]</div>
 
 
             <table class="b-profileMatches__history b-profileMatches__history_align_center">

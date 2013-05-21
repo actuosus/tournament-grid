@@ -1,0 +1,31 @@
+/**
+ * match-table
+ * @author: actuosus
+ * Date: 21/05/2013
+ * Time: 13:22
+ */
+
+.matches-table-item {
+    position: relative;
+}
+
+.match-table-item .autocomplete-text-field {
+    max-height: 21px;
+}
+
+.matches-table-item .team-grid-item {
+    border: 0;
+    background-color: transparent;
+}
+
+.matches-table-item td {
+    position: relative;
+}
+
+.matches-table-item.is-dirty td {
+    background-color: rgba(255,255,0,0.2);
+}
+
+.matches-table-item.is-updating td {
+    background-color: rgba(155,0,155,0.2);
+}

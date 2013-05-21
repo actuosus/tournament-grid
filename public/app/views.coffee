@@ -24,9 +24,12 @@ define [
   'cs!./views/multilingual_text_area'
   'cs!./views/multilingual_editable_label'
 #  'cs!./views/date_field'
+  'cs!./views/country_flag'
   'cs!./views/country_select'
   'cs!./views/named_container'
   'cs!./views/editable_label'
+
+  'cs!./views/date_with_popup'
 
   'cs!./views/tester'
 

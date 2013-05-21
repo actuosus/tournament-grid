@@ -13,6 +13,7 @@ module.exports.Round = [
   matches: ['50fd102c3612183b15000001', '50fd102c3612183b15000002', '50fd102c3612183b15000004', '50fd102c3612183b15000005']
 ,
   _id: '50fd4a58cbbf53a72a000003'
+  sort_index: 0
   name: 'Полуфинал'
   _name:
     ru: 'Полуфинал'
@@ -22,6 +23,7 @@ module.exports.Round = [
   matches: ['50fd102c3612183b15000003', '50fd102c3612183b15000006']
 ,
   _id: '50fd4a58cbbf53a72a000004'
+  sort_index: 1
   name: 'Финал'
   _name:
     ru: 'Финал'

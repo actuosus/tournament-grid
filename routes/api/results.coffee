@@ -16,3 +16,15 @@ exports.list = (req, res)->
 exports.item = (req, res)->
   Result.where('_id', req.params._id).findOne().exec (err, doc)->
     res.send result: doc
+
+exports.create = (req, res)->
+  Result.where('_id', req.params._id).findOne().exec (err, doc)->
+    res.send result: doc
+
+exports.update = (req, res)->
+  Result.where('_id', req.params._id).findOne().exec (err, doc)->
+    res.send result: doc
+
+exports.delete = (req, res)->
+  Result.where('_id', req.params._id).findOne().exec (err, doc)->
+    res.send result: doc

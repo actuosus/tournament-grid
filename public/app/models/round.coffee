@@ -9,8 +9,11 @@
 define ['cs!../core'],->
   App.Round = DS.Model.extend Ember.History,
     primaryKey: '_id'
+    sort_index: DS.attr 'number'
     _trackProperties: ['name']
+
     name: DS.attr('string', {loc: {keyPath: '_name', defaultLanguage: 'ru'}})
+    _name: DS.attr('object')
     __name: (->
       console.log arguments
       nameHash = @get '_name'
@@ -22,8 +25,6 @@ define ['cs!../core'],->
         value = @get 'name'
       value
     ).property('_name', 'App.currentLanguage').volatile()
-
-    _name: DS.attr('object')
 
     parentReference: 'stage'
     parent: (-> @get @get 'parentReference').property('stage')
@@ -47,8 +48,8 @@ define ['cs!../core'],->
     matches: DS.hasMany 'App.Match'
     results: DS.hasMany 'App.Result'
 
-    stage: DS.belongsTo 'App.Stage'
-    bracket: DS.belongsTo 'App.Bracket'
+    stage: DS.belongsTo('App.Stage', {inverse: 'rounds'})
+    bracket: DS.belongsTo('App.Bracket', {inverse: 'rounds'})
 
     itemIndex: (->
       parent = @get 'parent'

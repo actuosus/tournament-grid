@@ -12,6 +12,8 @@ define ['cs!../core'],->
 
     target: null
 
+    origin: null
+
     showCloseButton: no
 
     childViews: ['arrowBorderView', 'arrowView', 'closeButtonView']
@@ -41,6 +43,7 @@ define ['cs!../core'],->
       target = @get('target')
 #      targetElement = target.get('element')
       element = @get('element')
+      origin = @get('origin')
       dimensions = width: element.offsetWidth, height: element.offsetHeight
 #      targetDimensions = width: targetElement.offsetWidth, height: targetElement.offsetHeight
 #      console.log dimensions
@@ -48,18 +51,27 @@ define ['cs!../core'],->
         offset = target.$().offset()
         targetWidth = target.$().width()
         targetHeight = target.$().height()
+
+        # Right
         offset.left += targetWidth
         offset.top += targetHeight/2 - 30
 
         transformOriginX = '-10px'
 
-        if offset.left + dimensions.width > window.innerWidth
+        if origin is 'center'
+          offset.left -= targetWidth/2 + dimensions.width/2
+          offset.top += targetHeight/2 - dimensions.height/2
+          transformOriginX = "#{targetWidth/2}"
+        else if origin is 'top'
+          offset = target.$().offset()
+          # Centered horizontaly
+          offset.left += targetWidth/2 - dimensions.width/2
+          offset.top -= dimensions.height
+          transformOriginX = "#{targetWidth/2}"
+        else if offset.left + dimensions.width > window.innerWidth
           offset.left -= dimensions.width + targetWidth
           @$().addClass('right')
           transformOriginX = "#{dimensions.width - targetWidth + 10}px"
-
-#        if offset.top + dimensions.height > window.innerHeight
-#          offset.top -= dimensions.height
 
         transformOrigin = "#{transformOriginX} 30px"
 

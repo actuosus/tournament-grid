@@ -12,10 +12,7 @@ define [
 
     lastResults: null
 
-    results: Ember.computed('@each.entrant1_points',
-      '@each.entrant2_points',
-      '@each.entrant1',
-      '@each.entrant2', ->
+    results: (->
         incrementPropertyForEntrant = (entrant, property, increment)->
           if results.has entrant
             result = results.get entrant
@@ -71,4 +68,8 @@ define [
 
         lastResults = Ember.ArrayController.create content: resultsArray, sortProperties: ['position']
         @set 'lastResults', lastResults
-    )
+        lastResults
+    ).property('@each.entrant1_points',
+      '@each.entrant2_points',
+      '@each.entrant1',
+      '@each.entrant2')

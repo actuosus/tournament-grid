@@ -13,10 +13,12 @@ define ['cs!../core'],->
     firstName: DS.attr 'string'
     middleName: DS.attr 'string'
     lastName: DS.attr 'string'
-    country: DS.belongsTo 'App.Country'
-    team: DS.belongsTo 'App.Team'
 
-#    teamRef: DS.belongsTo 'App.TeamRef'
+    # Relations
+    country: DS.belongsTo 'App.Country'
+
+    team: DS.belongsTo 'App.Team'
+    teamRef: DS.belongsTo('App.TeamRef', {inverse: 'players'})
 
     matches: DS.hasMany 'App.Match'
 

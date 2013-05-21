@@ -13,7 +13,7 @@
 <td class="matches-table-points">{{view App.NumberView classNames="points-label" valueBinding=view.content.entrant2_points}}]</td>
 <td class="matches-table-team2">{{view App.TeamCellView contentBinding=view.content.entrant2 matchBinding=view.content contentIndex=1}}</td>
 <td class="matches-table-map-type" title="Карта"><span class="matches-table-map-type-marker">@</span>{{view.content.map_type}}</td>
-<td class="matches-table-description" title="Описание"><a href="#">{{view.content.description}}</a></td>
+<td class="matches-table-description" title="Описание"><a {{bindAttr href="view.content.link"}} target="_blank">{{view.content.description}}</a></td>
 <td>
     {{view App.GamesInfoBarView contentBinding=view.content.games}}
 </td>

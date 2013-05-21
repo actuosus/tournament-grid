@@ -25,7 +25,7 @@ define ['cs!../core'],->
     # Just for creation marking
     report: DS.belongsTo 'App.Report'
 
-    players: DS.hasMany 'App.Player'
+    players: DS.hasMany('App.Player', {inverse: 'team'})
 
 #    captain: DS.belongsTo 'App.Player'
     hasCaptain: (->

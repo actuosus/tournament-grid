@@ -35,12 +35,13 @@ define [
     setupController: (controller, model)->
       window.stageView.set('controller', controller)
 
+#  App.StagesNewRoute = Em.Route.extend
+#    setupController: (controller, model)->
+#      window.stageView.set('controller', controller)
+
   App.StageRoute = Ember.Route.extend
     setupController: (controller, model)->
-      console.log controller, model
-
       window.stageView.set('controller', controller)
-
       window.stageView.set('currentStage', model)
       window.stageView.get('currentStage').addObserver 'data', window.stageView, window.stageView.currentStageDidLoad
 

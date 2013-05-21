@@ -29,6 +29,7 @@ define [
 
   # Rounds
     content: (->
+      stage = @get('stage')
       entrantsNumber = @get('entrantsNumber')
       roundsCount = Math.log(entrantsNumber) / Math.log(2)-1
       rounds = []
@@ -41,8 +42,11 @@ define [
             roundName = '_final'.loc()
           when 1
             roundName = '_semifinal'.loc()
-        round = Em.Object.create
-          index: roundsCount - i
+        roundIndex = roundsCount - i
+        actualRound = stage?.getByPath "#{roundIndex}"
+        round = App.RoundProxy.create
+          content: actualRound
+          index: roundIndex
           itemIndex: i
           name: roundName
           parentReference: 'stage'
@@ -53,7 +57,7 @@ define [
           if roundsCount-i-1 >= 0
             leftPath = "#{roundsCount-i-1}.#{j*2}"
             rightPath = "#{roundsCount-i-1}.#{j*2+1}"
-          match = Em.Object.create
+          match = App.MatchProxy.create
             index: j
             itemIndex: j
             date: new Date()
@@ -61,15 +65,16 @@ define [
             rightPath: rightPath
             parentNodePath: "#{roundsCount-i+1}.#{Math.floor(j/2)}"
             entrants: [null, null]
+#            content: actualMatch
             round: round
           round.get('matches').push match
         rounds.push round
-      finalRound = Em.Object.create
+      finalRound = App.RoundProxy.create
         name: '_winner'.loc()
         itemIndex: -1
         parentReference: 'stage'
         matches: []
-      finalRound.get('matches').push Em.Object.create
+      finalRound.get('matches').push App.MatchProxy.create
         isWinner: yes
         isFinal: yes
         itemIndex: -1

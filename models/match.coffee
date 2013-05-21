@@ -14,6 +14,8 @@ ObjectId = Schema.ObjectId
 socketNotifyPlugin = require '../lib/mongoose'
 
 MatchSchema = new Schema
+  sort_index: type: Number
+
   title: type: String
   description: type: String # editable
   date: type: Date # editable

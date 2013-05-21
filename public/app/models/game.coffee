@@ -11,6 +11,8 @@ define ['cs!../core'],->
     primaryKey: '_id'
     title: DS.attr 'string'
     link: DS.attr 'string'
-    match: DS.belongsTo 'App.Match'
+
+    # Relationships
+    match: DS.belongsTo('App.Match', {inverse: 'games'})
 
   App.Game.toString = -> 'Game'

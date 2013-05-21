@@ -14,7 +14,10 @@ exports.list = (req, res)->
 exports.item = (req, res)->
   Match.findById(req.params._id)
     .populate('author')
+    .populate('entrant1_id')
+    .populate('entrant2_id')
     .exec (err, doc)->
+      console.log doc
       res.render 'matches/item.ect', title: 'Match', doc: doc
 
 exports.createForm = (req, res)->

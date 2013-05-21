@@ -9,7 +9,11 @@
 Round = require('../../models').Round
 Stage = require('../../models').Stage
 
-exports.list = (req, res)-> Round.find({}).exec (err, docs)-> res.send rounds: docs
+exports.list = (req, res)->
+  query = Round.find({})
+  query.where('_id').in(req.query?.ids) if req.query?.ids
+  query.exec (err, docs)-> res.send rounds: docs
+
 exports.item = (req, res)->
   Round.where('_id', req.params._id).findOne().exec (err, doc)->
     res.send round: doc

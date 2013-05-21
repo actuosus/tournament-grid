@@ -15,6 +15,7 @@ exports.item = (req, res)->
   Team.findById(req.params._id)
     .populate('author')
     .populate('country_id')
+    .populate('players')
     .exec (err, doc)->
       res.render 'teams/item.ect', title: 'Team', doc: doc
 

@@ -7,36 +7,24 @@
 
 define [
   'cs!../autocomplete_text_field'
+  'cs!./lineup_popup'
 ], ->
   ###
   Represents team model in grid. Also can be used standalone.
   ###
-  App.TeamCellView = Em.ContainerView.extend
+  App.TeamCellView = Em.ContainerView.extend App.Editing,
     classNames: ['team-cell']
     classNameBindings: ['winnerClassName', 'isEditing', 'teamUndefined', 'isUpdating']
-    childViews: [
-      'countryFlagView',
-      'nameView',
-      'autocompleteView',
-      'resetButtonView'
-    ]
+    childViews: ['countryFlagView', 'nameView']
+    editingChildViews: ['autocompleteView', 'resetButtonView']
 
-    matchBinding: 'parentView.match'
+    matchBinding: 'parentView.content'
     isUpdatingBinding: 'match.isUpdating'
 
     teamUndefined: (-> !@get('content')).property('content')
 
-    countryFlagView: Em.View.extend
-      tagName: 'i'
-      classNames: ['country-flag-icon', 'team-country-flag-icon']
-      classNameBindings: ['countryFlagClassName', 'hasFlag']
-      attributeBindings: ['title']
-      title: (-> @get 'content.country.name').property('content.country')
+    countryFlagView: App.CountryFlagView.extend
       contentBinding: 'parentView.content'
-      hasFlag: (-> !!@get 'content.country.code').property('content.country')
-      countryFlagClassName: (->
-        'country-flag-icon-%@'.fmt @get 'content.country.code'
-      ).property('content.country.code')
 
     autocompleteView: App.AutocompleteTextField.extend
       isVisible: no
@@ -45,7 +33,10 @@ define [
       filteredContent: (->
         content = @get 'content'
         entrants = @get 'parentView.match.round.stage.entrants'
-        content.filter (item)-> not entrants.contains item
+        if entrants
+          content.filter (item)-> not entrants.contains item
+        else
+          content
       ).property().volatile()
 
       contentFilter: (content)->
@@ -84,7 +75,11 @@ define [
           @focus()
 
     nameView: Em.View.extend
+      tagName: 'a'
       classNames: ['team-name']
+#      attributeBindings: ['href', 'target']
+#      target: '_blank'
+#      href: (-> "/teams/#{@get 'content.id'}").property('content')
       contentBinding: 'parentView.content'
       template: Em.Handlebars.compile '{{view.content.name}}'
 
@@ -94,6 +89,21 @@ define [
             @set('parentView.autocompleteView.isVisible', yes)
             @get('parentView.autocompleteView').focus()
 
+      mouseEnter: ->
+        @set 'shouldShowPopup', yes
+        Em.run.later =>
+          if @get 'shouldShowPopup'
+            @lineupPopup = App.TeamLineupPopupView.create
+              target: @
+              content: @get 'content'
+              origin: 'top'
+            @lineupPopup.append()
+        , 300
+
+      mouseLeave: ->
+        @set 'shouldShowPopup', no
+        @lineupPopup.hide() if @lineupPopup
+
     points: (->
       contentIndex = @get('contentIndex')
       console.log @get('match'), contentIndex
@@ -101,10 +111,11 @@ define [
     ).property()
 
     isEditing: no,
+    _isEditingBinding: 'isEditable'
     isEditableBinding: 'App.isEditingMode'
 
     isWinner: (->
-      @get('parentView.match.winner.clientId') is @get('content.clientId')
+      @get('match.winner.clientId') is @get('content.clientId')
     ).property 'points', 'match.winner'
 
     winnerClassName: (->

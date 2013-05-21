@@ -13,6 +13,7 @@ define [
   'ember-data'
 
   'cs!./core'
+  'cs!./mixins'
 
   'cs!./controllers'
   'cs!./views'
@@ -53,6 +54,50 @@ define [
 
   App.ready = ->
     $('#content').empty()
+
+    App.RoundProxy = Em.ObjectProxy.extend
+      isSelected: no
+      content: null
+
+    App.MatchProxy = Em.ObjectProxy.extend
+      isSelected: no
+      entrant1: (->
+        console.log arguments
+      ).property()
+      entrant2: (->
+        console.log arguments
+      ).property()
+
+      entrantsChanged: ((self, property)->
+#        console.log arguments
+        content = @get('content')
+        unless content
+          content = App.Match.createRecord()
+          content.set property, @get property
+          content.set 'sort_index', @get 'sort_index'
+          content.set 'round', @get 'round.content'
+          @set 'content', content
+      ).observes('entrant1', 'entrant2')
+
+      close: ->
+        content = @get('content')
+        content.close() if content
+      content: (->
+        match = @get('round.content.matches')?.objectAtContent @get 'sort_index'
+#        console.log match
+#        console.log match.get('entrants') if match
+        @set('entrants', match.get('entrants')) if match
+        match
+      ).property('some', 'round.content.matches.@each.isLoaded')
+
+      some: null
+
+      roundContentIsLoaded: (->
+  #      console.log 'round.content.isLoaded'
+        @set 'some', @get 'round.index'
+  #      @notifyPropertyChange('some')
+      ).observes('round.content.isLoaded')
+
 
     Em.run ->
     App.set 'report', App.Report.find window.currentReportId

@@ -74,6 +74,11 @@
     text-overflow: ellipsis;
 }
 
+.team-name a {
+    color: black;
+    text-decoration: none;
+}
+
 .team-undefined .team-name {
     width: 107px;
     border: 1px dashed #858586;

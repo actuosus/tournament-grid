@@ -31,6 +31,7 @@ module.exports.Match = [
   games: ['5111afa9c3a093c8a1000002', '5111afa9c3a093c8a1000003', '5111afa9c3a093c8a1000004']
 ,
   _id: '50fd102c3612183b15000003',
+  sort_index: 0
   title: 'Umitara vs Bly',
   entrant1_id: '50fcdf189c68d90f07000001',
   entrant2_id: '50fcdf189c68d90f07000004',
@@ -64,6 +65,7 @@ module.exports.Match = [
   description: 'Дополнительно описание, которе вбивается'
 ,
   _id: '50fd102c3612183b15000006',
+  sort_index: 1
   title: 'Stephano vs Wikipediots',
   entrant1_id: '50fcdf189c68d90f07000003',
   entrant2_id: '50fcdf189c68d90f07000002',
@@ -75,6 +77,7 @@ module.exports.Match = [
   description: 'Еще какое-то описание, дополняющее текст'
 ,
   _id: '50fd102c3612183b15000007',
+  sort_index: 0
   title: 'Bly vs Wikipediots',
   entrant1_id: '50fcdf189c68d90f07000004',
   entrant2_id: '50fcdf189c68d90f07000002',
@@ -176,8 +179,8 @@ module.exports.Match = [
 ,
   _id: '51142bdc323f4b360c000009',
   title: 'LeX vs evil',
-  entrant1_id: '5107d4cd351fb19719000002',
-  entrant2_id: '5107d4cd351fb19719000003',
+  entrant1_id: '50fcdf189c68d90f07000002',
+  entrant2_id: '5116163383cf2f2534000002',
   entrant1_points: 4,
   entrant2_points: 7,
   date: new Date '03.24.2013'
@@ -187,8 +190,8 @@ module.exports.Match = [
 ,
   _id: '51142bdc323f4b360c000010',
   title: 'LeX vs evil',
-  entrant1_id: '5107d4cd351fb19719000002',
-  entrant2_id: '5107d4cd351fb19719000003',
+  entrant1_id: '50fcdf189c68d90f07000002',
+  entrant2_id: '5116163383cf2f2534000002',
   entrant1_points: 4,
   entrant2_points: 7,
   date: new Date '03.24.2013'
@@ -198,8 +201,8 @@ module.exports.Match = [
 ,
   _id: '51142bdc323f4b360c000011',
   title: 'LeX vs evil',
-  entrant1_id: '5107d4cd351fb19719000002',
-  entrant2_id: '5107d4cd351fb19719000003',
+  entrant1_id: '50fcdf189c68d90f07000002',
+  entrant2_id: '5116163383cf2f2534000002',
   entrant1_points: 4,
   entrant2_points: 7,
   date: new Date '03.24.2013'
@@ -209,8 +212,8 @@ module.exports.Match = [
 ,
   _id: '51142bdc323f4b360c000012',
   title: 'LeX vs evil',
-  entrant1_id: '5107d4cd351fb19719000002',
-  entrant2_id: '5107d4cd351fb19719000003',
+  entrant1_id: '50fcdf189c68d90f07000002',
+  entrant2_id: '5116163383cf2f2534000002',
   entrant1_points: 4,
   entrant2_points: 7,
   date: new Date '03.24.2013'

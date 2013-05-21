@@ -206,6 +206,9 @@ define [
 
   App.languageObserver = App.LanguageObserver.create()
 
+  $.datepicker?.setDefaults $.datepicker.regional[App.get('currentLanguage')]
+  $.timepicker?.setDefaults $.timepicker.regional[App.get('currentLanguage')]
+
   App.animation =
     duration: 300
 

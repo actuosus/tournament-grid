@@ -14,41 +14,29 @@ define [
   'cs!./ask_move_form'
 #  'cs!./how_is_the_captain_form'
 ], ->
-  App.TeamLineupGridItem = Em.ContainerView.extend
+  App.TeamLineupGridItem = Em.ContainerView.extend App.Editing,
     classNames: ['lineup-grid-item', 'team-lineup-grid-item']
     classNameBindings: ['content.isDirty']
-    childViews: ['teamNameView', 'playersView', 'addPlayerView']
+    childViews: ['teamNameView', 'playersView']
+    editingChildViews: ['addPlayerView']
 
-    teamNameView: Em.ContainerView.extend(App.MovingHightlight,
+    _isEditingBinding: 'App.isEditingMode'
+
+    didInsertElement: ->
+      @$().css scale: 0
+      @$().transition scale: 1
+
+    teamNameView: Em.ContainerView.extend(App.MovingHightlight, App.Editing,
       contentBinding: 'parentView.content.team'
       classNames: ['lineup-grid-item-name-container']
-      childViews: ['countryFlagView', 'nameView', 'removeButtonView']#'editButtonView',
+      childViews: ['countryFlagView', 'nameView']#'editButtonView',
 
-#      editableChildViews: []
-#
-#      edititableModeChanged: (->
-#        isEditingMode = App.get 'isEditingMode'
-#        editableChildViews = @get 'editableChildViews'
-#        container = @
-#        childViews = @get 'childViews'
-#
-#        if isEditingMode
-#          editableChildViews.forEach (view)-> childViews.pushObject container.get view
-#        else
-#          editableChildViews.forEach (view)-> childViews.removeObject container.get view
-#      ).observes('App.isEditingMode')
+      _isEditingBinding: 'parentView._isEditing'
 
-      countryFlagView: Em.View.extend
-        tagName: 'i'
-        classNames: ['country-flag-icon', 'team-country-flag-icon']
-        classNameBindings: ['countryFlagClassName', 'hasFlag']
-        attributeBindings: ['title']
+      editingChildViews: ['removeButtonView']
+
+      countryFlagView: App.CountryFlagView.extend
         contentBinding: 'parentView.content'
-        titleBinding: 'content.country.name'
-        hasFlag: (-> !!@get 'content.country.code').property('content.country')
-        countryFlagClassName: (->
-          'country-flag-icon-%@'.fmt @get 'content.country.code'
-        ).property('content.country.code')
 
       nameView: Em.View.extend
         contentBinding: 'parentView.content'

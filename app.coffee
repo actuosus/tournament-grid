@@ -211,6 +211,9 @@ app.get '/api/reports/:_id', routes.api.reports.item
 
 app.get '/api/results', routes.api.results.list
 app.get '/api/results/:_id', routes.api.results.item
+app.post '/api/results', routes.api.results.create
+app.put '/api/results/:_id', routes.api.results.update
+app.delete '/api/results/:_id', routes.api.results.delete
 
 app.get '/api/rounds', routes.api.rounds.list
 app.get '/api/rounds/:_id', routes.api.rounds.item
@@ -271,7 +274,7 @@ app.get '/reports/create', ensureAuthenticated, routes.reports.createForm
 app.post '/reports/create', ensureAuthenticated, routes.reports.create
 app.get '/reports/:_id', ensureAuthenticated, routes.reports.item
 
-app.get '/match/:_id', ensureAuthenticated, routes.matches.item
+app.get '/matches/:_id', ensureAuthenticated, routes.matches.item
 
 app.get '/teams/:_id', ensureAuthenticated, routes.teams.item
 

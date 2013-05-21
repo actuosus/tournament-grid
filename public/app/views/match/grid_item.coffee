@@ -10,17 +10,30 @@ define [
   'cs!../game/info_bar'
   'cs!../team/grid_item_container'
 ], ->
-  App.MatchGridItemView = Em.ContainerView.extend
+  App.MatchGridItemView = Em.ContainerView.extend App.Editing,
     classNames: ['match-grid-item']
-    childViews: ['dateView', 'infoBarView', 'contentView', 'editControlsView']#'saveButtonView',
-    classNameBindings: ['content.isSelected', 'content.isDirty']
+    childViews: ['dateView', 'infoBarView', 'contentView']#'saveButtonView',
+    editingChildViews: ['editControlsView']
+    classNameBindings: ['content.isSelected', 'content.isDirty', 'content.isPast']
     attributeBindings: ['title']
     titleBinding: 'content.description'
+
+#    willInsertElement: ->
+#      @$().css scale: 0
+
+    didInsertElement: ->
+      @$().css scale: 0
+      @$().transition scale: 1
 
     isEditable: (->
       isEditingMode = App.get('isEditingMode')
       status = @get 'content.status'
-    ).property('App.isEditingMode', 'content.status')
+      currentStatus = @get 'content.currentStatus'
+      console.log currentStatus
+      isEditingMode and status is 'opened'
+    ).property('App.isEditingMode', 'content.status', 'content.currentStatus')
+
+    _isEditingBinding: 'App.isEditingMode'
 
     mouseEnter: ->
       @set 'editControlsView.isVisible', yes
@@ -43,18 +56,10 @@ define [
       # Redirect to match URL
       document.location.href = url if url
 
-    dateView: App.DateField.extend
+    dateView: App.DateWithPopupView.extend
       classNames: ['match-start-date']
       contentBinding: 'parentView.content.date'
-
-      value: (->
-        moment(@get 'content.date').format('DD.MM.YY HH:mm:ss')
-      ).property('content')
-
-#      valueChanged: (->
-#        @set 'content', @get 'value'
-#      ).observes('value')
-
+      format: 'DD.MM.YY'
 
     infoBarView: App.GamesInfoBarView.extend
       contentBinding: 'parentView.content.games'
@@ -70,17 +75,10 @@ define [
         matchBinding: 'parentView.match'
 
     editControlsView: Em.ContainerView.extend
+      isVisible: no
       classNames: ['match-grid-item-edit-controls']
-      childViews: ['removeButtonView', 'closeButtonView', 'saveButtonView']
+      childViews: ['closeButtonView', 'saveButtonView']#'removeButtonView',
       contentBinding: 'parentView.content'
-
-#      isVisibleChanged: (->
-#        isVisible = @get 'isVisible'
-#        if isVisible
-#          @$().css({right: 0}).animate({right: -10})
-#        else
-#          @$().css({display: 'block'}).animate({right: 0}, => @$().css({display: 'none'}))
-#      ).observes('isVisible')
 
       closeButtonView: Em.View.extend
         tagName: 'button'
@@ -98,9 +96,10 @@ define [
         ).property('content.status')
 
         isVisible: (->
-          isEditingMode = App.get('isEditingMode')
-          yes if isEditingMode
-        ).property('App.isEditingMode', 'parentView.content.isDirty')
+          isEditingMode = App.get 'isEditingMode'
+          isOpenable = @get 'content.isOpenable'
+          yes if isEditingMode and isOpenable
+        ).property('App.isEditingMode', 'content.isDirty', 'content.isOpenable')
 
         click: ->
           match = @get 'content'
@@ -116,14 +115,17 @@ define [
         template: Em.Handlebars.compile '{{loc "_save"}}'
 
         isVisible: (->
-          isEditingMode = App.get('isEditingMode')
           isDirty = @get 'parentView.content.isDirty'
-          yes if isEditingMode and isDirty
-        ).property('App.isEditingMode', 'parentView.content.isDirty')
+          if isDirty
+            yes
+          else
+            no
+        ).property('parentView.content.isDirty')
 
         click: ->
           match = @get 'parentView.content'
-          match.transaction.commit() if match
+          transaction = match.get('transaction')
+          transaction.commit() if transaction
 
       editButtonView: Em.View.extend
         tagName: 'button'

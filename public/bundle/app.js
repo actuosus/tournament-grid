@@ -53744,7 +53744,7 @@ define("jquery.ui.timepicker-de", function(){});
 (function() {
 
   define('cs!core',['jquery.cookie', 'ember', 'ember-data', 'cs!./locales', 'cs!./config'], function(cookie, ember, emberData, locales, config) {
-    var App, TournamentGrid, lang, localize;
+    var App, TournamentGrid, lang, localize, _ref, _ref1;
     lang = $.cookie('lang');
     localize = function(language) {
       if (language == null) {
@@ -53934,6 +53934,12 @@ define("jquery.ui.timepicker-de", function(){});
       }).observes('App.currentLanguage')
     });
     App.languageObserver = App.LanguageObserver.create();
+    if ((_ref = $.datepicker) != null) {
+      _ref.setDefaults($.datepicker.regional[App.get('currentLanguage')]);
+    }
+    if ((_ref1 = $.timepicker) != null) {
+      _ref1.setDefaults($.timepicker.regional[App.get('currentLanguage')]);
+    }
     App.animation = {
       duration: 300
     };
@@ -53977,7 +53983,7 @@ require({
     'bootstrap.tooltip': '/vendor/scripts/bootstrap/bootstrap-tooltip',
     'three': '/vendor/scripts/three',
     'screenfull': '/vendor/scripts/screenfull.min',
-    'jquery-ui': '/vendor/scripts/jquery-ui-1.10.1.custom.min',
+    'jquery-ui': '/vendor/scripts/jquery-ui-1.10.3.custom',
     'jquery.ui.datepicker-ru': '/vendor/scripts/jquery.ui.datepicker-ru',
     'jquery.ui.datepicker-it': '/vendor/scripts/jquery.ui.datepicker-it',
     'jquery.ui.datepicker-de': '/vendor/scripts/jquery.ui.datepicker-de',

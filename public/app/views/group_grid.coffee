@@ -27,6 +27,9 @@ define [
         classNames: ['lineup-grid-item-name-container']
         childViews: ['nameView', 'addButtonView', 'automaticCountingButtonView', 'removeButtonView']
 
+        editingChildViews: []
+        _isEditingBinding: 'App.isEditingMode'
+
         nameView: App.EditableLabel.extend
           isEditableBinding: 'App.isEditingMode'
           contentBinding: 'parentView.content'
@@ -46,7 +49,7 @@ define [
           template: Em.Handlebars.compile '+'
 
           click: ->
-            console.debug 'Should add match.'
+            console.debug 'Should add entrant.'
             content = @get 'content'
             if content.createRecord
               content.createRecord() if content
@@ -86,8 +89,8 @@ define [
         childViews: ['stadingsView', 'contentView']
         entrantsBinding: 'parentView.content.entrants'
         matches: (->
-          actualContent = @get 'parentView.content.matches'
-          App.MatchesController.create content: actualContent, round: @get 'parentView.content'
+          round = @get 'parentView.content'
+          App.MatchesController.create content: round.get('matches'), round: round
         ).property 'parentView.content.matches'
         contentBinding: 'parentView.content.matches'
         contentView: App.MatchesGroupTableContainerView.extend

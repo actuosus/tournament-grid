@@ -76,10 +76,10 @@ exports.update = (req, res)->
             teamRef.save()
 #      await TeamRef.findOneAndUpdate {team_id: player.team_id, report_id: player.report_id}, {$pull: {players: p._id}}, defer err, oldTeamRef
 
-      await TeamRef.findByIdAndUpdate player.team_ref_id, {$push: {players: p._id}}, defer err, newTeamRef
+      await TeamRef.findByIdAndUpdate player.team_ref_id, {$push: {players: req.params._id}}, defer err, newTeamRef
     else if player.team_ref_id
       # Just adding to team ref
-      await TeamRef.findByIdAndUpdate player.team_ref_id, {$push: {players: p._id}}, defer err, teamRef
+      await TeamRef.findByIdAndUpdate player.team_ref_id, {$push: {players: req.params._id}}, defer err, teamRef
     else if player.team_id and req.query.report_id
       # Remove old reference first
       await TeamRef.find({report_id: req.query.report_id}).exec defer err, teamRefs

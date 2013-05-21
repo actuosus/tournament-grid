@@ -22,6 +22,8 @@ define [
 
       entrantsNumberBinding: 'parentView.entrantsNumber'
 
+      stageBinding: 'parentView.stage'
+
       setupWidth: ->
         entrantsNumber = @get('entrantsNumber')
         roundsCount = Math.log(entrantsNumber) / Math.log(2)
@@ -36,6 +38,8 @@ define [
         @setupWidth()
 
       createWinnerBracket: ->
+        stage = @get('stage')
+        console.log 'Winner', stage
         entrantsNumber = @get('entrantsNumber')
         roundsCount = Math.log(entrantsNumber) / Math.log(2)-1
         rounds = []
@@ -51,7 +55,12 @@ define [
               roundName = '_final'.loc()
             when 1
               roundName = '_semifinal'.loc()
-          round = Em.Object.create
+          roundIndex = roundsCount - i
+          actualRound = stage?.getByPath "#{roundIndex}"
+          round = App.RoundProxy.create
+            content: actualRound
+            index: roundIndex
+            sort_index: roundIndex
             itemIndex: i
             name: roundName
             parentReference: 'bracket'
@@ -63,8 +72,10 @@ define [
             if roundsCount-i-1 >= 0
               leftPath = "#{roundsCount-i-1}.#{j*2}"
               rightPath = "#{roundsCount-i-1}.#{j*2+1}"
-            match = Em.Object.create
+            match = App.MatchProxy.create
+              index: j
               itemIndex: j
+              sort_index: j
               date: new Date()
               leftPath: leftPath
               rightPath: rightPath
@@ -73,15 +84,6 @@ define [
               round: round
             round.get('matches').push match
           rounds.push round
-  #      finalRound = Em.Object.create
-  #        itemIndex: -1
-  #        parentReference: 'stage'
-  #        matches: []
-  #      finalRound.get('matches').push Em.Object.create
-  #        isWinner: yes
-  #        isFinal: yes
-  #        itemIndex: -1
-  #      rounds.push finalRound
         bracket.set 'rounds', rounds
         bracket
 
@@ -96,7 +98,9 @@ define [
           isWinnerBracket: no
         for r in [roundsCount-1..0]
           for n in [1..0]
-            round = Em.Object.create
+            round = App.RoundProxy.create
+              index: roundsCount - rCount
+              sort_index: roundsCount - rCount
               itemIndex: rCount--
               parentReference: 'bracket'
               bracket: bracket
@@ -107,8 +111,10 @@ define [
               else
                 parentNodePath = null
 #              console.log parentNodePath
-              match = Em.Object.create
+              match = App.MatchProxy.create
+                index: m
                 itemIndex: m
+                sort_index: m
                 parentNodePath: parentNodePath
                 entrants: [null, null]
                 round: round
@@ -132,22 +138,22 @@ define [
         classNames: ['finals']
         content: (->
           rounds = []
-          finalRound = Em.Object.create
+          finalRound = App.RoundProxy.create
             name: '_final'.loc()
             itemIndex: -1
             parentReference: 'stage'
             matches: []
-          finalRound.get('matches').push Em.Object.create
+          finalRound.get('matches').push App.MatchProxy.create
             itemIndex: -1
             entrants: [null, null]
             round: finalRound
           rounds.push finalRound
-          winnerRound = Em.Object.create
+          winnerRound = App.RoundProxy.create
             name: '_winner'.loc()
             itemIndex: -1
             parentReference: 'stage'
             matches: []
-          winnerRound.get('matches').push Em.Object.create
+          winnerRound.get('matches').push App.MatchProxy.create
             isWinner: yes
             isFinal: yes
             itemIndex: -1

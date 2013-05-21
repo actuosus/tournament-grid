@@ -33,6 +33,7 @@
 @import "team-lineup-grid.css";
 @import "lineup_grid_item.css";
 @import "match_grid.css";
+@import "match-table.css";
 @import "team_standings_table_item.css";
 @import "team_info_item.css";
 @import "multilingual-field.css";
@@ -101,6 +102,10 @@
     top: 7px;
 }
 
+.matches-table-container-header .toggle-btn-collapsed {
+    background-position-y: 2px;
+}
+
 .matches-table-title {
     padding: 5px 8px;
 }
@@ -117,6 +122,7 @@
 }
 
 .matches-table-points .points-label {
+    font-weight: bold;
     padding: 0 3px;
 }
 
@@ -182,6 +188,18 @@
     margin-left: 10px;
 }
 
+.matches-table-team1 .team-name {
+    float: right;
+}
+
+.matches-table-team1 .remove-btn {
+    left: 6px;
+    top: 50%;
+    margin-top: -6px;
+    right: auto;
+}
+
+
 .matches-group-table {
     border: 0;
 }
@@ -198,6 +216,8 @@
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
+    min-width: 40px;
+    min-height: 1em;
 }
 
 input.match-start-date {
@@ -314,27 +334,6 @@ input.match-start-date {
     padding: 0 8px;
 }
 
-.matches-table-item {
-    position: relative;
-}
-
-.matches-table-item .team-grid-item {
-    border: 0;
-    background-color: transparent;
-}
-
-.matches-table-item td {
-    position: relative;
-}
-
-.matches-table-item.is-dirty td {
-    background-color: rgba(255,0,0,0.2);
-}
-
-.matches-table-item.is-updating td {
-    background-color: rgba(155,0,155,0.2);
-}
-
 .team-standings-table .editable-label {
     display: inline-block;
 }
@@ -345,4 +344,29 @@ input.match-start-date {
 
 .menu-item .lineup-grid-item-name {
     margin: 2px 0;
+}
+
+.team-cell {
+    overflow: hidden;
+}
+
+.lineup-list-name-container {
+    border-bottom: 3px solid #f35900;
+    padding-bottom: 2px;
+}
+
+.lineup-list-name-container a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.team-lineup-popup-players-item {
+    padding: 4px 0;
+}
+
+.team-lineup-popup-players-item-name {
+    margin-top: 2px;
+    margin-left: 4px;
+    font-size: 11px;
 }

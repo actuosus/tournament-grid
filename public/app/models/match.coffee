@@ -10,70 +10,20 @@ define ['cs!../core'],->
   App.Match = DS.Model.extend Ember.History,
     primaryKey: '_id'
 
-    _trackProperties: [
-      'entrant1_points'
-      'entrant2_points'
-    ]
-#    init: ->
-#      @_super()
-#
-#      DS.StateManager.prototype.states.rootState.states.loaded.states.created.states.locked = DS.State.create
-#        enter: (manager)-> console.log arguments
-#
-#      stateManager = DS.StateManager.create record: @
-#      @.set 'stateManager', stateManager
-#
-#      @._setup()
-#
-#      stateManager.goToState 'empty'
-    currentStatus: (->
-      status = @get 'status'
-      date = @get 'date'
-      entrant1_points = @get 'entrant1_points'
-      entrant2_points = @get 'entrant2_points'
-      currentDate = new Date
-      if not date or date > currentDate and (not entrant1_points and not entrant2_points)
-        currentStatus = 'future'
-      if date < currentDate or (entrant1_points and entrant2_points) and status isnt 'closed'
-        currentStatus = 'active'
-      if date > (currentDate + 12) and (entrant1_points and entrant2_points)
-        currentStatus = 'delayed'
-      currentStatus
-    ).property('date', 'entrant1_points', 'entrant2_points')
-
-    open: ->
-      console.log 'Opening match'
-      @set 'status', 'opened'
-      @store.commit()
-
-    close: ->
-      console.log 'Closing match'
-      @set 'status', 'closed'
-      @store.commit()
-
-    url: DS.attr 'string'
-
-    isLocked: no
-    isSelected: no
     status: DS.attr 'string', {defaultValue: 'opened'}
+
+    sort_index: DS.attr 'number'
 
     title: DS.attr 'string'
     description: DS.attr 'string'
     date: DS.attr 'date'
+    url: DS.attr 'string'
 
     map_type: DS.attr 'string'
 
     type: DS.attr 'string'
 
     editingStatus: DS.attr 'string'
-
-    entrants: (->
-      isWinner = @get 'isWinner'
-      if isWinner
-        [@get('entrant1')]
-      else
-        [@get('entrant1'), @get('entrant2')]
-    ).property().volatile()
 
     entrant1: DS.belongsTo 'App.Team'
     entrant2: DS.belongsTo 'App.Team'
@@ -89,12 +39,63 @@ define ['cs!../core'],->
 
     games: DS.hasMany 'App.Game'
 
-#    isDirtyChanged: (->
-#      console.log @get 'isDirty'
-#      if @get 'isDirty'
-#        @set 'round.isDirty', yes
-#
-#    ).observes('isDirty')
+    _trackProperties: [
+      'entrant1_points'
+      'entrant2_points'
+    ]
+
+    link: (->
+      "/matches/#{@get 'id'}"
+    ).property('url')
+
+    currentStatus: (->
+      status = @get 'status'
+      date = @get 'date'
+      entrant1_points = @get 'entrant1_points'
+      entrant2_points = @get 'entrant2_points'
+      reopenInterval = 1000 * 60 * 60 * 12
+      currentDate = new Date
+      if not date or date > currentDate and (not entrant1_points and not entrant2_points)
+        currentStatus = 'future'
+      if date < currentDate or (entrant1_points and entrant2_points) and status isnt 'closed'
+        currentStatus = 'active'
+      if date > (currentDate + reopenInterval) and (entrant1_points and entrant2_points)
+        currentStatus = 'delayed'
+      currentStatus
+    ).property('date', 'entrant1_points', 'entrant2_points')
+
+    isOpenable: (->
+      currentStatus = @get 'currentStatus'
+      date = @get 'date'
+      currentDate = new Date
+      reopenInterval = 1000 * 60 * 60 * 12
+      currentStatus is 'active' and date + reopenInterval > currentDate
+    ).property('currentStatus')
+
+    open: ->
+      console.log 'Opening match'
+      @set 'status', 'opened'
+      @store.commit()
+
+    close: ->
+      console.log 'Closing match'
+      @set 'status', 'closed'
+      @store.commit()
+
+    isPast: (->
+      new Date > @get 'date'
+    ).property('date')
+
+    isLocked: no
+    isSelected: no
+
+    entrants: (->
+      isWinner = @get 'isWinner'
+      if isWinner
+        [@get('entrant1')]
+      else
+        [@get('entrant1'), @get('entrant2')]
+    ).property().volatile()
 
     entrant1Changed: (->
       isWinner = @get 'isWinner'

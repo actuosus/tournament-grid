@@ -33,7 +33,7 @@ define [
 
       itemViewClass: Em.ContainerView.extend
         classNames: ['tournament-match']
-        childViews: ['dateView', 'infoBarView', 'connectorView', 'contentView']#, 'saveButtonView'
+        childViews: ['dateView', 'infoBarView', 'connectorView', 'contentView', 'editControlsView']
         classNameBindings: ['content.isSelected', 'content.isFinal', 'content.isDirty']
         attributeBindings: ['title']
         roundIndexBinding: 'parentView.parentView.contentIndex'
@@ -45,6 +45,7 @@ define [
 #        titleBinding: 'content.description'
 
         mouseEnter: ->
+          @set 'editControlsView.isVisible', yes
           node = @get 'content'
           lastNode = null
           while node
@@ -56,6 +57,8 @@ define [
               break
 
         mouseLeave: ->
+          @set 'editControlsView.isVisible', no
+
           node = @get 'content'
           lastNode = null
           while node
@@ -160,47 +163,17 @@ define [
 
             @$().css styles
 
-        saveButtonView: Em.View.extend
-          tagName: 'button'
-          classNames: ['btn', 'btn-primary', 'btn-mini', 'save-btn', 'save']
-          template: Em.Handlebars.compile '{{loc "_save"}}'
-          isVisible: (->
-            isEditingMode = App.get('isEditingMode')
-            isDirty = @get 'parentView.content.isDirty'
-            yes if isEditingMode and isDirty
-          ).property('App.isEditingMode', 'parentView.content.isDirty')
-
-          click: ->
-            match = @get 'parentView.content'
-
-            if match
-              match.transaction.commit()
-
-        dateView: App.DateField.extend
+        dateView: App.DateWithPopupView.extend
           classNames: ['match-start-date']
           contentBinding: 'parentView.content.date'
-          attributeBindings: ['title']
-          isEditableBinding: 'App.isEditingMode'
-
-          title: (->
-            moment(@get 'content').format('DD.MM.YY HH:mm:ss')
-          ).property('content')
-
-          value: (->
-            moment(@get 'content').format('DD.MM.YY')
-          ).property('content')
-
-          rawDateChanged: (->
-            @set 'content', @get 'rawDate'
-          ).observes('rawDate')
+          format: 'DD.MM.YY'
+          showPopupBinding: 'App.isEditingMode'
 
         infoBarView: App.GamesInfoBarView.extend
           contentBinding: 'parentView.content.games'
-#          shouldShowInfoLabel: (->
-#            @get('content.length') > 0
-#          ).property('content.length')
           showInfoLabel: yes
           classNames: ['match-info-bar']
+          isEditableBinding: 'App.isEditingMode'
 
         contentView: Em.CollectionView.extend
           classNames: ['match-grid-item-entrants']
@@ -212,3 +185,80 @@ define [
             pointsIsVisible: (->
               !@get('match.isFinal')
             ).property()
+
+        editControlsView: Em.ContainerView.extend
+          isVisible: no
+          classNames: ['match-grid-item-edit-controls']
+          childViews: ['closeButtonView', 'saveButtonView']#'removeButtonView',
+          contentBinding: 'parentView.content'
+
+          closeButtonView: Em.View.extend
+            tagName: 'button'
+            classNames: ['btn', 'btn-primary', 'btn-mini', 'close-btn', 'close']
+            contentBinding: 'parentView.content'
+            template: Em.Handlebars.compile '{{view.actionLabel}}'
+
+            actionLabel: (->
+              console.log @get('content'), @get('content.status')
+              switch @get 'content.status'
+                when 'closed'
+                  '_open'.loc()
+                when 'opened'
+                  '_close'.loc()
+            ).property('content.status')
+
+            isVisible: (->
+              isEditingMode = App.get 'isEditingMode'
+              isOpenable = @get 'content.isOpenable'
+              yes if isEditingMode and isOpenable
+            ).property('App.isEditingMode', 'content.isDirty', 'content.isOpenable')
+
+            click: ->
+              match = @get 'content'
+              switch @get 'content.status'
+                when 'closed'
+                  match.open()
+                when 'opened'
+                  match.close()
+
+          saveButtonView: Em.View.extend
+            tagName: 'button'
+            classNames: ['btn', 'btn-primary', 'btn-mini', 'save-btn', 'save']
+            template: Em.Handlebars.compile '{{loc "_save"}}'
+
+            isVisible: (->
+              isDirty = @get 'parentView.content.isDirty'
+              yes if isDirty
+            ).property('parentView.content.isDirty').volatile()
+
+            click: ->
+              match = @get 'parentView.content'
+              transaction = match.get('transaction')
+              transaction.commit() if transaction
+
+          editButtonView: Em.View.extend
+            tagName: 'button'
+            contentBinding: 'parentView.content'
+            isVisibleBinding: 'App.isEditingMode'
+            classNames: ['btn-clean', 'edit-btn', 'edit']
+            attributeBindings: ['title']
+            title: '_edit'.loc()
+
+            click: ->
+              team = @get('content')
+              team.deleteRecord()
+              team.store.commit()
+
+          removeButtonView: Em.View.extend
+            tagName: 'button'
+            contentBinding: 'parentView.content'
+            isVisibleBinding: 'App.isEditingMode'
+            classNames: ['btn-clean', 'remove-btn', 'remove']
+            attributeBindings: ['title']
+            title: '_remove'.loc()
+            template: Em.Handlebars.compile '×'
+
+            click: ->
+              team = @get('content')
+              team.deleteRecord()
+              team.store.commit()

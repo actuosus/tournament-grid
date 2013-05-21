@@ -69,10 +69,9 @@
     box-shadow: 0 0 10px #ff6c00;
 }
 
-.tournament-match .save-btn {
-    position: absolute;
-    top: -5px;
-    left: 60px;
+.tournament-match .match-grid-item-edit-controls {
+    left: 156px;
+    top: 15px;
 }
 
 .connector {

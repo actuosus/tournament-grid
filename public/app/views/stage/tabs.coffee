@@ -29,9 +29,11 @@ define [
         when 'single', 'grid'
           @currentStage.get('matches')
           contentView = App.NewTournamentGridView.create
+            stage: @currentStage
             entrantsNumber: @currentStage.get('entrantsNumber')
         when 'double'
           contentView = App.NewDoubleTournamentGridView.create
+            stage: @currentStage
             entrantsNumber: @currentStage.get('entrantsNumber')
         when 'group'
           contentView = App.GroupGridView.create
@@ -56,7 +58,7 @@ define [
     setCurrentTabView: (@currentTabView)->
       @currentStage = @currentTabView.get 'content'
 
-      @get('controller.container').lookup('router:main').transitionTo('stage', @currentStage)
+      @get('controller.container')?.lookup('router:main').transitionTo('stage', @currentStage)
 
 #      console.log '@currentStage', @currentStage, @currentStage.get 'visual_type'
 #      @currentStage.on 'didLoad', @currentStageDidLoad.bind(@)
@@ -70,17 +72,29 @@ define [
       contentBinding: 'parentView.content'
       template: Em.Handlebars.compile '''
                                       <ul class="b-listsTabs">
-                                      {{#each view.content}}
-                                        {{view view.itemViewClass contentBinding=this}}
-                                      {{/each}}
-                                      {{#if App.isEditingMode}}
-                                      <li class="item add"><button class="btn-clean add">+</button></li>
-                                      {{/if}}
-                                      </ul>
+                                        {{#each view.content}}
+                                          {{view view.itemViewClass contentBinding=this}}
+                                        {{/each}}
+                                        {{#if App.isEditingMode}}
+                                          <li {{bindAttr class=":item :add view.addActive:active"}}><button class="btn-clean add">+</button></li>
+                                        {{/if}}
+                                        </ul>
                                       '''
+
+      addActive: (->
+        router = @get 'router'
+        return unless router
+        router.isActive.apply(router, ['stages.new'])
+      ).property('router.url')
+
+      router: (->
+        @get('controller.container')?.lookup('router:main')
+      ).property('controller')
 
       click: (event)->
         if $(event.target).hasClass('add')
+          router = @get 'router'
+          router.transitionTo 'stages.new' if router
           @set 'parentView.currentView', App.StageForm.create(classNames: ['padded'], report: App.report)
 
       selectChildView: (childView)->
@@ -92,21 +106,16 @@ define [
           else
             properChild .$().removeClass('active')
 
-#        itemViewClass: App.MultilingualEditableLabel.extend
       itemViewClass: Em.ContainerView.extend
         tagName: 'li'
         classNames: ['item']
-        classNameBindings: ['isEditing', 'content.isUpdating', 'active']#
-        isEditingBinding: 'App.isEditingMode'
+        classNameBindings: ['active']#
+#        isEditingBinding: 'App.isEditingMode'
         childViews: ['nameView', 'removeButtonView']
         languages: App.languages
         attributeBindings: ['title']
 
         currentWhen: 'stage'
-
-        contentChanged: (->
-          console.log 'stage item content'
-        ).observes('content.isLoaded')
 
         active: (->
           router = @get 'router'
@@ -116,10 +125,10 @@ define [
           router.isActive.apply(router, [@currentWhen].concat(content)) or
             router.isActive.apply(router, [currentWithIndex].concat(content))
         ).property('namedRoute', 'router.url')
-#
+
         router: (->
           @get('controller.container')?.lookup('router:main')
-        ).property()
+        ).property('controller')
 
         titleBinding: 'content.description'
 
@@ -138,5 +147,5 @@ define [
 
         click: ->
           router = @get 'router'
-          router.transitionTo 'stage', @get 'content'
+          router.transitionTo 'stage', @get 'content' if router
           @get('parentView').selectChildView(@)

@@ -28,7 +28,12 @@
 }
 
 .match-grid-item.is-dirty {
+    border-radius: 3px;
     background-color: rgba(255,255,0,0.2);
+}
+
+.match-grid-item.is-past .match-start-date {
+    color: #afb0b0;
 }
 
 .grid .match-grid-item {
@@ -36,6 +41,11 @@
     margin-right: 43px;
     /*margin-bottom: 10px;*/
     position: relative;
+}
+
+.grid .match-grid-item {
+    padding: 5px;
+    height: 67px;
 }
 
 /*.csscolumns .match-grid .match-grid-item {*/
@@ -48,8 +58,8 @@
 
 .match-grid-item-edit-controls {
     position: absolute;
-    left: 156px;
-    top: 16px;
+    left: 161px;
+    top: 20px;
     width: 63px;
     border-bottom: 0;
     line-height: 21px;
