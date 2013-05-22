@@ -13,8 +13,14 @@ define ['cs!./autocomplete_text_field'], ->
       'currentValueView',
       'disclosureButtonView',
       'autocompleteTextFieldView'
-#      'selectView'
       ]
+
+    selectionBinding: 'autocompleteTextFieldView.selection'
+
+    selectionChanged: (->
+      @set 'value', @get 'selection'
+    ).observes('selection')
+
     valueBinding: 'autocompleteTextFieldView.selection'
 
     currentValueView: Em.View.extend
@@ -26,12 +32,14 @@ define ['cs!./autocomplete_text_field'], ->
       classNames: ['disclosure-button', 'non-selectable']
       attributeBindings: ['title']
       menuViewBinding: 'parentView.autocompleteTextFieldView.menuView'
+
       title: (->
         if @get('menuView.isVisible')
           '_hide_list'.loc()
         else
           '_show_list'.loc()
       ).property('menuView.isVisible')
+
       template: Em.Handlebars.compile("""
                                       {{#if view.menuView.isVisible}}
                                         <i class="disclosure-icon">▴</i>

@@ -43,6 +43,12 @@ define [
       match.get('games').pushObject(game)
       transaction.commit()
 
+    deleteRecord: ->
+      @$('.delete-btn').attr('disabled', 'disabled')
+      content = @get 'content'
+      if content
+        content.deleteRecord()
+
     submit: (event)->
       event.preventDefault()
       @createRecord()if @get 'isValid'

@@ -84,3 +84,4 @@ define
   _winner: 'Победитель'
   _loser: 'Проигравший'
   _player_nickname: 'Ник игрока'
+  _nothing_to_display: 'Пусто'

@@ -252,22 +252,22 @@ define [
 
     App.peroids = Em.ArrayController.create
       content: [
+        Em.Object.create name:'Все', id: 'all'
+
         Em.Object.create name:'Период', id: 'period'
         Em.Object.create name:'Дата', id: 'date'
         Em.Object.create name:'Сегодня', id: 'today'
         Em.Object.create name:'Вчера', id: 'yesterday'
         Em.Object.create name:'Неделя', id: 'week'
         Em.Object.create name:'Месяц', id: 'month'
+        Em.Object.create name:'Год', id: 'year'
       ]
 
     App.matchTypes = Em.ArrayController.create
       content: [
-        Em.Object.create name:'_period'.loc(), id: 'period'
-        Em.Object.create name:'_date'.loc(), id: 'date'
-        Em.Object.create name:'_today'.loc(), id: 'today'
-        Em.Object.create name:'_yesterday'.loc(), id: 'yesterday'
-        Em.Object.create name:'_week'.loc(), id: 'week'
-        Em.Object.create name:'_month'.loc(), id: 'month'
+        Em.Object.create name:'_team'.loc(), id: 'team'
+        Em.Object.create name:'_player'.loc(), id: 'player'
+        Em.Object.create name:'_mixed'.loc(), id: 'mixed'
       ]
 
     App.visualTypes = Em.ArrayController.create

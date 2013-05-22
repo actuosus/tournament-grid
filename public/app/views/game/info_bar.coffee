@@ -11,52 +11,78 @@ define [
   'cs!../match/form'
   'cs!../remove_button'
 ], ->
-  App.GamesInfoBarView = Em.View.extend
-    tagName: 'ul'
+  App.GamesInfoBarView = Em.ContainerView.extend
     classNames: ['games-info-bar']
     showInfoLabel: no
     isEditable: no
-#    itemViewClass: Em.View.extend
-#      tagName: 'li
-    template: Em.Handlebars.compile """
-      {{#if view.showInfoLabel}}
-      <li class="games-info-bar-label">{{loc '_info'}}</li>
-      {{/if}}
-      {{#each view.content}}
-        {{view view.itemViewClass contentBinding=this}}
-      {{/each}}
-      {{#if App.isEditingMode}}
-      <li class="games-create-button" {{bindAttr title="view.addButtonTitle"}}><button class="btn-clean create-btn">+</button></li>
-      {{/if}}
-      """
 
-    itemViewClass: Em.View.extend
-      tagName: 'li'
-      classNameBindings: ['isUpdating']
-      template: Em.Handlebars.compile '<a target="_blank" {{bindAttr href="link" title="title"}}>{{view.content.contentIndex}}</a>'
-      didInsertElement: -> console.log @get 'content'
-#      click: ->
+    childViews: ['infoLabelView', 'gamesView', 'addButtonView']
 
+    matchBinding: 'parentView.content'
 
-    addButtonTitle: (-> '_add_game'.loc()).property()
+    infoLabelView: Em.View.extend
+      classNames: ['games-info-bar-label']
+      isVisibleBinding: 'parentView.showInfoLabel'
+      template: Em.Handlebars.compile "{{loc '_info'}}"
 
-    click: (event)->
-      if $(event.target).hasClass('games-create-button') or $(event.target).hasClass 'create-btn'
-        popup = App.PopupView.create target: @
-        popup.pushObject(
-          App.GameForm.create
-            popupView: popup
-            match: @get('parentView.content')
-            didCreate: => popup.hide()
-        )
-        popup.append()
-      if $(event.target).hasClass('games-info-bar-label')
-#        return unless @get 'isEditable'
+      matchBinding: 'parentView.match'
+
+      click: ->
         popup = App.PopupView.create target: @
         popup.pushObject(
           App.MatchForm.create
             popupView: popup
-            match: @get('parentView.content')
+            match: @get('match')
+            content: @get('match')
+            title: @get 'match.title'
+            description: @get 'match.description'
+            didUpdate: => popup.hide()
+        )
+        popup.append()
+
+    gamesView: Em.CollectionView.extend
+      tagName: 'ul'
+      classNames: ['games-list']
+      contentBinding: 'parentView.content'
+
+      itemViewClass: Em.View.extend
+        tagName: 'li'
+        classNames: ['games-list-item']
+        classNameBindings: ['isUpdating']
+        attributeBindings: ['title']
+        title: Em.computed.alias 'content.title'
+        template: Em.Handlebars.compile '<a target="_blank" {{bindAttr href="link" title="title"}}>{{view.content.contentIndex}}</a>'
+        didInsertElement: -> console.log @get 'content'
+        click: ->
+          popup = App.PopupView.create target: @
+          popup.pushObject(
+            App.GameForm.create
+              popupView: popup
+              match: @get('match')
+
+              # TODO Should be proper form
+              title: @get 'content.title'
+              link: @get 'content.link'
+              didUpdate: => popup.hide()
+          )
+          popup.append()
+
+
+    addButtonView: Em.View.extend
+      isVisibleBinding: 'App.isEditingMode'
+      classNames: ['games-create-button']
+      attributeBindings: ['title']
+      title: '_add_game'.loc()
+      template: Em.Handlebars.compile '<button class="btn-clean create-btn">+</button>'
+
+      matchBinding: 'parentView.match'
+
+      click: ->
+        popup = App.PopupView.create target: @
+        popup.pushObject(
+          App.GameForm.create
+            popupView: popup
+            match: @get('match')
             didCreate: => popup.hide()
         )
         popup.append()

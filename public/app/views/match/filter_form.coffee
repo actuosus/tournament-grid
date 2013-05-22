@@ -14,3 +14,44 @@ define [
   App.MatchFilterFormView = Em.View.extend
     templateName: 'matchFilterForm'
     classNames: ['match-filter-form']
+
+    team: null
+    type: null
+    periodType: null
+
+    date: null
+    startDate: null
+    endDate: null
+
+    teamChanged: (->
+      @set 'content.entrantFilter', @get 'team'
+    ).observes('team')
+
+    dateChanged: (->
+      @set 'content.dateFilter', @get 'date'
+    ).observes('date')
+
+    startDateChanged: (->
+      @set 'content.startDateFilter', @get 'startDate'
+    ).observes('startDate')
+
+    endDateChanged: (->
+      @set 'content.endDateFilter', @get 'endDate'
+    ).observes('endDate')
+
+    didInsertElement: ->
+      self = @
+      @$('.date').bind 'change', -> self.set 'date', @valueAsDate
+      @$('.start-date').bind 'change', -> self.set 'startDate', @valueAsDate
+      @$('.end-date').bind 'change', -> self.set 'endDate', @valueAsDate
+
+    periodTypeChanged: (->
+      switch @get 'periodType.id'
+        when 'period'
+          @set 'isPeriod', yes
+          @set 'isDate', no
+        when 'date'
+          @set 'isPeriod', no
+          @set 'isDate', yes
+      @set 'content.periodFilter', @get 'periodType'
+    ).observes('periodType')

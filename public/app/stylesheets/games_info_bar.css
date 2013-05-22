@@ -13,7 +13,13 @@
     padding: 0;
 }
 
-.games-info-bar li {
+.games-list {
+    float: left;
+    padding: 0;
+    margin: 0;
+}
+
+.games-list-item {
     display: block;
     float: left;
     width: 12px;
@@ -27,7 +33,7 @@
     -webkit-font-smoothing: antialiased;
 }
 
-.games-info-bar li a {
+.games-list-item a {
     display: block;
     width: 12px;
     height: 12px;
@@ -37,29 +43,55 @@
     -webkit-transition-duration: .3s;
 }
 
-.games-info-bar li a:hover {
+.games-list-item a:hover {
     text-decoration: none;
     background-color: #424242;
 }
 
+.games-list-item.is-updating {
+    background-color: #971b1a;
+}
+
 .games-info-bar .games-info-bar-label {
     width: 29px;
+    margin-right: 3px;
     text-transform: uppercase;
     font-size: 7px;
     background-color: #3b3b3b;
+    color: white;
     cursor: default;
+    float: left;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 12px;
 
     -webkit-transition-property: background-color;
     -webkit-transition-duration: .3s;
 }
+
+.games-info-bar .games-info-bar-label:hover {
+    background-color: #555555;
+}
+
+.games-info-bar .games-info-bar-label:active {
+    background-color: #000;
+}
+
+.games-info-bar .games-create-button {
+    width: 12px;
+    height: 12px;
+    float: left;
+    font-size: 10px;
+    line-height: 12px;
+    text-align: center;
+    color: white;
+    background-color: #979797;
+}
+
 
 .games-info-bar .games-create-button button {
     padding: 0;
     color: white;
     font-size: 10px;
     line-height: 11px;
-}
-
-.games-info-bar li.is-updating {
-    background-color: #971b1a;
 }

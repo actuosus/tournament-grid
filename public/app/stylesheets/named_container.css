@@ -70,3 +70,9 @@
     top: 14px;
     width: 246px;
 }
+
+.named-container .help-btn {
+    position: absolute;
+    right: 40px;
+    top: 15px;
+}

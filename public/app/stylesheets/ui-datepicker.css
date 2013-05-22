@@ -14,3 +14,16 @@
     padding: 0;
     font-family: Arial, Helvetica, sans-serif;
 }
+
+.ui-datepicker-next .ui-icon {
+    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAPCAMAAAABFhU/AAAAOVBMVEU4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODiX3pCcAAAAE3RSTlMAAwYODxATHTU4SVCBg8XL8/j5PPXyqwAAAC9JREFUCNdjYORggAIeQS4oi5UfG5OFXwg/k11IgA3MYOYT4iaawcALYzAwcUIZALS4AmZQ5GtQAAAAAElFTkSuQmCC') right 0 no-repeat;
+}
+
+.ui-datepicker-prev .ui-icon {
+    -webkit-transform: rotate(180deg);
+    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAPCAMAAAABFhU/AAAAOVBMVEU4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODiX3pCcAAAAE3RSTlMAAwYODxATHTU4SVCBg8XL8/j5PPXyqwAAAC9JREFUCNdjYORggAIeQS4oi5UfG5OFXwg/k11IgA3MYOYT4iaawcALYzAwcUIZALS4AmZQ5GtQAAAAAElFTkSuQmCC') right 0 no-repeat;
+}
+
+.ui-datepicker .ui-datepicker-header {
+    border-radius: 0;
+}

@@ -99,16 +99,16 @@ app.configure ->
 
   # Session support
   console.log 'Redis', conf._redis
-#  app.use express.session(
-#    secret: 'Is it secure?'
-#    store: new RedisStore(
-#      host: conf._redis.host
-#      port: conf._redis.port
-#      pass: conf._redis.password
-#      db: conf._redis.db
-#    )
-#  )
-  app.use express.session secret: 'Is it secure?'
+  app.use express.session(
+    secret: 'Is it secure?'
+    store: new RedisStore(
+      host: conf._redis.host
+      port: conf._redis.port
+      pass: conf._redis.password
+      db: conf._redis.db
+    )
+  )
+#  app.use express.session secret: 'Is it secure?'
   app.use passport.initialize()
   app.use passport.session()
 
@@ -137,11 +137,11 @@ app.configure 'development', ->
   # Error handling
   app.use express.errorHandler dumpExceptions: yes, showStack: yes
 
-#  app.use (req, res, next)->
-#    if req.url.match /api/
-#      waiter req, res, next
-#    else
-#      next()
+  app.use (req, res, next)->
+    if req.url.match /api/
+      waiter req, res, next
+    else
+      next()
 
 app.configure 'production', ->
   # Compression
@@ -219,6 +219,13 @@ app.get '/api/rounds', routes.api.rounds.list
 app.get '/api/rounds/:_id', routes.api.rounds.item
 app.post '/api/rounds', routes.api.rounds.create
 app.put '/api/rounds/:_id', routes.api.rounds.update
+app.delete '/api/rounds/:_id', routes.api.rounds.delete
+
+app.get '/api/brackets', routes.api.brackets.list
+app.get '/api/brackets/:_id', routes.api.brackets.item
+app.post '/api/brackets', routes.api.brackets.create
+app.put '/api/brackets/:_id', routes.api.brackets.update
+app.delete '/api/brackets/:_id', routes.api.brackets.update
 
 app.get '/api/stages', routes.api.stages.list
 app.get '/api/stages/:_id', routes.api.stages.item

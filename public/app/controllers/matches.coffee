@@ -8,9 +8,62 @@
 define [
   'cs!../core'
 ],->
+  inDateRange = (start, end, d)->
+    (moment(start)?.isBefore(d, 'day') or moment(start)?.isSame d, 'day') and
+      (moment(end)?.isAfter(d, 'day') or moment(end)?.isSame d, 'day')
+
   App.MatchesController = Em.ArrayController.extend
 
     lastResults: null
+
+    sortProperties: ['date', 'sort_index']
+
+    entrantFilter: null
+    periodFilter: null
+
+    dateFilter: null
+    startDateFilter: null
+    endDateFilter: null
+
+    filteredContent: (->
+      content = @get 'content'
+      entrantFilter = @get 'entrantFilter'
+      periodType = @get 'periodFilter'
+
+      date = @get 'dateFilter'
+      startDate = @get 'startDateFilter'
+      endDate = @get 'endDateFilter'
+
+      if entrantFilter
+        content = content.filter (item)->
+          Em.isEqual(item.get('entrant1'), entrantFilter) or Em.isEqual(item.get('entrant2'), entrantFilter)
+      if periodType and periodType.get('id') isnt 'all'
+        content = content.filter (item)->
+          d = item.get('date')
+          switch periodType.get('id')
+            when 'today'
+              today = new Date()
+              return d.getDate() is today.getDate() and
+              d.getMonth() is today.getMonth() and
+              d.getDay() is today.getDay()
+            when 'yesterday'
+              yesterday = moment().add('days', -1).toDate()
+              return d.getDate() is yesterday.getDate() and
+              d.getMonth() is yesterday.getMonth() and
+              d.getDay() is yesterday.getDay()
+            when 'week'
+              return inDateRange moment().startOf('day').add('weeks', -1), new Date(), d
+            when 'month'
+              return inDateRange moment().startOf('day').add('months', -1), new Date(), d
+            when 'year'
+              return inDateRange moment().startOf('day').add('years', -1), new Date(), d
+            when 'date'
+              return moment(date)?.isSame d, 'day'
+            when 'period'
+              return inDateRange startDate, endDate, d
+
+      content
+    ).property('entrantFilter', 'periodFilter', 'dateFilter', 'startDateFilter', 'endDateFilter')
 
     results: (->
         incrementPropertyForEntrant = (entrant, property, increment)->

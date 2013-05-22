@@ -14,7 +14,7 @@ define [
     classNames: ['match-grid-item']
     childViews: ['dateView', 'infoBarView', 'contentView']#'saveButtonView',
     editingChildViews: ['editControlsView']
-    classNameBindings: ['content.isSelected', 'content.isDirty', 'content.isPast']
+    classNameBindings: ['content.isSelected', 'content.isDirty', 'content.isSaving', 'content.isPast', 'content.invalid']
     attributeBindings: ['title']
     titleBinding: 'content.description'
 
@@ -29,7 +29,6 @@ define [
       isEditingMode = App.get('isEditingMode')
       status = @get 'content.status'
       currentStatus = @get 'content.currentStatus'
-      console.log currentStatus
       isEditingMode and status is 'opened'
     ).property('App.isEditingMode', 'content.status', 'content.currentStatus')
 
@@ -87,7 +86,6 @@ define [
         template: Em.Handlebars.compile '{{view.actionLabel}}'
 
         actionLabel: (->
-          console.log @get('content'), @get('content.status')
           switch @get 'content.status'
             when 'closed'
               '_open'.loc()

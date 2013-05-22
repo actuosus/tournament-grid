@@ -7,13 +7,17 @@
 ###
 
 define ['spin', 'cs!../core'], (Spinner)->
-  App.NamedContainerView = Em.ContainerView.extend
+  App.NamedContainerView = Em.ContainerView.extend App.Editing,
     classNames: ['block-container', 'named-container']
     classNameBindings: ['collapsed']
     childViews: [
       'titleView', 'toolbarView', 'toggleButtonView', 'contentView'
     ]
     collapsed: no
+
+    editingChildViews: ['helpButtonView']
+
+    _isEditingBinding: 'App.isEditingMode'
 
     titleView: Em.View.extend
       tagName: 'p'
@@ -62,6 +66,13 @@ define ['spin', 'cs!../core'], (Spinner)->
 #        template: Em.Handlebars.compile '{{view.value}}'
 
     contentView: Em.View.extend()
+
+    helpButtonView: Em.View.extend
+      tagName: 'button'
+      classNames: ['btn', 'btn-round', 'help-btn']
+      attributeBindings: ['title']
+      title: '_help'.loc()
+      template: Em.Handlebars.compile '?'
 
     toggleButtonView: Em.View.extend
       tagName: 'button'

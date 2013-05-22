@@ -16,6 +16,11 @@ define [
     contentView: App.GridView.extend
       classNames: ['lineup-grid']
       contentBinding: 'parentView.content'
+
+#      emptyView: Em.View.extend
+#        classNames: ['empty-view']
+#        template: Em.Handlebars.compile '{{loc "_nothing_to_display"}}'
+
       itemViewClass: App.TeamLineupGridItem
 
     addEntrantView: App.TeamLineupGridItem.extend

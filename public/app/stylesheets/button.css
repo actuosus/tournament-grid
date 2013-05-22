@@ -79,6 +79,13 @@
     padding: 0 40px;
 }
 
+.btn-round {
+    width: 24px;
+    height: 24px;
+    border-radius: 12px;
+    padding: 0;
+}
+
 .toggle-btn {
     -webkit-appearance: none;
     border: 0;

@@ -163,12 +163,6 @@ define ['cs!../core'],->
       losers
     ).property()
 
-#    selectTeam: (team)->
-#      rounds = @get 'rounds'
-#      rounds.forEach (round, roundIndex)->
-#        round.get('matches').forEach (match, matchIndex)->
-#          entrants = match.get('entrants')
-
     createWinnerBracket: (bracket, entrantsNumber)->
       unless bracket
         bracket = @get('brackets').createRecord(name: 'Winner bracket')

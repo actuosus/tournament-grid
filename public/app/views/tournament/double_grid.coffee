@@ -76,7 +76,6 @@ define [
               index: j
               itemIndex: j
               sort_index: j
-              date: new Date()
               leftPath: leftPath
               rightPath: rightPath
               parentNodePath: "#{roundsCount-i+1}.#{Math.floor(j/2)}"

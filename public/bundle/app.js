@@ -53348,7 +53348,8 @@ define('cs',['coffee-script'], function (CoffeeScript) {
     _move_player_to_from: 'Переместить игрока %@ из команды %@ в команду %@?',
     _winner: 'Победитель',
     _loser: 'Проигравший',
-    _player_nickname: 'Ник игрока'
+    _player_nickname: 'Ник игрока',
+    _nothing_to_display: 'Пусто'
   });
 
 }).call(this);
@@ -53441,7 +53442,8 @@ define('cs',['coffee-script'], function (CoffeeScript) {
     _ok: 'Ok',
     _winner: 'Winner',
     _loser: 'Loser',
-    _player_nickname: 'Player nickname'
+    _player_nickname: 'Player nickname',
+    _nothing_to_display: 'Empty'
   });
 
 }).call(this);
@@ -53534,7 +53536,8 @@ define('cs',['coffee-script'], function (CoffeeScript) {
     _ok: 'Ok',
     _winner: 'Gewinner',
     _loser: 'Verlierer',
-    _player_nickname: 'Spieler Spitznamen'
+    _player_nickname: 'Spieler Spitznamen',
+    _nothing_to_display: 'Frei'
   });
 
 }).call(this);

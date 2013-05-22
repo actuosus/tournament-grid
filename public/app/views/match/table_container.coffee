@@ -9,14 +9,19 @@
 define [
   'cs!./filter_form'
   'cs!./table'
+  'cs!../../mixins/collapsable'
 ], ()->
   App.MatchesTableContainerView = Em.ContainerView.extend
     classNames: ['matches-table-container']
     childViews: ['filterView', 'tableView'],
-    filterView: App.MatchFilterFormView.extend
+    filterView: Em.ContainerView.extend
+      classNames: ['match-filter-form-container']
       contentBinding: 'parentView.content'
-    tableView: App.MatchesTableView.extend
-      contentBinding: 'parentView.content'
-#    click: (event)->
-#      if $(event.target).hasClass('toggle-btn-expand')
-#        @.$().height(40)
+      childViews: ['filterFormView']
+      filterFormView: App.MatchFilterFormView.extend
+        contentBinding: 'parentView.content'
+    tableView: App.MatchesTableView.extend(App.Collapsable, {
+      collapsed: yes
+      toggleButtonTarget: Em.computed.alias 'parentView.filterView'
+      contentBinding: 'parentView.content.filteredContent'
+    })

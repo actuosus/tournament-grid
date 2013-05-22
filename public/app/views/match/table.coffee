@@ -14,13 +14,17 @@ define [
   App.MatchesTableView = Em.CollectionView.extend
     tagName: 'table'
     classNames: ['matches-table', 'table']
+
     itemViewClass: Em.View.extend
       tagName: 'tr'
       classNames: ['matches-table-item']
-      classNameBindings: ['content.isDirty']
+      classNameBindings: ['content.isDirty', 'content.isSaving', 'content.invalid']
       templateName: 'matchesTableItem'
 
       click: (event)->
+        if $(event.target).hasClass('save-btn')
+          match = @get 'content'
+          match.get('store').commit()
         if $(event.target).hasClass('remove-btn')
           match = @get 'content'
           match.deleteRecord() if match

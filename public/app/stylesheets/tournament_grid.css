@@ -74,6 +74,10 @@
     top: 15px;
 }
 
+.tournament-match .team-grid-item-container {
+    margin-bottom: 5px;
+}
+
 .connector {
     position: absolute;
     display: block;

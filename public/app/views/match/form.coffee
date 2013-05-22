@@ -18,80 +18,43 @@ define [
     classNames: ['stage-form', 'form-vertical']
     templateName: 'matchForm'
 
-    visualType: 'grid'
-
-    name: null
-    rating: null
+    title: null
+    map_type: null
     description: null
 
     didCreate: Em.K
+    didUpdate: Em.K
 
-    isGroupType: (->
-      visualType = @get 'visualType.id'
-      yes if visualType is 'group'
-    ).property('visualType')
-
-    isGridType: (->
-      visualType = @get 'visualType.id'
-      yes if visualType is 'single' or visualType is 'double' or visualType is 'grid'
-    ).property('visualType')
-
-    isMatrixType: (->
-      visualType = @get 'visualType.id'
-      yes if visualType is 'matrix'
-    ).property('visualType')
-
-    isTeamType: (->
-      visualType = @get 'visualType.id'
-      yes if visualType is 'team'
-    ).property('visualType')
+    willInsertElement: ->
+      console.log @get 'element'
 
     createRecord: ->
+      console.debug 'Should implement match creation.'
+
+    updateRecord: ->
       @$('.save-btn').attr('disabled', 'disabled')
-      entransNumber = parseInt(@$('.entrants-number').val(), 10)
-      report = @get 'report'
-
-      switch @get 'visualType.id'
-        when 'grid', 'single'
-          stage = report.createStageByEntrants entransNumber
-        when 'double'
-          stage = report.get('stages').createRecord()
-          stage.createWinnerBracket null, entransNumber
-          stage.createLoserBracket null, entransNumber
-        when 'group'
-          stage = report.createStageByRoundsNumber parseInt(@$('.group-number').val(), 10)
-        when 'matrix'
-          stage = report.createStageByMatchesNumber parseInt(@$('.matrix-matches-number').val(), 10)
-        when 'team'
-          stage = report.createStageByMatchesNumber parseInt(@$('.team-matches-number').val(), 10)
-      ##      stage = App.Stage.createRecord
-      #      stage.set 'name', @$('.name').val()
-      stage.set 'report', report
-      stage.set 'name', @get 'name'
-      stage.set 'rating', @get 'rating'
-      #      stage.set 'description', @$('.description').val()
-      stage.set 'description', @get 'description'
-      stage.set 'visual_type', @get 'visualType.id'
-
-      if report
-        report.get('stages').pushObject stage
-#
-##        name: @$('.name').val()
-##        description: @$('.description').val()
-##        visual_type: @get 'visualType'
-#      stage.on 'didCreate', => @didCreate stage
-#      stage.on 'becameError', =>
-#        console.log arguments
-#        stage.destroy()
-##      App.store.commit()
+      content = @get 'content'
+      transaction = content.get('store').transaction()
+      transaction.add content
+      content.on 'didUpdate', => @didUpdate content
+      content.set 'title', @get 'title'
+      content.set 'map_type', @get 'map_type'
+      content.set 'description', @get 'description'
+      transaction.commit()
 
     submit: (event)->
       event.preventDefault()
-      @createRecord()
+      if @get 'content'
+        @updateRecord()
+      else
+        @createRecord()
 
     click: (event)->
       event.preventDefault()
       if $(event.target).hasClass('save-btn')
-        @createRecord()
+        if @get 'content'
+          @updateRecord()
+        else
+          @createRecord()
       if $(event.target).hasClass('cancel-btn')
         @popupView.hide() if @popupView

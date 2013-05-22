@@ -19,11 +19,18 @@
             </label>
             <label>
                 <span>{{loc '_team'}}:</span>
-                {{view App.ComboBoxView controllerBinding=App.teamsController promt="Все"}}
+                {{view App.ComboBoxView controllerBinding=App.teamsController promt="Все" form=view valueBinding=view.team}}
             </label>
             <label>
                 <span>За время:</span>
-                {{view App.SelectView contentBinding=App.peroids}}
+                {{view App.SelectView contentBinding=App.peroids valueBinding=view.periodType}}
+
+                <div class="period-selector">
+                    <input type="date" class="start-date"/><input type="date" class="end-date"/>
+                </div>
+                <div class="date-selector">
+                    <input type="date" class="date"/>
+                </div>
             </label>
 
             <button type="button" class="btn btn-large search-btn submit" title="Отфильтровать" {{action filter}}><i class="icon-search icon-white"></i></button>

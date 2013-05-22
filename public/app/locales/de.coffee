@@ -83,3 +83,4 @@ define
   _winner: 'Gewinner'
   _loser: 'Verlierer'
   _player_nickname: 'Spieler Spitznamen'
+  _nothing_to_display: 'Frei'

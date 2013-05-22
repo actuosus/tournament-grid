@@ -19,11 +19,12 @@ define ['cs!../core'],->
     isEmpty: (-> !@get('value')).property('value')
 
     didInsertElement: ->
-      switch @get 'valueType'
-        when 'text'
-          @$().text(@get 'value')
-        when 'html'
-          @$().html(@get 'value')
+      if @get('value') isnt null
+        switch @get 'valueType'
+          when 'text'
+            @$().text(@get 'value')
+          when 'html'
+            @$().html(@get 'value')
 
     isEditableChanged: (->
       unless @get 'isEditable'
@@ -73,7 +74,6 @@ define ['cs!../core'],->
           when 'html'
             @$().html(@get 'value')
     ).observes('value')
-
 
 #    keyUp: ->
 #      @set 'value', @$().text()

@@ -16,7 +16,7 @@ define ['cs!../core'],->
 
     title: DS.attr 'string'
     description: DS.attr 'string'
-    date: DS.attr 'date'
+    date: DS.attr('date', {defaultValue: new Date})
     url: DS.attr 'string'
 
     map_type: DS.attr 'string'
@@ -28,8 +28,8 @@ define ['cs!../core'],->
     entrant1: DS.belongsTo 'App.Team'
     entrant2: DS.belongsTo 'App.Team'
 
-    entrant1_points: DS.attr 'number'
-    entrant2_points: DS.attr 'number'
+    entrant1_points: DS.attr('number', {defaultValue: 0})
+    entrant2_points: DS.attr('number', {defaultValue: 0})
 
     entrant1_race_id: DS.attr 'number'
     entrant2_race_id: DS.attr 'number'
@@ -37,11 +37,12 @@ define ['cs!../core'],->
     round: DS.belongsTo 'App.Round'
     stage: DS.belongsTo 'App.Stage'
 
-    games: DS.hasMany 'App.Game'
+    games: DS.hasMany('App.Game', {inverse: 'match'})
 
     _trackProperties: [
       'entrant1_points'
       'entrant2_points'
+      'date'
     ]
 
     link: (->
@@ -85,6 +86,16 @@ define ['cs!../core'],->
     isPast: (->
       new Date > @get 'date'
     ).property('date')
+
+    # Match is only valid if it has entrants.
+    valid: (->
+      valid = no
+      if @get('entrant1') and @get('entrant2')
+        valid = yes
+      valid
+    ).property('entrant1', 'entrant2')
+
+    invalid: Em.computed.not 'valid'
 
     isLocked: no
     isSelected: no

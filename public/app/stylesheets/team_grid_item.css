@@ -8,7 +8,7 @@
 .team-grid-item-container {
     border: 1px solid #828282;
     background-color: #efefef;
-    width: 154px;
+    width: 156px;
     height: 23px;
     overflow: hidden;
     position: relative;
@@ -19,6 +19,11 @@
 
 .team-grid-item-container.is-highlighted {
     box-shadow: 0 0 10px #ff6c00;
+    z-index: 2;
+}
+
+.team-grid-item-container.is-highlighted:hover {
+    box-shadow: 0 0 10px 2px #ff6c00;
 }
 
 .team-grid-item {

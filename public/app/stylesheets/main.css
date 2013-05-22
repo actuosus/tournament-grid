@@ -370,3 +370,23 @@ input.match-start-date {
     margin-left: 4px;
     font-size: 11px;
 }
+
+.match-filter-form-container {
+    position: relative;
+}
+
+
+/* Data extras */
+.is-saving {
+    cursor: progress;
+    opacity: 0.8;
+}
+
+.is-dirty {
+    background-color: rgba(255,255,0,0.2);
+}
+
+.empty-view {
+    text-align: center;
+    font-size: 20px;
+}
