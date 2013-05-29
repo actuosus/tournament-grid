@@ -20,12 +20,15 @@ define [
     classNameBindings: ['content.isSelected']
 
     mouseEnter: (event)->
-      @matchesPopup = App.MatchTablePopupView.create
-        target: @
-        origin: 'top'
-        entrant: @get('content.entrant')
-        controller: @get('content.controller')
-      @matchesPopup.append()
+      controller = @get('content.controller')
+      entrant = @get('content.entrant')
+      if controller?.hasPastOrFutureMatchesForEntrant entrant
+        @matchesPopup = App.MatchTablePopupView.create
+          target: @
+          origin: 'top'
+          entrant: entrant
+          controller: controller
+        @matchesPopup.append()
 
     mouseLeave: -> @matchesPopup.hide()
 

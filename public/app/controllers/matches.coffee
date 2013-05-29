@@ -87,6 +87,10 @@ define [
         if Em.isEqual(item.get('entrant1'), entrant) or Em.isEqual(item.get('entrant2'), entrant)
           item.get('currentStatus') is 'future'
 
+    hasPastOrFutureMatchesForEntrant: (entrant)->
+      @pastMatchesForEntrant(entrant).length or
+        @futureMatchesForEntrant(entrant).length
+
     results: (->
         incrementPropertyForEntrant = (entrant, property, increment)->
           if results.has entrant

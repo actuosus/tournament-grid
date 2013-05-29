@@ -26,6 +26,7 @@ define [
   'cs!./views/country_select'
   'cs!./views/named_container'
   'cs!./views/editable_label'
+  'cs!./views/date_field'
   'cs!./views/date_with_popup'
   'cs!./views/lineup'
   'cs!./views/lineup_container'

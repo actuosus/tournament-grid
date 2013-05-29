@@ -17,7 +17,16 @@ define [
     controller: null
     entrant: null
 
+    pastMatches: (->
+      @get('controller')?.pastMatchesForEntrant(@get('entrant'))
+    ).property()
+
+    futureMatches: (->
+      @get('controller')?.futureMatchesForEntrant(@get('entrant'))
+    ).property()
+
     pastMatchesContainerView: Em.ContainerView.extend
+      isVisible: (-> !!@get('parentView.pastMatches.length')).property('parentView.pastMatches')
       classNames: ['section']
       controllerBinding: 'parentView.controller'
       entrantBinding: 'parentView.entrant'
@@ -33,6 +42,7 @@ define [
         ).property()
         itemViewClass: App.MatchPopupTableItemView
     futureMatchesContainerView: Em.ContainerView.extend
+      isVisible: (-> !!@get('parentView.futureMatches.length')).property('parentView.futureMatches')
       classNames: ['section']
       controllerBinding: 'parentView.controller'
       entrantBinding: 'parentView.entrant'
