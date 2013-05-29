@@ -15,27 +15,38 @@ define [
   'cs!./remove_button'
   'cs!../controllers/matches'
 ], ->
-  App.GroupGridView = App.GridView.extend
+  App.GroupGridView = App.GridView.extend App.ContextMenuSupport,
     classNames: ['lineup-grid', 'group-lineup-grid']
+
+    shouldShowContextMenuBinding: 'App.isEditingMode'
+    contextMenuActions: ['add']
+
+    add: ->
+      @get('content').createRecord()
 
     itemViewClass: Em.ContainerView.extend(App.ContextMenuSupport, {
       classNames: ['lineup-grid-item']
+      classNameBindings: ['content.isDirty', 'content.isUpdating']
       childViews: ['contentView', 'matchesView']
 
       showFilterFormBinding: 'parentView.showFilterForm'
       tableItemViewClassBinding: 'parentView.tableItemViewClass'
 
-      contextMenuActions: ['deleteRecord:removeGroup']
+      shouldShowContextMenuBinding: 'App.isEditingMode'
+      contextMenuActions: ['save', 'deleteRecord:removeGroup']
+
+      save: ->
+        @get('content.store')?.commit()
 
       deleteRecord: ->
         @get('content').deleteRecord()
 
-      contentView: Em.ContainerView.extend
+      contentView: Em.ContainerView.extend( App.Editing, {
         contentBinding: 'parentView.content'
         classNames: ['lineup-grid-item-name-container']
-        childViews: ['nameView', 'addButtonView', 'automaticCountingButtonView', 'removeButtonView']
+        childViews: ['nameView', 'addButtonView']
 
-        editingChildViews: []
+        editingChildViews: ['automaticCountingButtonView', 'removeButtonView']
         _isEditingBinding: 'App.isEditingMode'
 
         nameView: App.EditableLabel.extend
@@ -85,11 +96,13 @@ define [
 
           click: -> @toggleProperty 'automaticCountingDisabled'
 
-        remove: -> @get('content').deleteRecord()
+        deleteRecord: -> @get('content').deleteRecord()
 
         removeButtonView: App.RemoveButtonView.extend
           title: '_remove_group'.loc()
-          remove: -> @get('parentView').remove()
+          deleteRecord: -> @get('parentView').deleteRecord()
+
+      })
 
       matchesView: App.StandingTableView.extend
         childViews: ['standingsView', 'contentView']

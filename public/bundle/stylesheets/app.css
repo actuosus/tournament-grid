@@ -3018,8 +3018,8 @@ body .ui-tooltip {
 .matches-table-item {
     position: relative;
 }
-.match-table-item .autocomplete-text-field {
-    max-height: 21px;
+.matches-table-item .autocomplete-text-field {
+    min-height: 20px;
 }
 .matches-table-item .team-grid-item {
     border: 0;
@@ -3608,4 +3608,7 @@ input.match-start-date {
 }
 .error {
     color: #ac0000;
+}
+.context-menu {
+    cursor: context-menu;
 }

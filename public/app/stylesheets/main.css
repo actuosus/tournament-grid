@@ -425,3 +425,7 @@ input.match-start-date {
 .error {
     color: #ac0000;
 }
+
+.context-menu {
+    cursor: context-menu;
+}

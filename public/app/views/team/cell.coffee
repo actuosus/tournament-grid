@@ -19,7 +19,7 @@ define [
     editingChildViews: ['autocompleteView', 'resetButtonView']
 
     isEditing: no,
-    _isEditingBinding: 'isEditable'
+    _isEditingBinding: 'App.isEditingMode'
     isEditableBinding: 'App.isEditingMode'
 
     matchBinding: 'parentView.content'
@@ -87,7 +87,11 @@ define [
       contentBinding: 'parentView.content'
       template: Em.Handlebars.compile '{{view.content.name}}'
 
-      click: -> @set('parentView.autocompleteView.isVisible', yes)
+      click: ->
+        autocompleteView = @get 'parentView.autocompleteView'
+        if autocompleteView
+          autocompleteView.set 'isVisible', yes
+          autocompleteView.focus()
 
       mouseEnter: ->
         @set 'shouldShowPopup', yes

@@ -16,7 +16,8 @@ define [
     templateName: 'teamStandingsTable'
     classNames: ['team-standings-table', 'table']
 
-    contextMenuActions: 'add'
+    shouldShowContextMenuBinding: 'App.isEditingMode'
+    contextMenuActions: ['add']
 
     showSorterOnColumn: (element)->
       @sorter = App.TableSorterView.create()

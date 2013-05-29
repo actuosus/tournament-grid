@@ -14,12 +14,19 @@ define ->
 
     createMenuItems: ->
       contextMenuActions = @get 'contextMenuActions'
-      contextMenuItems = []
-      contextMenuActions.forEach (actionItem)->
-        [action, title] = actionItem.split ':'
-        title = action unless title
-        contextMenuItems.pushObject Em.Object.create action: action, title: "_#{title.decamelize()}".loc()
-      @set 'contextMenuItems', contextMenuItems
+      if contextMenuActions
+        contextMenuItems = []
+        contextMenuActions.forEach (actionItem)->
+          [action, title] = actionItem.split ':'
+          title = action unless title
+          contextMenuItems.pushObject Em.Object.create action: action, title: "_#{title.decamelize()}".loc()
+        @set 'contextMenuItems', contextMenuItems
+
+    init: ->
+      classNames = @get 'classNames'
+      if classNames
+        classNames.push 'context-menu'
+      @_super()
 
     contextMenu: (event)->
       console.log 'ContextMenuSupport', event

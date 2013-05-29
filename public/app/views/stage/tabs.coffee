@@ -142,6 +142,7 @@ define [
 #                                      </ul>
 #                                      '''
 #
+      shouldShowContextMenuBinding: 'App.isEditingMode'
       contextMenuActions: ['add']
 
       add: -> @addItem()
