@@ -7,4 +7,9 @@
 
 define [
   'cs!./mixins/editing'
+  'cs!./mixins/context_menu_support'
+  'cs!./mixins/draggable'
+  'cs!./mixins/droppable'
+  'cs!./mixins/movable'
+  'cs!./mixins/visualy_selectable'
 ]

@@ -19,6 +19,7 @@
     -webkit-transition-property: color, background-color;
     -webkit-transition-duration: .3s;
     text-decoration: none;
+    min-width: 70px;
 }
 
 .team-standings-table-item .name a:hover {

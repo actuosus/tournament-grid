@@ -7,43 +7,38 @@
 ###
 
 define ['cs!../core'],->
-  App.Match = DS.Model.extend Ember.History,
+  App.Match = DS.Model.extend
     primaryKey: '_id'
-
-    status: DS.attr 'string', {defaultValue: 'opened'}
-
-    sort_index: DS.attr 'number'
 
     title: DS.attr 'string'
     description: DS.attr 'string'
-    date: DS.attr('date', {defaultValue: new Date})
+    date: DS.attr 'date'
     url: DS.attr 'string'
-
     map_type: DS.attr 'string'
-
+    status: DS.attr 'string', {defaultValue: 'opened'}
     type: DS.attr 'string'
-
-    editingStatus: DS.attr 'string'
-
+    sort_index: DS.attr 'number'
     entrant1: DS.belongsTo 'App.Team'
     entrant2: DS.belongsTo 'App.Team'
-
-    entrant1_points: DS.attr('number', {defaultValue: 0})
-    entrant2_points: DS.attr('number', {defaultValue: 0})
+    entrant1_points: DS.attr 'number'
+    entrant2_points: DS.attr 'number'
 
     entrant1_race_id: DS.attr 'number'
     entrant2_race_id: DS.attr 'number'
+    editingStatus: DS.attr 'string'
 
+    # Relations
     round: DS.belongsTo 'App.Round'
     stage: DS.belongsTo 'App.Stage'
 
     games: DS.hasMany('App.Game', {inverse: 'match'})
 
-    _trackProperties: [
-      'entrant1_points'
-      'entrant2_points'
-      'date'
-    ]
+    # Ember History
+#    _trackProperties: [
+#      'entrant1_points'
+#      'entrant2_points'
+#      'date'
+#    ]
 
     link: (->
       "/matches/#{@get 'id'}"
@@ -56,12 +51,15 @@ define ['cs!../core'],->
       entrant2_points = @get 'entrant2_points'
       reopenInterval = 1000 * 60 * 60 * 12
       currentDate = new Date
-      if not date or date > currentDate and (not entrant1_points and not entrant2_points)
-        currentStatus = 'future'
-      if date < currentDate or (entrant1_points and entrant2_points) and status isnt 'closed'
+      console.log 'currentStatus', date < currentDate
+      if date < currentDate
+        currentStatus = 'past'
+      if date < currentDate and (entrant1_points and entrant2_points) and status isnt 'closed'
         currentStatus = 'active'
       if date > (currentDate + reopenInterval) and (entrant1_points and entrant2_points)
         currentStatus = 'delayed'
+      if not (date or date > currentDate) and not (entrant1_points and entrant2_points)
+        currentStatus = 'future'
       currentStatus
     ).property('date', 'entrant1_points', 'entrant2_points')
 
@@ -70,8 +68,8 @@ define ['cs!../core'],->
       date = @get 'date'
       currentDate = new Date
       reopenInterval = 1000 * 60 * 60 * 12
-      currentStatus is 'active' and date + reopenInterval > currentDate
-    ).property('currentStatus')
+      currentStatus is 'active' and ((date + reopenInterval) > currentDate)
+    ).property('currentStatus', 'date').volatile()
 
     open: ->
       console.log 'Opening match'
@@ -97,7 +95,6 @@ define ['cs!../core'],->
 
     invalid: Em.computed.not 'valid'
 
-    isLocked: no
     isSelected: no
 
     entrants: (->
@@ -124,45 +121,6 @@ define ['cs!../core'],->
         @set 'entrants', [@get('entrant1'), @get('entrant2')]
     ).observes 'entrant2'
 
-    resolveBrackets: ->
-      console.log 'resolveBrackets'
-      matchIndex = @get 'itemIndex'
-      stage = @get('round.stage')
-      if stage
-        roundIndex = @get 'round.itemIndex'
-        brakets = stage.get 'brackets'
-
-        loserBracket = brakets.findProperty('name', 'Losers')
-
-        unless loserBracket
-          loserBracket = brakets.createRecord
-            itemIndex: 1
-            name: 'Losers'
-
-        rounds = loserBracket.get 'rounds'
-
-        round = rounds.findProperty('itemIndex', roundIndex + 1)
-
-        unless round
-          round = rounds.createRecord
-            itemIndex: roundIndex
-
-        matches = round.get('matches')
-        loser = @get 'loser'
-        if loser
-          if roundIndex is stage.get('rounds.length')-1
-            itemIndex = Math.floor(matchIndex/2)
-          else
-            itemIndex = matchIndex
-          match = matches.findProperty('itemIndex', itemIndex)
-          unless match
-            data = {itemIndex: itemIndex, isLocked: yes}
-            data["entrant#{Math.floor(matchIndex%2)+1}"] = loser
-            match = matches.createRecord data
-          else
-            match.get('entrants').replace Math.floor(matchIndex%2), 1, [loser]
-            match.set "entrant#{Math.floor(matchIndex%2)+1}", loser
-
     winnerChanged: (->
 #      console.debug 'winnerChanged'
       nextMatch = @get 'parentNode'
@@ -181,9 +139,6 @@ define ['cs!../core'],->
         else
           nextMatch.get('entrants').replace matchIndex%2, 1, [null]
           nextMatch.set "entrant#{matchIndex%2+1}", null
-
-#      stage.checkRounds('winners') if stage
-#      @resolveBrackets()
     ).observes('winner')
 
     loser: (->
@@ -264,12 +219,5 @@ define ['cs!../core'],->
           @set 'rigthPath', rigthPath
           return parent.getByPath(rigthPath)
     ).property('rightPath')
-
-#    future #default
-#    current
-#    delayed
-#    closed
-
-    longDateString: (-> moment(@get 'date').format('LLLL')).property 'date'
 
   App.Match.toString = -> 'Match'

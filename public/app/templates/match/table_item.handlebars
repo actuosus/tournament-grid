@@ -15,7 +15,7 @@
 <td class="matches-table-map-type" title="Карта"><span class="matches-table-map-type-marker">@</span>{{view.content.map_type}}</td>
 <td class="matches-table-description" title="Описание"><a {{bindAttr href="view.content.link"}} target="_blank">{{view.content.description}}</a></td>
 <td>
-    {{view App.GamesInfoBarView showInfoLabel=true contentBinding=view.content.games}}
+    {{view App.GamesInfoBarView showInfoLabelBinding=App.isEditingMode contentBinding=view.content.games}}
 </td>
 {{#if App.isEditingMode}}
     <td>

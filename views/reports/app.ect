@@ -15,6 +15,7 @@
                     <div id="content"></div>
                     <script type="text/javascript">
                         window.currentReportId = '<%- @doc.id %>';
+                        window.debug = true;
                     </script>
 
                     <% if @node_env is 'production': %>
@@ -24,7 +25,11 @@
                     <% end %>
                     <link rel="icon" type="image/x-icon" href="<%- @staticDomain %>/favicon.ico" />
 
+                    <% if @node_env is 'production': %>
+                    <script data-main="/bundle/app.js" src="/vendor/scripts/require.js"></script>
+                    <% else: %>
                     <script data-main="/app/main.js" src="/vendor/scripts/require.js"></script>
+                    <% end %>
 
                     <script type="text/javascript" id="grid-config">
                         window.grid = {};

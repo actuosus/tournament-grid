@@ -1,5 +1,5 @@
 /**
- * tournament_grid
+ * tournament-grid
  * @author: actuosus
  * Date: 14/03/2013
  * Time: 02:32
@@ -80,7 +80,6 @@
 
 .connector {
     position: absolute;
-    display: block;
     z-index: 1;
     width: 24px;
 }

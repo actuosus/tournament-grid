@@ -1,23 +1,36 @@
 /**
  * main
  * @author: actuosus
- * @fileOverview
+ * @fileOverview Main require file.
  * Date: 21/01/2013
  * Time: 07:28
  */
 
 require({
-//  baseUrl: '/app',
+  baseUrl: '/app',
   name: 'app',
   paths: {
-    'jquery': '/vendor/scripts/jquery',
-    'jquery.mousewheel': '/vendor/scripts/jquery.mousewheel',
+    'jquery': [
+      'http://yandex.st/jquery/2.0.0/jquery.min',
+      '//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min',
+      '/vendor/scripts/jquery'
+    ],
+    'jquery.mousewheel': [
+      'http://yandex.st/jquery/mousewheel/3.0.6/jquery.mousewheel.min',
+      '/vendor/scripts/jquery.mousewheel'
+    ],
     'jquery.isotope': '/vendor/scripts/jquery.isotope',
-    'jquery.cookie': '/vendor/scripts/jquery.cookie',
+    'jquery.cookie': [
+      'http://yandex.st/jquery/cookie/1.0/jquery.cookie.min',
+      '/vendor/scripts/jquery.cookie'
+    ],
     'jquery.scrollTo': '/vendor/scripts/jquery.scrollTo.min',
     'moment': '/vendor/scripts/moment',
     'Faker': '/vendor/scripts/Faker',
-    'raphael': '/vendor/scripts/raphael',
+    'raphael': [
+      'http://yandex.st/raphael/2.1.0/raphael.min',
+      '/vendor/scripts/raphael'
+    ],
     'spin': '/vendor/scripts/spin',
     'cs': '/vendor/scripts/cs',
     'text': '/vendor/scripts/text',
@@ -25,7 +38,10 @@ require({
     'iced-coffee-script': '/vendor/scripts/coffee-script-iced-large',
     'transit': '/vendor/scripts/jquery.transit.min',
     'handlebars': '/vendor/scripts/handlebars-1.0.0-rc.3',
-    'ember': '/vendor/scripts/ember-1.0.0-rc.3',
+    'ember': [
+      '/vendor/scripts/ember-1.0.0-rc.3',
+      '/vendor/scripts/ember.prod'
+    ],
     'ember-data': '/vendor/scripts/ember-data',
     'ember-history': '/vendor/scripts/ember-history',
     'ember-table': '/vendor/scripts/ember-table',
@@ -33,7 +49,11 @@ require({
     'bootstrap.tooltip': '/vendor/scripts/bootstrap/bootstrap-tooltip',
     'three': '/vendor/scripts/three',
     'screenfull': '/vendor/scripts/screenfull.min',
-    'jquery-ui': '/vendor/scripts/jquery-ui-1.10.3.custom',
+    'jquery-ui': [
+      'http://yandex.st/jquery-ui/1.10.3/jquery-ui.min',
+      '//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min',
+      '/vendor/scripts/jquery-ui-1.10.3.custom'
+    ],
     'jquery.ui.datepicker-ru': '/vendor/scripts/jquery.ui.datepicker-ru',
     'jquery.ui.datepicker-it': '/vendor/scripts/jquery.ui.datepicker-it',
     'jquery.ui.datepicker-de': '/vendor/scripts/jquery.ui.datepicker-de',
@@ -44,6 +64,9 @@ require({
     'socket.io': 'http://' + document.location.host + '/socket.io/socket.io.js'
   },
   shim: {
+    'jquery.cookie': {
+      deps: ['jquery']
+    },
     'jquery.mousewheel': {
       deps: ['jquery']
     },
@@ -128,10 +151,31 @@ require({
   }
 });
 
+if (this.debug) {
+  var contentElement = document.getElementById('content');
+  var statusElement = document.createElement('div');
+  statusElement.id = 'status';
+  statusElement.className = 'status';
+  contentElement.appendChild(statusElement);
+
+  var errorElement = document.createElement('div');
+  errorElement.id = 'error';
+  errorElement.className = 'error';
+
+  requirejs.onResourceLoad = function (context, map, depArray) {
+    statusElement.innerHTML = 'Loading ' + map.name + '…';
+  }
+
+  requirejs.onError = function(err) {
+    contentElement.appendChild(errorElement);
+    errorElement.innerHTML = err;
+    throw err;
+  }
+}
+
 require([
   'jquery.mousewheel',
   'jquery.scrollTo',
-//  'jquery.isotope',
   'jquery.cookie',
   'jquery-ui',
   'jquery.ui.timepicker',
@@ -139,20 +183,13 @@ require([
 //  'raphael',
   'moment',
   'spin',
-  'Faker',
-  'handlebars',
-  'ember',
   'ember-data',
   'ember-history',
-//  'ember-table',
   'modernizr.columns',
-  'cs!./core',
-//  'cs!application'
+  'cs!./core'
 ], function(){
-//  App.ready();
-
   require(['cs!application'], function(){
-//    App.ready();
+    console.profile('Loading');
     App.advanceReadiness();
   });
 });

@@ -9,10 +9,18 @@ define [
   'cs!../../core'
   'cs!../remove_button'
 ],->
-  App.PlayerLineupGridItemView = Em.ContainerView.extend
+  App.PlayerLineupGridItemView = Em.ContainerView.extend App.Editing, App.ContextMenuSupport,
     classNames: ['lineup-grid-item-player-row']
     classNameBindings: ['content.isSaving', 'content.isDirty']
-    childViews: ['countryFlagView', 'nameView', 'realNameView', 'captianMarkerView', 'removeButtonView']
+    childViews: ['countryFlagView', 'nameView', 'realNameView', 'captianMarkerView']
+    editingChildViews: ['removeButtonView']
+
+    contextMenuActions: ['setAsTheCaptain']
+
+    setAsTheCaptain: ->
+      teamRef = @get 'teamRef'
+      teamRef.set 'captain', @get 'content'
+      teamRef.store.commit()
 
     teamRefBinding: 'parentView.teamRef'
 
@@ -91,7 +99,4 @@ define [
       title: '_remove_player'.loc()
       remove: -> @get('parentView').deleteRecord()
 
-    doubleClick: ->
-      teamRef = @get 'teamRef'
-      teamRef.set 'captain', @get 'content'
-      teamRef.store.commit()
+    doubleClick: -> @setAsTheCaptain()

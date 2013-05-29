@@ -67,7 +67,7 @@ module.exports = (grunt)->
             'iced-coffee-script': '../vendor/scripts/coffee-script-iced-large',
             'transit': '../vendor/scripts/jquery.transit.min',
             'handlebars': '../vendor/scripts/handlebars-1.0.0-rc.3',
-            'ember': '../vendor/scripts/ember-1.0.0-rc.3',
+            'ember': '../vendor/scripts/ember.prod',
             'ember-data': '../vendor/scripts/ember-data',
             'ember-history': '../vendor/scripts/ember-history',
             'ember-table': '../vendor/scripts/ember-table',
@@ -88,17 +88,77 @@ module.exports = (grunt)->
           }
           name: 'main'
           out: 'public/bundle/app.js'
-#          modules: [
-#            {
-#              name: 'main'
-#              out: 'public/app.js'
-#            }
-##            {
-##              optimizeCss: "standard.keepLines"
-##              cssIn: 'stylesheets/main.css'
-##              out: 'public/app.css'
-##            }
-#          ]
+          shim: {
+            'jquery.cookie': {
+              deps: ['jquery']
+            },
+            'jquery.mousewheel': {
+              deps: ['jquery']
+            },
+            'jquery.isotope': {
+              deps: ['jquery']
+            },
+
+            'jquery.scrollTo': {
+              deps: ['jquery']
+            },
+
+            'jquery-ui': {
+              deps: ['jquery']
+            },
+
+            'jquery.ui.datepicker-ru': {
+              deps: ['jquery-ui']
+            },
+
+            'jquery.ui.datepicker-it': {
+              deps: ['jquery-ui']
+            },
+
+            'jquery.ui.datepicker-de': {
+              deps: ['jquery-ui']
+            },
+
+            'jquery.ui.timepicker': {
+              deps: ['jquery-ui']
+            },
+            'jquery.ui.timepicker-ru': {
+              deps: ['jquery.ui.timepicker']
+            },
+
+            'jquery.ui.timepicker-it': {
+              deps: ['jquery.ui.timepicker']
+            },
+
+            'jquery.ui.timepicker-de': {
+              deps: ['jquery.ui.timepicker']
+            },
+
+            'handlebars': {
+              exports: 'Handlebars'
+            },
+
+            'ember': {
+              deps: ['jquery', 'handlebars']
+            },
+            'ember-data': {
+              deps: ['ember']
+            },
+            'ember-history': {
+              deps: ['ember']
+            },
+
+            'transit': {
+              deps: ['jquery']
+            },
+
+            'bootstrap.tooltip': {
+              deps: ['jquery']
+            },
+            'ember-table': {
+              deps: ['ember', 'jquery-ui']
+            }
+          }
     handlebars:
       options:
         namespace: 'Em.TEMPLATES'

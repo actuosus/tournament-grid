@@ -15,6 +15,9 @@ define ['cs!../core'],->
     ]
     name: DS.attr 'string'
     country: DS.belongsTo 'App.Country'
+
+    is_pro: DS.attr 'boolean'
+
 #    country: Em.computed -> App.Country.createRecord name: 'Япония', code: 'jp'
     countryFlagClassName: (->
       'country-flag-icon-%@'.fmt @get 'country.code'

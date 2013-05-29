@@ -43,9 +43,6 @@ define ['cs!../core'], ->
     init: ->
       @_super()
       toggleButtonTarget = @get 'toggleButtonTarget'
-#      if toggleButtonAppendViewBinding.isClass
-#        toggleButtonAppendViewBinding.prototype.childViews?.pushObject 'toggleButtonView'
-#        toggleButtonAppendViewBinding.prototype.toggleButtonView = @get 'toggleButtonView'
       if toggleButtonTarget?.isInstance
         toggleButtonView = @get 'toggleButtonView'
         unless toggleButtonView.isInstance
@@ -54,13 +51,20 @@ define ['cs!../core'], ->
           toggleButtonView.set 'collapseTarget', @
         toggleButtonTarget.pushObject toggleButtonView
 
-    didInsertElement: -> @$().hide() if @get 'collapsed'
+    didInsertElement: ->
+      @_super()
+      @set 'toggleButtonTarget.isTargetCollapsed', @get 'collapsed'
+      @$().hide() if @get 'collapsed'
 
     toggle: ->
       if @get 'collapsed'
         @expand()
       else
         @collapse()
+
+    collapsedChanged: (->
+      @set 'toggleButtonTarget.isTargetCollapsed', @get 'collapsed'
+    ).observes('collapsed')
 
     isCollapsedChanged: (->
       if @get 'isCollapsed'

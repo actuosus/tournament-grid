@@ -13,7 +13,7 @@
 <td class="matches-table-points matches-table-points-team2">{{view App.NumberView classNames="points-label" valueBinding=view.content.entrant2_points isEditableBinding="App.isEditingMode"}}]</td>
 <td class="matches-table-team2">{{view App.TeamCellView contentBinding=view.content.entrant2 matchBinding=view.content contentIndex=1}}</td>
 <td>
-    {{view App.GamesInfoBarView contentBinding=view.content.games}}
+    {{view App.GamesInfoBarView contentBinding=view.content.games showInfoLabelBinding=App.isEditingMode}}
 </td>
 {{#if App.isEditingMode}}
 <td>

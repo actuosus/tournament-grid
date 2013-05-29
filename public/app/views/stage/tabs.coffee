@@ -39,47 +39,112 @@ define [
           contentView = App.GroupGridView.create
             content: @currentStage.get 'rounds'
             entrants: @currentStage.get 'entrants'
+            showFilterForm: no
+            tableItemViewClass: 'App.MatchGroupTableItemView'
         when 'matrix'
           matchesController = App.MatchesController.create(stage: @currentStage, contentBinding: 'stage.matches')
           contentView = App.MatchGridContainer.create
             stage: @currentStage
             content: matchesController
         when 'team'
-          teamsController = Em.ArrayController.create
-            content: @currentStage.get('entrants')
-#            sortProperties: ['gamesPlayed']
+          console.log @currentStage.get('entrants')
+          teamsController = App.ReportEntrantsController.create
+            searchPath: 'name'
+            stage: @currentStage
+            contentBinding: 'stage.entrants'
           matchesController = App.MatchesController.create
             content: @currentStage.get('rounds.firstObject.matches')
-          contentView = App.StangingTableView.create
+          contentView = App.StandingTableView.create
+            classNames: ['for-team']
             entrants: teamsController
             matches: matchesController
+            showFilterForm: yes
+            tableItemViewClass: 'App.MatchTableItemView'
       @set 'currentView', contentView
 
     setCurrentTabView: (@currentTabView)->
       @currentStage = @currentTabView.get 'content'
-
       @get('controller.container')?.lookup('router:main').transitionTo('stage', @currentStage)
-
-#      console.log '@currentStage', @currentStage, @currentStage.get 'visual_type'
-#      @currentStage.on 'didLoad', @currentStageDidLoad.bind(@)
       @currentStage.addObserver 'data', @, @currentStageDidLoad
       @setViewForStage @currentStage
 
     contentView: Em.View.extend()
 
-    tabBarView: Em.View.extend
+    tabBarView: Em.ContainerView.extend( App.ContextMenuSupport, {
       classNames: ['i-listsTabs', 'i-listsTabs_bd']
       contentBinding: 'parentView.content'
-      template: Em.Handlebars.compile '''
-                                      <ul class="b-listsTabs">
-                                        {{#each view.content}}
-                                          {{view view.itemViewClass contentBinding=this}}
-                                        {{/each}}
-                                        {{#if App.isEditingMode}}
-                                          <li {{bindAttr class=":item :add view.addActive:active"}}><button class="btn-clean add">+</button></li>
-                                        {{/if}}
-                                        </ul>
-                                      '''
+      childViews: ['tabsView']
+
+      tabsView: Em.CollectionView.extend
+        tagName: 'ul'
+        classNames: 'b-listsTabs'
+        contentBinding: 'parentView.content'
+        itemViewClass: Em.ContainerView.extend( App.ContextMenuSupport, App.Editing, {
+          tagName: 'li'
+          classNames: ['item']
+          classNameBindings: ['active', 'isFocused']
+          childViews: ['nameView']
+          attributeBindings: ['title']
+          _isEditingBinding: 'App.isEditingMode'
+          editingChildViews: ['removeButtonView']
+
+          contextMenuActions: ['edit', 'deleteRecord:delete']
+
+          titleBinding: 'content.description'
+
+          edit: ->
+            @popup = App.PopupView.create target: @
+            @popup.pushObject App.StageForm.create content: @get 'content'
+            @popup.append()
+
+          deleteRecord: -> @get('content').deleteRecord()
+
+          currentWhen: 'stage'
+
+          active: (->
+            router = @get 'router'
+            content = @get 'content'
+            return unless router
+            currentWithIndex = @currentWhen + '.index'
+            router.isActive.apply(router, [@currentWhen].concat(content)) or
+              router.isActive.apply(router, [currentWithIndex].concat(content))
+          ).property('namedRoute', 'router.url')
+
+          router: (->
+            @get('controller.container')?.lookup('router:main')
+          ).property('controller')
+
+          nameView: Em.View.extend
+            contentBinding: 'parentView.content'
+            template: Em.Handlebars.compile '{{view.content.name}}'
+
+          removeButtonView: App.RemoveButtonView.extend
+            title: '_remove_stage'.loc()
+            deleteRecord: -> @get('parentView').deleteRecord()
+            click: (event)->
+              event.stopPropagation()
+  #            @_super()
+
+          click: ->
+            router = @get 'router'
+            router.transitionTo 'stage', @get 'content' if router
+            @get('parentView.parentView').selectChildView(@)
+        })
+
+#      template: Em.Handlebars.compile '''
+#                                      <ul class="b-listsTabs">
+#                                        {{#each view.content}}
+#                                          {{view view.itemViewClass contentBinding=this}}
+#                                        {{/each}}
+#                                        {{#if App.isEditingMode}}
+#                                          <li {{bindAttr class=":item :add view.addActive:active"}}><button class="btn-clean add">+</button></li>
+#                                        {{/if}}
+#                                      </ul>
+#                                      '''
+#
+      contextMenuActions: ['add']
+
+      add: -> @addItem()
 
       addActive: (->
         router = @get 'router'
@@ -91,61 +156,18 @@ define [
         @get('controller.container')?.lookup('router:main')
       ).property('controller')
 
+      addItem: ->
+        router = @get 'router'
+        router.transitionTo 'stages.new' if router
+        @set 'parentView.currentView', App.StageForm.create(classNames: ['padded'], report: App.report)
+
       click: (event)->
         if $(event.target).hasClass('add')
-          router = @get 'router'
-          router.transitionTo 'stages.new' if router
-          @set 'parentView.currentView', App.StageForm.create(classNames: ['padded'], report: App.report)
+          @addItem()
 
       selectChildView: (childView)->
-        @get('childViews').forEach (child)=>
+        @get('childViews.firstObject.childViews').forEach (child)=>
           properChild = child #.get('childViews').objectAt 0
           if Em.isEqual(properChild , childView)
             @get('parentView').setCurrentTabView properChild
-            properChild.$().addClass('active')
-          else
-            properChild .$().removeClass('active')
-
-      itemViewClass: Em.ContainerView.extend
-        tagName: 'li'
-        classNames: ['item']
-        classNameBindings: ['active']#
-#        isEditingBinding: 'App.isEditingMode'
-        childViews: ['nameView', 'removeButtonView']
-        languages: App.languages
-        attributeBindings: ['title']
-
-        currentWhen: 'stage'
-
-        active: (->
-          router = @get 'router'
-          content = @get 'content'
-          return unless router
-          currentWithIndex = @currentWhen + '.index'
-          router.isActive.apply(router, [@currentWhen].concat(content)) or
-            router.isActive.apply(router, [currentWithIndex].concat(content))
-        ).property('namedRoute', 'router.url')
-
-        router: (->
-          @get('controller.container')?.lookup('router:main')
-        ).property('controller')
-
-        titleBinding: 'content.description'
-
-        nameView: Em.View.extend
-          contentBinding: 'parentView.content'
-          template: Em.Handlebars.compile '{{view.content.name}}'
-
-        deleteRecord: -> @get('content').deleteRecord()
-
-        removeButtonView: App.RemoveButtonView.extend
-          title: '_remove_stage'.loc()
-          remove: -> @get('parentView').deleteRecord()
-          click: (event)->
-            event.stopPropagation()
-            @_super()
-
-        click: ->
-          router = @get 'router'
-          router.transitionTo 'stage', @get 'content' if router
-          @get('parentView').selectChildView(@)
+    })

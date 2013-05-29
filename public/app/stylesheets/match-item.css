@@ -1,0 +1,30 @@
+/**
+ * match-item
+ * @author: actuosus
+ * Date: 27/05/2013
+ * Time: 13:53
+ */
+
+.match-item {
+    
+}
+
+.match-item.is-dirty {
+
+}
+
+.match-item.is-past .match-start-date {
+    color: #afb0b0;
+}
+
+.match-item.invalid {
+    background-color: rgba(255,0,0,0.1);
+}
+
+.match-item.is-dirty.invalid {
+    background-color: rgba(255,127,0,0.2);
+}
+
+.match-item.is-selected {
+    background-color: rgba(0,0,0,0.05);
+}

@@ -11,7 +11,7 @@ define [
   'cs!./team/lineup_grid_item'
 ], ->
   App.LineupView = Em.ContainerView.extend
-    childViews: ['contentView']#, 'addEntrantView'
+    childViews: ['contentView']
 
     contentView: App.GridView.extend
       classNames: ['lineup-grid']
@@ -22,6 +22,3 @@ define [
 #        template: Em.Handlebars.compile '{{loc "_nothing_to_display"}}'
 
       itemViewClass: App.TeamLineupGridItem
-
-    addEntrantView: App.TeamLineupGridItem.extend
-      classNames: ['boo']

@@ -77,8 +77,14 @@ define ['cs!../core'],->
 
         @$().css({transformOrigin: transformOrigin, scale: 0})
         @$().css(offset)
-        @show()
         $(document.body).bind('mousedown.popup', @onDocumentMouseDown.bind(@))
+        @show()
+      else
+        # Without target it's floatable
+        @$().css 'position', 'fixed'
+        @$().css 'right', 100
+        @$().css 'top', '50%'
+        @show()
 
     mouseDown: (event)->
       event.stopPropagation()
@@ -88,7 +94,6 @@ define ['cs!../core'],->
       @hide()
 
     onShow: Em.K
-
     onHide: Em.K
 
     show: (args)->

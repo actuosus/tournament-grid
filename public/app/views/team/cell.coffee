@@ -18,6 +18,10 @@ define [
     childViews: ['countryFlagView', 'nameView']
     editingChildViews: ['autocompleteView', 'resetButtonView']
 
+    isEditing: no,
+    _isEditingBinding: 'isEditable'
+    isEditableBinding: 'App.isEditingMode'
+
     matchBinding: 'parentView.content'
     isUpdatingBinding: 'match.isUpdating'
 
@@ -28,7 +32,7 @@ define [
 
     autocompleteView: App.AutocompleteTextField.extend
       isVisible: no
-      controllerBinding: 'App.teamsController'
+      controllerBinding: 'App.reportTeamsController'
 
       filteredContent: (->
         content = @get 'content'
@@ -83,11 +87,7 @@ define [
       contentBinding: 'parentView.content'
       template: Em.Handlebars.compile '{{view.content.name}}'
 
-      click: ->
-        if @get('parentView.isEditable')
-          unless @get('parentView.match.isLocked')
-            @set('parentView.autocompleteView.isVisible', yes)
-            @get('parentView.autocompleteView').focus()
+      click: -> @set('parentView.autocompleteView.isVisible', yes)
 
       mouseEnter: ->
         @set 'shouldShowPopup', yes
@@ -109,10 +109,6 @@ define [
       console.log @get('match'), contentIndex
       @get("match.entrant#{contentIndex+1}_points")
     ).property()
-
-    isEditing: no,
-    _isEditingBinding: 'isEditable'
-    isEditableBinding: 'App.isEditingMode'
 
     isWinner: (->
       @get('match.winner.clientId') is @get('content.clientId')

@@ -7,9 +7,15 @@
 ###
 
 module.exports = ->
+  _redis =
+    host: 'localhost'
+    hostname: 'localhost'
+    username: ''
+    password: ''
+    db: 1
+  mongo = 'mongodb://localhost/tournament_grid'
   switch process.env.NODE_ENV
     when 'production'
-      _redis = null
       if process.env.REDISCLOUD_URL
         url = require 'url'
         redisURL = url.parse process.env.REDISCLOUD_URL
@@ -21,7 +27,7 @@ module.exports = ->
           password: redisURL.auth.split(':')[1]
       return {
       hostname: 'virtus-pro.herokuapp.com'
-      mongo: process.env.MONGOLAB_URI
+      mongo: process.env.MONGOLAB_URI or mongo
       memcache:
         host: process.env.MEMCACHIER_SERVERS
         port: 11211,

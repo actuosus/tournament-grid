@@ -11,10 +11,12 @@ define [
   'cs!./standings_table_item'
 ], (template)->
   Em.TEMPLATES.teamStandingsTable = Em.Handlebars.compile template
-  App.TeamStandingsTableView = Em.View.extend
+  App.TeamStandingsTableView = Em.View.extend App.ContextMenuSupport,
     tagName: 'table'
     templateName: 'teamStandingsTable'
     classNames: ['team-standings-table', 'table']
+
+    contextMenuActions: 'add'
 
     showSorterOnColumn: (element)->
       @sorter = App.TableSorterView.create()

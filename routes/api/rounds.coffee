@@ -61,3 +61,5 @@ exports.update = (req, res)->
       res.send 400, error: "server error"
   else
     res.send 400, error: "server error"
+
+exports.delete = (req, res)->

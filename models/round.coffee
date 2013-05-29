@@ -21,4 +21,6 @@ RoundSchema = new Schema
   stage_id: type: ObjectId, ref: 'Stage'
   matches: [type: ObjectId, ref: 'Match']
 
+  team_refs: [type: ObjectId, ref: 'TeamRef']
+
 module.exports = RoundSchema

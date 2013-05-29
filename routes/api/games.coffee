@@ -38,3 +38,11 @@ exports.create = (req, res)->
     res.send game: doc
   else
     res.send 400, error: "server error"
+
+exports.update = (req, res)->
+  if req.body?.game
+    game = req.body?.game
+    await Game.findByIdAndUpdate req.params._id, { $set: game }, defer err, doc
+    res.send game: doc
+  else
+    res.send 400, error: "server error"

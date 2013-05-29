@@ -11,7 +11,7 @@ define [
 #  'cs!./controllers/application'
   'cs!./controllers/countries'
   'cs!./controllers/entrants'
-  'cs!./controllers/entrant'
+#  'cs!./controllers/entrant'
   'cs!./controllers/players'
   'cs!./controllers/teams'
 #  'cs!./controllers/stages'
@@ -19,4 +19,4 @@ define [
   'cs!./controllers/report_entrants'
 
 #  'cs!controllers/socket'
-], -> console.log 'Controllers loaded.'
+]

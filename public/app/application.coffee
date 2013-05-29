@@ -7,38 +7,26 @@
 ###
 
 define [
-  'jquery'
-  'Faker'
-  'ember'
-  'ember-data'
-
   'cs!./core'
   'cs!./mixins'
 
   'cs!./controllers'
   'cs!./views'
   'cs!./models'
-  'cs!./fixtures'
+#  'cs!./fixtures'
 
   'cs!./router'
-
-  'text!./templates/lineup_grid_item.handlebars'
 
   'cs!./mixins/translatable'
   'cs!./mixins/collapsable'
   'cs!./translators/yandex'
 
 #  'cs!./tree_test'
-
-  'cs!lib/node'
+#  'cs!lib/node'
 
 ], ()->
 
-#  App.ApplicationController = Em.Controller.extend()
-#  App.ApplicationView = Em.View.extend
-#    templateName : 'application'
-
-  App.set 'isEditingMode', yes
+#  App.set 'isEditingMode', yes
 
   $(document.body).keydown (event)->
 #    console.log event.keyCode
@@ -51,106 +39,87 @@ define [
             App.set 'isEditingMode', not App.get('isEditingMode')
           when 90 # z
             History.undo()
+          when 192 # Paragraph
+            popup = App.PopupView.create(showCloseButton: yes)
+            popup.pushObject App.ServerDebugView.create()
+            popup.append()
+
+  App.RoundProxy = Em.ObjectProxy.extend
+    isSelected: no
+    content: null
+
+  App.MatchProxy = Em.ObjectProxy.extend
+    isSelected: no
+    entrant1: (->
+      console.log arguments
+    ).property()
+    entrant2: (->
+      console.log arguments
+    ).property()
+
+    entrantsChanged: ((self, property)->
+#        console.log arguments
+      content = @get('content')
+      unless content
+        content = App.Match.createRecord()
+        content.set property, @get property
+        content.set 'sort_index', @get 'sort_index'
+        content.set 'round', @get 'round.content'
+        @set 'content', content
+    ).observes('entrant1', 'entrant2')
+
+    open: ->
+      content = @get('content')
+      content.open() if content
+
+    close: ->
+      content = @get('content')
+      content.close() if content
+
+    content: (->
+#        match = @get('round.content.matches')?.objectAtContent @get 'sort_index'
+#        @set('entrants', match.get('entrants')) if match
+    ).property('some', 'round.content.matches.@each.isLoaded')
+
+    some: null
+
+    roundContentIsLoaded: (->
+      @set 'some', @get 'round.index'
+    ).observes('round.content.isLoaded')
+
 
   App.ready = ->
     $('#content').empty()
 
-    App.RoundProxy = Em.ObjectProxy.extend
-      isSelected: no
-      content: null
-
-    App.MatchProxy = Em.ObjectProxy.extend
-      isSelected: no
-      entrant1: (->
-        console.log arguments
-      ).property()
-      entrant2: (->
-        console.log arguments
-      ).property()
-
-      entrantsChanged: ((self, property)->
-#        console.log arguments
-        content = @get('content')
-        unless content
-          content = App.Match.createRecord()
-          content.set property, @get property
-          content.set 'sort_index', @get 'sort_index'
-          content.set 'round', @get 'round.content'
-          @set 'content', content
-      ).observes('entrant1', 'entrant2')
-
-      close: ->
-        content = @get('content')
-        content.close() if content
-      content: (->
-        match = @get('round.content.matches')?.objectAtContent @get 'sort_index'
-#        console.log match
-#        console.log match.get('entrants') if match
-        @set('entrants', match.get('entrants')) if match
-        match
-      ).property('some', 'round.content.matches.@each.isLoaded')
-
-      some: null
-
-      roundContentIsLoaded: (->
-  #      console.log 'round.content.isLoaded'
-        @set 'some', @get 'round.index'
-  #      @notifyPropertyChange('some')
-      ).observes('round.content.isLoaded')
-
-
-    Em.run ->
+#    Em.run ->
     App.set 'report', App.Report.find window.currentReportId
 #
     App.set 'entrantsController', App.EntrantsController.create()
     App.set 'countriesController', App.CountriesController.create()
     App.set 'teamsController', App.TeamsController.create()
+#    App.set 'reportTeamsController', App.ReportEntrantsController.create contentBinding: 'App.report.teamRefs'
     App.set 'playersController', App.PlayersController.create()
 
+#    TODO Socket support
 #    App.socketController = App.SocketController.create()
 #    App.socketController.connect()
-#
-#    window.teamsController = teamsController
-#
+
     stageTabsView = App.StageTabsView.create()
     window.stageView = stageTabsView
-#
-#    # Preloading countries
+
+    # Preloading countries
     App.countries = App.Country.find()
-#
-#    App.anotherCountriesController = Em.ArrayController.create content: []
-#
+
     stageSelectorContainerView = App.NamedContainerView.create
       title: '_tournament_results_table'.loc()
       contentView: stageTabsView
-#
-#    teamsController = Em.ArrayController.create
-#      contentBinding: 'App.report.entrants'
-#      sortProperties: ['gamesPlayed']
-#      editingModeChanged: ->
-#        content = @get 'content'
-#        if App.get('isEditingMode')
-#          content.createRecord({proxy: true, report: App.get('report')})
-#        else
-#          proxy = content.find (item)-> item if item.get('proxy')
-#          content.removeObject(proxy) if proxy
-#    App.addObserver 'isEditingMode', teamsController, teamsController.editingModeChanged
-#
-
-#
-#    $('.link_pencil').click (event)->
-#      event.preventDefault()
-#      App.set 'isEditingMode', not App.get('isEditingMode')
-#
-#      if lineupContainerView?.$()
-#        $(document.body).scrollTo(lineupContainerView.$(), 500, {offset: {top: -18}})
-#      else if stageSelectorContainerView?.$()
-#        $(document.body).scrollTo(stageSelectorContainerView.$(), 500, {offset: {top: -18}})
 
     App.get('report').didLoad = ->
       report = App.get 'report'
       stageTabsView.set 'content', report.get('stages')
-      App.racesController.set 'content', report.get('races')
+#      App.racesController.set 'content', report.get('races')
+
+      App.set 'reportTeamsController', App.ReportEntrantsController.create contentBinding: 'App.report.teamRefs'
 
       if report?.get('match_type') is 'team'
         reportEntrants = App.ReportEntrantsController.create
@@ -170,20 +139,7 @@ define [
 
         unless window.stageView.get('currentStage')
           window.stageView.get('controller')?.transitionTo 'stage', App.get('report.stages.firstObject')
-#          window.stageView.set('currentStage', report.get('stages.firstObject'))
-#          window.stageView.get('currentStage').addObserver 'data', window.stageView, window.stageView.currentStageDidLoad
 
-#      App.store.adapter.findMany = (store, type, ids, owner)->
-#        root = @rootForType(type)
-#        ids = @serializeIds(ids)
-#
-#        data = {ids: ids}
-#        data.report_id = owner.get('id') if App.Report.detectInstance(owner)
-#
-#        @ajax @buildURL(root), "GET", {
-#          data: data,
-#          success: (json)-> Ember.run @, -> @didFindMany(store, type, json)
-#        }
       App.store.adapter.ajax = (url, type, hash)->
         hash.url = url
         hash.type = type
@@ -194,61 +150,20 @@ define [
         if hash.data
           if type isnt 'GET'
             hash.url += "?report_id=#{report.get 'id'}"
+            if App.debug?.wait?
+              hash.url += '&' + jQuery.param({start: App.get('debug.wait.start'), end: App.get('debug.wait.end')})
             hash.data = JSON.stringify hash.data
           else
             hash.data.report_id = report.get 'id'
         else
           hash.url += "?report_id=#{report.get 'id'}"
+          if App.debug?.wait?
+            hash.url += '&' + jQuery.param({start: App.get('debug.wait.start'), end: App.get('debug.wait.end')})
 
         jQuery.ajax hash
 
 
     stageSelectorContainerView.appendTo '#content'
-#
-#    ###
-#      Кодировать и визуализировать состояние матча (сохранение и редактирование)
-#
-#      Подтверждать сохранение и закрытие каждого матча
-#      В течении получаса (суток) редактирование матча возможно
-#
-#      Группу тоже можно и нужно закрывать
-#
-#      При клике на участника группы он маркируется
-#
-#    ###
-#
-#    App.NamedContainerView.create(
-#      title: 'Tester'
-#      contentView: App.TesterView.create()
-#    ).appendTo('#content')
-
-#    App.NamedContainerView.create(
-#      title: '3D'
-#      contentView: App.Tournament3DGridView.create(content: App.get('report.stages'))
-#    ).appendTo('#content')
-
-#    App.entrantsNumber = 8
-
-#    window.newTournamentGridView = App.NewTournamentGridView.create
-#      entrantsNumberBinding: 'App.entrantsNumber'
-#    App.NamedContainerView.create(
-#      title: 'Tournament grid'
-#      contentView: window.newTournamentGridView
-#    ).appendTo('#content')
-#
-#    window.newTournamentSingleGridView = App.NewTournamentGridView.create
-#      entrantsNumberBinding: 'App.entrantsNumber'
-#    App.NamedContainerView.create(
-#      title: 'Single grid'
-#      contentView: window.newTournamentSingleGridView
-#    ).appendTo('#content')
-#
-#    window.newTournamentDoubleGridView = App.NewDoubleTournamentGridView.create
-#      entrantsNumberBinding: 'App.entrantsNumber'
-#    App.NamedContainerView.create(
-#      title: 'Double grid'
-#      contentView: window.newTournamentDoubleGridView
-#    ).appendTo('#content')
 
     App.peroids = Em.ArrayController.create
       content: [
@@ -265,14 +180,16 @@ define [
 
     App.matchTypes = Em.ArrayController.create
       content: [
-        Em.Object.create name:'_team'.loc(), id: 'team'
-        Em.Object.create name:'_player'.loc(), id: 'player'
-        Em.Object.create name:'_mixed'.loc(), id: 'mixed'
+        Em.Object.create name:'Все', id: 'all'
+
+        Em.Object.create name:'_future_match_type'.loc(), id: 'future'
+        Em.Object.create name:'_active_match_type'.loc(), id: 'active'
+        Em.Object.create name:'_delayed_match_type'.loc(), id: 'delayed'
+        Em.Object.create name:'_past_match_type'.loc(), id: 'past'
       ]
 
     App.visualTypes = Em.ArrayController.create
       content: [
-#        Em.Object.create name:'_grid'.loc(), id: 'grid'
         Em.Object.create name:'_single'.loc(), id: 'single'
         Em.Object.create name:'_double'.loc(), id: 'double'
         Em.Object.create name:'_group'.loc(), id: 'group'
@@ -280,63 +197,38 @@ define [
         Em.Object.create name:'_team'.loc(), id: 'team'
       ]
 
-    App.racesController = Em.ArrayController.create
-      content: [
-        Em.Object.create name: '_zerg'.loc(), id: 'zerg'
-        Em.Object.create name: '_protoss'.loc(), id: 'protos'
-        Em.Object.create name: '_terrain'.loc(), id: 'terrain'
-      ]
-      all: ->
-        @set 'content.isLoaded', yes
-      search: (options)->
-        result = @get('content').filter (item, idx)->
-          regexp = new RegExp(options.name, 'i')
-          if item.get('name')?.match regexp
-            return yes
-          if item.get('__name')?.match regexp
-            return yes
-          if item.get('englishName')?.match regexp
-            return yes
-        @set 'content.isLoaded', yes
-      menuItemViewClass: Em.View.extend
-        classNames: ['menu-item']
-        classNameBindings: ['isSelected']
-        template: Em.Handlebars.compile(
-#          '<i {{bindAttr class=":country-flag-icon view.content.flagClassName"}}></i>'+
-          '{{view.content.name}}')
-        mouseDown: (event)->
-          event.stopPropagation()
-
-        click: (event)->
-          event.preventDefault()
-          event.stopPropagation()
-          @get('parentView').click(event)
-          @set 'parentView.selection', @get 'content'
-          @set 'parentView.value', @get 'content'
-          @set 'parentView.isVisible', no
-
-#  rootNode = App.Node.create(content: 'root')
-#  rootNode.set('left', App.Node.create(
-#    content: 'left1',
-#    left: App.Node.create(content: 'left2'),
-#    right: App.Node.create(content: 'right2'))
-#  )
-#  rootNode.set('right', App.Node.create(content: 'right1'))
+#    App.racesController = Em.ArrayController.create
+#      content: [
+#        Em.Object.create name: '_zerg'.loc(), id: 'zerg'
+#        Em.Object.create name: '_protoss'.loc(), id: 'protos'
+#        Em.Object.create name: '_terrain'.loc(), id: 'terrain'
+#      ]
+#      all: ->
+#        @set 'content.isLoaded', yes
+#      search: (options)->
+#        result = @get('content').filter (item, idx)->
+#          regexp = new RegExp(options.name, 'i')
+#          if item.get('name')?.match regexp
+#            return yes
+#          if item.get('__name')?.match regexp
+#            return yes
+#          if item.get('englishName')?.match regexp
+#            return yes
+#        @set 'content.isLoaded', yes
+#      menuItemViewClass: Em.View.extend
+#        classNames: ['menu-item']
+#        classNameBindings: ['isSelected']
+#        template: Em.Handlebars.compile '{{view.content.name}}'
+#        mouseDown: (event)->
+#          event.stopPropagation()
 #
-#  App.MatchTreeItemView = App.TreeItemView.extend
-#    treeItemViewClass: (->
-#      App.MatchGridItemView.extend
-#        classNames: ['tree-item-view-content'],
-#        contentBinding: 'parentView.content'
-#        contentIndexBinding: 'parentView.contentIndex'
-#    ).property()
-#
-#  treeView = App.TreeView.create content: [rootNode]
-##  treeView.appendTo '#content'
-#
-#  App.NamedContainerView.create(
-#    title: 'Tree'
-#    contentView: treeView
-#  ).appendTo('#content')
+#        click: (event)->
+#          event.preventDefault()
+#          event.stopPropagation()
+#          @get('parentView').click(event)
+#          @set 'parentView.selection', @get 'content'
+#          @set 'parentView.value', @get 'content'
+#          @set 'parentView.isVisible', no
 
 
+    console.profileEnd('Loading');

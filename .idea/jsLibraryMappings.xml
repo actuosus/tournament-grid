@@ -2,7 +2,6 @@
 <project version="4">
   <component name="JavaScriptLibraryMappings">
     <file url="PROJECT" libraries="{Ember, Node.js v0.8.16 Core Modules, jQuery-1.9.1}" />
-    <includedPredefinedLibrary name="Node.js Globals" />
   </component>
 </project>
 

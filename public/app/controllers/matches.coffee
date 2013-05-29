@@ -14,10 +14,15 @@ define [
 
   App.MatchesController = Em.ArrayController.extend
 
+#    itemController: App.MatchController
+
     lastResults: null
+
+    round: null
 
     sortProperties: ['date', 'sort_index']
 
+    matchTypeFilter: null
     entrantFilter: null
     periodFilter: null
 
@@ -27,12 +32,19 @@ define [
 
     filteredContent: (->
       content = @get 'content'
+      console.log 'filteredContent', content
+      matchTypeFilter = @get 'matchTypeFilter'
       entrantFilter = @get 'entrantFilter'
       periodType = @get 'periodFilter'
 
       date = @get 'dateFilter'
       startDate = @get 'startDateFilter'
       endDate = @get 'endDateFilter'
+
+      if matchTypeFilter
+        unless matchTypeFilter.get('id') is 'all'
+          content = content.filter (item)->
+            Em.isEqual(item.get('currentStatus'), matchTypeFilter.get('id'))
 
       if entrantFilter
         content = content.filter (item)->
@@ -63,7 +75,7 @@ define [
               return inDateRange startDate, endDate, d
 
       content
-    ).property('entrantFilter', 'periodFilter', 'dateFilter', 'startDateFilter', 'endDateFilter')
+    ).property('matchTypeFilter', 'entrantFilter', 'periodFilter', 'dateFilter', 'startDateFilter', 'endDateFilter')
 
     results: (->
         incrementPropertyForEntrant = (entrant, property, increment)->
@@ -114,9 +126,15 @@ define [
             results.set entrant1, Ember.Object.create() unless results.has entrant1
             results.set entrant2, Ember.Object.create() unless results.has entrant2
 
+        teamRefs = @get 'round.teamRefs'
+        teamRefs?.forEach (ref)->
+          team = ref.get('team')
+          results.set ref.get('team'), Ember.Object.create() unless results.has team
+
         resultsArray = []
         results.forEach (entrant, result)->
           resultsArray.pushObject Em.Object.create entrant: entrant, result
+
         resultsArray.sort((a,b)-> a.get('wins') > b.get('wins')).forEach (result, index)-> result.set 'position', index+1
 
         lastResults = Ember.ArrayController.create content: resultsArray, sortProperties: ['position']
@@ -125,4 +143,5 @@ define [
     ).property('@each.entrant1_points',
       '@each.entrant2_points',
       '@each.entrant1',
-      '@each.entrant2')
+      '@each.entrant2',
+      'round.teamRefs.length')

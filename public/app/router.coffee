@@ -45,6 +45,4 @@ define [
       window.stageView.set('currentStage', model)
       window.stageView.get('currentStage').addObserver 'data', window.stageView, window.stageView.currentStageDidLoad
 
-    model: (params)->
-      console.log 'Model for', params
-      App.Stage.find params.stage_id
+    model: (params)-> App.Stage.find params.stage_id

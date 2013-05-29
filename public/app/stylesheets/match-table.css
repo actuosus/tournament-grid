@@ -5,6 +5,10 @@
  * Time: 13:22
  */
 
+.matches-table {
+    border: 0;
+}
+
 .matches-table-item {
     position: relative;
 }

@@ -70,7 +70,10 @@ processRandom = (req, res, next)->
 rangedRandom = (min = 0, max = 255)-> Math.floor(Math.random() * (max - min + 1)) + min
 
 waiter = (req, res, next)->
-  setTimeout next, rangedRandom 500, 3000
+  if req.query?.start and req.query?.end
+    setTimeout next, rangedRandom parseInt(req.query.start), parseInt(req.query.end)
+  else
+    next()
 
 languages = ['ru', 'en', 'de', 'it']
 
@@ -137,11 +140,11 @@ app.configure 'development', ->
   # Error handling
   app.use express.errorHandler dumpExceptions: yes, showStack: yes
 
-  app.use (req, res, next)->
-    if req.url.match /api/
-      waiter req, res, next
-    else
-      next()
+#  app.use (req, res, next)->
+#    if req.url.match /api/
+#      waiter req, res, next
+#    else
+#      next()
 
 app.configure 'production', ->
   # Compression
@@ -187,10 +190,12 @@ app.post '/api/logs', routes.api.logs.create
 app.get '/api/championships', routes.api.championships.list
 
 app.get '/api/countries', routes.api.countries.list
+app.get '/api/countries/names', routes.api.countries.namesList
 app.get '/api/countries/:_id', routes.api.countries.item
 
 app.get '/api/games', routes.api.games.list
 app.get '/api/games/:_id', routes.api.games.item
+app.put '/api/games/:_id', routes.api.games.update
 app.post '/api/games', routes.api.games.create
 
 app.get '/api/matches', routes.api.matches.list

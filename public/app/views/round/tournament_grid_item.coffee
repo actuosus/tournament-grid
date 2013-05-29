@@ -8,44 +8,33 @@
 define [
   'cs!../team/grid_item_container'
   'cs!../game/info_bar'
-  'cs!../date_field'
   'cs!../match/grid_item'
 ], ->
   App.RoundGridItemView = Em.ContainerView.extend
-    classNames: ['tournament-round-container']
+    classNames: 'tournament-round-container'
     classNameBindings: ['content.isDirty']
     childViews: ['nameView', 'contentView']
 
     nameView: App.EditableLabel.extend
-      classNames: ['round-name']
+      classNames: 'round-name'
       valueBinding: 'parentView.content.name'
       isEditableBinding: 'App.isEditingMode'
 
     contentView: Em.CollectionView.extend
-      classNames: ['tournament-round']
+      classNames: 'tournament-round'
       roundBinding: 'content'
       contentBinding: 'parentView.content.matches'
-      attributeBindings: ['title']
-
-      titleBinding: 'parentView.content.itemIndex'
 
       entrantsNumberBinding: 'parentView.entrantsNumber'
 
-      itemViewClass: Em.ContainerView.extend
-        classNames: ['tournament-match']
-        childViews: ['dateView', 'infoBarView', 'connectorView', 'contentView', 'editControlsView']
-        classNameBindings: ['content.isSelected', 'content.isFinal', 'content.isDirty']
-        attributeBindings: ['title']
+      itemViewClass: App.MatchItemView.extend
+        classNames: 'tournament-match'
+        childViews: ['dateView', 'infoBarView', 'connectorView', 'contentView']
         roundIndexBinding: 'parentView.parentView.contentIndex'
         roundsBinding: 'parentView.parentView.parentView.content'
         entrantsNumberBinding: 'parentView.entrantsNumber'
 
-        title: (-> "#{@get('content.round.index')}:#{@get('content.index')}").property('content')
-
-#        titleBinding: 'content.description'
-
         mouseEnter: ->
-          @set 'editControlsView.isVisible', yes
           node = @get 'content'
           lastNode = null
           while node
@@ -57,8 +46,6 @@ define [
               break
 
         mouseLeave: ->
-          @set 'editControlsView.isVisible', no
-
           node = @get 'content'
           lastNode = null
           while node
@@ -80,12 +67,12 @@ define [
             @set 'connectorView.isVisible', no
             @set 'dateView.isVisible', no
             @set 'infoBarView.isVisible', no
-          styles = {height: height * 2}
 
+          styles = {height: height * 2}
           bracket = match.get('round.bracket')
 
           if (match.get('itemIndex') is -1) and (match.get('round.itemIndex') is -1)
-            console.debug 'Winner', @get('parentView.parentView.parentView.parentView.entrantsNumber')
+#            console.debug 'Winner', @get('parentView.parentView.parentView.parentView.entrantsNumber')
             entrantsNumber = @get('parentView.parentView.parentView.parentView.entrantsNumber')
             roundsCount = Math.log(entrantsNumber) / Math.log(2)-1
             matchesCount = Math.pow(2, roundsCount)-1
@@ -100,7 +87,7 @@ define [
               unless bracket.get('isWinnerBracket')
                 # TODO Revise weird formula
                 currentIndex = Math.ceil(Math.pow(2, Math.floor((roundIndex-1)/2 + ((roundIndex-1)%2))) - 1)
-                console.log 'Loser', roundIndex, currentIndex
+#                console.log 'Loser', roundIndex, currentIndex
             if contentIndex is 0
               styles.marginTop = currentIndex * height
             else
@@ -137,7 +124,6 @@ define [
                 currentIndex = index(roundIndex) - index(roundIndex-1)
                 if match.get('round.itemIndex') is 0
                   entrantsNumber = @get('entrantsNumber')
-                  console.log 'index(roundIndex-1)', index(roundIndex-1)
                   _height = (index(roundIndex-1) * height) + 30 + 13 + 20 + 15 + (entrantsNumber/2 * height) + 6
                   styles.top = -_height
                   styles.height = _height + 15 + 24
@@ -163,102 +149,21 @@ define [
 
             @$().css styles
 
-        dateView: App.DateWithPopupView.extend
-          classNames: ['match-start-date']
-          contentBinding: 'parentView.content.date'
-          format: 'DD.MM.YY'
-          showPopupBinding: 'App.isEditingMode'
-
-        infoBarView: App.GamesInfoBarView.extend
-          contentBinding: 'parentView.content.games'
-          showInfoLabel: yes
-          classNames: ['match-info-bar']
-          isEditableBinding: 'App.isEditingMode'
-
         contentView: Em.CollectionView.extend
           classNames: ['match-grid-item-entrants']
           matchBinding: 'parentView.content'
           contentBinding: 'parentView.content.entrants'
 
-          itemViewClass: App.TeamGridItemContainerView.extend
+          itemViewClass: App.TeamGridItemContainerView.extend( App.Droppable, {
             matchBinding: 'parentView.match'
             pointsIsVisible: (->
               !@get('match.isFinal')
             ).property()
 
-        editControlsView: Em.ContainerView.extend
-          isVisible: no
-          classNames: ['match-grid-item-edit-controls']
-          childViews: ['closeButtonView', 'saveButtonView']#'removeButtonView',
-          contentBinding: 'parentView.content'
-
-          closeButtonView: Em.View.extend
-            tagName: 'button'
-            classNames: ['btn', 'btn-primary', 'btn-mini', 'close-btn', 'close']
-            contentBinding: 'parentView.content'
-            template: Em.Handlebars.compile '{{view.actionLabel}}'
-
-            actionLabel: (->
-              console.log @get('content'), @get('content.status')
-              switch @get 'content.status'
-                when 'closed'
-                  '_open'.loc()
-                when 'opened'
-                  '_close'.loc()
-            ).property('content.status')
-
-            isVisible: (->
-              isEditingMode = App.get 'isEditingMode'
-              isOpenable = @get 'content.isOpenable'
-              yes if isEditingMode and isOpenable
-            ).property('App.isEditingMode', 'content.isDirty', 'content.isOpenable')
-
-            click: ->
-              match = @get 'content'
-              switch @get 'content.status'
-                when 'closed'
-                  match.open()
-                when 'opened'
-                  match.close()
-
-          saveButtonView: Em.View.extend
-            tagName: 'button'
-            classNames: ['btn', 'btn-primary', 'btn-mini', 'save-btn', 'save']
-            template: Em.Handlebars.compile '{{loc "_save"}}'
-
-            isVisible: (->
-              isDirty = @get 'parentView.content.isDirty'
-              yes if isDirty
-            ).property('parentView.content.isDirty').volatile()
-
-            click: ->
-              match = @get 'parentView.content'
-              transaction = match.get('transaction')
-              transaction.commit() if transaction
-
-          editButtonView: Em.View.extend
-            tagName: 'button'
-            contentBinding: 'parentView.content'
-            isVisibleBinding: 'App.isEditingMode'
-            classNames: ['btn-clean', 'edit-btn', 'edit']
-            attributeBindings: ['title']
-            title: '_edit'.loc()
-
-            click: ->
-              team = @get('content')
-              team.deleteRecord()
-              team.store.commit()
-
-          removeButtonView: Em.View.extend
-            tagName: 'button'
-            contentBinding: 'parentView.content'
-            isVisibleBinding: 'App.isEditingMode'
-            classNames: ['btn-clean', 'remove-btn', 'remove']
-            attributeBindings: ['title']
-            title: '_remove'.loc()
-            template: Em.Handlebars.compile '×'
-
-            click: ->
-              team = @get('content')
-              team.deleteRecord()
-              team.store.commit()
+            drop: (event)->
+              viewId = event.originalEvent.dataTransfer.getData 'Text'
+              view = Em.View.views[viewId]
+              teamRef = view.get 'content'
+              Em.run.next @, => @set 'content', teamRef.get('team')
+              @_super event
+          })

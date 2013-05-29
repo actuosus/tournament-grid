@@ -28,26 +28,6 @@
     -webkit-transition: background-color 0.3s ease-in-out;
 }
 
-.match-grid-item.is-dirty {
-
-}
-
-.match-grid-item.is-past .match-start-date {
-    color: #afb0b0;
-}
-
-.match-grid-item.invalid {
-    background-color: rgba(255,0,0,0.1);
-}
-
-.match-grid-item.is-dirty.invalid {
-    background-color: rgba(255,127,0,0.2);
-}
-
-.match-grid-item.is-selected {
-    background-color: rgba(0,0,0,0.05);
-}
-
 .grid .match-grid-item {
     float: left;
     position: relative;

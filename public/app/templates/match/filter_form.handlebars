@@ -6,31 +6,32 @@
  * Time: 07:49
 -->
 
-<form class="selector row b-filter" xmlns="http://www.w3.org/1999/html">
+<form class="selector row">
     <div class="cf">
-        <div class="span1">
-            <label>{{loc '_matches'}}</label>
-        </div>
         <div class="columnLeft">
 
             <label>
                 <span>{{loc '_type'}}:</span>
-                {{view App.SelectView contentBinding=App.matchTypes promt="Все"}}
+                {{view App.SelectView contentBinding=App.matchTypes promt="Все" valueBinding=view.matchType}}
             </label>
             <label>
                 <span>{{loc '_team'}}:</span>
-                {{view App.ComboBoxView controllerBinding=App.teamsController promt="Все" form=view valueBinding=view.team}}
+                {{view App.ComboBoxView controllerBinding=view.entrants promt="Все" form=view valueBinding=view.team}}
             </label>
             <label>
                 <span>За время:</span>
                 {{view App.SelectView contentBinding=App.peroids valueBinding=view.periodType}}
 
+                {{#if view.isPeriod}}
                 <div class="period-selector">
                     <input type="date" class="start-date"/><input type="date" class="end-date"/>
                 </div>
+                {{/if}}
+                {{#if view.isDate}}
                 <div class="date-selector">
                     <input type="date" class="date"/>
                 </div>
+                {{/if}}
             </label>
 
             <button type="button" class="btn btn-large search-btn submit" title="Отфильтровать" {{action filter}}><i class="icon-search icon-white"></i></button>

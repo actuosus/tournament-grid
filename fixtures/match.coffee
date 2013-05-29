@@ -65,7 +65,7 @@ module.exports.Match = [
   description: 'Дополнительно описание, которе вбивается'
 ,
   _id: '50fd102c3612183b15000006',
-  sort_index: 1
+  sort_index: 3
   title: 'Stephano vs Wikipediots',
   entrant1_id: '50fcdf189c68d90f07000003',
   entrant2_id: '50fcdf189c68d90f07000002',

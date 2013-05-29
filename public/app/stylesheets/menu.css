@@ -7,7 +7,7 @@
 
 .menu {
     position: absolute;
-    width: 205px;
+    /*width: 205px;*/
     z-index: 200;
     /* Weird but with bg color box-shadow is not visible */
     background-color: white;

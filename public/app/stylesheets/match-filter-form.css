@@ -5,6 +5,26 @@
  * Time: 18:04
  */
 
+.match-filter-form-container {
+    background: #e0e0e0;
+    border-bottom: 1px solid #afafaf;
+    min-height: 24px;
+}
+
+.match-filter-form {
+    position: absolute;
+    top: 12px;
+    left: 75px;
+}
+
+.is-target-collapsed .match-filter-form {
+    display: none;
+}
+
+.is-target-collapsed .matches-table-container .toggle-btn {
+    top: 3px;
+}
+
 .match-filter-form .columnLeft {
     float: none;
 }
@@ -17,12 +37,38 @@
 
 .match-filter-form .select {
     min-width: 90px;
+
+    float: left;
 }
 
-.match-filter-form .b-filter {
-    padding: 0px 20px 17px;
+.match-filter-form label {
+    float: left;
+    margin-right: 17px;
 }
 
-.match-filter-form .b-filter label span {
+.match-filter-form label span {
     font-size: 11px;
+    display: block;
+}
+
+.period-selector, .date-selector {
+    float: left;
+
+}
+
+.date-selector .date {
+    min-height: 26px;
+    margin-left: 9px;
+}
+
+.period-selector .start-date, .period-selector .end-date {
+    float: left;
+    min-height: 26px;
+    margin-left: 9px;
+}
+
+.match-filter-form .search-btn {
+    position: absolute;
+    right: 49px;
+    top: 8px;
 }

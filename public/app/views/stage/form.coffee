@@ -65,8 +65,8 @@ define [
           stage.createWinnerBracket null, entrantsNumber
         when 'double'
           stage = report.get('stages').createRecord()
-          stage.createWinnerBracket null, entrantsNumber
-          stage.createLoserBracket null, entrantsNumber
+#          stage.createWinnerBracket null, entrantsNumber
+#          stage.createLoserBracket null, entrantsNumber
         when 'group'
           stage = report.createStageByRoundsNumber parseInt(@$('.group-number').val(), 10)
         when 'matrix'

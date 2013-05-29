@@ -11,7 +11,8 @@ define ['cs!../core'],->
 
     team: DS.belongsTo 'App.Team'
     report: DS.belongsTo('App.Report', {inverse: 'teamRefs'})
-    match: DS.belongsTo 'App.Match'
+    round: DS.belongsTo('App.Round', {inverse: 'teamRefs'})
+    match: DS.belongsTo('App.Match', {inverse: 'teamRefs'})
 
     players: DS.hasMany('App.Player', {inverse: 'teamRef'})
 

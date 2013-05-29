@@ -14,7 +14,7 @@ define [
   'cs!./ask_move_form'
 #  'cs!./how_is_the_captain_form'
 ], ->
-  App.TeamLineupGridItem = Em.ContainerView.extend App.Editing,
+  App.TeamLineupGridItem = Em.ContainerView.extend App.Editing, App.Droppable,
     classNames: ['lineup-grid-item', 'team-lineup-grid-item']
     classNameBindings: ['content.isDirty']
     childViews: ['teamNameView', 'playersView']
@@ -22,11 +22,23 @@ define [
 
     _isEditingBinding: 'App.isEditingMode'
 
+    drop: (event)->
+      viewId = event.originalEvent.dataTransfer.getData 'Text'
+      view = Em.View.views[viewId]
+
+      teamRef = @get 'content'
+
+      Em.run.next @, ->
+        player = view.get('content')
+        player.set 'teamRef', teamRef
+
+      @_super event
+
     didInsertElement: ->
       @$().css scale: 0
       @$().transition scale: 1
 
-    teamNameView: Em.ContainerView.extend(App.MovingHightlight, App.Editing,
+    teamNameView: Em.ContainerView.extend(App.MovingHightlight, App.Editing, App.Draggable,
       contentBinding: 'parentView.content.team'
       classNames: ['lineup-grid-item-name-container']
       childViews: ['countryFlagView', 'nameView']#'editButtonView',
@@ -85,7 +97,7 @@ define [
 
       removeButtonView: App.RemoveButtonView.extend
         title: '_remove_team'.loc()
-        remove: -> @get('parentView').deleteRecord()
+        deleteRecord: -> @get('parentView').deleteRecord()
 
     )
     playersView: Em.CollectionView.extend
@@ -93,7 +105,7 @@ define [
       teamRefBinding: 'parentView.content'
       contentBinding: 'parentView.content.players'
 
-      itemViewClass: App.PlayerLineupGridItemView
+      itemViewClass: App.PlayerLineupGridItemView.extend(App.Draggable)
 
     addPlayerView: Em.ContainerView.extend
       classNames: ['lineup-grid-item-player-row']
@@ -104,6 +116,8 @@ define [
         controllerBinding: 'App.playersController'
         teamRefBinding: 'parentView.parentView.content'
         entrantBinding: 'parentView.parentView.content'
+        attributeBindings: 'title'
+        title: '_enter_player_name'.loc()
         placeholder: '_player_nickname'.loc()
 
         filteredContent: (->

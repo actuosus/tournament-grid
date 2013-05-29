@@ -57,7 +57,8 @@ require(['chai', 'mocha', 'sinon'], function (chai) {
     require([
       'cs!/app/test/fixtures',
       'cs!/app/test/system',
-      'cs!/app/test/models'
+      'cs!/app/test/models',
+      'cs!/app/test/views'
     ], function () {
       App.store = DS.defaultStore = DS.Store.create({
         revision: 11,

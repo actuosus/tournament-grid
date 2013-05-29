@@ -19,7 +19,7 @@ TeamSchema = new Schema
   profile_url: type: String
   players: [type: ObjectId, ref: 'Player']
 
-  isPro: type: Boolean
+  is_pro: type: Boolean
 
   description: type: String
 

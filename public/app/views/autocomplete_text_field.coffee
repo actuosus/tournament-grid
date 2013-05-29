@@ -149,7 +149,7 @@ define [
       content = @get 'filteredContent'
       console.log 'content.isLoaded', @get 'content.isLoaded'
       if @get 'content.isLoaded'
-        unless @get 'menuView'
+        if not @get('menuView') or @get('menuView').isDestroyed
           menuView = App.MenuView.create
             content: content
             autocompleteView: @

@@ -10,20 +10,13 @@ define [
   'cs!./team/standings_table',
   'cs!./match/table_container'
 ], ()->
-  App.StangingTableView = Em.ContainerView.extend
+  App.StandingTableView = Em.ContainerView.extend
     classNames: ['standing-table']
-    childViews: ['stadingsView', 'contentView']
-    stadingsView: App.TeamStandingsTableView.extend
-#      roundBinding: 'parentView.matches.round'
-#      automaticCountingDisabledChanged: (->
-#        if @get 'round.automaticCountingDisabled'
-#          Ember.bind(@, 'content', 'parentView.matches.lastResults')
-##          @set 'contentBinding', 'parentView.matches.lastResults'
-#        else
-#          Ember.bind(@, 'content', 'parentView.matches.results')
-##          @set 'contentBinding', 'parentView.matches.results'
-#
-#      ).observes('round.automaticCountingDisabled')
+    childViews: ['standingsView', 'contentView']
+    standingsView: App.TeamStandingsTableView.extend
       contentBinding: 'parentView.matches.results'
     contentView: App.MatchesTableContainerView.extend
+      entrantsBinding: 'parentView.entrants'
       contentBinding: 'parentView.matches'
+      showFilterFormBinding: 'parentView.showFilterForm'
+      tableItemViewClassBinding: 'parentView.tableItemViewClass'

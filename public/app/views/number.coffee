@@ -22,7 +22,6 @@ define [
     max: 100
 
     _valueChanged: (->
-      console.log '_val', @get('value')
       if @get('value') isnt null
         @$().text(@get 'value') if @$()
     ).observes('value')
@@ -59,6 +58,5 @@ define [
 
 
     setValue: (value)->
-      console.log 'setValue'
       value = parseFloat(value) if value
       @set('value', value) if @get('value') isnt value

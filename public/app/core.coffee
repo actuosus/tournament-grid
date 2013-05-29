@@ -88,10 +88,11 @@ define [
   App = Em.Application.create
     VERSION: '0.1'
     autoinit: false
-    LOG_TRANSITIONS: true
 #    rootElement: '#content'
     customEvents:
       mousewheel: 'mouseWheel'
+
+  App.LOG_TRANSITIONS = yes if window.debug
   App.deferReadiness()
 
   window.TournamentGrid = TournamentGrid
@@ -211,5 +212,11 @@ define [
 
   App.animation =
     duration: 300
+
+  App.set 'debug', Em.Object.create({
+    wait:
+      start: 1000
+      end: 3000
+  })
 
   App

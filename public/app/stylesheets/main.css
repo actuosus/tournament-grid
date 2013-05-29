@@ -14,11 +14,11 @@
 @import "button.css";
 @import "menu.css";
 @import "combobox.css";
-@import "tree.css";
-@import "../../vendor/styles/bootstrap-tooltip.css";
+/*@import "tree.css";*/
+/*@import "../../vendor/styles/bootstrap-tooltip.css";*/
 @import "../../vendor/styles/jquery-ui.css";
 @import "../../vendor/styles/jquery-ui-timepicker-addon.css";
-@import "ember-table.css";
+/*@import "ember-table.css";*/
 @import "block_container.css";
 @import "named_container.css";
 /*@import "test-grid.css";*/
@@ -29,9 +29,10 @@
 @import "autocomplete_text_field.css";
 @import "team_grid_item.css";
 @import "country_flag_icon.css";
-@import "tournament_grid.css";
+@import "tournament-grid.css";
 @import "team-lineup-grid.css";
 @import "lineup_grid_item.css";
+@import "match-item.css";
 @import "match_grid.css";
 @import "match-table.css";
 @import "team_standings_table_item.css";
@@ -102,12 +103,24 @@
     top: 7px;
 }
 
+.for-team .matches-table-container-header.is-target-expanded .toggle-btn {
+    top: 31px;
+}
+
 .matches-table-container-header .toggle-btn-collapsed {
     background-position-y: 2px;
 }
 
+.for-team .matches-table-container-header.is-target-expanded {
+    height: 75px;
+}
+
 .matches-table-title {
     padding: 5px 8px;
+}
+
+.for-team .matches-table-container-header.is-target-expanded .matches-table-title {
+    padding: 29px 8px;
 }
 
 .matches-table-date {
@@ -389,4 +402,26 @@ input.match-start-date {
 .empty-view {
     text-align: center;
     font-size: 20px;
+}
+
+.selection-mask {
+    position: absolute;
+    border: 1px solid rgba(255,255,255,0.8);
+    background-color: rgba(0,0,0,0.2);
+    z-index: 100;
+}
+
+.is-visualy-selected {
+    background-color: red !important;
+    background-color: -webkit-focus-ring-color !important;
+}
+
+.status {
+    padding-left: 21px;
+    min-height: 16px;
+    background: url('/images/loader.gif') no-repeat;
+}
+
+.error {
+    color: #ac0000;
 }

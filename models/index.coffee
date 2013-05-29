@@ -11,7 +11,7 @@ mongoose = require 'mongoose'
 exports.UserSchema = require './user'
 exports.LogSchema = require './log'
 
-exports.ChampionshipSchema = require './championship'
+#exports.ChampionshipSchema = require './championship'
 exports.CountrySchema = require './country'
 exports.GameSchema = require './game'
 exports.MatchSchema = require './match'
@@ -30,7 +30,7 @@ try
   exports.User = mongoose.model 'User', exports.UserSchema
   exports.Log = mongoose.model 'Log', exports.LogSchema
 
-  exports.Championship = mongoose.model 'Championship', exports.ChampionshipSchema
+#  exports.Championship = mongoose.model 'Championship', exports.ChampionshipSchema
   exports.Country = mongoose.model 'Country', exports.CountrySchema
   exports.Game = mongoose.model 'Game', exports.GameSchema
   exports.Match = mongoose.model 'Match', exports.MatchSchema

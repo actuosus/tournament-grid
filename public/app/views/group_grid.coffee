@@ -11,16 +11,24 @@ define [
   'cs!./standing_table',
   'cs!./editable_label',
   'cs!./multilingual_editable_label',
-  'cs!./match/group_table_container'
+  'cs!./match/table_container'
   'cs!./remove_button'
   'cs!../controllers/matches'
 ], ->
   App.GroupGridView = App.GridView.extend
     classNames: ['lineup-grid', 'group-lineup-grid']
 
-    itemViewClass: Em.ContainerView.extend
+    itemViewClass: Em.ContainerView.extend(App.ContextMenuSupport, {
       classNames: ['lineup-grid-item']
       childViews: ['contentView', 'matchesView']
+
+      showFilterFormBinding: 'parentView.showFilterForm'
+      tableItemViewClassBinding: 'parentView.tableItemViewClass'
+
+      contextMenuActions: ['deleteRecord:removeGroup']
+
+      deleteRecord: ->
+        @get('content').deleteRecord()
 
       contentView: Em.ContainerView.extend
         contentBinding: 'parentView.content'
@@ -50,11 +58,9 @@ define [
 
           click: ->
             console.debug 'Should add entrant.'
-            content = @get 'content'
-            if content.createRecord
-              content.createRecord() if content
-            if content.get('content')?.createRecord
-              content.get('content')?.createRecord()
+            teamRefs = @get 'content.teamRefs'
+            if teamRefs?.createRecord
+              teamRefs.createRecord()
 
         automaticCountingButtonView: Em.View.extend
           tagName: 'button'
@@ -85,13 +91,18 @@ define [
           title: '_remove_group'.loc()
           remove: -> @get('parentView').remove()
 
-      matchesView: App.StangingTableView.extend
-        childViews: ['stadingsView', 'contentView']
+      matchesView: App.StandingTableView.extend
+        childViews: ['standingsView', 'contentView']
         entrantsBinding: 'parentView.content.entrants'
+        showFilterFormBinding: 'parentView.showFilterForm'
+        tableItemViewClassBinding: 'parentView.tableItemViewClass'
         matches: (->
           round = @get 'parentView.content'
           App.MatchesController.create content: round.get('matches'), round: round
         ).property 'parentView.content.matches'
         contentBinding: 'parentView.content.matches'
-        contentView: App.MatchesGroupTableContainerView.extend
+        contentView: App.MatchesTableContainerView.extend
           contentBinding: 'parentView.matches'
+          showFilterFormBinding: 'parentView.showFilterForm'
+          tableItemViewClassBinding: 'parentView.tableItemViewClass'
+    })

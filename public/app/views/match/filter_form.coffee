@@ -16,12 +16,16 @@ define [
     classNames: ['match-filter-form']
 
     team: null
-    type: null
+    matchType: null
     periodType: null
 
     date: null
     startDate: null
     endDate: null
+
+    matchTypeChanged: (->
+      @set 'content.matchTypeFilter', @get 'matchType'
+    ).observes('matchType')
 
     teamChanged: (->
       @set 'content.entrantFilter', @get 'team'
@@ -53,5 +57,8 @@ define [
         when 'date'
           @set 'isPeriod', no
           @set 'isDate', yes
+        else
+          @set 'isPeriod', no
+          @set 'isDate', no
       @set 'content.periodFilter', @get 'periodType'
     ).observes('periodType')

@@ -9,6 +9,7 @@ util = require 'util'
 
 Team = require('../../models').Team
 TeamRef = require('../../models').TeamRef
+Round = require('../../models').Round
 Report = require('../../models').Report
 
 socket = require('../../io').getSocket()
@@ -36,6 +37,7 @@ exports.create = (req, res) ->
     t = new TeamRef teamRef
     await t.save defer err, doc
     console.log teamRef.report_id
+    Round.findByIdAndUpdate(teamRef.round_id, {$push: {team_refs: t._id}}, ->) if teamRef.round_id
     Report.findByIdAndUpdate(teamRef.report_id, {$push: {team_refs: t._id}}, ->) if teamRef.report_id
     res.send team_ref: doc
   else

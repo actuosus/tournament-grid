@@ -41,6 +41,7 @@ define
   _edit: 'Bearbeiten'
   _add: 'Hinzifugen'
   _remove: 'Entfernen'
+  _delete: 'Löschen'
   _the_teams: 'Die Teams'
   _filter: 'Filtern'
   _captain: 'Kapitän'
@@ -84,3 +85,4 @@ define
   _loser: 'Verlierer'
   _player_nickname: 'Spieler Spitznamen'
   _nothing_to_display: 'Frei'
+  _map_type: 'Map type'

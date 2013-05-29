@@ -38,10 +38,8 @@ define [
         console.debug "Round #{i}, #{matchesCount+1} matches."
         roundName = "1/#{matchesCount+1} #{'_of_the_final'.loc()}"
         switch i
-          when 0
-            roundName = '_final'.loc()
-          when 1
-            roundName = '_semifinal'.loc()
+          when 0 then roundName = '_final'.loc()
+          when 1 then roundName = '_semifinal'.loc()
         roundIndex = roundsCount - i
         actualRound = stage?.getByPath "#{roundIndex}"
         round = App.RoundProxy.create
@@ -51,7 +49,6 @@ define [
           name: roundName
           parentReference: 'stage'
           matches: []
-        #        matches = round.get 'matches'
         for j in [0..matchesCount]
           leftPath = rightPath = undefined
           if roundsCount-i-1 >= 0
@@ -65,7 +62,6 @@ define [
             rightPath: rightPath
             parentNodePath: "#{roundsCount-i+1}.#{Math.floor(j/2)}"
             entrants: [null, null]
-#            content: actualMatch
             round: round
           round.get('matches').push match
         rounds.push round

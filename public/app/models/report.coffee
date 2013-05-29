@@ -10,13 +10,15 @@ define ['cs!../core'],->
   App.Report = DS.Model.extend
     primaryKey: '_id'
     title: DS.attr 'string'
-    _title: DS.attr 'object'
+    # TODO Make localization
+#    _title: DS.attr 'object'
     description: DS.attr 'string'
     start_date: DS.attr 'date'
     end_date: DS.attr 'date'
     date: DS.attr 'date'
     place: DS.attr 'string'
-    _place: DS.attr 'object'
+#   TODO Make localization
+#    _place: DS.attr 'object'
 
     match_type: DS.attr 'string'
 

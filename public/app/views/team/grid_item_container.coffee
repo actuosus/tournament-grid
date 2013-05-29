@@ -15,6 +15,7 @@ define [
     isHighlightedBinding: 'content.isHighlighted'
     childViews: ['teamGridItemView']
     pointsIsVisible: yes
+
     teamGridItemView: App.TeamGridItemView.extend
       contentIndexBinding: 'parentView.contentIndex'
       contentBinding: 'parentView.content'

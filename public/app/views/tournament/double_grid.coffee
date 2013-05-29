@@ -7,16 +7,37 @@
 
 define [
   'cs!../../core'
+  'cs!../team/list'
   'cs!../round/tournament_grid_item'
 ], ->
-  App.NewDoubleTournamentGridView = Em.ContainerView.extend
+  App.NewDoubleTournamentGridView = Em.ContainerView.extend App.ContextMenuSupport,
     classNames: ['tournament-grid-wrapper']
     childViews: ['contentView']
+
+    contextMenuActions: ['showTeamList']
+
+    init: ->
+      console.timeStamp 'Render NewDoubleTournamentGridView'
+      console.time 'NewDoubleTournamentGridView'
+      @_super()
+
+    didInsertElement: ->
+      console.timeEnd 'NewDoubleTournamentGridView'
+
+    showTeamList: ->
+      @teamListPopup = App.PopupView.createWithMixins(App.Movable, {showCloseButton: yes})
+      reportEntrants = App.ReportEntrantsController.create
+        contentBinding: 'App.report.teamRefs'
+      listView = App.TeamListView.create
+        controller: reportEntrants
+        contentBinding: 'controller.arrangedContent'
+      @teamListPopup.pushObject listView
+      @teamListPopup.append()
 
     entrantsNumber: 32
 
     contentView: Em.ContainerView.extend
-      classNames: ['tournament-grid-container']
+      classNames: 'tournament-grid-container'
 
       childViews: ['contentView', 'finalsView']
 
@@ -27,7 +48,7 @@ define [
       setupWidth: ->
         entrantsNumber = @get('entrantsNumber')
         roundsCount = Math.log(entrantsNumber) / Math.log(2)
-        console.log roundsCount
+#        console.log roundsCount
         rCount = roundsCount * 2
         @$().width rCount * 181
 
@@ -39,7 +60,7 @@ define [
 
       createWinnerBracket: ->
         stage = @get('stage')
-        console.log 'Winner', stage
+#        console.log 'Winner', stage
         entrantsNumber = @get('entrantsNumber')
         roundsCount = Math.log(entrantsNumber) / Math.log(2)-1
         rounds = []
@@ -48,7 +69,7 @@ define [
           isWinnerBracket: yes
         for i in [roundsCount..0]
           matchesCount = Math.pow(2, i)-1
-          console.debug "Round #{i}, #{matchesCount+1} matches."
+#          console.debug "Round #{i}, #{matchesCount+1} matches."
           roundName = "1/#{matchesCount+1} #{'_of_the_final'.loc()}"
           switch i
             when 0
@@ -56,9 +77,9 @@ define [
             when 1
               roundName = '_semifinal'.loc()
           roundIndex = roundsCount - i
-          actualRound = stage?.getByPath "#{roundIndex}"
+#          actualRound = stage?.getByPath "#{roundIndex}"
           round = App.RoundProxy.create
-            content: actualRound
+#            content: actualRound
             index: roundIndex
             sort_index: roundIndex
             itemIndex: i
@@ -66,7 +87,7 @@ define [
             parentReference: 'bracket'
             bracket: bracket
             matches: []
-          #        matches = round.get 'matches'
+          matches = round.get 'matches'
           for j in [0..matchesCount]
             leftPath = rightPath = undefined
             if roundsCount-i-1 >= 0
@@ -81,7 +102,7 @@ define [
               parentNodePath: "#{roundsCount-i+1}.#{Math.floor(j/2)}"
               entrants: [null, null]
               round: round
-            round.get('matches').push match
+            matches.push match
           rounds.push round
         bracket.set 'rounds', rounds
         bracket
@@ -181,7 +202,7 @@ define [
         entrantsNumberBinding: 'parentView.entrantsNumber'
 
         setupWidth: ->
-          console.log 'rounds', Math.max.apply(null, @get('content').mapProperty 'rounds.length')
+#          console.log 'rounds', Math.max.apply(null, @get('content').mapProperty 'rounds.length')
           @$().width Math.max.apply(null, @get('content').mapProperty 'rounds.length') * 181
 
         didInsertElement: ->

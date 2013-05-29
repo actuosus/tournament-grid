@@ -7,24 +7,37 @@
 ###
 
 define ['cs!../core'],->
-  App.Round = DS.Model.extend Ember.History,
+  App.Round = DS.Model.extend
     primaryKey: '_id'
     sort_index: DS.attr 'number'
-    _trackProperties: ['name']
+
+    # History Ember.History,
+#    _trackProperties: ['name']
 
     name: DS.attr('string', {loc: {keyPath: '_name', defaultLanguage: 'ru'}})
-    _name: DS.attr('object')
-    __name: (->
-      console.log arguments
-      nameHash = @get '_name'
-      currentLanguage = App.get('currentLanguage')
-      value = ''
-      if currentLanguage and nameHash
-        value = nameHash[currentLanguage]
-      unless value
-        value = @get 'name'
-      value
-    ).property('_name', 'App.currentLanguage').volatile()
+
+    # Relations
+    matches: DS.hasMany 'App.Match'
+    results: DS.hasMany 'App.Result'
+
+    stage: DS.belongsTo('App.Stage', {inverse: 'rounds'})
+    bracket: DS.belongsTo('App.Bracket', {inverse: 'rounds'})
+
+    teamRefs: DS.hasMany 'App.TeamRef'
+
+    # TODO Make localization
+#    _name: DS.attr('object')
+#    __name: (->
+#      console.log arguments
+#      nameHash = @get '_name'
+#      currentLanguage = App.get('currentLanguage')
+#      value = ''
+#      if currentLanguage and nameHash
+#        value = nameHash[currentLanguage]
+#      unless value
+#        value = @get 'name'
+#      value
+#    ).property('_name', 'App.currentLanguage').volatile()
 
     parentReference: 'stage'
     parent: (-> @get @get 'parentReference').property('stage')
@@ -44,12 +57,6 @@ define ['cs!../core'],->
 
     left: null
     right: null
-
-    matches: DS.hasMany 'App.Match'
-    results: DS.hasMany 'App.Result'
-
-    stage: DS.belongsTo('App.Stage', {inverse: 'rounds'})
-    bracket: DS.belongsTo('App.Bracket', {inverse: 'rounds'})
 
     itemIndex: (->
       parent = @get 'parent'
