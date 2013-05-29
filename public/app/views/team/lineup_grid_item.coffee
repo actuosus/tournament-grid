@@ -166,7 +166,8 @@ define [
           player.set 'teamRef', teamRef
           player.set 'team', team
           players.addObject player
-          teamRef.set('captain', player) if player.get 'isCaptain'
+          # TODO Should resolve captain.
+#          teamRef.set('captain', player) if player.get 'isCaptain'
           teamRef.store.commit()
 
           @notifyPropertyChange 'filteredContent'

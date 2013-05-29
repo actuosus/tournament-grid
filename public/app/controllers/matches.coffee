@@ -58,6 +58,11 @@ define [
               return d.getDate() is today.getDate() and
               d.getMonth() is today.getMonth() and
               d.getDay() is today.getDay()
+            when 'tomorrow'
+              tomorrow = moment().add('days', 1).toDate()
+              return d.getDate() is tomorrow.getDate() and
+                d.getMonth() is tomorrow.getMonth() and
+                d.getDay() is tomorrow.getDay()
             when 'yesterday'
               yesterday = moment().add('days', -1).toDate()
               return d.getDate() is yesterday.getDate() and

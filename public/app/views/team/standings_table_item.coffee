@@ -30,6 +30,6 @@ define [
           controller: controller
         @matchesPopup.append()
 
-    mouseLeave: -> @matchesPopup.hide()
+    mouseLeave: -> @matchesPopup?.hide()
 
     click: -> @toggleProperty 'content.isSelected'

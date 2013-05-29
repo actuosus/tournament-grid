@@ -172,6 +172,7 @@ define [
         Em.Object.create name:'Период', id: 'period'
         Em.Object.create name:'Дата', id: 'date'
         Em.Object.create name:'Сегодня', id: 'today'
+        Em.Object.create name:'Завтра', id: 'tomorrow'
         Em.Object.create name:'Вчера', id: 'yesterday'
         Em.Object.create name:'Неделя', id: 'week'
         Em.Object.create name:'Месяц', id: 'month'

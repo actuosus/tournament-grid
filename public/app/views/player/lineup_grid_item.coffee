@@ -15,6 +15,8 @@ define [
     childViews: ['countryFlagView', 'nameView', 'realNameView', 'captianMarkerView']
     editingChildViews: ['removeButtonView']
 
+    _isEditingBinding: 'App.isEditingMode'
+
     contextMenuActions: ['setAsTheCaptain']
 
     setAsTheCaptain: ->
@@ -97,6 +99,6 @@ define [
 
     removeButtonView: App.RemoveButtonView.extend
       title: '_remove_player'.loc()
-      remove: -> @get('parentView').deleteRecord()
+      deleteRecord: -> @get('parentView').deleteRecord()
 
     doubleClick: -> @setAsTheCaptain()

@@ -55777,6 +55777,24 @@ define("jquery.ui.timepicker-de", ["jquery.ui.timepicker"], function(){});
 
   define('cs!core',['jquery.cookie', 'ember', 'ember-data', 'cs!./locales', 'cs!./config'], function(cookie, ember, emberData, locales, config) {
     var App, TournamentGrid, lang, localize, _ref, _ref1;
+    window.onerror = function(errorMsg, url, lineNumber) {
+      var data;
+      data = {
+        log: {
+          message: errorMsg,
+          date: new Date(),
+          data: {
+            url: url,
+            lineNumber: lineNumber
+          }
+        }
+      };
+      return $.ajax('/api/logs', {
+        data: JSON.stringify(data),
+        contentType: 'application/json',
+        type: 'POST'
+      });
+    };
     lang = $.cookie('lang');
     localize = function(language) {
       if (language == null) {

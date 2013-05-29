@@ -18,7 +18,10 @@ define [
     classNames: ['team-standings-table', 'table']
 
     shouldShowContextMenuBinding: 'App.isEditingMode'
-    contextMenuActions: ['add']
+    contextMenuActions: ['addEntrant']
+
+    addEntrant: ->
+      console.info 'Should add entrant'
 
     showSorterOnColumn: (element)->
       @sorter = App.TableSorterView.create()

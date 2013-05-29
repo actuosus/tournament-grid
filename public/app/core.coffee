@@ -14,19 +14,19 @@ define [
   'cs!./config'
 #  'cs!lib/array'
 ] , (cookie, ember, emberData, locales, config)->
-#  window.onerror = (errorMsg, url, lineNumber)->
-#    data =
-#      log:
-#        message: errorMsg
-#        date: new Date()
-#        data:
-#          url: url
-#          lineNumber: lineNumber
-#    $.ajax('/api/logs', {
-#      data: JSON.stringify(data)
-#      contentType : 'application/json'
-#      type: 'POST'
-#    })
+  window.onerror = (errorMsg, url, lineNumber)->
+    data =
+      log:
+        message: errorMsg
+        date: new Date()
+        data:
+          url: url
+          lineNumber: lineNumber
+    $.ajax('/api/logs', {
+      data: JSON.stringify(data)
+      contentType : 'application/json'
+      type: 'POST'
+    })
 
   lang = $.cookie 'lang'
 

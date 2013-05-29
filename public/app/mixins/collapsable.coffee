@@ -53,7 +53,9 @@ define ['cs!../core'], ->
 
     didInsertElement: ->
       @_super()
-      @set 'toggleButtonTarget.isTargetCollapsed', @get 'collapsed'
+      toggleButtonTarget = @get 'toggleButtonTarget'
+      if toggleButtonTarget
+        toggleButtonTarget.set 'isTargetCollapsed', @get 'collapsed'
       @$().hide() if @get 'collapsed'
 
     toggle: ->

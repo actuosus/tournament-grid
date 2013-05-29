@@ -6,7 +6,7 @@
 ###
 
 Bracket = require('../../models').Bracket
-
+Stage = require('../../models').Stage
 
 exports.list = (req, res)->
   query = Bracket.find({})
