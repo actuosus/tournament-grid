@@ -32,6 +32,7 @@ define [
     ).observes('team')
 
     dateChanged: (->
+      console.log @get 'date'
       @set 'content.dateFilter', @get 'date'
     ).observes('date')
 
@@ -45,9 +46,9 @@ define [
 
     didInsertElement: ->
       self = @
-      @$('.date').bind 'change', -> self.set 'date', @valueAsDate
-      @$('.start-date').bind 'change', -> self.set 'startDate', @valueAsDate
-      @$('.end-date').bind 'change', -> self.set 'endDate', @valueAsDate
+      @$('.date').bind 'change.filter', -> self.set 'date', @valueAsDate
+      @$('.start-date').bind 'change.filter', -> self.set 'startDate', @valueAsDate
+      @$('.end-date').bind 'change.filter', -> self.set 'endDate', @valueAsDate
 
     periodTypeChanged: (->
       switch @get 'periodType.id'

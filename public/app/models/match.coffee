@@ -58,7 +58,7 @@ define ['cs!../core'],->
         currentStatus = 'active'
       if date > (currentDate + reopenInterval) and (entrant1_points and entrant2_points)
         currentStatus = 'delayed'
-      if not (date or date > currentDate) and not (entrant1_points and entrant2_points)
+      if (not date or date > currentDate) or not (entrant1_points and entrant2_points)
         currentStatus = 'future'
       currentStatus
     ).property('date', 'entrant1_points', 'entrant2_points')

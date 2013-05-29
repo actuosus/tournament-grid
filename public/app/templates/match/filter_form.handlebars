@@ -24,12 +24,13 @@
 
                 {{#if view.isPeriod}}
                 <div class="period-selector">
-                    <input type="date" class="start-date"/><input type="date" class="end-date"/>
+                    <input type="date" class="start-date" {{bindAttr value="view.startDate"}}/>
+                    <input type="date" class="end-date" {{bindAttr value="view.endDate"}}/>
                 </div>
                 {{/if}}
                 {{#if view.isDate}}
                 <div class="date-selector">
-                    <input type="date" class="date"/>
+                    <input type="date" class="date" {{bindAttr value="view.date"}}/>
                 </div>
                 {{/if}}
             </label>

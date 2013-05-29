@@ -18,10 +18,12 @@ define [
     entrant: null
 
     pastMatchesContainerView: Em.ContainerView.extend
+      classNames: ['section']
       controllerBinding: 'parentView.controller'
       entrantBinding: 'parentView.entrant'
       childViews: ['titleView', 'contentView']
       titleView: Em.View.extend
+        classNames: ['section-header']
         template: Em.Handlebars.compile '{{loc _past_matches}}'
       contentView: App.MatchesTableView.extend
         controllerBinding: 'parentView.controller'
@@ -31,10 +33,12 @@ define [
         ).property()
         itemViewClass: App.MatchPopupTableItemView
     futureMatchesContainerView: Em.ContainerView.extend
+      classNames: ['section']
       controllerBinding: 'parentView.controller'
       entrantBinding: 'parentView.entrant'
       childViews: ['titleView', 'contentView']
       titleView: Em.View.extend
+        classNames: ['section-header']
         template: Em.Handlebars.compile '{{loc _future_matches}}'
       contentView: App.MatchesTableView.extend
         controllerBinding: 'parentView.controller'
