@@ -3612,3 +3612,9 @@ input.match-start-date {
 .context-menu {
     cursor: context-menu;
 }
+.matches-table-popup .matches-table-item td {
+    border: 0;
+}
+.matches-table-popup .matches-table-item .team-name {
+    color: white;
+}

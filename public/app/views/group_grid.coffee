@@ -44,9 +44,9 @@ define [
       contentView: Em.ContainerView.extend( App.Editing, {
         contentBinding: 'parentView.content'
         classNames: ['lineup-grid-item-name-container']
-        childViews: ['nameView', 'addButtonView']
+        childViews: ['nameView']
 
-        editingChildViews: ['automaticCountingButtonView', 'removeButtonView']
+        editingChildViews: ['automaticCountingButtonView', 'addButtonView', 'removeButtonView']
         _isEditingBinding: 'App.isEditingMode'
 
         nameView: App.EditableLabel.extend

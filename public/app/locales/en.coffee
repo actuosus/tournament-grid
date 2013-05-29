@@ -95,3 +95,5 @@ define
   _delayed_match_type: 'Delayed'
   _past_match_type: 'Past'
   _map_type: 'Map type'
+  _past_matches: 'Past matches'
+  _future_matches: 'Future matches'

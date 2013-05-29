@@ -19,4 +19,15 @@ define [
     classNames: ['team-standings-table-item']
     classNameBindings: ['content.isSelected']
 
+    mouseEnter: (event)->
+      @matchesPopup = App.MatchTablePopupView.create
+        target: @
+        origin: 'top'
+        entrant: @get('content.entrant')
+        controller: @get('content.controller')
+      @matchesPopup.append()
+
+    mouseLeave: ->
+      @matchesPopup.hide()
+
     click: -> @toggleProperty 'content.isSelected'

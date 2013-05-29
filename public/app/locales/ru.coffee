@@ -97,3 +97,5 @@ define
   _past_match_type: 'Прошедший'
   _removeGroup: 'Удалить группу'
   _map_type: 'Тип карты'
+  _past_matches: 'Прошедшие матчи'
+  _future_matches: 'Будущие матчи'

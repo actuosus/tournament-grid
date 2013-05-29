@@ -174,6 +174,7 @@ if (this.debug) {
 }
 
 require([
+  'jquery',
   'jquery.mousewheel',
   'jquery.scrollTo',
   'jquery.cookie',

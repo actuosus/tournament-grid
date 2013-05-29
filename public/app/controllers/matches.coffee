@@ -77,6 +77,16 @@ define [
       content
     ).property('matchTypeFilter', 'entrantFilter', 'periodFilter', 'dateFilter', 'startDateFilter', 'endDateFilter')
 
+    pastMatchesForEntrant: (entrant)->
+      @get('content').filter (item)->
+        if Em.isEqual(item.get('entrant1'), entrant) or Em.isEqual(item.get('entrant2'), entrant)
+          item.get('currentStatus') is  'past'
+
+    futureMatchesForEntrant: (entrant)->
+      @get('content').filter (item)->
+        if Em.isEqual(item.get('entrant1'), entrant) or Em.isEqual(item.get('entrant2'), entrant)
+          item.get('currentStatus') is 'future'
+
     results: (->
         incrementPropertyForEntrant = (entrant, property, increment)->
           if results.has entrant
@@ -132,12 +142,15 @@ define [
           results.set ref.get('team'), Ember.Object.create() unless results.has team
 
         resultsArray = []
+        controller = @
         results.forEach (entrant, result)->
-          resultsArray.pushObject Em.Object.create entrant: entrant, result
+          resultsArray.pushObject Em.Object.create controller: controller, entrant: entrant, result
 
         resultsArray.sort((a,b)-> a.get('wins') > b.get('wins')).forEach (result, index)-> result.set 'position', index+1
 
-        lastResults = Ember.ArrayController.create content: resultsArray, sortProperties: ['position']
+        lastResults = Ember.ArrayController.create
+          content: resultsArray
+          sortProperties: ['position']
         @set 'lastResults', lastResults
         lastResults
     ).property('@each.entrant1_points',

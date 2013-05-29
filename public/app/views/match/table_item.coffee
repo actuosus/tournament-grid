@@ -14,7 +14,10 @@ define [
     tagName: 'tr'
     classNames: ['matches-table-item']
     classNameBindings: ['content.isDirty', 'content.isSaving', 'content.invalid']
+    attributeBindings: ['title']
     templateName: 'matchesTableItem'
+
+    titleBinding: 'content.description'
 
     shouldShowContextMenuBinding: 'App.isEditingMode'
     contextMenuActions: ['open', 'close', 'edit', 'save', 'deleteRecord:delete']

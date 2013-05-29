@@ -5,7 +5,7 @@
  * Time: 17:53
 ###
 
-define ->
+define ['jquery'], ->
   defaults =
     api:
 #      host: '//virtus-pro.herokuapp.com'

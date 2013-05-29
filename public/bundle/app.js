@@ -55361,7 +55361,9 @@ define('cs',['coffee-script'], function (CoffeeScript) {
     _delayed_match_type: 'Отложенный',
     _past_match_type: 'Прошедший',
     _removeGroup: 'Удалить группу',
-    _map_type: 'Тип карты'
+    _map_type: 'Тип карты',
+    _past_matches: 'Прошедшие матчи',
+    _future_matches: 'Будущие матчи'
   });
 
 }).call(this);
@@ -55466,7 +55468,9 @@ define('cs',['coffee-script'], function (CoffeeScript) {
     _active_match_type: 'Active',
     _delayed_match_type: 'Delayed',
     _past_match_type: 'Past',
-    _map_type: 'Map type'
+    _map_type: 'Map type',
+    _past_matches: 'Past matches',
+    _future_matches: 'Future matches'
   });
 
 }).call(this);
@@ -55746,7 +55750,7 @@ define("jquery.ui.timepicker-de", ["jquery.ui.timepicker"], function(){});
 
 (function() {
 
-  define('cs!config',[],function() {
+  define('cs!config',['jquery'], function() {
     var defaults;
     defaults = {
       api: {
@@ -56160,6 +56164,7 @@ if (this.debug) {
 }
 
 require([
+  'jquery',
   'jquery.mousewheel',
   'jquery.scrollTo',
   'jquery.cookie',

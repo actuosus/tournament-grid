@@ -14,12 +14,25 @@ define [
     classNames: ['matches-table-container']
     childViews: ['headerView', 'tableContainerView']
 
-    headerView: Em.ContainerView.extend( App.Editing, {
+    headerView: Em.ContainerView.extend( App.Editing, App.ContextMenuSupport, {
       classNames: ['matches-table-container-header']
       classNameBindings: ['isTargetCollapsed:is-target-collapsed:is-target-expanded']
       entrantsBinding: 'parentView.entrants'
       contentBinding: 'parentView.content'
       childViews: ['titleView', 'filterFormView']
+
+      shouldShowContextMenuBinding: 'App.isEditingMode'
+      contextMenuActions: ['add']
+
+      add: ->
+        content = @get 'content'
+        if content.createRecord
+          content.createRecord() if content
+        if content.get('content')?.createRecord
+          content.get('content')?.createRecord()
+
+        tableContainerView = @get 'parentView.tableContainerView'
+        tableContainerView.set 'isCollapsed', yes
 
       showFilterFormBinding: 'parentView.showFilterForm'
 
@@ -45,15 +58,7 @@ define [
         template: Em.Handlebars.compile '+'
 
         click: ->
-          console.debug 'Should add match.'
-          content = @get 'content'
-          if content.createRecord
-            content.createRecord() if content
-          if content.get('content')?.createRecord
-            content.get('content')?.createRecord()
-
-          tableContainerView = @get 'parentView.parentView.tableContainerView'
-          tableContainerView.set 'isCollapsed', yes
+          @get('parentView').add()
     })
 
 

@@ -9,6 +9,7 @@ define [
   'text!../../templates/team/standings_table.handlebars'
   'cs!../../core'
   'cs!./standings_table_item'
+  'cs!../match/table_popup'
 ], (template)->
   Em.TEMPLATES.teamStandingsTable = Em.Handlebars.compile template
   App.TeamStandingsTableView = Em.View.extend App.ContextMenuSupport,
@@ -23,10 +24,6 @@ define [
       @sorter = App.TableSorterView.create()
       console.log(@sorter)
       $(element).append(@sorter.createElement().get('element'))
-
-#    mouseEnter: (event)->
-#      if $(event.target).hasClass('header-item')
-#        @showSorterOnColumn(event.target)
 
     click: (event)->
       if $(event.target).hasClass('header-item-position')
