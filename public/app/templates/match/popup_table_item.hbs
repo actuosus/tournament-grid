@@ -1,6 +1,10 @@
 <td class="matches-table-date" title="Дата">{{view App.DateWithPopupView classNames='match-start-date' contentBinding=view.content.date format=DD.MM.YY}}</td>
 <td class="matches-table-team1">{{view App.TeamCellView contentBinding=view.content.entrant1 matchBinding=view.content contentIndex=0}}</td>
-<td class="matches-table-points matches-table-points-team1" title="Счёт">[{{view App.NumberView classNames="points-label" valueBinding=view.content.entrant1_points isEditableBinding="App.isEditingMode"}}</td>
-<td class="matches-table-points">:</td>
-<td class="matches-table-points matches-table-points-team2">{{view App.NumberView classNames="points-label" valueBinding=view.content.entrant2_points isEditableBinding="App.isEditingMode"}}]</td>
+{{#if view.content.hasPoints}}
+    <td class="matches-table-points matches-table-points-team1" title="Счёт"><span class="left-bracket-symbol">[</span>{{view App.NumberView classNames="points-label" valueBinding=view.content.entrant1_points isEditableBinding="App.isEditingMode"}}</td>
+    <td class="matches-table-points">:</td>
+    <td class="matches-table-points matches-table-points-team2">{{view App.NumberView classNames="points-label" valueBinding=view.content.entrant2_points isEditableBinding="App.isEditingMode"}}<span class="right-bracket-symbol">]</span></td>
+{{else}}
+    <td colspan="3" class="matches-table-points matches-table-points-undefined"><span class="left-bracket-symbol">[</span><span class="versus-marker">VS</span><span class="right-bracket-symbol">]</span></td>
+{{/if}}
 <td class="matches-table-team2">{{view App.TeamCellView contentBinding=view.content.entrant2 matchBinding=view.content contentIndex=1}}</td>

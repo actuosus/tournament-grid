@@ -30,7 +30,7 @@ define [
 
       matchBinding: 'parentView.match'
 
-      click: ->
+      click: (event)->
         return unless App.get('isEditingMode')
         popup = App.PopupView.create target: @
         popup.pushObject(
@@ -56,8 +56,10 @@ define [
         classNameBindings: ['isUpdating']
         attributeBindings: ['title']
         title: Em.computed.alias 'content.title'
-        template: Em.Handlebars.compile '<a target="_blank" {{bindAttr href="link" title="title"}}>{{view.content.contentIndex}}</a>'
-        contextMenuActions: ['edit', 'delete']
+        template: Em.Handlebars.compile '<a target="_blank" {{bindAttr href="view.content.link" title="view.content.title"}}>{{view.content.contentIndex}}</a>'
+
+        shouldShowContextMenuBinding: 'App.isEditingMode'
+        contextMenuActions: ['edit', 'deleteRecord']
 
         edit: ->
           popup = App.PopupView.create target: @
@@ -73,9 +75,10 @@ define [
           )
           popup.append()
 
-        delete: -> @get('content').deleteRecord()
-        click: ->
+        deleteRecord: -> @get('content').deleteRecord()
+        click: (event)->
           return unless App.get('isEditingMode')
+          event.preventDefault()
           @edit()
       })
 

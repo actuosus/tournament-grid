@@ -8,6 +8,7 @@
 
 define [
   'cs!./core'
+  'cs!./system'
   'cs!./mixins'
 
   'cs!./controllers'

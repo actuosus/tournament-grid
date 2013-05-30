@@ -23,6 +23,10 @@ define [
     contextMenuActions: ['open', 'close', 'edit', 'save', 'deleteRecord:delete']
 #    contextMenuTargetBinding: 'content'
 
+    hasPointsOrEditable: (->
+      @get('content.hasPoints') or App.get('isEditingMode')
+    ).property('content.hasPoints', 'App.isEditingMode')
+
     open: ->
       content = @get 'content'
       content.open()

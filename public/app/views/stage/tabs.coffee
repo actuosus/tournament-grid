@@ -88,6 +88,7 @@ define [
           _isEditingBinding: 'App.isEditingMode'
           editingChildViews: ['removeButtonView']
 
+          shouldShowContextMenuBinding: 'App.isEditingMode'
           contextMenuActions: ['edit', 'deleteRecord:delete']
 
           titleBinding: 'content.description'

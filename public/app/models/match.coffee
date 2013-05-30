@@ -6,6 +6,10 @@
  * Time: 07:29
 ###
 
+# Левон
+#терешковой 15
+#926 283 60 82
+
 define ['cs!../core'],->
   App.Match = DS.Model.extend
     primaryKey: '_id'
@@ -32,6 +36,10 @@ define ['cs!../core'],->
     stage: DS.belongsTo 'App.Stage'
 
     games: DS.hasMany('App.Game', {inverse: 'match'})
+
+    hasPoints: (->
+      not Em.isEmpty(@get('entrant1_points')) and not Em.isEmpty(@get('entrant2_points'))
+    ).property('entrant1_points', 'entrant2_points')
 
     # Ember History
 #    _trackProperties: [
@@ -164,6 +172,12 @@ define ['cs!../core'],->
         winner = undefined
       return winner
     ).property 'entrants', 'entrant1_points', 'entrant2_points'
+
+    firstIsAWinner: (-> Em.isEqual(@get('entrant1'), @get('winner'))).property('winner')
+    firstIsALoser: (-> Em.isEqual(@get('entrant1'), @get('loser'))).property('loser')
+
+    secondIsAWinner: (-> Em.isEqual(@get('entrant2'), @get('winner'))).property('winner')
+    secondIsALoser: (-> Em.isEqual(@get('entrant2'), @get('loser'))).property('loser')
 
     parent: (-> @get 'round').property('round')
     children: (-> @get 'entrants').property('entrants')

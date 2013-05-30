@@ -13,10 +13,13 @@ define [
   ###
   Represents team model in grid. Also can be used standalone.
   ###
-  App.TeamGridItemView = Em.ContainerView.extend App.MovingHightlight, App.Editing,
+  App.TeamGridItemView = Em.ContainerView.extend App.MovingHightlight, App.Editing, App.ContextMenuSupport,
     classNames: ['team-grid-item']
     classNameBindings: ['winnerClassName', 'isEditing', 'teamUndefined', 'isUpdating']
     childViews: ['countryFlagView', 'nameView', 'pointsView']
+
+    shouldShowContextMenuBinding: 'App.isEditingMode'
+    contextMenuActions: ['reset']
 
     editingChildViews: ['autocompleteView', 'resetButtonView']
 
@@ -32,7 +35,7 @@ define [
     autocompleteView: App.AutocompleteTextField.extend
       isVisible: no
 
-      controllerBinding: 'App.teamsController'
+      controllerBinding: 'App.reportTeamsController'
 
       filteredContent: (->
         content = @get 'content'
@@ -183,6 +186,13 @@ define [
 #      @shouldShowLineupPopup = no
 #      @teamLineupPopup?.hide()
 
+    reset: ->
+      @set 'content', null
+      match = @get 'match'
+      if match
+        match.get('entrants')[@get 'contentIndex'] = null
+        match.set "entrant#{@get('contentIndex')+1}", null
+
     resetButtonView: Em.View.extend
       tagName: 'button'
       classNames: ['btn-clean', 'remove-btn', 'team-reset-btn']
@@ -199,8 +209,4 @@ define [
       Sets team binding to null.
       ###
       click: ->
-        @set 'parentView.content', null
-        match = @get 'parentView.match'
-        if match
-          match.get('entrants')[@get 'parentView.contentIndex'] = null
-          match.set "entrant#{@get('parentView.contentIndex')+1}", null
+        @get('parentView').reset()

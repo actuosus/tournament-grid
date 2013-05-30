@@ -19,7 +19,9 @@ define ->
         contextMenuActions.forEach (actionItem)->
           [action, title] = actionItem.split ':'
           title = action unless title
-          contextMenuItems.pushObject Em.Object.create action: action, title: "_#{title.decamelize()}".loc()
+          contextMenuItems.pushObject App.MenuItem.create
+            action: action
+            title: "_#{title.decamelize()}".loc()
         @set 'contextMenuItems', contextMenuItems
 
     init: ->

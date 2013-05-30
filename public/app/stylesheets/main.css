@@ -132,11 +132,22 @@
     color: #7a7a7a;
     width: 4px;
     padding: 4px 2px !important;
+
+    text-align: center;
+    white-space: nowrap;
 }
 
 .matches-table-points .points-label {
     font-weight: bold;
-    padding: 0 3px;
+    display: inline-block;
+}
+
+.matches-table-points.winner .points-label {
+    color: #2c9338;
+}
+
+.matches-table-points.loser .points-label {
+    color: #9f252d;
 }
 
 .matches-table-map-type {
@@ -198,7 +209,11 @@
 
 .matches-table-team1 .team-country-flag-icon {
     float: right;
-    margin-left: 10px;
+    margin-left: 7px;
+}
+
+.matches-table-team2 .team-country-flag-icon {
+    margin-right: 7px;
 }
 
 .matches-table-team1 .team-name {
@@ -448,6 +463,10 @@ input.match-start-date {
     margin-bottom: 5px;
 }
 
+.matches-table-popup .section:last-child {
+    margin-bottom: 0;
+}
+
 .matches-table-popup .section-header {
     font-weight: bold;
     border-bottom: 3px solid #f35900;
@@ -462,4 +481,19 @@ input.match-start-date {
 
 .team-standings-table-item:hover td {
     background-color: rgba(0,0,0,0.075);
+}
+
+.versus-marker {
+    font-size: 11px;
+    line-height: 16px;
+}
+
+.left-bracket-symbol {
+    text-align: left;
+    float: left;
+}
+
+.right-bracket-symbol {
+    text-align: right;
+    float: right;
 }

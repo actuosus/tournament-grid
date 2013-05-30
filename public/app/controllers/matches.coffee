@@ -148,7 +148,7 @@ define [
         teamRefs = @get 'round.teamRefs'
         teamRefs?.forEach (ref)->
           team = ref.get('team')
-          results.set ref.get('team'), Ember.Object.create() unless results.has team
+          results.set ref.get('team'), Ember.Object.create()
 
         resultsArray = []
         controller = @

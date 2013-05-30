@@ -44,11 +44,11 @@ define [
     isEditable: (->
       isEditingMode = App.get('isEditingMode')
       status = @get 'content.status'
-      currentStatus = @get 'content.currentStatus'
+#      currentStatus = @get 'content.currentStatus'
       isEditingMode and status is 'opened'
-    ).property('App.isEditingMode', 'content.status', 'content.currentStatus')
+    ).property('App.isEditingMode', 'content.status')
 
-    _isEditingBinding: 'App.isEditingMode'
+    _isEditingBinding: 'isEditable'
 
     mouseEnter: ->
       @set 'editControlsView.isVisible', yes
