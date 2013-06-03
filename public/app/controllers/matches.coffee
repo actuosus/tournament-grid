@@ -83,11 +83,15 @@ define [
     ).property('matchTypeFilter', 'entrantFilter', 'periodFilter', 'dateFilter', 'startDateFilter', 'endDateFilter')
 
     pastMatchesForEntrant: (entrant)->
+      if App.TeamRef.detectInstance entrant
+        entrant = entrant.get('team')
       @get('content').filter (item)->
         if Em.isEqual(item.get('entrant1'), entrant) or Em.isEqual(item.get('entrant2'), entrant)
           item.get('currentStatus') is  'past'
 
     futureMatchesForEntrant: (entrant)->
+      if App.TeamRef.detectInstance entrant
+        entrant = entrant.get('team')
       @get('content').filter (item)->
         if Em.isEqual(item.get('entrant1'), entrant) or Em.isEqual(item.get('entrant2'), entrant)
           item.get('currentStatus') is 'future'

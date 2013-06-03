@@ -14,6 +14,7 @@ define [
     classNames: ['standing-table']
     childViews: ['standingsView', 'contentView']
     standingsView: App.TeamStandingsTableView.extend
+      matchesBinding: 'parentView.matches'
       contentBinding: 'parentView.matches.results'
     contentView: App.MatchesTableContainerView.extend
       entrantsBinding: 'parentView.entrants'

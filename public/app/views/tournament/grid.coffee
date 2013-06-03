@@ -46,6 +46,7 @@ define [
           content: actualRound
           index: roundIndex
           itemIndex: i
+          sort_index: roundIndex
           name: roundName
           parentReference: 'stage'
           matches: []
@@ -57,6 +58,7 @@ define [
           match = App.MatchProxy.create
             index: j
             itemIndex: j
+            sort_index: j
             date: new Date()
             leftPath: leftPath
             rightPath: rightPath

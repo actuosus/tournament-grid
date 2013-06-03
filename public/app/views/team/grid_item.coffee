@@ -29,6 +29,14 @@ define [
 
     teamUndefined: (-> !@get('content')).property('content')
 
+    content: (->
+      content = @get 'content'
+      if App.TeamRef.detectInstance content
+        content.get 'team'
+      else
+        content
+    ).property('content')
+
     countryFlagView: App.CountryFlagView.extend
       contentBinding: 'parentView.content'
 

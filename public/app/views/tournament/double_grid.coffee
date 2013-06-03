@@ -77,9 +77,9 @@ define [
             when 1
               roundName = '_semifinal'.loc()
           roundIndex = roundsCount - i
-#          actualRound = stage?.getByPath "#{roundIndex}"
+          actualRound = stage?.getByPath "#{roundIndex}"
           round = App.RoundProxy.create
-#            content: actualRound
+            content: actualRound
             index: roundIndex
             sort_index: roundIndex
             itemIndex: i

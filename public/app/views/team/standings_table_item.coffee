@@ -21,7 +21,7 @@ define [
     classNameBindings: ['content.isSelected', 'content.isDirty', 'content.isSaving']
 
     mouseEnter: (event)->
-      controller = @get('content.controller')
+      controller = @get('parentView.matches')
       entrant = @get('content.entrant')
       if controller?.hasPastOrFutureMatchesForEntrant entrant
         @matchesPopup = App.MatchTablePopupView.create

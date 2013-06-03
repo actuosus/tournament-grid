@@ -78,8 +78,14 @@ define [
       content.close() if content
 
     content: (->
-#        match = @get('round.content.matches')?.objectAtContent @get 'sort_index'
-#        @set('entrants', match.get('entrants')) if match
+#      console.log 'round.content.matches.@each.isLoaded'
+      Em.run.later =>
+#        console.log @get('sort_index'), @get('round.content.matches')
+        match = @get('round.content.matches')?.objectAtContent @get 'sort_index'
+        console.log match
+        @set('entrants', match.get('entrants')) if match
+        @set 'content', match if match
+      ,1000
     ).property('some', 'round.content.matches.@each.isLoaded')
 
     some: null

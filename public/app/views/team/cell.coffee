@@ -102,7 +102,7 @@ define [
         else
           content
       ).property('parentView.content')
-      contentBinding: 'parentView.content'
+#      contentBinding: 'parentView.content'
       template: Em.Handlebars.compile '{{view.content.name}}'
 
       click: ->
