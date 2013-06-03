@@ -53,6 +53,7 @@ define [
             stage: @currentStage
             contentBinding: 'stage.entrants'
           matchesController = App.MatchesController.create
+            round: @currentStage.get('rounds.firstObject')
             content: @currentStage.get('rounds.firstObject.matches')
           contentView = App.StandingTableView.create
             classNames: ['for-team']

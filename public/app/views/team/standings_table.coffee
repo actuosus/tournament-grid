@@ -22,6 +22,7 @@ define [
 
     addEntrant: ->
       console.info 'Should add entrant'
+      @get('content.content').createRecord()
 
     showSorterOnColumn: (element)->
       @sorter = App.TableSorterView.create()

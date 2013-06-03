@@ -43,9 +43,12 @@ define ['cs!../core'],->
     parent: (-> @get @get 'parentReference').property('stage')
     children: (-> @get 'matches').property('matches')
 
-    resultSetEntrants: (->
-      App.ReportEntrantsController.create content: @get('resultSets').map (item)-> item.get 'entrant'
-    ).property('resultSets.@each.isLoaded')
+#    resultSetEntrants: (->
+#      entrants = @get('resultSets').map (item)->
+#        console.log item
+#        item.get 'entrant'
+#      App.ReportEntrantsController.create content: entrants
+#    ).property('resultSets.@each.entrant.isLoaded')
 
     treeItemChildren: (-> @get 'matches').property('matches')
 

@@ -39,14 +39,11 @@ define [
 
     autocompleteView: App.AutocompleteTextField.extend
       isVisible: no
-      controller: (->
-        entrants = @get 'parentView.match.round.resultSetEntrants'
-        entrants or App.get('reportEntrantsController')
-      ).property('parentView.match.round.resultSetEntrants', 'App.reportEntrantsController')
+      controllerBinding: 'App.reportTeamsController'
 
       filteredContent: (->
         content = @get 'content'
-        entrants = @get 'parentView.match.round.resultSetEntrants'
+        entrants = @get 'parentView.match.round.stage.entrants'
         if entrants
           content.filter (item)-> not entrants.contains item
         else
@@ -105,7 +102,7 @@ define [
         else
           content
       ).property('parentView.content')
-#      contentBinding: 'parentView.content'
+      contentBinding: 'parentView.content'
       template: Em.Handlebars.compile '{{view.content.name}}'
 
       click: ->

@@ -11,10 +11,7 @@ define [
   App.TeamStandingCellView = App.TeamCellView.extend
     autocompleteView: App.AutocompleteTextField.extend
       isVisible: no
-      controller: (->
-        entrants = @get 'parentView.match.round.resultSetEntrants'
-        entrants or App.get('reportEntrantsController')
-      ).property('parentView.match.round.resultSetEntrants', 'App.reportEntrantsController')
+      controllerBinding: 'App.reportTeamsController'
 
       filteredContent: (->
         content = @get 'content'
