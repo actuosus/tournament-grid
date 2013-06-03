@@ -42,11 +42,11 @@ define [
       controller: (->
         entrants = @get 'parentView.match.round.resultSetEntrants'
         entrants or App.get('reportEntrantsController')
-      ).property('')
+      ).property('parentView.match.round.resultSetEntrants', 'App.reportEntrantsController')
 
       filteredContent: (->
         content = @get 'content'
-        entrants = @get 'parentView.match.round.stage.entrants'
+        entrants = @get 'parentView.match.round.resultSetEntrants'
         if entrants
           content.filter (item)-> not entrants.contains item
         else

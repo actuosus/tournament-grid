@@ -18,6 +18,7 @@ define [
   'cs!./views/modal'
   'cs!./views/checkbox'
   'cs!./views/number_input'
+  'cs!./views/form'
   'cs!./views/autocomplete_text_field'
   'cs!./views/multilingual_text_field'
   'cs!./views/multilingual_text_area'
