@@ -6,6 +6,7 @@
  * Time: 12:24
 ###
 
+ResultSet = require('../../models').ResultSet
 Result = require('../../models').Result
 
 exports.list = (req, res)->
@@ -18,13 +19,28 @@ exports.item = (req, res)->
     res.send result: doc
 
 exports.create = (req, res)->
-  Result.where('_id', req.params._id).findOne().exec (err, doc)->
-    res.send result: doc
+  if req.body.result
+    result = req.body.result
+    console.log result
+    await new Result(result).save defer err, r
+    await ResultSet.findByIdAndUpdate result.result_set_id, {$push: {results: r._id}}, defer err, rs if result.result_set_id
+    res.send result: r
+  else
+    res.send 400, error: 'server error'
 
 exports.update = (req, res)->
-  Result.where('_id', req.params._id).findOne().exec (err, doc)->
-    res.send result: doc
+  if req.body.result_set
+    result = req.body.result
+    console.log result
+    await Result.findByIdAndUpdate req.param._id, {$set:result}, defer err, r
+#    await ResultSet.findByIdAndUpdate result.result_set_id, {$push: {results: r._id}}, defer err, rs if result.result_set_id
+    res.send result: r
+  else
+    res.send 400, error: 'server error'
 
 exports.delete = (req, res)->
-  Result.where('_id', req.params._id).findOne().exec (err, doc)->
-    res.send result: doc
+  Result.findByIdAndRemove req.param._id, (err)->
+    unless err
+      res.send 204
+    else
+      res.send 400, error: err

@@ -17,6 +17,7 @@ define [
   'cs!./models/player'
   'cs!./models/race'
   'cs!./models/report'
+  'cs!./models/result_set'
   'cs!./models/result'
   'cs!./models/round'
   'cs!./models/stage'

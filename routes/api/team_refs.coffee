@@ -47,7 +47,8 @@ exports.create = (req, res) ->
 exports.update = (req, res)->
   if req.body?.team_ref
     teamRef = req.body.team_ref
-    await TeamRef.findByIdAndUpdate req.params._id, teamRef, defer err, doc
+    await TeamRef.findByIdAndUpdate req.params._id, { $set: teamRef }, defer err, doc
+    console.log err, doc
     res.send team_ref: doc
   else
     res.send 400, error: "server error"

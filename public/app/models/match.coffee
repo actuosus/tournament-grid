@@ -38,6 +38,7 @@ define ['cs!../core'],->
     games: DS.hasMany('App.Game', {inverse: 'match'})
 
     hasPoints: (->
+      console.log 'hasPoints', @get('entrant1_points'), @get('entrant2_points')
       not Em.isEmpty(@get('entrant1_points')) and not Em.isEmpty(@get('entrant2_points'))
     ).property('entrant1_points', 'entrant2_points')
 

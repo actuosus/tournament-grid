@@ -23,4 +23,6 @@ RoundSchema = new Schema
 
   team_refs: [type: ObjectId, ref: 'TeamRef']
 
+  result_sets: [type: ObjectId, ref: 'ResultSet']
+
 module.exports = RoundSchema

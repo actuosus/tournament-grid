@@ -14,8 +14,11 @@ define ['cs!./multilingual_field'], ->
       attributeBindings: ['required']
       nameBinding: 'parentView.name'
       placeholderBinding: 'parentView.placeholder'
+      sizeBinding: 'parentView.size'
+      patternBinding: 'parentView.pattern'
       requiredBinding: 'parentView.required'
       valueBinding: 'parentView.value'
+
       valueChanged: (->
         value = @get 'value'
         if @$()

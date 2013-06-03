@@ -18,6 +18,7 @@ define ['cs!./multilingual_field'], ->
       rowsBinding: 'parentView.rows'
       colsBinding: 'parentView.cols'
       requiredBinding: 'parentView.required'
+
       valueChanged: (->
         value = @get 'value'
         if @$()

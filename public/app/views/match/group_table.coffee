@@ -14,4 +14,5 @@ define [
     tagName: 'table'
     classNames: ['matches-group-table', 'table']
 
-    itemViewClass: App.MatchGroupTableItemView
+    itemViewClass: App.MatchGroupTableItemView.extend
+      entrantsBinding: 'parentView.entrants'

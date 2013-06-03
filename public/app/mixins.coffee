@@ -12,4 +12,6 @@ define [
   'cs!./mixins/droppable'
   'cs!./mixins/movable'
   'cs!./mixins/visualy_selectable'
+
+  'cs!./mixins/match_delegate'
 ]

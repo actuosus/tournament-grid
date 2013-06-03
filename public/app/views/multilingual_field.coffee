@@ -9,22 +9,23 @@ define ['cs!../mixins/translatable', 'cs!./language_menu'], ->
   App.MultilingualField = Em.ContainerView.extend App.Translatable,
     childViews: ['fieldView', 'languageSelectorView']
 
-    value: null
+#    value: null
     languages: []
 
     automaticTranslation: yes
 
     provider: null
 
-    selectedLanguage: null
+    selectedLanguageBinding: 'App.currentLanguage'
 
     init: ()->
       @_super()
       @set 'values', new Em.Map()
-      @set 'selectedLanguage', App.currentLanguage
+#      @set 'selectedLanguage', App.get 'currentLanguage'
+#      @selectedLanguage = App.get 'currentLanguage'
 
     appCurrentLanguageChanged: (->
-      @set 'selectedLanguage', App.get('currentLanguage')
+      @set 'selectedLanguage', App.get 'currentLanguage'
     ).observes('App.currentLanguage')
 
     selectedLanguageChanged: (->

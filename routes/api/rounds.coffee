@@ -63,3 +63,17 @@ exports.update = (req, res)->
     res.send 400, error: "server error"
 
 exports.delete = (req, res)->
+  if req.params?._id?
+    await Round.findById req.params._id, defer err, round
+    if round
+      Round.remove _id: req.params._id, (err)->
+        # TODO Remove socket hack.
+        socket.send {action: 'remove', model: 'Round', _id: req.params._id}
+
+        Stage.findByIdAndUpdate(round.stage_id, {$pull : {rounds: req.params._id}}) if round.stage_id
+        res.status 204 unless err
+        res.send()
+    else
+      res.send 404, error: "server error"
+  else
+    res.send 400, error: "server error"

@@ -9,5 +9,6 @@ define [
   'cs!../core'
 ], ->
   App.FormView = Em.View.extend
+    content: null
     tagName: 'form'
     classNames: ['form']

@@ -18,7 +18,7 @@ define ['cs!../core'],->
 
     # Relations
     matches: DS.hasMany 'App.Match'
-    results: DS.hasMany 'App.Result'
+    resultSets: DS.hasMany 'App.ResultSet'
 
     stage: DS.belongsTo('App.Stage', {inverse: 'rounds'})
     bracket: DS.belongsTo('App.Bracket', {inverse: 'rounds'})
@@ -42,6 +42,10 @@ define ['cs!../core'],->
     parentReference: 'stage'
     parent: (-> @get @get 'parentReference').property('stage')
     children: (-> @get 'matches').property('matches')
+
+    resultSetEntrants: (->
+      App.ReportEntrantsController.create content: @get('resultSets').map (item)-> item.get 'entrant'
+    ).property('resultSets.@each.isLoaded')
 
     treeItemChildren: (-> @get 'matches').property('matches')
 

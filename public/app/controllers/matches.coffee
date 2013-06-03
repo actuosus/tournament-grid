@@ -97,6 +97,55 @@ define [
         @futureMatchesForEntrant(entrant).length
 
     results: (->
+      Ember.ArrayController.create
+        content: @get 'round.resultSets'
+        sortProperties: ['position']
+    ).property('round.resultSets.length')
+
+    automaticCountingChanged: (->
+      console.log 'automaticCountingChanged'
+      resultSets = @get 'round.resultSets'
+
+      # Reset
+      resultSets.forEach (resultSet)->
+        ['wins', 'losses', 'draw'].forEach (property)-> resultSet.set property, 0
+
+      incrementPropertyForEntrant = (entrant, property, increment)->
+        resultSet = resultSets.find (resultSet)-> Em.isEqual(resultSet.get('entrant.team'), entrant)
+        console.log 'found', resultSet
+        resultSet.incrementProperty property, increment if resultSet
+
+      unless @get 'round.automaticCountingDisabled'
+        @forEach (match)->
+          entrant1 = match.get('entrant1')
+          entrant2 = match.get('entrant2')
+          entrant1_points = match.get('entrant1_points')
+          entrant2_points = match.get('entrant2_points')
+
+          if entrant1_points and entrant2_points
+            if entrant1_points > entrant2_points
+              incrementPropertyForEntrant entrant1, 'wins' if entrant1
+              incrementPropertyForEntrant entrant2, 'losses' if entrant2
+            else if entrant1_points is entrant2_points
+              incrementPropertyForEntrant entrant1, 'draws' if entrant1
+              incrementPropertyForEntrant entrant2, 'draws' if entrant2
+            else
+              incrementPropertyForEntrant entrant1, 'losses' if entrant1
+              incrementPropertyForEntrant entrant2, 'wins' if entrant2
+
+    ).observes(
+      'round.automaticCountingDisabled'
+#      '@each.entrant1_points',
+#      '@each.entrant2_points',
+#      '@each.entrant1',
+#      '@each.entrant2'
+    )
+
+    entrants: (->
+      @get('round.resultSets').map (item)-> item.get 'entrant'
+    ).property('round.resultSets.length')
+
+    _results: (->
         incrementPropertyForEntrant = (entrant, property, increment)->
           if results.has entrant
             result = results.get entrant
@@ -148,7 +197,12 @@ define [
         teamRefs = @get 'round.teamRefs'
         teamRefs?.forEach (ref)->
           team = ref.get('team')
-          results.set ref.get('team'), Ember.Object.create()
+          results.set ref, Ember.Object.create()
+
+        resultSets = @get 'round.resultSets'
+        resultSets?.forEach (resultSet)->
+          entrant = resultSet.get('entrant')
+          results.set entrant, Ember.Object.create()
 
         resultsArray = []
         controller = @
@@ -166,4 +220,6 @@ define [
       '@each.entrant2_points',
       '@each.entrant1',
       '@each.entrant2',
-      'round.teamRefs.length')
+      'round.teamRefs.length'
+      'round.resultSets.length'
+    )

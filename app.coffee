@@ -102,16 +102,16 @@ app.configure ->
 
   # Session support
   console.log 'Redis', conf._redis
-  app.use express.session(
-    secret: 'Is it secure?'
-    store: new RedisStore(
-      host: conf._redis.host
-      port: conf._redis.port
-      pass: conf._redis.password
-      db: conf._redis.db
-    )
-  )
-#  app.use express.session secret: 'Is it secure?'
+#  app.use express.session(
+#    secret: 'Is it secure?'
+#    store: new RedisStore(
+#      host: conf._redis.host
+#      port: conf._redis.port
+#      pass: conf._redis.password
+#      db: conf._redis.db
+#    )
+#  )
+  app.use express.session secret: 'Is it secure?'
   app.use passport.initialize()
   app.use passport.session()
 
@@ -213,6 +213,12 @@ app.delete '/api/players/:_id', routes.api.players.delete
 
 app.get '/api/reports', routes.api.reports.list
 app.get '/api/reports/:_id', routes.api.reports.item
+
+app.get '/api/result_sets', routes.api.resultSets.list
+app.get '/api/result_sets/:_id', routes.api.resultSets.item
+app.post '/api/result_sets', routes.api.resultSets.create
+app.put '/api/result_sets/:_id', routes.api.resultSets.update
+app.delete '/api/result_sets/:_id', routes.api.resultSets.delete
 
 app.get '/api/results', routes.api.results.list
 app.get '/api/results/:_id', routes.api.results.item

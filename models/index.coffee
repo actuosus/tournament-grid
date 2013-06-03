@@ -18,6 +18,7 @@ exports.MatchSchema = require './match'
 exports.PlayerSchema = require './player'
 exports.RaceSchema = require './race'
 exports.ReportSchema = require './report'
+exports.ResultSetSchema = require './result_set'
 exports.ResultSchema = require './result'
 exports.RoundSchema = require './round'
 exports.StageSchema = require './stage'
@@ -36,6 +37,7 @@ try
   exports.Match = mongoose.model 'Match', exports.MatchSchema
   exports.Player = mongoose.model 'Player', exports.PlayerSchema
   exports.Race = mongoose.model 'Race', exports.RaceSchema
+  exports.ResultSet = mongoose.model 'ResultSet', exports.ResultSetSchema
   exports.Report = mongoose.model 'Report', exports.ReportSchema
   exports.Result = mongoose.model 'Result', exports.ResultSchema
   exports.Round = mongoose.model 'Round', exports.RoundSchema

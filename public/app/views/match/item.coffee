@@ -9,33 +9,12 @@ define [
   'cs!../game/info_bar'
   'cs!../team/grid_item_container'
 ], ->
-  App.MatchItemView = Em.ContainerView.extend App.ContextMenuSupport,
+  App.MatchItemView = Em.ContainerView.extend App.MatchDelegate,
     classNames: ['match-item']
     childViews: ['dateView', 'infoBarView', 'contentView']
     classNameBindings: ['content.isSelected','content.isVisualySelected', 'content.isDirty', 'content.isSaving', 'content.isPast', 'content.invalid']
     attributeBindings: ['title']
     titleBinding: 'content.description'
-
-    shouldShowContextMenuBinding: 'App.isEditingMode'
-    contextMenuActions: ['open', 'close', 'edit', 'save', 'deleteRecord:delete']
-
-    open: -> @get('content').open()
-    close: -> @get('content').close()
-    save: -> @get('content.store').commit()
-    edit: ->
-      popup = App.PopupView.create target: @
-      popup.pushObject(
-        App.MatchForm.create
-          popupView: popup
-          match: @get('match')
-          content: @get('match')
-          title: @get 'match.title'
-          description: @get 'match.description'
-          didUpdate: => popup.hide()
-      )
-      popup.append()
-
-    deleteRecord: -> @get('content').deleteRecord()
 
 #    didInsertElement: ->
 #      @$().css scale: 0

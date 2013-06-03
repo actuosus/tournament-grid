@@ -14,6 +14,7 @@ ObjectId = Schema.ObjectId
 TeamRefSchema = new Schema
   team_id: type: ObjectId, ref: 'Team'
   report_id: type: ObjectId, ref: 'Report'
+  round_id: type: ObjectId, ref: 'Round'
   match_id: type: ObjectId, ref: 'Match'
   players: [type: ObjectId, ref: 'Player']
   captain_id: type: ObjectId, ref: 'Player'

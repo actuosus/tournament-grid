@@ -14,8 +14,9 @@ define ['cs!../core'],->
   App.Result = DS.Model.extend
     primaryKey: '_id'
     name: DS.attr 'string'
-    entrant: DS.belongsTo 'App.TeamRef'
-    round: DS.belongsTo('App.Round')
-    matches: DS.hasMany 'App.Match'
+    value: DS.attr 'number'
+
+    # Relations
+    resultSet: DS.belongsTo('App.ResultSet', {inverse: 'results'})
 
   App.Result.toString = -> 'Result'

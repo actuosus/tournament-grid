@@ -40,6 +40,7 @@ define [
 
       deleteRecord: ->
         @get('content').deleteRecord()
+        @get('content.store')?.commit()
 
       contentView: Em.ContainerView.extend( App.Editing, {
         contentBinding: 'parentView.content'
@@ -69,9 +70,11 @@ define [
 
           click: ->
             console.debug 'Should add entrant.'
-            teamRefs = @get 'content.teamRefs'
-            if teamRefs?.createRecord
-              teamRefs.createRecord()
+            round = @get 'content'
+            resultSets = @get 'content.resultSets'
+            console.log resultSets
+            if resultSets?.createRecord
+              resultSets.createRecord(round: round)
 
         automaticCountingButtonView: Em.View.extend
           tagName: 'button'
@@ -96,7 +99,9 @@ define [
 
           click: -> @toggleProperty 'automaticCountingDisabled'
 
-        deleteRecord: -> @get('content').deleteRecord()
+        deleteRecord: ->
+          @get('content').deleteRecord()
+          @get('content.store')?.commit()
 
         removeButtonView: App.RemoveButtonView.extend
           title: '_remove_group'.loc()
@@ -115,6 +120,7 @@ define [
         ).property 'parentView.content.matches'
         contentBinding: 'parentView.content.matches'
         contentView: App.MatchesTableContainerView.extend
+          entrantsBinding: 'parentView.matches.entrants'
           contentBinding: 'parentView.matches'
           showFilterFormBinding: 'parentView.showFilterForm'
           tableItemViewClassBinding: 'parentView.tableItemViewClass'

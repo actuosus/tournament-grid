@@ -18,10 +18,6 @@ define [
     classNames: ['stage-form', 'form-vertical']
     templateName: 'matchForm'
 
-    title: null
-    map_type: null
-    description: null
-
     didCreate: Em.K
     didUpdate: Em.K
 

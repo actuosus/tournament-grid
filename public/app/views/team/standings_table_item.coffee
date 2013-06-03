@@ -11,13 +11,14 @@ define [
   'text!../../templates/team/standings_table_item.handlebars'
   'cs!../../core'
   'cs!./cell'
+  'cs!./standing_cell'
 ], (template)->
   Em.TEMPLATES.teamStandingsTableItem = Em.Handlebars.compile template
   App.TeamStandingsTableItemView = Em.View.extend
     tagName: 'tr'
     templateName: 'teamStandingsTableItem'
     classNames: ['team-standings-table-item']
-    classNameBindings: ['content.isSelected']
+    classNameBindings: ['content.isSelected', 'content.isDirty', 'content.isSaving']
 
     mouseEnter: (event)->
       controller = @get('content.controller')
@@ -32,4 +33,6 @@ define [
 
     mouseLeave: -> @matchesPopup?.hide()
 
-    click: -> @toggleProperty 'content.isSelected'
+    click: (event)->
+      unless $(event.target).hasClass 'editable-label'
+        @toggleProperty 'content.isSelected'

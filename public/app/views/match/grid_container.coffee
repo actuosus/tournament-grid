@@ -15,6 +15,7 @@ define [
 
     selectableElementsView: Em.computed.alias 'contentView'
 
+    shouldShowContextMenuBinding: 'App.isEditingMode'
     contextMenuActions: ['add:addMatch', 'removeAll', 'closeAll', 'openAll']
 
     visualSelectionChanged: (->

@@ -55360,7 +55360,7 @@ define('cs',['coffee-script'], function (CoffeeScript) {
     _active_match_type: 'Активный',
     _delayed_match_type: 'Отложенный',
     _past_match_type: 'Прошедший',
-    _removeGroup: 'Удалить группу',
+    _remove_group: 'Удалить группу',
     _map_type: 'Тип карты',
     _past_matches: 'Прошедшие матчи',
     _future_matches: 'Будущие матчи'
@@ -55462,6 +55462,7 @@ define('cs',['coffee-script'], function (CoffeeScript) {
     _ok: 'Ok',
     _winner: 'Winner',
     _loser: 'Loser',
+    _remove_group: 'Remove group',
     _player_nickname: 'Player nickname',
     _nothing_to_display: 'Empty',
     _future_match_type: 'Future',

@@ -70,6 +70,7 @@ define [
       toggleButtonTarget: Em.computed.alias 'parentView.headerView'
       tableItemViewClassBinding: 'parentView.tableItemViewClass'
       tableView: App.MatchesTableView.extend
+        entrantsBinding: 'parentView.content.entrants'
         contentBinding: 'parentView.content.filteredContent'
         itemViewClassBinding: 'parentView.tableItemViewClass'
     )

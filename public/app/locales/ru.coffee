@@ -95,7 +95,7 @@ define
   _active_match_type: 'Активный'
   _delayed_match_type: 'Отложенный'
   _past_match_type: 'Прошедший'
-  _removeGroup: 'Удалить группу'
+  _remove_group: 'Удалить группу'
   _map_type: 'Тип карты'
   _past_matches: 'Прошедшие матчи'
   _future_matches: 'Будущие матчи'

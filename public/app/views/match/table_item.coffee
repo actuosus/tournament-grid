@@ -10,41 +10,26 @@ define [
 ], (template)->
   Em.TEMPLATES.matchesTableItem = Em.Handlebars.compile template
 
-  App.MatchTableItemView = Em.View.extend(App.ContextMenuSupport, {
+  App.MatchTableItemView = Em.View.extend(App.MatchDelegate, {
     tagName: 'tr'
     classNames: ['matches-table-item']
     classNameBindings: ['content.isDirty', 'content.isSaving', 'content.invalid']
     attributeBindings: ['title']
     templateName: 'matchesTableItem'
 
+    entrantsBinding: 'parentView.entrant'
+
     titleBinding: 'content.description'
 
-    shouldShowContextMenuBinding: 'App.isEditingMode'
-    contextMenuActions: ['open', 'close', 'edit', 'save', 'deleteRecord:delete']
-#    contextMenuTargetBinding: 'content'
-
     hasPointsOrEditable: (->
+      console.log 'hasPointsOrEditable', @get('content.hasPoints')
       @get('content.hasPoints') or App.get('isEditingMode')
     ).property('content.hasPoints', 'App.isEditingMode')
 
-    open: ->
-      content = @get 'content'
-      content.open()
-      console.log 'Should be opened'
-
-    close: ->
-      content = @get 'content'
-      content.close()
-      console.log 'Should be closed'
-
-    deleteRecord: ->
-      content = @get 'content'
-      content.deleteRecord()
-      content.store.commit()
-
-    save: ->
-      content = @get 'content'
-      content.store.commit()
+    hasPointsChanged: (->
+      console.log 'hasPointsChanged', @get('content.hasPoints')
+      @set 'hasPointsOrEditable', @get('content.hasPoints') or App.get('isEditingMode')
+    ).observes('content.hasPoints')
 
     click: (event)->
       if $(event.target).hasClass('save-btn')

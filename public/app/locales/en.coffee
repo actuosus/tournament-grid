@@ -88,6 +88,7 @@ define
   _ok: 'Ok'
   _winner: 'Winner'
   _loser: 'Loser'
+  _remove_group: 'Remove group'
   _player_nickname: 'Player nickname'
   _nothing_to_display: 'Empty'
   _future_match_type: 'Future'

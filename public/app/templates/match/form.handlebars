@@ -1,16 +1,16 @@
 <div class="control-row">
     <label for="title">{{loc '_title'}}:</label>
-    {{view App.MultilingualTextField name="title" classNames="title" valueBinding="view.title" languagesBinding="App.languages" selectedLanguage=App.currentLanguage}}
+    {{view App.MultilingualTextField name="title" classNames="title" valueBinding="view.content.title" languagesBinding="App.languages" selectedLanguage=App.currentLanguage}}
 </div>
 
 <div class="control-row">
     <label for="description">{{loc '_description'}}:</label>
-    {{view App.MultilingualTextArea name="description" classNames="description" cols="40" valueBinding="view.description" languagesBinding="App.languages" selectedLanguage=App.currentLanguage}}
+    {{view App.MultilingualTextArea name="description" classNames="description" cols="40" valueBinding="view.content.description" languagesBinding="App.languages" selectedLanguage=App.currentLanguage}}
 </div>
 
 <div class="control-row">
     <label for="map_type">{{loc '_map_type'}}:</label>
-    {{view App.MultilingualTextField name="map_type" classNames="map_type" valueBinding="view.map_type" languagesBinding="App.languages" selectedLanguage=App.currentLanguage}}
+    {{view App.MultilingualTextField name="map_type" classNames="map_type" valueBinding="view.content.map_type" languagesBinding="App.languages" selectedLanguage=App.currentLanguage}}
 </div>
 
 <div class="control-row">
