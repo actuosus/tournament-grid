@@ -18,6 +18,7 @@ define ->
     results: DS.hasMany('App.Result', {inverse: 'resultSet'})
     matches: DS.hasMany 'App.Match'
 
+    # TODO Resolve storage.
     position: DS.attr 'number'
     matchesPlayed: DS.attr 'number'
     wins: DS.attr 'number'

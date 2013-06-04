@@ -14,7 +14,6 @@
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.75);
     max-height: 200px;
     overflow-y: auto;
-    /*margin-top: 4px;*/
 }
 
 .menu-item {
@@ -25,9 +24,6 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-
-    /*-webkit-transition-property: background-color;*/
-    /*-webkit-transition-duration: .3s;*/
 }
 
 .menu-item:hover {

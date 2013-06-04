@@ -21,16 +21,11 @@ define [
   'cs!./mixins/translatable'
   'cs!./mixins/collapsable'
   'cs!./translators/yandex'
-
-#  'cs!./tree_test'
-#  'cs!lib/node'
-
 ], ()->
 
 #  App.set 'isEditingMode', yes
 
   $(document.body).keydown (event)->
-#    console.log event.keyCode
     if event.ctrlKey
       if event.shiftKey
         switch event.keyCode
@@ -45,66 +40,14 @@ define [
             popup.pushObject App.ServerDebugView.create()
             popup.append()
 
-  App.RoundProxy = Em.ObjectProxy.extend
-    isSelected: no
-    content: null
-
-  App.MatchProxy = Em.ObjectProxy.extend
-    isSelected: no
-    entrant1: (->
-      console.log arguments
-    ).property()
-    entrant2: (->
-      console.log arguments
-    ).property()
-
-    entrantsChanged: ((self, property)->
-#        console.log arguments
-      content = @get('content')
-      unless content
-        content = App.Match.createRecord()
-        content.set property, @get property
-        content.set 'sort_index', @get 'sort_index'
-        content.set 'round', @get 'round.content'
-        @set 'content', content
-    ).observes('entrant1', 'entrant2')
-
-    open: ->
-      content = @get('content')
-      content.open() if content
-
-    close: ->
-      content = @get('content')
-      content.close() if content
-
-    content: (->
-#      console.log 'round.content.matches.@each.isLoaded'
-      Em.run.later =>
-#        console.log @get('sort_index'), @get('round.content.matches')
-        match = @get('round.content.matches')?.objectAtContent @get 'sort_index'
-        console.log match
-        @set('entrants', match.get('entrants')) if match
-        @set 'content', match if match
-      ,1000
-    ).property('some', 'round.content.matches.@each.isLoaded')
-
-    some: null
-
-    roundContentIsLoaded: (->
-      @set 'some', @get 'round.index'
-    ).observes('round.content.isLoaded')
-
-
   App.ready = ->
     $('#content').empty()
 
-#    Em.run ->
     App.set 'report', App.Report.find window.currentReportId
 #
     App.set 'entrantsController', App.EntrantsController.create()
     App.set 'countriesController', App.CountriesController.create()
     App.set 'teamsController', App.TeamsController.create()
-#    App.set 'reportTeamsController', App.ReportEntrantsController.create contentBinding: 'App.report.teamRefs'
     App.set 'playersController', App.PlayersController.create()
 
 #    TODO Socket support

@@ -29,10 +29,6 @@ define ['cs!../core'],->
 
     mouseWheel: (event)->
       if event.shiftKey
-
-
-        #      console.log (event)
-
         offset = @$().offset()
 
         scale = @get('scale')
@@ -68,7 +64,6 @@ define ['cs!../core'],->
       newPosition =
         x: event.pageX - @startMousePosition.x + @oldPosition.x
         y: event.pageY - @startMousePosition.y + @oldPosition.y
-      console.log newPosition
       @doMove newPosition
 
     mouseUp: (event)->
@@ -79,7 +74,6 @@ define ['cs!../core'],->
 
     doMove: (newPosition)->
       scale = @get('scale')
-      console.log scale, newPosition.x / scale
       @get('contentView').$().css
         x: newPosition.x / scale
         y: newPosition.y / scale

@@ -27,8 +27,6 @@ define [
 #      @notifyPropertyChange 'arrangedContent'
 
     arrayDidChange: (content, start, removed, added)->
-#      console.log content, start, removed, added
-#      console.log content.type, start, added
       idx = start
       while idx < start+added
         @get('content').pushObject content.objectAtContent idx
@@ -37,7 +35,6 @@ define [
       @set 'arrangedContent.isUpdating', no
 
     arrayWillChange: (content, start, removedCount)->
-#      console.log content.type, start, removedCount
 
     sourceContentChanged: (->
       sources = @get 'sources'

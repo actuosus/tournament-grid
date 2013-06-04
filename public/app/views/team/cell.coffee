@@ -31,10 +31,11 @@ define [
 #      contentBinding: 'parentView.content'
       content: (->
         content = @get 'parentView.content'
-        if App.TeamRef.detectInstance content
-          content.get 'team'
-        else
-          content
+        if content
+          if App.TeamRef.detectInstance content
+            content.get 'team.country'
+          else
+            content.get 'country'
       ).property('parentView.content')
 
     autocompleteView: App.AutocompleteTextField.extend
@@ -68,10 +69,7 @@ define [
         else
           @set 'parentView.content', newTeam
         match = @get 'parentView.parentView.match'
-        console.debug 'Match', match
-        if match
-#          match.get('entrants')[@get 'parentView.contentIndex'] = newTeam
-          match.set "entrant#{@get('parentView.contentIndex')+1}", newTeam
+        match.set "entrant#{@get('parentView.contentIndex')+1}", newTeam if match
         @set('isVisible', no)
       ).observes('selection')
 

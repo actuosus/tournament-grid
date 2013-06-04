@@ -11,7 +11,6 @@ mongoose = require 'mongoose'
 exports.UserSchema = require './user'
 exports.LogSchema = require './log'
 
-#exports.ChampionshipSchema = require './championship'
 exports.CountrySchema = require './country'
 exports.GameSchema = require './game'
 exports.MatchSchema = require './match'

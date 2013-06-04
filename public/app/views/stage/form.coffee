@@ -83,17 +83,7 @@ define [
       stage.set 'description', @get 'description'
       stage.set 'visual_type', @get 'visualType.id'
 
-      if report
-        report.get('stages').pushObject stage
-#
-##        name: @$('.name').val()
-##        description: @$('.description').val()
-##        visual_type: @get 'visualType'
-#      stage.on 'didCreate', => @didCreate stage
-#      stage.on 'becameError', =>
-#        console.log arguments
-#        stage.destroy()
-##      App.store.commit()
+      report.get('stages').pushObject stage if report
 
     submit: (event)->
       event.preventDefault()

@@ -10,10 +10,13 @@ define [
   'cs!./grid'
   'cs!./team/lineup_grid_item'
 ], ->
-  App.LineupView = Em.ContainerView.extend
+  App.LineupView = Em.ContainerView.extend App.ContextMenuSupport,
     childViews: ['contentView']
 
-    contentView: App.GridView.extend
+    shouldShowContextMenuBinding: 'App.isEditingMode'
+    contextMenuActions: ['add', 'removeAll', 'closeAll', 'openAll']
+
+    contentView: App.GridView.extend(App.VisualySelectable, {
       classNames: ['lineup-grid']
       contentBinding: 'parentView.content'
 
@@ -22,3 +25,4 @@ define [
 #        template: Em.Handlebars.compile '{{loc "_nothing_to_display"}}'
 
       itemViewClass: App.TeamLineupGridItem
+    })

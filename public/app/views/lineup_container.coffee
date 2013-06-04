@@ -71,7 +71,6 @@ define [
         title: '_enter_team_name_to_filter_the_teams_and_search_for_team_to_add'.loc()
 
         filteredContent: (->
-          console.log 'should refilter content'
           content = @get 'content'
           entrants = App.get 'report.teamRefs'
           teams = entrants.map (item)-> item.get('team')

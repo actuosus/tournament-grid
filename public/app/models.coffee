@@ -10,12 +10,11 @@ define [
   'cs!./core'
 
   'cs!./models/bracket'
-  'cs!./models/championship'
   'cs!./models/country'
   'cs!./models/game'
   'cs!./models/match'
   'cs!./models/player'
-  'cs!./models/race'
+#  'cs!./models/race'
   'cs!./models/report'
   'cs!./models/result_set'
   'cs!./models/result'

@@ -72,7 +72,6 @@ define [
           bracket = match.get('round.bracket')
 
           if (match.get('itemIndex') is -1) and (match.get('round.itemIndex') is -1)
-#            console.debug 'Winner', @get('parentView.parentView.parentView.parentView.entrantsNumber')
             entrantsNumber = @get('parentView.parentView.parentView.parentView.entrantsNumber')
             roundsCount = Math.log(entrantsNumber) / Math.log(2)-1
             matchesCount = Math.pow(2, roundsCount)-1
@@ -87,7 +86,6 @@ define [
               unless bracket.get('isWinnerBracket')
                 # TODO Revise weird formula
                 currentIndex = Math.ceil(Math.pow(2, Math.floor((roundIndex-1)/2 + ((roundIndex-1)%2))) - 1)
-#                console.log 'Loser', roundIndex, currentIndex
             if contentIndex is 0
               styles.marginTop = currentIndex * height
             else

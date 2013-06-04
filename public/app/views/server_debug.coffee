@@ -21,10 +21,8 @@ define ->
       start: 0
       end: 0
       startChanged: (->
-        console.log @get 'start'
         App.set 'debug.wait.start', @get 'start'
       ).observes('start')
       endChanged: (->
-        console.log @get 'end'
         App.set 'debug.wait.end', @get 'end'
       ).observes('end')

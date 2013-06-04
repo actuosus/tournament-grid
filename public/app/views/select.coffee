@@ -21,7 +21,6 @@ define ['cs!../core'],->
     currentLabel: (->
       @get 'childViews.firstObject.selection.name'
     ).property 'value'
-#    valueChanged: (-> console.log @get 'value').observes('value')
     classNames: ['select']
     click: (event)->
       if $(event.target).hasClass('disclosure-button')

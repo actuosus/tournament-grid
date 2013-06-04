@@ -52,7 +52,6 @@ define [
     new Handlebars.SafeString (str || '').loc('')
 
   Em.Handlebars.registerBoundHelper '_loc', (value, options)->
-#    console.log arguments
     if options.contexts and typeof options.contexts[0] is 'string'
       str = options.contexts[0]
     else if typeof value is 'object'
@@ -138,18 +137,6 @@ define [
     serialize: (deserialized)->
       if Em.isNone(deserialized) then null else String(deserialized)
 
-#  DS.StateManager.reopen
-#    enterState: (transition)->
-#      @_super(transition)
-#      console.log @, arguments, @get 'currentState'
-#
-#      record = @record
-#      currentState = @get 'currentState'
-#
-#      switch currentState.name
-#        when 'uncommitted'
-#          localStorage.setItem 'boo', JSON.stringify record._data
-
   App.store = DS.Store.create
     revision: 11
     adapter: DS.RESTAdapter.create
@@ -159,19 +146,6 @@ define [
   App.store.adapter.namespace = config.api.namespace
 
   App.store.adapter.serializer.primaryKey = -> '_id'
-#  App.store.adapter.serializer.keyForAttributeName = (type, name)->
-##    console.log arguments
-#    console.log type.metaForProperty name
-#    name
-#  App.store.adapter.serializer.extractAttribute = (type, hash, attributeName)->
-#    console.log arguments
-#    key = this._keyForAttributeName(type, attributeName)
-#    hash[key]
-#  App.store.adapter.materializeAttribute = (record, serialized, attributeName, attributeType)->
-#    value = this.extractAttribute(record.constructor, serialized, attributeName);
-#    value = this.deserializeValue(value, attributeType);
-#
-#    record.materializeAttribute(attributeName, value);
 
   App.config =
     local:

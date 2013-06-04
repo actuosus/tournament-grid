@@ -1,0 +1,34 @@
+/**
+ * matches-table-popup
+ * @author: actuosus
+ * Date: 05/06/2013
+ * Time: 01:25
+ */
+
+.matches-table-popup .matches-table-item td {
+    border: 0;
+    padding: 0px 8px;
+}
+
+.matches-table-popup .matches-table-item .team-name {
+    color: white;
+    font-size: 11px;
+}
+
+.matches-table-popup .matches-table-item .match-start-date {
+    font-size: 10px;
+}
+
+.matches-table-popup .section {
+    margin-bottom: 5px;
+}
+
+.matches-table-popup .section:last-child {
+    margin-bottom: 0;
+}
+
+.matches-table-popup .section-header {
+    font-weight: bold;
+    border-bottom: 3px solid #f35900;
+    padding-bottom: 2px;
+}

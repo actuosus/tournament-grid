@@ -38,7 +38,7 @@ define [
     ).property('content')
 
     countryFlagView: App.CountryFlagView.extend
-      contentBinding: 'parentView.content'
+      contentBinding: 'parentView.content.country'
 
     autocompleteView: App.AutocompleteTextField.extend
       isVisible: no

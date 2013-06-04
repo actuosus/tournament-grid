@@ -32,7 +32,6 @@ define [
     ).observes('team')
 
     dateChanged: (->
-      console.log @get 'date'
       @set 'content.dateFilter', @get 'date'
     ).observes('date')
 

@@ -26,5 +26,4 @@ define ['cs!../core'],->
     didFetchTranslation: Em.K
 
     _didFetchTranslation: (data, cb)->
-      console.log data
       cb data?.text?[0]

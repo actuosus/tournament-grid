@@ -42,7 +42,6 @@ define ['cs!../core'], ->
 
     nestedTreeView: (->
       content = @get 'content'
-#      console.log @, arguments, content
       if @get 'hasChildren'
         App.TreeView.extend
           classNames: ['tree-nested']

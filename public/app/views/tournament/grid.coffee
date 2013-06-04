@@ -35,14 +35,13 @@ define [
       rounds = []
       for i in [roundsCount..0]
         matchesCount = Math.pow(2, i)-1
-        console.debug "Round #{i}, #{matchesCount+1} matches."
         roundName = "1/#{matchesCount+1} #{'_of_the_final'.loc()}"
         switch i
           when 0 then roundName = '_final'.loc()
           when 1 then roundName = '_semifinal'.loc()
         roundIndex = roundsCount - i
         actualRound = stage?.getByPath "#{roundIndex}"
-        round = App.RoundProxy.create
+        round = App.RoundController.create
           content: actualRound
           index: roundIndex
           itemIndex: i
@@ -55,7 +54,7 @@ define [
           if roundsCount-i-1 >= 0
             leftPath = "#{roundsCount-i-1}.#{j*2}"
             rightPath = "#{roundsCount-i-1}.#{j*2+1}"
-          match = App.MatchProxy.create
+          match = App.MatchController.create
             index: j
             itemIndex: j
             sort_index: j
@@ -67,12 +66,12 @@ define [
             round: round
           round.get('matches').push match
         rounds.push round
-      finalRound = App.RoundProxy.create
+      finalRound = App.RoundController.create
         name: '_winner'.loc()
         itemIndex: -1
         parentReference: 'stage'
         matches: []
-      finalRound.get('matches').push App.MatchProxy.create
+      finalRound.get('matches').push App.MatchController.create
         isWinner: yes
         isFinal: yes
         itemIndex: -1

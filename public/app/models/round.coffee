@@ -11,7 +11,7 @@ define ['cs!../core'],->
     primaryKey: '_id'
     sort_index: DS.attr 'number'
 
-    # History Ember.History,
+    # TODO History Ember.History,
 #    _trackProperties: ['name']
 
     name: DS.attr('string', {loc: {keyPath: '_name', defaultLanguage: 'ru'}})
@@ -28,7 +28,6 @@ define ['cs!../core'],->
     # TODO Make localization
 #    _name: DS.attr('object')
 #    __name: (->
-#      console.log arguments
 #      nameHash = @get '_name'
 #      currentLanguage = App.get('currentLanguage')
 #      value = ''
@@ -42,13 +41,6 @@ define ['cs!../core'],->
     parentReference: 'stage'
     parent: (-> @get @get 'parentReference').property('stage')
     children: (-> @get 'matches').property('matches')
-
-#    resultSetEntrants: (->
-#      entrants = @get('resultSets').map (item)->
-#        console.log item
-#        item.get 'entrant'
-#      App.ReportEntrantsController.create content: entrants
-#    ).property('resultSets.@each.entrant.isLoaded')
 
     treeItemChildren: (-> @get 'matches').property('matches')
 

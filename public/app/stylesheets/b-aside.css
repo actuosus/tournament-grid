@@ -1,0 +1,23 @@
+/**
+ * b-aside
+ * @author: actuosus
+ * Date: 05/06/2013
+ * Time: 01:24
+ */
+
+/* arrows */
+.b-aside__title.open {
+    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAJCAMAAADaUYZlAAAAOVBMVEU4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODiX3pCcAAAAE3RSTlMAAwYNFDk+SFFrbG+srcTb8/n+43xG/AAAADxJREFUeNpFyEEOgCAQQ9GCgAgowv0Pq0mbma76H8IJ21GAvi/L502I9w/KVQGCp0BJGLsxHSbTgOmQdT6lXQIj8v3aswAAAABJRU5ErkJggg==') right 0 no-repeat;
+}
+
+.b-aside__title.collapsed {
+    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAJCAMAAADaUYZlAAAAOVBMVEU4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODiX3pCcAAAAE3RSTlMAAwYOFDg+SVBRbHCsrcXc8/n+d22gqAAAAD5JREFUeNpVyFsOgCAQQ9E6CuiIvPa/WEgaRuhPcw84cfyZsd5btkyYqWcykK8pMOBZkmD5w8sklAtHAAw8OpFEAipz42oiAAAAAElFTkSuQmCC') right 0 no-repeat;
+}
+
+.b-aside__nav-wrap {
+    border-bottom: 1px solid #c8c8c8;
+}
+
+.b-aside__nav {
+    border-bottom: 0;
+}

@@ -32,7 +32,6 @@ define [
 
     filteredContent: (->
       content = @get 'content'
-      console.log 'filteredContent', content
       matchTypeFilter = @get 'matchTypeFilter'
       entrantFilter = @get 'entrantFilter'
       periodType = @get 'periodFilter'
@@ -107,7 +106,6 @@ define [
     ).property('round.resultSets.length')
 
     automaticCountingChanged: (->
-      console.log 'automaticCountingChanged'
       resultSets = @get 'round.resultSets'
 
       # Reset
@@ -116,7 +114,6 @@ define [
 
       incrementPropertyForEntrant = (entrant, property, increment)->
         resultSet = resultSets.find (resultSet)-> Em.isEqual(resultSet.get('entrant.team'), entrant)
-        console.log 'found', resultSet
         resultSet.incrementProperty property, increment if resultSet
 
       unless @get 'round.automaticCountingDisabled'

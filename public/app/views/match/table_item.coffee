@@ -22,12 +22,10 @@ define [
     titleBinding: 'content.description'
 
     hasPointsOrEditable: (->
-      console.log 'hasPointsOrEditable', @get('content.hasPoints')
       @get('content.hasPoints') or App.get('isEditingMode')
     ).property('content.hasPoints', 'App.isEditingMode')
 
     hasPointsChanged: (->
-      console.log 'hasPointsChanged', @get('content.hasPoints')
       @set 'hasPointsOrEditable', @get('content.hasPoints') or App.get('isEditingMode')
     ).observes('content.hasPoints')
 

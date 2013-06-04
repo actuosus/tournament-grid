@@ -15,11 +15,6 @@ define [
     searchResults: []
     labelValue: 'name'
 
-#    contentLoaded: (->
-##      console.log 'App.TeamsController', 'content.isLoaded', @get('content.isLoaded'), @get('content')
-#      @set 'isLoaded', yes
-#    ).observes('content.isLoaded')
-
     search: (options)->
       @set 'isLoaded', no
       @set 'content', App.Team.find options

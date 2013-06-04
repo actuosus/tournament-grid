@@ -10,7 +10,6 @@ define ->
     maskView: null
 
     mouseDown: (event)->
-#      console.log 'VisualySelectable', event
       $(document.body).addClass 'non-selectable'
       $(document.body).bind('mousemove.selectable', @onDocumentMouseMove.bind(@))
       $(document.body).bind('mouseup.selectable', @mouseUp.bind(@))
@@ -51,7 +50,6 @@ define ->
     visualSelection: []
 
     mouseUp: (event)->
-#      console.log 'VisualySelectable', event
       $(document.body).removeClass 'non-selectable'
       $(document.body).unbind 'mousemove.selectable'
       $(document.body).unbind 'mouseup.selectable'

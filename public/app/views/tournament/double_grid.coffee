@@ -14,6 +14,7 @@ define [
     classNames: ['tournament-grid-wrapper']
     childViews: ['contentView']
 
+    shouldShowContextMenuBinding: 'App.isEditingMode'
     contextMenuActions: ['showTeamList']
 
     init: ->
@@ -48,7 +49,6 @@ define [
       setupWidth: ->
         entrantsNumber = @get('entrantsNumber')
         roundsCount = Math.log(entrantsNumber) / Math.log(2)
-#        console.log roundsCount
         rCount = roundsCount * 2
         @$().width rCount * 181
 
@@ -60,7 +60,6 @@ define [
 
       createWinnerBracket: ->
         stage = @get('stage')
-#        console.log 'Winner', stage
         entrantsNumber = @get('entrantsNumber')
         roundsCount = Math.log(entrantsNumber) / Math.log(2)-1
         rounds = []
@@ -69,7 +68,6 @@ define [
           isWinnerBracket: yes
         for i in [roundsCount..0]
           matchesCount = Math.pow(2, i)-1
-#          console.debug "Round #{i}, #{matchesCount+1} matches."
           roundName = "1/#{matchesCount+1} #{'_of_the_final'.loc()}"
           switch i
             when 0
@@ -78,7 +76,7 @@ define [
               roundName = '_semifinal'.loc()
           roundIndex = roundsCount - i
           actualRound = stage?.getByPath "#{roundIndex}"
-          round = App.RoundProxy.create
+          round = App.RoundController.create
             content: actualRound
             index: roundIndex
             sort_index: roundIndex
@@ -93,7 +91,7 @@ define [
             if roundsCount-i-1 >= 0
               leftPath = "#{roundsCount-i-1}.#{j*2}"
               rightPath = "#{roundsCount-i-1}.#{j*2+1}"
-            match = App.MatchProxy.create
+            match = App.MatchController.create
               index: j
               itemIndex: j
               sort_index: j
@@ -118,7 +116,7 @@ define [
           isWinnerBracket: no
         for r in [roundsCount-1..0]
           for n in [1..0]
-            round = App.RoundProxy.create
+            round = App.RoundController.create
               index: roundsCount - rCount
               sort_index: roundsCount - rCount
               itemIndex: rCount--
@@ -130,15 +128,13 @@ define [
                 parentNodePath = "#{rCount}.#{m}"
               else
                 parentNodePath = null
-#              console.log parentNodePath
-              match = App.MatchProxy.create
+              match = App.MatchController.create
                 index: m
                 itemIndex: m
                 sort_index: m
                 parentNodePath: parentNodePath
                 entrants: [null, null]
                 round: round
-#              console.log match.clientId
               round.get('matches').push match
             rounds.push round
           matchesCount /= 2
@@ -158,22 +154,22 @@ define [
         classNames: ['finals']
         content: (->
           rounds = []
-          finalRound = App.RoundProxy.create
+          finalRound = App.RoundController.create
             name: '_final'.loc()
             itemIndex: -1
             parentReference: 'stage'
             matches: []
-          finalRound.get('matches').push App.MatchProxy.create
+          finalRound.get('matches').push App.MatchController.create
             itemIndex: -1
             entrants: [null, null]
             round: finalRound
           rounds.push finalRound
-          winnerRound = App.RoundProxy.create
+          winnerRound = App.RoundController.create
             name: '_winner'.loc()
             itemIndex: -1
             parentReference: 'stage'
             matches: []
-          winnerRound.get('matches').push App.MatchProxy.create
+          winnerRound.get('matches').push App.MatchController.create
             isWinner: yes
             isFinal: yes
             itemIndex: -1
@@ -202,7 +198,6 @@ define [
         entrantsNumberBinding: 'parentView.entrantsNumber'
 
         setupWidth: ->
-#          console.log 'rounds', Math.max.apply(null, @get('content').mapProperty 'rounds.length')
           @$().width Math.max.apply(null, @get('content').mapProperty 'rounds.length') * 181
 
         didInsertElement: ->

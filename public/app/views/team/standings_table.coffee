@@ -21,7 +21,6 @@ define [
     contextMenuActions: ['addEntrant']
 
     addEntrant: ->
-      console.info 'Should add entrant'
       @get('content.content').createRecord()
 
     showSorterOnColumn: (element)->

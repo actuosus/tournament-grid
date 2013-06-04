@@ -11,8 +11,8 @@ define ->
     classNames: ['country-flag-icon', 'team-country-flag-icon']
     classNameBindings: ['countryFlagClassName', 'hasFlag']
     attributeBindings: ['title']
-    title: (-> @get 'content.country.name').property('content.country')
-    hasFlag: (-> !!@get 'content.country.code').property('content.country')
+    title: (-> @get 'content.name').property('content')
+    hasFlag: (-> !!@get 'content.code').property('content')
     countryFlagClassName: (->
-      "country-flag-icon-#{@get 'content.country.code'}"
-    ).property('content.country.code')
+      "country-flag-icon-#{@get 'content.code'}"
+    ).property('content.code')

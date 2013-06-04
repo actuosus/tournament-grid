@@ -13,6 +13,10 @@
     background-position: center center;
 }
 
+.country-flag-icon:hover {
+    box-shadow: 0 0 5px rgba(0, 0, 0, .3);
+}
+
 .country-flag-icon-ax {
     background-image: url(../../vendor/images/famfamfam_flag_icons/png/ax.png);
 }

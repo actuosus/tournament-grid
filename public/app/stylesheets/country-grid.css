@@ -1,0 +1,14 @@
+/**
+ * country-grid
+ * @author: actuosus
+ * Date: 04/06/2013
+ * Time: 23:17
+ */
+
+.country-grid {
+    max-width: 300px;
+}
+
+.country-grid-item {
+    float: left;
+}

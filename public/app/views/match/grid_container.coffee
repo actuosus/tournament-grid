@@ -19,7 +19,6 @@ define [
     contextMenuActions: ['add:addMatch', 'removeAll', 'closeAll', 'openAll']
 
     visualSelectionChanged: (->
-#      console.log 'visualSelectionChanged'
       if @get('visualSelection.length') > 0
         @get('contextMenuActions').pushObject 'removeSelected'
       else

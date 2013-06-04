@@ -37,9 +37,7 @@ define [
       game.set 'title', @$('.title').val()
       game.set 'link', @$('.link').val()
       game.on 'didCreate', => @didCreate game
-      game.on 'becameError', =>
-        console.log arguments
-        game.destroy()
+      game.on 'becameError', => game.destroy()
       match.get('games').pushObject(game)
       transaction.commit()
 

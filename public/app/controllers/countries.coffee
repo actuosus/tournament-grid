@@ -28,7 +28,6 @@ define [
       @set 'content.isLoaded', yes
       @notifyPropertyChange('content.isLoaded')
     search: (options)->
-#        @set 'content', App.Country.find options
       return unless App.countries
       result = App.countries.filter (item, idx)->
         regexp = new RegExp(options.name, 'i')
@@ -44,7 +43,6 @@ define [
     menuItemViewClass: Em.View.extend
       classNames: ['menu-item', 'country-menu-item']
       classNameBindings: ['isSelected']
-#        isSelectedBinding: 'content.isSelected'
       template: Em.Handlebars.compile(
         '<i {{bindAttr class=":country-flag-icon view.content.flagClassName"}}></i>'+
         '{{highlight view.content.__name partBinding=parentView.highlight}}')

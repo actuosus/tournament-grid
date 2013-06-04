@@ -13,4 +13,4 @@ define ->
     dragOver: (event)->
       event.preventDefault()
       no
-    drop: -> console.log 'drop'
+#    drop: -> console.log 'drop'

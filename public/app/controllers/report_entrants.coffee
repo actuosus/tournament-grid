@@ -7,6 +7,7 @@
 
 define ->
   App.ReportEntrantsController = Em.ArrayController.extend
+    sortProperties: ['team.name']
     searchResults: []
 
     search: (options)->
@@ -20,7 +21,6 @@ define ->
       content = @get 'content'
       searchQuery = @get 'searchQuery'
       searchPath = @get 'searchPath'
-      #      console.log searchQuery
       if searchQuery
         reg = new RegExp searchQuery, 'gi'
         result = content.filter (item)->

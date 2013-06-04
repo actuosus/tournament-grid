@@ -14,10 +14,5 @@ define ->
       event.stopPropagation()
 
     dragStart: (event)->
-      console.log 'dragStart'
       dataTransfer = event.originalEvent.dataTransfer
       dataTransfer.setData 'Text', @get 'elementId'
-
-#    didInsertElement: ->
-#      @_super()
-#      @$().css '-webkit-user-drag', 'element'

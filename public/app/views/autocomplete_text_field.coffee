@@ -9,7 +9,7 @@
 define [
   'cs!./menu'
   'cs!./loader'
-], (Spinner)->
+], ->
   App.AutocompleteTextField = Em.ContainerView.extend
     classNames: ['autocomplete-text-field']
     childViews: 'textFieldView loaderView addButtomView statusIconView'.w()
@@ -61,12 +61,13 @@ define [
         controller.search name: value
 
     textFieldView: Em.TextField.extend
-      classNames: ['text-field']
+      classNames: 'text-field'
       attributeBindings: ['required', 'title']
       requiredBinding: 'parentView.required'
-      lastValue: null
       titleBinding: 'parentView.title'
       placeholderBinding: 'parentView.placeholder'
+
+      lastValue: null
 
       shouldSearch: yes
 
@@ -96,7 +97,6 @@ define [
         setTimeout (=> @set 'parentView.hasFocus', no), 150
 
       keyDown: (event)->
-#        console.log event.keyCode
         switch event.keyCode
           when 40 # down
             event.preventDefault()
@@ -132,22 +132,11 @@ define [
 
     showAll: ->
       @set 'hasFocus', yes
-#      @notifyPropertyChange 'hasFocus'
       @get('controller')?.all()
-#    showAll: -> @notifyPropertyChange 'content.isLoaded'
-
-#    contentIsUpdating: (->
-#      return unless @get 'hasFocus'
-#      if not @get('content.isUpdating') and @get('content.isLoaded')
-#        @loaderView.set 'isVisible', no
-#      else
-#        @loaderView.set 'isVisible', yes
-#    ).observes('content.isLoaded', 'content.isUpdating')
 
     contentLoaded: (->
       return unless @get 'hasFocus'
       content = @get 'filteredContent'
-      console.log 'content.isLoaded', @get 'content.isLoaded'
       if @get 'content.isLoaded'
         if not @get('menuView') or @get('menuView').isDestroyed
           menuView = App.MenuView.create
@@ -178,7 +167,7 @@ define [
           @addButtomView.set 'isVisible', no
     ).observes 'content.isLoaded', 'filteredContent'
 
-    loaderView: App.LoaderView.extend()
+    loaderView: App.LoaderView
 
     addButtomView: Em.View.extend
       tagName: 'button'
@@ -200,7 +189,7 @@ define [
           popup.hide(entrant)
       popup.set 'formView', form
       popup.set 'contentView', form
-      popup.get('childViews').pushObject form
+      popup.pushObject form
       popup.append()
       popup
 
@@ -214,5 +203,3 @@ define [
       tagName: 'i'
       classNames: ['icon-status', 'non-selectable']
       isVisible: no
-
-    content: null

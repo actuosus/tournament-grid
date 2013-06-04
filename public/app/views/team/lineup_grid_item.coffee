@@ -12,9 +12,8 @@ define [
   'cs!../player/lineup_grid_item'
   'cs!../remove_button'
   'cs!./ask_move_form'
-#  'cs!./how_is_the_captain_form'
 ], ->
-  App.TeamLineupGridItem = Em.ContainerView.extend App.Editing, App.Droppable,
+  App.TeamLineupGridItem = Em.ContainerView.extend App.Editing, App.Droppable, App.Collapsable,
     classNames: ['lineup-grid-item', 'team-lineup-grid-item']
     classNameBindings: ['content.isDirty']
     childViews: ['teamNameView', 'playersView']
@@ -34,21 +33,23 @@ define [
 
       @_super event
 
+    willInsertElement: ->
+      $(@get 'element').css scale: 0
+
     didInsertElement: ->
-      @$().css scale: 0
       @$().transition scale: 1
 
     teamNameView: Em.ContainerView.extend(App.MovingHightlight, App.Editing, App.Draggable,
       contentBinding: 'parentView.content.team'
       classNames: ['lineup-grid-item-name-container']
-      childViews: ['countryFlagView', 'nameView']#'editButtonView',
+      childViews: ['countryFlagView', 'nameView']
 
       _isEditingBinding: 'parentView._isEditing'
 
       editingChildViews: ['removeButtonView']
 
       countryFlagView: App.CountryFlagView.extend
-        contentBinding: 'parentView.content'
+        contentBinding: 'parentView.content.country'
 
       nameView: Em.View.extend
         contentBinding: 'parentView.content'
@@ -121,8 +122,6 @@ define [
         placeholder: '_player_nickname'.loc()
 
         filteredContent: (->
-          console.log 'filteredContent App.playersController'
-          window.fuck = @
           content = @get 'content'
           entrants = @get 'teamRef.players'
           content?.filter (item)-> not entrants.contains item
@@ -137,7 +136,6 @@ define [
 
           # Moving existing player
           if reportPlayers.contains player
-            console.log '_move_player_to_from'.loc player.get('nickname'), player.get('_teamRef.team.name'), teamRef.get('team.name')
             modalView = App.ModalView.create
               classNames: ['team']
               target: @get 'parentView.parentView'
@@ -185,11 +183,6 @@ define [
                 @focus()
           else
             @addPlayer player
-
-#        selectionChanged: (->
-#          player = @get 'selection'
-#          @addPlayer player if player
-#        ).observes('selection')
 
         valueChanged: (->
           player = @get 'value'

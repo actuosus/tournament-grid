@@ -19,23 +19,22 @@ require({
       'http://yandex.st/jquery/mousewheel/3.0.6/jquery.mousewheel.min',
       '/vendor/scripts/jquery.mousewheel'
     ],
-    'jquery.isotope': '/vendor/scripts/jquery.isotope',
     'jquery.cookie': [
       'http://yandex.st/jquery/cookie/1.0/jquery.cookie.min',
       '/vendor/scripts/jquery.cookie'
     ],
     'jquery.scrollTo': '/vendor/scripts/jquery.scrollTo.min',
     'moment': '/vendor/scripts/moment',
-    'Faker': '/vendor/scripts/Faker',
-    'raphael': [
-      'http://yandex.st/raphael/2.1.0/raphael.min',
-      '/vendor/scripts/raphael'
-    ],
+//    'Faker': '/vendor/scripts/Faker',
+//    'raphael': [
+//      'http://yandex.st/raphael/2.1.0/raphael.min',
+//      '/vendor/scripts/raphael'
+//    ],
     'spin': '/vendor/scripts/spin',
     'cs': '/vendor/scripts/cs',
     'text': '/vendor/scripts/text',
     'coffee-script': '/vendor/scripts/coffee-script',
-    'iced-coffee-script': '/vendor/scripts/coffee-script-iced-large',
+//    'iced-coffee-script': '/vendor/scripts/coffee-script-iced-large',
     'transit': '/vendor/scripts/jquery.transit.min',
     'handlebars': '/vendor/scripts/handlebars-1.0.0-rc.3',
     'ember': [
@@ -44,10 +43,9 @@ require({
     ],
     'ember-data': '/vendor/scripts/ember-data',
     'ember-history': '/vendor/scripts/ember-history',
-    'ember-table': '/vendor/scripts/ember-table',
+//    'ember-table': '/vendor/scripts/ember-table',
     'modernizr.columns': '/vendor/scripts/modernizr/columns',
-    'bootstrap.tooltip': '/vendor/scripts/bootstrap/bootstrap-tooltip',
-    'three': '/vendor/scripts/three',
+//    'three': '/vendor/scripts/three',
     'screenfull': '/vendor/scripts/screenfull.min',
     'jquery-ui': [
       'http://yandex.st/jquery-ui/1.10.3/jquery-ui.min',
@@ -140,13 +138,6 @@ require({
 
     'transit': {
       deps: ['jquery']
-    },
-
-    'bootstrap.tooltip': {
-      deps: ['jquery']
-    },
-    'ember-table': {
-      deps: ['ember', 'jquery-ui']
     }
   }
 });
@@ -185,7 +176,7 @@ require([
   'moment',
   'spin',
   'ember-data',
-  'ember-history',
+//  'ember-history',
   'modernizr.columns',
   'cs!./core'
 ], function(){

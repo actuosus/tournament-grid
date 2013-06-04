@@ -30,14 +30,11 @@ define ['cs!../core'],->
     # Just for creation marking
     report: DS.belongsTo 'App.Report'
 
-    countryFlagClassName: (->
-      'country-flag-icon-%@'.fmt @get 'country.code'
-    ).property('country')
-
     shortName: (->
       [@get('firstName'), @get('lastName')].compact().join(' ')
     ).property('firstName', 'lastName')
 
+    # TODO Do we actualy need full name. Observers!
     fullName: (->
       [@get('firstName'), @get('middleName'), @get('lastName')].compact().join(' ')
     ).property('firstName', 'middleName', 'lastName')

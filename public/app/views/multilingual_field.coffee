@@ -30,7 +30,6 @@ define ['cs!../mixins/translatable', 'cs!./language_menu'], ->
 
     selectedLanguageChanged: (->
       selectedLanguage = @get 'selectedLanguage'
-      console.log 'selectedLanguageChanged', selectedLanguage
       values = @get 'values'
       value = values.get selectedLanguage
 #      @set 'value', value
@@ -59,7 +58,6 @@ define ['cs!../mixins/translatable', 'cs!./language_menu'], ->
     ).observes('value')
 
     translationsChanged: (->
-      console.log @, 'translationsChanged', @get 'translations'
       translations = @get 'translations'
       values = @get 'values'
       translations.forEach (translation)->

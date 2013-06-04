@@ -24,14 +24,14 @@ define ->
             title: "_#{title.decamelize()}".loc()
         @set 'contextMenuItems', contextMenuItems
 
-    init: ->
-      classNames = @get 'classNames'
-      if classNames
-        classNames.push 'context-menu'
-      @_super()
+#    TODO Should mark context menu enabled items appropriately.
+#    init: ->
+#      classNames = @get 'classNames'
+#      if classNames
+#        classNames.push 'context-menu'
+#      @_super()
 
     contextMenu: (event)->
-      console.log 'ContextMenuSupport', event
       return unless @get 'shouldShowContextMenu'
       event.preventDefault()
       event.stopPropagation()

@@ -32,15 +32,15 @@ define ['cs!../core'],->
       ).property('content.target')
       actionBinding: 'content.action'
       click: ->
-        console.log 'Menu click'
         @triggerAction()
         @get('parentView').hide()
     })
 
-    didInsertElement: ->
+    willInsertElement: ->
       @_super()
+      element = @get 'element'
       sender = @get 'sender'
-      target = @get('target')
+      target = @get 'target'
       unless @get 'sender'
         offset = target.$().offset() if target
       else
@@ -49,8 +49,12 @@ define ['cs!../core'],->
 
       target.set 'isFocused', yes if target
 
-      @$().css(offset)
+      $(element).css({transformOrigin: "#{target.$().width()/2} 0"})
+      $(element).css offset
       $(document.body).bind('mousedown.menu', @onDocumentMouseDown.bind(@))
+
+    didInsertElement: ->
+      @_super()
       @show()
 
     mouseDown: (event)->

@@ -9,19 +9,16 @@ define ['cs!../core'],->
   App.TeamRef = DS.Model.extend
     primaryKey: '_id'
 
+    # Relations
     team: DS.belongsTo 'App.Team'
     report: DS.belongsTo('App.Report', {inverse: 'teamRefs'})
     round: DS.belongsTo('App.Round', {inverse: 'teamRefs'})
     match: DS.belongsTo('App.Match', {inverse: 'teamRefs'})
+    captain: DS.belongsTo 'App.Player'
 
     players: DS.hasMany('App.Player', {inverse: 'teamRef'})
 
-    hasCaptain: (->
-#      console.log 'Finding the captain', @get('players').findProperty 'isCaptain', yes
-#      !!@get('players').findProperty 'isCaptain', yes
-      @get 'captain'
-    ).property('players.@each.isCaptain')
 
-    captain: DS.belongsTo 'App.Player'
+    hasCaptain: (-> @get 'captain' ).property('players.@each.isCaptain')
 
   App.TeamRef.toString = -> 'TeamRef'

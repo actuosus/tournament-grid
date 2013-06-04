@@ -6,10 +6,6 @@
  * Time: 07:29
 ###
 
-# Левон
-#терешковой 15
-#926 283 60 82
-
 define ['cs!../core'],->
   App.Match = DS.Model.extend
     primaryKey: '_id'
@@ -38,7 +34,6 @@ define ['cs!../core'],->
     games: DS.hasMany('App.Game', {inverse: 'match'})
 
     hasPoints: (->
-      console.log 'hasPoints', @get('entrant1_points'), @get('entrant2_points')
       not Em.isEmpty(@get('entrant1_points')) and not Em.isEmpty(@get('entrant2_points'))
     ).property('entrant1_points', 'entrant2_points')
 
@@ -60,7 +55,6 @@ define ['cs!../core'],->
       entrant2_points = @get 'entrant2_points'
       reopenInterval = 1000 * 60 * 60 * 12
       currentDate = new Date
-      console.log 'currentStatus', date < currentDate
       if date < currentDate
         currentStatus = 'past'
       if date < currentDate and (entrant1_points and entrant2_points) and status isnt 'closed'
@@ -81,12 +75,10 @@ define ['cs!../core'],->
     ).property('currentStatus', 'date').volatile()
 
     open: ->
-      console.log 'Opening match'
       @set 'status', 'opened'
       @store.commit()
 
     close: ->
-      console.log 'Closing match'
       @set 'status', 'closed'
       @store.commit()
 
@@ -131,7 +123,6 @@ define ['cs!../core'],->
     ).observes 'entrant2'
 
     winnerChanged: (->
-#      console.debug 'winnerChanged'
       nextMatch = @get 'parentNode'
       winner = @get 'winner'
       matchIndex = @get 'itemIndex'
@@ -174,6 +165,7 @@ define ['cs!../core'],->
       return winner
     ).property 'entrants', 'entrant1_points', 'entrant2_points'
 
+    # TODO Kind of hacky, should refine.
     firstIsAWinner: (-> Em.isEqual(@get('entrant1'), @get('winner'))).property('winner')
     firstIsALoser: (-> Em.isEqual(@get('entrant1'), @get('loser'))).property('loser')
 
@@ -194,10 +186,8 @@ define ['cs!../core'],->
         if parent
           round = @get 'round'
           roundIndex = parent.get('rounds').indexOf(round)
-          roundsCount = parent.get('rounds.length')-1
           matchIndex = round.get('matches').indexOf(@)
           parentNodePath = "#{roundIndex+1}.#{Math.floor(matchIndex/2)}"
-          console.log 'parentNodePath', parentNodePath
           @set 'parentNodePath', parentNodePath
           return parent.getByPath(parentNodePath)
     ).property('parentNodePath').volatile()

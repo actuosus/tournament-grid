@@ -20,4 +20,4 @@ define [
   'cs!./controllers'
   'cs!./row_selection_mixin'
   'cs!./views'
-], -> console.log 'Table view loaded.'
+]

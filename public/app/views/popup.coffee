@@ -41,12 +41,9 @@ define ['cs!../core'],->
     didInsertElement: ->
       @_super()
       target = @get('target')
-#      targetElement = target.get('element')
       element = @get('element')
       origin = @get('origin')
       dimensions = width: element.offsetWidth, height: element.offsetHeight
-#      targetDimensions = width: targetElement.offsetWidth, height: targetElement.offsetHeight
-#      console.log dimensions
       if target
         offset = target.$().offset()
         targetWidth = target.$().width()
@@ -81,9 +78,10 @@ define ['cs!../core'],->
         @show()
       else
         # Without target it's floatable
-        @$().css 'position', 'fixed'
-        @$().css 'right', 100
-        @$().css 'top', '50%'
+        @$().css
+          position: 'fixed'
+          right: 100
+          top: '50%'
         @show()
 
     mouseDown: (event)->

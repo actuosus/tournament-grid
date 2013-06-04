@@ -37,15 +37,11 @@ define ['three', 'cs!../../core'], ->
 
         @scene.add object
 
-    roundsLoaded: ->
-      console.log 'roundsLoaded'
-      @createObjects()
+    roundsLoaded: -> @createObjects()
 
     stagesLoaded: ->
-      console.log 'stagesLoaded'
       stages = @get 'report.stages'
       stage = stages.objectAt(2)
-#      console.log stage
       if stage
         if stage.get('rounds.isLoaded')
           @roundsLoaded

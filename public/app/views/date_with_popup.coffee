@@ -47,7 +47,6 @@ define ->
             timeFormat: 'HH:mm:ss'
             showAnim: 'show'
             showButtonPanel: no
-            beforeShow: (input, inst)-> console.log inst
             onClose: -> dateView.popup.hide()
             onSelect: -> dateView.set 'content', $el.datetimepicker 'getDate'
           @$().datetimepicker 'setDate', date if date

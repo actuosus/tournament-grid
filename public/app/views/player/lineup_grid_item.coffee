@@ -26,17 +26,12 @@ define [
 
     teamRefBinding: 'parentView.teamRef'
 
-    countryFlagView: Em.View.extend
-      tagName: 'i'
-      classNames: ['country-flag-icon', 'team-country-flag-icon']
-      classNameBindings: ['countryFlagClassName', 'hasFlag']
-      attributeBindings: ['title']
-      contentBinding: 'parentView.content'
-      titleBinding: 'content.country.name'
-      hasFlag: (-> !!@get 'content.country.code').property('content.country')
-      countryFlagClassName: (->
-        'country-flag-icon-%@'.fmt @get 'content.country.code'
-      ).property('content.country.code')
+    countryFlagView: App.CountryFlagView.extend
+      contentBinding: 'parentView.content.country'
+      click: ->
+        @popup = App.PopupView.create target: @
+        @popup.pushObject App.CountryGridView.create content: App.Country.all()
+        @popup.append()
 
     raceFlagView: Em.View.extend
       tagName: 'i'

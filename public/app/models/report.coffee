@@ -10,21 +10,22 @@ define ['cs!../core'],->
   App.Report = DS.Model.extend
     primaryKey: '_id'
     title: DS.attr 'string'
+
     # TODO Make localization
 #    _title: DS.attr 'object'
+
     description: DS.attr 'string'
     start_date: DS.attr 'date'
     end_date: DS.attr 'date'
     date: DS.attr 'date'
     place: DS.attr 'string'
+
 #   TODO Make localization
 #    _place: DS.attr 'object'
 
     match_type: DS.attr 'string'
 
     stages: DS.hasMany 'App.Stage'
-
-#    teams: DS.hasMany 'App.Team'
 
     teamRefs: DS.hasMany 'App.TeamRef'
 
@@ -48,22 +49,10 @@ define ['cs!../core'],->
         description: 'Testing grid layout'
         visual_type: 'grid'
 
-      #      brackets = stage.get 'brackets'
-      #
-      #      winnerBracket = brackets.createRecord
-      #        name: '_winners'.loc()
-      #
-      #      loserBracket = brackets.createRecord
-      #        name: '_losers'.loc()
-      #
-      #      loserBracket.get('rounds').createRecord
-      #        name: 'Wow'
-
       roundsCount = roundsCount or (Math.ceil(Math.random()*5))
       rounds = stage.get 'rounds'
       for i in [roundsCount..0]
         matchesCount = Math.pow(2, i)-1
-        console.debug "Round #{i}, #{matchesCount+1} matches."
         roundName = "1/#{matchesCount+1} #{'_of_the_final'.loc()}"
         switch i
           when 0
@@ -86,17 +75,6 @@ define ['cs!../core'],->
             leftPath: leftPath
             rightPath: rightPath
             parentNodePath: "#{roundsCount-i+1}.#{Math.floor(j/2)}"
-        #            team1: App.Team.createRecord(identifier: 'team1')
-        #            team2: App.Team.createRecord(identifier: 'team2')
-#        if i is 0
-#          console.log 'Zero!'
-#          round = rounds.createRecord
-#            itemIndex: -1
-#            parentReference: 'stage'
-#          round.get('matches').createRecord
-#            isWinner: yes
-#            isFinal: yes
-#            itemIndex: -1
       stage
 
     createStageByEntrants: (entrantsNumber)->

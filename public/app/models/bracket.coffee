@@ -9,6 +9,13 @@
 define ['cs!../core'],->
   App.Bracket = DS.Model.extend
     primaryKey: '_id'
+    name: DS.attr 'string'
+
+    # Relations
+    stage: DS.belongsTo 'App.Stage'
+    rounds: DS.hasMany 'App.Round'
+
+
     parent: (-> @get 'stage').property('stage')
     children: (-> @get 'rounds').property('rounds')
 
@@ -21,9 +28,5 @@ define ['cs!../core'],->
         for idx in [1...splittedPath.length]
           lastChild = @getDescendant lastChild, splittedPath[idx]
         lastChild
-
-    name: DS.attr 'string'
-    stage: DS.belongsTo 'App.Stage'
-    rounds: DS.hasMany 'App.Round'
 
   App.Bracket.toString = -> 'Bracket'

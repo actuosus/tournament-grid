@@ -69,10 +69,8 @@ define [
           template: Em.Handlebars.compile '+'
 
           click: ->
-            console.debug 'Should add entrant.'
             round = @get 'content'
             resultSets = @get 'content.resultSets'
-            console.log resultSets
             if resultSets?.createRecord
               resultSets.createRecord(round: round)
 

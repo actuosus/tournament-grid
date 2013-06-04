@@ -28,20 +28,14 @@ define [
     shouldShowRaceSelector: no
 
     canBeCaptain: (->
-      console.log 'hasCaptain',@get('entrant.hasCaptain')
       !@get('entrant.hasCaptain')
     ).property('entrant.hasCaptain')
-
-    isCaptainChanged: (->
-      console.log 'isCaptain', @get 'isCaptain'
-    ).observes('isCaptain')
 
     didCreate: Em.K
 
     willInsertElement: ->
       # Derived from team
       team = @get('entrant.team') or @get('entrant')
-      console.log 'country', team?.get('country')
       @set 'country', team?.get('country')
 
     focus: ->
@@ -75,7 +69,6 @@ define [
       player.on 'didCreate', => @didCreate player
       player.on 'becameError', =>
         @$('.save-btn').removeAttattr('disabled')
-        console.log arguments
         player.destroy()
       transaction.commit()
 

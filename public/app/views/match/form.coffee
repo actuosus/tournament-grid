@@ -21,9 +21,6 @@ define [
     didCreate: Em.K
     didUpdate: Em.K
 
-    willInsertElement: ->
-      console.log @get 'element'
-
     createRecord: ->
       console.debug 'Should implement match creation.'
 

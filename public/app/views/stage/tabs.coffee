@@ -7,7 +7,6 @@
 
 define [
   'cs!../../core'
-  'cs!../tournament_grid'
   'cs!../group_grid'
   'cs!../grid'
   'cs!../standing_table'
@@ -47,7 +46,6 @@ define [
             stage: @currentStage
             content: matchesController
         when 'team'
-          console.log @currentStage.get('entrants')
           teamsController = App.ReportEntrantsController.create
             searchPath: 'name'
             stage: @currentStage
