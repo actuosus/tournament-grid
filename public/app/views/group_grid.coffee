@@ -19,10 +19,9 @@ define [
     classNames: ['lineup-grid', 'group-lineup-grid']
 
     shouldShowContextMenuBinding: 'App.isEditingMode'
-    contextMenuActions: ['add']
+    contextMenuActions: ['add:addMatch']
 
-    add: ->
-      @get('content').createRecord()
+    add: -> @get('content').createRecord()
 
     itemViewClass: Em.ContainerView.extend(App.ContextMenuSupport, {
       classNames: ['lineup-grid-item']

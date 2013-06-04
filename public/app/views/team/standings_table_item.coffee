@@ -34,5 +34,6 @@ define [
     mouseLeave: -> @matchesPopup?.hide()
 
     click: (event)->
-      unless $(event.target).hasClass 'editable-label'
-        @toggleProperty 'content.isSelected'
+      if App.get('idEditingMode')
+        unless $(event.target).hasClass 'editable-label'
+          @toggleProperty 'content.isSelected'
