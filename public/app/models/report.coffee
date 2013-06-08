@@ -25,9 +25,9 @@ define ['cs!../core'],->
 
     match_type: DS.attr 'string'
 
-    stages: DS.hasMany 'App.Stage'
+    stages: DS.hasMany('App.Stage', {inverse: 'report'})
 
-    teamRefs: DS.hasMany 'App.TeamRef'
+    teamRefs: DS.hasMany('App.TeamRef', {inverse: 'report'})
 
     players: (->
       teamRefs = @get 'teamRefs'
@@ -42,40 +42,6 @@ define ['cs!../core'],->
     ).property().volatile()
 
     races: DS.hasMany 'App.Race'
-
-    createStage: (roundsCount)->
-      stage = App.Stage.createRecord
-        name: 'Test Stage'
-        description: 'Testing grid layout'
-        visual_type: 'grid'
-
-      roundsCount = roundsCount or (Math.ceil(Math.random()*5))
-      rounds = stage.get 'rounds'
-      for i in [roundsCount..0]
-        matchesCount = Math.pow(2, i)-1
-        roundName = "1/#{matchesCount+1} #{'_of_the_final'.loc()}"
-        switch i
-          when 0
-            roundName = '_final'.loc()
-          when 1
-            roundName = '_semifinal'.loc()
-        round = rounds.createRecord
-          itemIndex: i
-          name: roundName
-          parentReference: 'stage'
-        matches = round.get 'matches'
-        for j in [0..matchesCount]
-          leftPath = rightPath = undefined
-          if roundsCount-i-1 >= 0
-            leftPath = "#{roundsCount-i-1}.#{j*2}"
-            rightPath = "#{roundsCount-i-1}.#{j*2+1}"
-          matches.createRecord
-            itemIndex: j
-            date: new Date()
-            leftPath: leftPath
-            rightPath: rightPath
-            parentNodePath: "#{roundsCount-i+1}.#{Math.floor(j/2)}"
-      stage
 
     createStageByEntrants: (entrantsNumber)->
       @createStage Math.log(entrantsNumber) / Math.log(2)-1

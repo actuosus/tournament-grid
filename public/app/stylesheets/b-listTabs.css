@@ -10,6 +10,10 @@
     background-image: -webkit-linear-gradient(top, #cacacb 0%, #dbdbdb 100%);
 }
 
+.b-listsTabs:hover {
+    background-color: #DADADA;
+}
+
 .b-listsTabs .item {
     /*border-top: 1px solid #dadada;*/
     /*border-left: 1px solid #eaeaea;*/

@@ -9,44 +9,44 @@ define [
   'cs!../core'
   'cs!../models/team'
   'cs!../views/team/form'
+  'cs!../views/entrant/menu_item'
 ], ->
   App.TeamsController = Em.ArrayController.extend
     formView: App.TeamForm
     searchResults: []
     labelValue: 'name'
 
+    lastQuery: null
+
+    sort: (result, options)->
+      lowerCased = options.name.toLowerCase()
+      result.sort (a,b)->
+        lowerA = a.get('name').toLowerCase()
+        lowerB = b.get('name').toLowerCase()
+        if lowerA.indexOf(lowerCased) < lowerB.indexOf(lowerCased)
+          return -1
+        if lowerA.indexOf(lowerCased) > lowerB.indexOf(lowerCased)
+          return 1
+        if lowerA.indexOf(lowerCased) is lowerB.indexOf(lowerCased)
+          return 0
+
+    fetchAutocompleteResults: (value, target)->
+      @set 'lastQuery', {name: value}
+      @set 'content', App.Team.find {name: value}
+      @set 'autocompleteTarget', target
+      @get('content').addObserver 'isLoaded', @, 'contentLoaded'
+
+    cancelFetchingOfAutocompleteResults: ->
+      content = @get 'content'
+      content.req?.abort()
+      content.removeObserver 'isLoaded', @, 'contentLoaded'
+
+    contentLoaded: ->
+      @get('content').removeObserver 'isLoaded', @, 'contentLoaded'
+      @get('autocompleteTarget').didFetchAutocompleteResults @sort @get('content').toArray(), @get 'lastQuery'
+
     search: (options)->
       @set 'isLoaded', no
       @set 'content', App.Team.find options
 
-    menuItemViewClass: Em.ContainerView.extend
-      classNames: ['menu-item']
-      classNameBindings: ['isSelected']
-      attributeBindings: ['title']
-      titleBinding: 'content._id'
-      childViews: ['countryFlagView', 'nameView']
-
-      countryFlagView: Em.View.extend
-        tagName: 'i'
-        classNames: ['country-flag-icon', 'team-country-flag-icon']
-        classNameBindings: ['countryFlagClassName', 'hasFlag']
-        attributeBindings: ['title']
-        contentBinding: 'parentView.content'
-        title: (-> @get 'content.country.name').property('content.country')
-        hasFlag: (-> !!@get 'content.country.code').property('content.country')
-        countryFlagClassName: (->
-          'country-flag-icon-%@'.fmt @get 'content.country.code'
-        ).property('content.country.code')
-
-      nameView: Em.View.extend
-        contentBinding: 'parentView.content'
-        classNames: ['lineup-grid-item-name']
-        template: Em.Handlebars.compile '{{view.content.name}}'
-
-      click: (event)->
-        event.preventDefault()
-        event.stopPropagation()
-        @get('parentView').click(event)
-        @set 'parentView.selection', @get 'content'
-        @set 'parentView.value', @get 'content'
-        @set 'parentView.isVisible', no
+    menuItemViewClass: App.EntrantMenuItem

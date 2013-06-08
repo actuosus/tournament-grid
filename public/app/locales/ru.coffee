@@ -99,3 +99,4 @@ define
   _map_type: 'Тип карты'
   _past_matches: 'Прошедшие матчи'
   _future_matches: 'Будущие матчи'
+  _waiting_to_be_filled: 'Ожидает заполнения'

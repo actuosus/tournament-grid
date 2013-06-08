@@ -6,13 +6,13 @@
 ###
 
 define [
-  'text!../../templates/match/table_item.handlebars'
+  'text!../../templates/match/table_item.hbs'
 ], (template)->
   Em.TEMPLATES.matchesTableItem = Em.Handlebars.compile template
 
   App.MatchTableItemView = Em.View.extend(App.MatchDelegate, {
     tagName: 'tr'
-    classNames: ['matches-table-item']
+    classNames: ['table-row','matches-table-item']
     classNameBindings: ['content.isDirty', 'content.isSaving', 'content.invalid']
     attributeBindings: ['title']
     templateName: 'matchesTableItem'

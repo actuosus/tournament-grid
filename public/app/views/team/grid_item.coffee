@@ -40,7 +40,15 @@ define [
     countryFlagView: App.CountryFlagView.extend
       contentBinding: 'parentView.content.country'
 
-    autocompleteView: App.AutocompleteTextField.extend
+    autocompleteView: App.TextField.extend
+      isVisible: no
+      isAutocomplete: yes
+
+      autocompleteDelegate: (->
+        App.TeamsController.create()
+      ).property()
+
+    _autocompleteView: App.AutocompleteTextField.extend
       isVisible: no
 
       controllerBinding: 'App.reportTeamsController'
@@ -100,7 +108,7 @@ define [
         if @get('parentView.isEditable')
           unless @get('parentView.match.isLocked')
             @set('parentView.autocompleteView.isVisible', yes)
-            @get('parentView.autocompleteView').focus()
+            @get('parentView.autocompleteView').trigger('focus')
 
     points: (->
       contentIndex = @get('contentIndex')

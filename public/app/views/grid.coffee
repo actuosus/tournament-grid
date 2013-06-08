@@ -13,6 +13,8 @@ define ['cs!../core'],->
 
     reorderDelegate: null
 
+    emptyView: App.EmptyView
+
     didReorderContent: (content)->
       delegate = @get 'reorderDelegate'
       if delegate

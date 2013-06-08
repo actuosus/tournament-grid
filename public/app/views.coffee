@@ -9,7 +9,9 @@
 define [
   'cs!./core'
 
+  'cs!./views/text_field'
   'cs!./views/select'
+  'cs!./views/empty'
   'cs!./views/grid'
   'cs!./views/group_grid'
   'cs!./views/tournament/grid'
@@ -29,13 +31,17 @@ define [
   'cs!./views/named_container'
   'cs!./views/editable_label'
   'cs!./views/date_with_popup'
+  'cs!./views/date_field'
   'cs!./views/lineup'
   'cs!./views/lineup_container'
   'cs!./views/team/standings_table'
-  'cs!./views/stage/tabs'
+  'cs!./views/stage/container'
   'cs!./views/player/form'
   'cs!./views/stage/form'
   'cs!./views/standing_table'
+  'cs!./views/entrant/menu_item'
+
+  'cs!./views/application'
 
 
   'cs!./views/server_debug'

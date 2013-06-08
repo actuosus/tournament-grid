@@ -12,7 +12,13 @@
     margin: 10px;
 
     -webkit-transition-duration: 0.3s;
-    -webkit-transition-property: box-shadow;
+    -webkit-transition-property: box-shadow, background-color;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.lineup-grid-item:hover {
+    background-color: rgba(0,0,0,0.05);
 }
 
 .csscolumns .lineup-grid {
@@ -37,10 +43,6 @@
     column-break-inside: avoid;
 }
 
-/*.lineup-grid-item:hover {*/
-    /*box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);*/
-/*}*/
-
 .lineup-grid-item.is-dirty {
     background-color: rgba(255,255,0,0.2);
 }
@@ -49,6 +51,11 @@
     right: 6px;
     top: 50%;
     margin-top: -6px;
+}
+
+.lineup-grid-item .public-menu-btn {
+    right: 13px;
+    top: -3px;
 }
 
 .lineup-grid-item .edit-btn {
@@ -127,6 +134,7 @@
 .lineup-grid-item-players {
     max-height: 125px;
     /*overflow: scroll;*/
+    background-color: white;
 }
 
 .lineup-grid-item-players .lineup-grid-item-name {
@@ -151,8 +159,9 @@
 }
 
 .lineup-grid-item-player-row:hover {
-    background-color: #f2f2f2;
-    /*box-shadow: inset 0 0 7px rgba(0,0,0,0.75);*/
+    background-color: #f2f2f2;;
+    box-shadow: 0 0 2px rgba(0,0,0,0.5);
+    z-index: 3;
 }
 
 .lineup-grid-item-player-row.is-dirty {
@@ -205,10 +214,13 @@
     vertical-align: 2px;
     margin-left: -3px;
     cursor: default;
+    -webkit-transition-duration: 0.3s;
+    -webkit-transition-property: box-shadow, text-shadow;
 }
 
 .lineup-grid-item-captain-marker:hover {
     box-shadow: 0 0 3px rgba(0,0,0,0.5);
+    text-shadow: 0 0 1px rgba(0,0,0,0.5);
 }
 
 .csscolumns .group-lineup-grid {

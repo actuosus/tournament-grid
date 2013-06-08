@@ -7,4 +7,4 @@
 
 define ->
   App.StagesController = Em.ArrayController.extend
-    conten: null
+    content: null

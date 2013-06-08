@@ -1,10 +1,440 @@
-/**
- * main
- * @author: actuosus
- * Date: 23/03/2013
- * Time: 03:01
- */
+/*@import "common.css";*/
+@import "b-listTabs.css";
+@import "b-aside.css";
 
-@import "../app/stylesheets/block_container.css";
-@import "../app/stylesheets/named_container.css";
-@import "../app/stylesheets/extras.css";
+@import "global.css";
+@import "extras.css";
+@import "select.css";
+@import "input.css";
+@import "tooltip.css";
+@import "table.css";
+@import "popup.css";
+@import "modal.css";
+@import "checkbox.css";
+@import "control.css";
+@import "button.css";
+@import "menu.css";
+@import "combobox.css";
+/*@import "tree.css";*/
+/*@import "../../vendor/styles/bootstrap-tooltip.css";*/
+@import "../../vendor/styles/jquery-ui.css";
+@import "../../vendor/styles/jquery-ui-timepicker-addon.css";
+/*@import "ember-table.css";*/
+@import "block_container.css";
+@import "named_container.css";
+/*@import "test-grid.css";*/
+@import "games_info_bar.css";
+/*@import "nav_tabs.css";*/
+/*@import "nav_list.css";*/
+/*@import "navbar.css";*/
+@import "autocomplete_text_field.css";
+@import "team_grid_item.css";
+@import "country_flag_icon.css";
+@import "country-grid.css";
+@import "tournament-grid.css";
+@import "team-lineup-grid.css";
+@import "lineup_grid_item.css";
+@import "match-item.css";
+@import "match_grid.css";
+@import "match-table.css";
+@import "matches-table-popup.css";
+@import "team_standings_table_item.css";
+@import "team_info_item.css";
+@import "multilingual-field.css";
+@import "match-filter-form.css";
+@import "editable-label.css";
+
+@import "ui-datepicker.css";
+@import "ui-widget.css";
+
+@import "toolbar.css";
+
+
+.b-content :first-child[class="block-container"] {
+    margin-top: 0;
+}
+
+.round-grid-item {
+    position: relative;
+    width: 178px;
+    float: left;
+}
+
+.round-name {
+    color: #828282;
+    text-align: center;
+    font-size: 13px;
+}
+
+.matches-table-container {
+    border: 1px solid #bebebe;
+    background-color: #efefef;
+}
+
+.matches-table-container .toggle-btn {
+    top: 40px;
+    right: 10px;
+}
+
+.matches-table-container .save-btn {
+    position: absolute;
+    top: 3px;
+    right: 50px;
+}
+
+.matches-table-container-inner {
+    position: relative;
+    overflow: hidden;
+}
+
+.matches-table-container-header {
+    position: relative;
+    border-top: 1px solid #bebebe;
+}
+
+.matches-table-container-header .add-btn {
+    right: 30px;
+}
+
+.matches-table-container-header .toggle-btn {
+    top: 7px;
+}
+
+.for-team .matches-table-container-header.is-target-expanded .toggle-btn {
+    top: 31px;
+}
+
+.matches-table-container-header .toggle-btn-collapsed {
+    background-position-y: 2px;
+}
+
+.for-team .matches-table-container-header.is-target-expanded {
+    height: 75px;
+}
+
+.matches-table-title {
+    padding: 5px 8px;
+}
+
+.for-team .matches-table-container-header.is-target-expanded .matches-table-title {
+    padding: 29px 8px;
+}
+
+.matches-table-date {
+    font-size: 10px;
+    color: #838383;
+}
+
+.matches-table-points {
+    color: #7a7a7a;
+    width: 4px;
+    padding: 4px 2px !important;
+
+    text-align: center;
+    white-space: nowrap;
+}
+
+.matches-table-points .points-label {
+    font-weight: bold;
+    display: inline-block;
+}
+
+.matches-table-points.winner .points-label {
+    color: #2c9338;
+}
+
+.matches-table-points.loser .points-label {
+    color: #9f252d;
+}
+
+.matches-table-map-type {
+    color: #838383;
+    font-size: 10px;
+}
+
+.matches-table-map-type-marker {
+    font-size: 13px;
+    margin-right: 2px;
+}
+
+.team-info-tooltip-items {
+    font-size: 11px;
+}
+
+.lineup-grid-item .team-standings-table th {
+    line-height: 18px;
+    background-color: white;
+    border-bottom: 1px solid #bebebe;
+}
+
+.lineup-grid-item .team-standings-table th:hover {
+    background-color: #efefef;
+}
+
+.lineup-grid-item .team-standings-table td {
+    padding: 3px 8px 2px;
+}
+
+.matches-group-table td {
+    padding: 2px 8px;
+}
+
+.matches-table-description {
+    font-size: 11px;
+}
+
+.matches-table-description a {
+    color: #2a2a2a;
+    text-decoration: none;
+    -webkit-transition-property: color;
+    -webkit-transition-duration: .3s;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 230px;
+    display: inline-block;
+    white-space: nowrap;
+}
+
+.matches-table-description a:hover {
+    text-decoration: none;
+    color: #429dee;
+}
+
+.matches-table-team1 {
+    text-align: right !important;
+}
+
+.matches-table-team1 .team-country-flag-icon {
+    float: right;
+    margin-left: 7px;
+}
+
+.matches-table-team2 .team-country-flag-icon {
+    margin-right: 7px;
+}
+
+.matches-table-team1 .team-name {
+    float: right;
+}
+
+.matches-table-team1 .remove-btn {
+    left: 6px;
+    top: 50%;
+    margin-top: -6px;
+    right: auto;
+}
+
+
+.matches-group-table {
+    border: 0;
+}
+
+.matches-group-table .team-name,
+.matches-group-table .team-undefined .team-name {
+    max-width: 90px;
+}
+
+.match-start-date {
+    font-size: 11px;
+    float: left;
+    max-width: 90px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    min-width: 40px;
+    min-height: 1em;
+}
+
+input.match-start-date {
+    font-size: 11px;
+    float: left;
+    max-width: 80px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    min-height: 15px;
+    border: 0;
+    box-shadow: none;
+    padding: 0;
+    background-color: transparent;
+}
+
+.match-info-bar {
+    float: right;
+}
+
+.header-item {
+    cursor: default;
+    -webkit-user-select: none;
+}
+
+.chooser label {
+    font-size: 10px;
+}
+
+.search-btn {
+    width: 76px;
+    height: 34px;
+    background-image: -webkit-linear-gradient(top, #414141, #292929);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+    border: 1px solid #202020;
+}
+
+.grid {
+    overflow: hidden;
+}
+
+.b-profileBlock__title {
+    -webkit-user-select: none;
+    cursor: pointer;
+}
+
+.b-profileBlock__title.close {
+    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAJCAMAAADaUYZlAAAAOVBMVEU4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODiX3pCcAAAAE3RSTlMAAwYNFDk+SFFrbG+srcTb8/n+43xG/AAAADxJREFUeNpFyEEOgCAQQ9GCgAgowv0Pq0mbma76H8IJ21GAvi/L502I9w/KVQGCp0BJGLsxHSbTgOmQdT6lXQIj8v3aswAAAABJRU5ErkJggg==') right 6px no-repeat;
+}
+
+.stage-view {
+    margin-top: 16px;
+}
+
+.stage-view .i-listsTabs_bd {
+    border: 0;
+}
+
+.stage-view .grid, .stage-view .match-grid {
+    margin-top: 14px;
+}
+
+.b-profileBlock__toggle-button {
+    position: absolute;
+    right: 13px;
+    top: 18px;
+    height: 18px;
+    width: 22px;
+}
+
+.country-menu-item .country-flag-icon {
+    margin-right: 4px;
+    box-shadow: 0 0 4px rgba(0,0,0,0.5);
+}
+
+.collapsible {
+    position: relative;
+}
+
+.collapse {
+    position: relative;
+    height: 0;
+    overflow: hidden;
+    -webkit-transition: height 0.35s ease;
+    -moz-transition: height 0.35s ease;
+    -o-transition: height 0.35s ease;
+    transition: height 0.35s ease;
+}
+
+.collapse.in {
+    height: auto;
+}
+
+.group-lineup-grid .lineup-grid-item-name-container {
+    padding: 0 8px;
+}
+
+.team-standings-table .editable-label {
+    display: inline-block;
+}
+
+.grid-container {
+    position: relative;
+}
+
+.menu-item .lineup-grid-item-name {
+    margin: 2px 0;
+}
+
+.team-cell {
+    overflow: hidden;
+}
+
+.lineup-list-name-container {
+    border-bottom: 3px solid #f35900;
+    padding-bottom: 2px;
+}
+
+.lineup-list-name-container a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.team-lineup-popup-players-item {
+    padding: 4px 0;
+}
+
+.team-lineup-popup-players-item-name {
+    margin-top: 2px;
+    margin-left: 4px;
+    font-size: 11px;
+}
+
+.match-filter-form-container {
+    position: relative;
+}
+
+
+.empty-view {
+    text-align: center;
+    font-size: 20px;
+}
+
+.selection-mask {
+    position: absolute;
+    border: 1px solid rgba(255,255,255,0.8);
+    background-color: rgba(0,0,0,0.2);
+    z-index: 100;
+}
+
+.is-visualy-selected {
+    background-color: red !important;
+    background-color: -webkit-focus-ring-color !important;
+}
+
+.status {
+    padding-left: 21px;
+    min-height: 16px;
+    background: url('/images/loader.gif') no-repeat;
+}
+
+.error {
+    color: #ac0000;
+}
+
+.context-menu {
+    cursor: context-menu;
+}
+
+.team-standings-table-item td {
+    -webkit-transition-duration: 0.3s;
+    -webkit-transition-property: background-color;
+    background-color: rgba(0,0,0,0);
+}
+
+.team-standings-table-item:hover td {
+    background-color: rgba(0,0,0,0.075);
+}
+
+.versus-marker {
+    font-size: 11px;
+    line-height: 16px;
+}
+
+.left-bracket-symbol {
+    text-align: left;
+    float: left;
+}
+
+.right-bracket-symbol {
+    text-align: right;
+    float: right;
+}

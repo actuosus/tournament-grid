@@ -19,9 +19,12 @@ define [
 
     contextMenuActions: ['setAsTheCaptain']
 
-    setAsTheCaptain: ->
+    toggleAsTheCaptain: ->
       teamRef = @get 'teamRef'
-      teamRef.set 'captain', @get 'content'
+      if Em.isEqual @get('content'), teamRef.get('captain')
+        teamRef.set 'captain', null
+      else
+        teamRef.set 'captain', @get 'content'
       teamRef.store.commit()
 
     teamRefBinding: 'parentView.teamRef'
@@ -96,4 +99,4 @@ define [
       title: '_remove_player'.loc()
       deleteRecord: -> @get('parentView').deleteRecord()
 
-    doubleClick: -> @setAsTheCaptain()
+    doubleClick: -> @toggleAsTheCaptain()

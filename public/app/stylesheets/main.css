@@ -49,6 +49,14 @@
 
 @import "toolbar.css";
 
+html {
+    min-width: 0 !important;
+}
+
+.i-wrapper {
+    width: auto !important;
+}
+
 
 .b-content :first-child[class="block-container"] {
     margin-top: 0;
@@ -243,6 +251,7 @@
     overflow: hidden;
     min-width: 40px;
     min-height: 1em;
+    line-height: 11px;
 }
 
 input.match-start-date {
@@ -288,6 +297,12 @@ input.match-start-date {
 .b-profileBlock__title {
     -webkit-user-select: none;
     cursor: default;
+    -webkit-transition-duration: 0.3s;
+    -webkit-transition-property: color;
+}
+
+.b-profileBlock__title:hover {
+    color: black;
 }
 
 .b-profileBlock__title.close {
@@ -396,7 +411,6 @@ input.match-start-date {
 }
 
 .is-visualy-selected {
-    background-color: red !important;
     background-color: -webkit-focus-ring-color !important;
 }
 
@@ -437,4 +451,8 @@ input.match-start-date {
 .right-bracket-symbol {
     text-align: right;
     float: right;
+}
+
+.date-with-popup:hover {
+    outline: #da4600 auto 4px;
 }

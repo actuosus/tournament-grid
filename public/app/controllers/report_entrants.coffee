@@ -7,7 +7,7 @@
 
 define ->
   App.ReportEntrantsController = Em.ArrayController.extend
-    sortProperties: ['team.name']
+#    sortProperties: ['team.name']
     searchResults: []
 
     search: (options)->
@@ -30,7 +30,7 @@ define ->
           matches
       else
         result = content
-      result.isLoaded = yes
+      result.set 'isLoaded', yes
       result
     ).property('content', 'searchQuery')
 

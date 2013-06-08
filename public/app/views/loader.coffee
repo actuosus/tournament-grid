@@ -14,7 +14,6 @@ define [
     isVisible: no
     attributeBindings: ['title']
     title: '_loading'.loc()
-    isLoadingBinding: 'parentView.isLoading'
 
     didInsertElement: ->
       @_super()

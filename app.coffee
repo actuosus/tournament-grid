@@ -73,7 +73,7 @@ waiter = (req, res, next)->
   if req.query?.start and req.query?.end
     setTimeout next, rangedRandom parseInt(req.query.start), parseInt(req.query.end)
   else
-    next()
+    setTimeout next, rangedRandom 500, 3000
 
 languages = ['ru', 'en', 'de', 'it']
 
@@ -140,11 +140,11 @@ app.configure 'development', ->
   # Error handling
   app.use express.errorHandler dumpExceptions: yes, showStack: yes
 
-#  app.use (req, res, next)->
-#    if req.url.match /api/
-#      waiter req, res, next
-#    else
-#      next()
+  app.use (req, res, next)->
+    if req.url.match /api/
+      waiter req, res, next
+    else
+      next()
 
 app.configure 'production', ->
   # Compression
@@ -293,6 +293,7 @@ app.post '/reports/create', ensureAuthenticated, routes.reports.create
 app.get '/reports/:_id', ensureAuthenticated, routes.reports.item
 
 app.get '/matches/:_id', ensureAuthenticated, routes.matches.item
+app.get '/games/:_id', ensureAuthenticated, routes.games.item
 
 app.get '/teams/:_id', ensureAuthenticated, routes.teams.item
 

@@ -4,6 +4,10 @@
  * Date: 18/03/2013
  * Time: 23:38
  */
+ 
+.team-standings-table-item {
+    position: relative;
+}
 
 .team-standings-table-item .name {
     border-right: 1px solid #dddddd;

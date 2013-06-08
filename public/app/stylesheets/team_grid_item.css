@@ -27,7 +27,6 @@
 }
 
 .team-grid-item {
-    width: 150px;
     height: 19px;
     padding: 2px;
     overflow: hidden;
@@ -60,7 +59,7 @@
     left: 22px;
     top: 2px;
     bottom: 2px;
-    right: 23px;
+    right: 21px;
     min-height: 19px;
 }
 
@@ -85,7 +84,7 @@
 }
 
 .team-undefined .team-name {
-    width: 107px;
+    width: 111px;
     border: 1px dashed #858586;
     border-radius: 2px;
     min-height: 17px;
@@ -110,7 +109,7 @@
     /*-webkit-transform: scale(1);*/
 
     -webkit-transition-duration: 0.5s;
-    -webkit-transition-property: background-size;
+    -webkit-transition-property: background-size, box-shadow;
 }
 
 .team-country-flag-icon.has-flag {

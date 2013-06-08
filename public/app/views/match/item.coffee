@@ -16,30 +16,21 @@ define [
     attributeBindings: ['title']
     titleBinding: 'content.description'
 
-#    didInsertElement: ->
-#      @$().css scale: 0
-#      @$().transition scale: 1
-
     isEditable: (->
       isEditingMode = App.get('isEditingMode')
       status = @get 'content.status'
-#      currentStatus = @get 'content.currentStatus'
       isEditingMode and status is 'opened'
     ).property('App.isEditingMode', 'content.status')
 
     _isEditingBinding: 'isEditable'
 
     mouseEnter: ->
-      @set 'editControlsView.isVisible', yes
-
       node = @get 'content'
       while node
         node.set('isSelected', yes)
         node = node.get('parentNode')
 
     mouseLeave: ->
-      @set 'editControlsView.isVisible', no
-
       node = @get 'content'
       while node
         node.set('isSelected', no)
@@ -68,13 +59,6 @@ define [
 
       itemViewClass: App.TeamGridItemContainerView.extend( App.Droppable, {
         matchBinding: 'parentView.match'
-
-#        dragOver: (event)->
-#          viewId = event.originalEvent.dataTransfer.getData 'Text'
-#          view = Em.View.views[viewId]
-#          content = view.get 'content'
-#          console.log App.Team.detectInstance content
-#          event.preventDefault() if App.Team.detectInstance content
 
         drop: (event)->
           viewId = event.originalEvent.dataTransfer.getData 'Text'
@@ -125,10 +109,7 @@ define [
 
         isVisible: (->
           isDirty = @get 'parentView.content.isDirty'
-          if isDirty
-            yes
-          else
-            no
+          if isDirty yes else no
         ).property('parentView.content.isDirty')
 
         click: ->

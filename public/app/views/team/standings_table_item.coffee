@@ -8,17 +8,26 @@
 
 
 define [
-  'text!../../templates/team/standings_table_item.handlebars'
+  'text!../../templates/team/standings_table_item.hbs'
   'cs!../../core'
   'cs!./cell'
   'cs!./standing_cell'
 ], (template)->
   Em.TEMPLATES.teamStandingsTableItem = Em.Handlebars.compile template
-  App.TeamStandingsTableItemView = Em.View.extend
+  App.TeamStandingsTableItemView = Em.View.extend App.ContextMenuSupport,
     tagName: 'tr'
     templateName: 'teamStandingsTableItem'
     classNames: ['team-standings-table-item']
     classNameBindings: ['content.isSelected', 'content.isDirty', 'content.isSaving']
+    
+    shouldShowContextMenuBinding: 'App.isEditingMode'
+    contextMenuActions: ['save', 'deleteRecord:delete']
+    
+    save: ->
+      @get('content.store')?.commit()
+      
+    delete: ->
+      @get('content').deleteRecord()
 
     mouseEnter: (event)->
       controller = @get('parentView.matches')
@@ -34,6 +43,6 @@ define [
     mouseLeave: -> @matchesPopup?.hide()
 
     click: (event)->
-      if App.get('idEditingMode')
+      if App.get('isEditingMode')
         unless $(event.target).hasClass 'editable-label'
           @toggleProperty 'content.isSelected'

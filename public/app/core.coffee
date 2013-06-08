@@ -84,14 +84,19 @@ define [
 
   TournamentGrid = Em.Namespace.create
 
-  App = Em.Application.create
+  appConfig =
     VERSION: '0.1'
     autoinit: false
-#    rootElement: '#content'
     customEvents:
       mousewheel: 'mouseWheel'
 
-  App.LOG_TRANSITIONS = yes if window.debug
+#  appConfig.rootElement = config.rootElement if config.rootElement
+
+  App = Em.Application.create appConfig
+
+  if window.debug
+    App.LOG_TRANSITIONS = yes
+    App.LOG_VIEW_LOOKUPS = yes
   App.deferReadiness()
 
   window.TournamentGrid = TournamentGrid
@@ -109,6 +114,17 @@ define [
             callback that
       @addObserver 'isLoaded', isLoadedFn
       @
+
+  DS.RESTAdapter.reopen
+    findQuery: (store, type, query, recordArray)->
+      root = @rootForType type
+
+      req = @ajax @buildURL(root), 'GET',
+        data: query,
+        success: (json)->
+          Ember.run @, -> @didFindQuery(store, type, json, recordArray)
+      recordArray.req = req
+      req
 
   DS.RESTAdapter.configure 'plurals',
     country: 'countries'
@@ -144,8 +160,30 @@ define [
 
   App.store.adapter.url = config.api.host
   App.store.adapter.namespace = config.api.namespace
-
   App.store.adapter.serializer.primaryKey = -> '_id'
+
+  App.overrideAdapterAjax = (report)->
+    App.store.adapter.ajax = (url, type, hash)->
+      hash.url = url
+      hash.type = type
+      hash.dataType = 'json'
+      hash.contentType = 'application/json; charset=utf-8'
+      hash.context = @
+
+      if hash.data
+        if type isnt 'GET'
+          hash.url += "?report_id=#{report.get 'id'}"
+          if App.debug?.wait?
+            hash.url += '&' + jQuery.param({start: App.get('debug.wait.start'), end: App.get('debug.wait.end')})
+          hash.data = JSON.stringify hash.data
+        else
+          hash.data.report_id = report.get 'id'
+      else
+        hash.url += "?report_id=#{report.get 'id'}"
+        if App.debug?.wait?
+          hash.url += '&' + jQuery.param({start: App.get('debug.wait.start'), end: App.get('debug.wait.end')})
+
+      jQuery.ajax hash
 
   App.config =
     local:

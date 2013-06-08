@@ -3,6 +3,9 @@
     border-top: 1px solid #afafaf;
     background-image: -webkit-linear-gradient(top, #cacacb 0%, #dbdbdb 100%);
 }
+.b-listsTabs:hover {
+    background-color: #DADADA;
+}
 .b-listsTabs .item {
     
     
@@ -259,6 +262,13 @@ input[type="date"].input-large {
     font-size: 13px;
     border: 1px solid #bebebe;
     width: 100%;
+}
+.table-row {
+    -webkit-transition-property: color, background-color;
+    -webkit-transition-duration: .3s;
+}
+.table-row:hover {
+    background-color: rgba(0,0,0,0.075);
 }
 .table th, .table .td {
     text-align: left;
@@ -572,6 +582,12 @@ input[type="date"].input-large {
     box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.75);
     text-shadow: 0 1px 1px rgba(0,0,0,0.5);
 }
+.public-menu-btn {
+    position: absolute;
+    font-size: 19px;
+    color: gray;
+    font-weight: normal;
+}
 .menu {
     position: absolute;
     
@@ -581,6 +597,7 @@ input[type="date"].input-large {
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.75);
     max-height: 200px;
     overflow-y: auto;
+    border-radius: 2px;
 }
 .menu-item {
     padding: 5px 10px;
@@ -590,10 +607,10 @@ input[type="date"].input-large {
     text-overflow: ellipsis;
 }
 .menu-item:hover {
-    background-color: #e2e2e2;
+    background-color: rgba(0,0,0,0.1);
 }
 .menu-item.is-selected {
-    background-color: #d0deff;
+    background-color: hsla(222, 100%, 91%, 0.9);
 }
 .menu-item .highlight {
     font-weight: bold;
@@ -1771,7 +1788,7 @@ body .ui-tooltip {
 .named-container .search-bar {
     position: absolute;
     right: 440px;
-    top: 13px;
+    top: 16px;
 }
 .named-container .search-field {
     border-radius: 15px;
@@ -1835,7 +1852,7 @@ body .ui-tooltip {
     text-align: center;
     color: white;
     background-color: #979797;
-    margin-right: 3px;
+    margin-left: 3px;
     -webkit-font-smoothing: antialiased;
 }
 .games-list-item a {
@@ -1856,7 +1873,6 @@ body .ui-tooltip {
 }
 .games-info-bar .games-info-bar-label {
     width: 29px;
-    margin-right: 3px;
     text-transform: uppercase;
     font-size: 7px;
     background-color: #3b3b3b;
@@ -1884,6 +1900,7 @@ body .ui-tooltip {
     text-align: center;
     color: white;
     background-color: #979797;
+    margin-left: 3px;
 }
 .games-info-bar .games-create-button button {
     padding: 0;
@@ -1892,7 +1909,6 @@ body .ui-tooltip {
     line-height: 11px;
 }
 .autocomplete-text-field {
-    width: 100%;
     position: relative;
     min-height: 24px;
 }
@@ -1926,6 +1942,23 @@ body .ui-tooltip {
     background-color: white;
     box-shadow: 0 0 10px white;
 }
+.autocomplete-text-field .cancel-btn {
+    position: absolute;
+    right: 3px;
+    top: 50%;
+    border: 0;
+    width: 16px;
+    height: 16px;
+    padding: 0;
+    margin: -7px 0 0 0;
+    font-size: 9px;
+    font-weight: normal;
+    color: gray;
+    -webkit-appearance: none;
+    background-color: white;
+    box-shadow: 0 0 10px white;    
+    z-index: 3;
+}
 .autocomplete-text-field .text-field {
     position: absolute;
     left: 0;
@@ -1957,7 +1990,6 @@ body .ui-tooltip {
     box-shadow: 0 0 10px 2px #ff6c00;
 }
 .team-grid-item {
-    width: 150px;
     height: 19px;
     padding: 2px;
     overflow: hidden;
@@ -1985,7 +2017,7 @@ body .ui-tooltip {
     left: 22px;
     top: 2px;
     bottom: 2px;
-    right: 23px;
+    right: 21px;
     min-height: 19px;
 }
 .team-grid-item .autocomplete-text-field .text-field {
@@ -2006,7 +2038,7 @@ body .ui-tooltip {
     text-decoration: none;
 }
 .team-undefined .team-name {
-    width: 107px;
+    width: 111px;
     border: 1px dashed #858586;
     border-radius: 2px;
     min-height: 17px;
@@ -2026,7 +2058,7 @@ body .ui-tooltip {
     
     
     -webkit-transition-duration: 0.5s;
-    -webkit-transition-property: background-size;
+    -webkit-transition-property: background-size, box-shadow;
 }
 .team-country-flag-icon.has-flag {
     background-size: 100%;
@@ -2683,11 +2715,15 @@ body .ui-tooltip {
 }
 .tournament-round-container {
     float: left;
-    width: 160px;
-    margin-right: 21px;
+    width: 180px;
+    -webkit-transition-duration: 0.3s;
+    -webkit-transition-property: background-color;
+}
+.tournament-round-container:hover {
+    background-color: rgba(0,0,0,0.025);
 }
 .tournament-round {
-    padding-top: 30px;
+    padding: 30px 10px 0 10px;
 }
 .tournament-match {
     width: 160px;
@@ -2787,7 +2823,12 @@ body .ui-tooltip {
     height: 191px;
     margin: 10px;
     -webkit-transition-duration: 0.3s;
-    -webkit-transition-property: box-shadow;
+    -webkit-transition-property: box-shadow, background-color;
+    padding: 10px;
+    border-radius: 4px;
+}
+.lineup-grid-item:hover {
+    background-color: rgba(0,0,0,0.05);
 }
 .csscolumns .lineup-grid {
     -webkit-column-gap: 29px;
@@ -2809,7 +2850,6 @@ body .ui-tooltip {
     -moz-column-break-inside: avoid;
     column-break-inside: avoid;
 }
-    
 .lineup-grid-item.is-dirty {
     background-color: rgba(255,255,0,0.2);
 }
@@ -2817,6 +2857,10 @@ body .ui-tooltip {
     right: 6px;
     top: 50%;
     margin-top: -6px;
+}
+.lineup-grid-item .public-menu-btn {
+    right: 13px;
+    top: -3px;
 }
 .lineup-grid-item .edit-btn {
     position: absolute;
@@ -2884,6 +2928,7 @@ body .ui-tooltip {
 .lineup-grid-item-players {
     max-height: 125px;
     
+    background-color: white;
 }
 .lineup-grid-item-players .lineup-grid-item-name {
     margin: 0;
@@ -2902,8 +2947,9 @@ body .ui-tooltip {
     -webkit-transition-property: background-color, box-shadow;
 }
 .lineup-grid-item-player-row:hover {
-    background-color: #f2f2f2;
-    
+    background-color: #f2f2f2;;
+    box-shadow: 0 0 2px rgba(0,0,0,0.5);
+    z-index: 3;
 }
 .lineup-grid-item-player-row.is-dirty {
     background-color: rgba(255,255,0, 0.2);
@@ -2947,9 +2993,12 @@ body .ui-tooltip {
     vertical-align: 2px;
     margin-left: -3px;
     cursor: default;
+    -webkit-transition-duration: 0.3s;
+    -webkit-transition-property: box-shadow, text-shadow;
 }
 .lineup-grid-item-captain-marker:hover {
     box-shadow: 0 0 3px rgba(0,0,0,0.5);
+    text-shadow: 0 0 1px rgba(0,0,0,0.5);
 }
 .csscolumns .group-lineup-grid {
     -webkit-column-width: 428px;
@@ -2971,7 +3020,8 @@ body .ui-tooltip {
     margin: 0;
 }
 .match-item {
-    
+    -webkit-transition-duration: 0.3s;
+    -webkit-transition-property: background-color;
 }
 .match-item.is-dirty {
 }
@@ -3061,7 +3111,7 @@ body .ui-tooltip {
     background-color: rgba(155,0,155,0.2);
 }
 .matches-table-item.invalid td {
-    background-color: rgba(255,0,0,0.1);
+    background-color: rgba(255,0,0,0.05);
 }
 .matches-table-item.is-dirty.invalid td {
     background-color: rgba(255,127,0,0.2);
@@ -3087,6 +3137,10 @@ body .ui-tooltip {
     font-weight: bold;
     border-bottom: 3px solid #f35900;
     padding-bottom: 2px;
+}
+ 
+.team-standings-table-item {
+    position: relative;
 }
 .team-standings-table-item .name {
     border-right: 1px solid #dddddd;
@@ -3356,6 +3410,12 @@ body .ui-tooltip {
     right: 10px;
     top: 10px;
 }
+html {
+    min-width: 0 !important;
+}
+.i-wrapper {
+    width: auto !important;
+}
 .b-content :first-child[class="block-container"] {
     margin-top: 0;
 }
@@ -3510,6 +3570,7 @@ body .ui-tooltip {
     overflow: hidden;
     min-width: 40px;
     min-height: 1em;
+    line-height: 11px;
 }
 input.match-start-date {
     font-size: 11px;
@@ -3548,6 +3609,11 @@ input.match-start-date {
 .b-profileBlock__title {
     -webkit-user-select: none;
     cursor: default;
+    -webkit-transition-duration: 0.3s;
+    -webkit-transition-property: color;
+}
+.b-profileBlock__title:hover {
+    color: black;
 }
 .b-profileBlock__title.close {
     background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAJCAMAAADaUYZlAAAAOVBMVEU4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODiX3pCcAAAAE3RSTlMAAwYNFDk+SFFrbG+srcTb8/n+43xG/AAAADxJREFUeNpFyEEOgCAQQ9GCgAgowv0Pq0mbma76H8IJ21GAvi/L502I9w/KVQGCp0BJGLsxHSbTgOmQdT6lXQIj8v3aswAAAABJRU5ErkJggg==') right 6px no-repeat;
@@ -3633,7 +3699,6 @@ input.match-start-date {
     z-index: 100;
 }
 .is-visualy-selected {
-    background-color: red !important;
     background-color: -webkit-focus-ring-color !important;
 }
 .status {
@@ -3666,4 +3731,7 @@ input.match-start-date {
 .right-bracket-symbol {
     text-align: right;
     float: right;
+}
+.date-with-popup:hover {
+    outline: #da4600 auto 4px;
 }

@@ -23,6 +23,9 @@ define ['cs!../core'],->
       template: Em.Handlebars.compile '{{view.content.title}}'
       attributeBindings: ['aria-role']
       'aria-role': 'menu-item'
+
+      willInsertElement: -> console.log 'Menu item view class'
+
       target: (->
         target = @get 'content.target'
         if target
@@ -43,6 +46,7 @@ define ['cs!../core'],->
       target = @get 'target'
       unless @get 'sender'
         offset = target.$().offset() if target
+        offset.top += target.$().height()
       else
         sender
         offset = {left: sender.pageX, top: sender.pageY}
@@ -51,7 +55,16 @@ define ['cs!../core'],->
 
       $(element).css({transformOrigin: "#{target.$().width()/2} 0"})
       $(element).css offset
+      $(element).css 'min-width', @get 'minWidth' if @get 'minWidth'
       $(document.body).bind('mousedown.menu', @onDocumentMouseDown.bind(@))
+
+    selectNext: ->
+      index = @get('content').indexOf @get 'selection'
+      @set 'selection', @get('content').objectAt(index+1)
+
+    selectPrevious: ->
+      index = @get('content').indexOf @get 'selection'
+      @set 'selection', @get('content').objectAt(index-1)
 
     didInsertElement: ->
       @_super()
@@ -80,6 +93,11 @@ define ['cs!../core'],->
     click: (event)->
       eventDelegate = @get 'eventDelegate'
       eventDelegate.click event if eventDelegate
+
+    selectMenuItem: (item)->
+      target = @get('target')
+      if target and target.selectMenuItem
+        target.selectMenuItem item
 
     selectionChanged: (->
       index = @get('content').indexOf @get 'selection'

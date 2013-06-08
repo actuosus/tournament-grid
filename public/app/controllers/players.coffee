@@ -15,6 +15,33 @@ define [
     searchResults: []
     labelValue: 'nickname'
 
+    sort: (result, options)->
+      lowerCased = options.nickname.toLowerCase()
+      result.sort (a,b)->
+        lowerA = a.get('nickname').toLowerCase()
+        lowerB = b.get('nickname').toLowerCase()
+        if lowerA.indexOf(lowerCased) < lowerB.indexOf(lowerCased)
+          return -1
+        if lowerA.indexOf(lowerCased) > lowerB.indexOf(lowerCased)
+          return 1
+        if lowerA.indexOf(lowerCased) is lowerB.indexOf(lowerCased)
+          return 0
+
+    fetchAutocompleteResults: (value, target)->
+      @set 'lastQuery', {nickname: value}
+      @set 'content', App.Player.find {nickname: value}
+      @set 'autocompleteTarget', target
+      @get('content').addObserver 'isLoaded', @, 'contentLoaded'
+
+    cancelFetchingOfAutocompleteResults: ->
+      content = @get 'content'
+      content.req?.abort()
+      content.removeObserver 'isLoaded', @, 'contentLoaded'
+
+    contentLoaded: ->
+      @get('content').removeObserver 'isLoaded', @, 'contentLoaded'
+      @get('autocompleteTarget').didFetchAutocompleteResults @sort @get('content').toArray(), @get 'lastQuery'
+
     search: (options)->
       searchOptions = {}
       if options.name
@@ -58,9 +85,10 @@ define [
       click: (event)->
         event.preventDefault()
         event.stopPropagation()
-        @get('parentView').click(event)
+        @get('parentView').selectMenuItem @get 'content'
         @set 'parentView.selection', @get 'content'
         @set 'parentView.value', @get 'content'
+        @get('parentView').click(event)
         @set 'parentView.isVisible', no
 
 #    Em.View.extend

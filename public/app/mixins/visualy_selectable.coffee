@@ -10,6 +10,8 @@ define ->
     maskView: null
 
     mouseDown: (event)->
+      @_super event
+      @visualyDeselect()
       $(document.body).addClass 'non-selectable'
       $(document.body).bind('mousemove.selectable', @onDocumentMouseMove.bind(@))
       $(document.body).bind('mouseup.selectable', @mouseUp.bind(@))
@@ -47,13 +49,21 @@ define ->
             @get('visualSelection').pushObject view.get 'content'
           view.set 'content.isVisualySelected', intersects
 
+    visualyDeselect: ->
+      @set('visualSelection', [])
+      childViews = @get('selectableElementsView.childViews')
+      if childViews
+        # TODO Kinda bad
+        childViews.forEach (view)=>
+          view.set 'content.isVisualySelected', no
+
     visualSelection: []
 
     mouseUp: (event)->
       $(document.body).removeClass 'non-selectable'
       $(document.body).unbind 'mousemove.selectable'
       $(document.body).unbind 'mouseup.selectable'
-      @get('maskView')?.destroy()
+      @get('maskView')?.$().animate({opacity: 0}, 300, => @get('maskView').destroy())
 
     mouseOut: (event)-> @mouseUp event
 

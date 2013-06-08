@@ -4,7 +4,6 @@
  */
 
 .autocomplete-text-field {
-    width: 100%;
     position: relative;
     min-height: 24px;
 }
@@ -41,6 +40,26 @@
 
     background-color: white;
     box-shadow: 0 0 10px white;
+}
+
+.autocomplete-text-field .cancel-btn {
+    position: absolute;
+    right: 3px;
+    top: 50%;
+    border: 0;
+    width: 16px;
+    height: 16px;
+    padding: 0;
+    margin: -7px 0 0 0;
+    font-size: 9px;
+    font-weight: normal;
+    color: gray;
+
+    -webkit-appearance: none;
+
+    background-color: white;
+    box-shadow: 0 0 10px white;    
+    z-index: 3;
 }
 
 .autocomplete-text-field .text-field {

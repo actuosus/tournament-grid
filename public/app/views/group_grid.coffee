@@ -41,7 +41,7 @@ define [
         @get('content').deleteRecord()
         @get('content.store')?.commit()
 
-      contentView: Em.ContainerView.extend( App.Editing, {
+      contentView: Em.ContainerView.extend( App.Editing, App.MovingHightlight, {
         contentBinding: 'parentView.content'
         classNames: ['lineup-grid-item-name-container']
         childViews: ['nameView']
@@ -52,11 +52,8 @@ define [
         nameView: App.EditableLabel.extend
           isEditableBinding: 'App.isEditingMode'
           contentBinding: 'parentView.content'
-#          valuesBinding: 'content._name'
           valueBinding: 'content.name'
           classNames: ['lineup-grid-item-name']
-#          languagesBinding: 'App.languages'
-#          template: Em.Handlebars.compile '{{view.content.name}}'
 
         addButtonView: Em.View.extend
           tagName: 'button'

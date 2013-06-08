@@ -38,10 +38,10 @@ module.exports = ->
       }
     when 'test'
       return {
-#      hostname: 'tournament.local'
+#      hostname: 'virtus_pro.local'
       hostname: '0.0.0.0'
       port: 3001,
-      mongo: 'mongodb://localhost/tournament_grid_test'
+      mongo: 'mongodb://localhost/virtus_pro_test'
       memcache:
         host: 'localhost'
         port: 11211
@@ -55,9 +55,9 @@ module.exports = ->
       }
     else
       return {
-      hostname: 'tournament.local'
+      hostname: 'virtus_pro.local'
       port: 3000,
-      mongo: 'mongodb://localhost/tournament_grid'
+      mongo: 'mongodb://localhost/virtus_pro'
       _redis:
         host: 'localhost'
         hostname: 'localhost'

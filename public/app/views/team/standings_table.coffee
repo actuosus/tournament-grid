@@ -6,7 +6,7 @@
 ###
 
 define [
-  'text!../../templates/team/standings_table.handlebars'
+  'text!../../templates/team/standings_table.hbs'
   'cs!../../core'
   'cs!./standings_table_item'
   'cs!../match/table_popup'

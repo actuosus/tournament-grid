@@ -1,0 +1,663 @@
+<% extend 'layout.ect' %>
+
+<p class="b-title b-title_bump"><span class="ico ico_players"></span><%- @__ 'Game' %></p>
+
+<div class="b-profile" id="bx_887404810_31826">
+    <div class="b-tournament">
+        <aside class="b-tournament__aside1">
+            <div class="logo"><a href="/base/teams/virtuspro/virtus-pro-sc2/">			<img src="/upload/iblock/177/virtus_142x149 (1).png" width="142" height="149" alt="" class="logo__img" border="0" title="Virtus.pro*BenQ">
+
+            </a></div>
+
+            <h2 class="title"><% if @doc.entrant1_id : %><%- @doc.entrant1_id.name %><% end %></h2>
+            <p class="teamTitle">Состав команды:</p>
+
+            <ul class="b-tournament__team">
+                <li><a href="/base/gamers/Sneg1/" class="nick ru">Sneg1 [ K ]</a>
+                    Антон Черепенников </li>
+                <li><a href="/base/gamers/atsky/" class="nick ru">AtSky </a>
+                    Георгий Байков</li>
+                <li><a href="/base/gamers/neytpoh/" class="nick ru">Neytpoh </a>
+                    Юрий Карев</li>
+                <li><a href="/base/gamers/innirvana/" class="nick ru">inNirvana </a>
+                    Марат Фаридов</li>
+                <li><a href="/base/gamers/pomi/" class="nick ru">Pomi </a>
+                    Сергей Родионов</li>
+                <li><a href="/base/gamers/toddy/" class="nick ru">toddy </a>
+                    Иван Дукач</li>
+                <li><a href="/base/gamers/kycok-ov4arku/" class="nick ru">KycoK_Ov4arku </a>
+                    Дмитрий Касаткин</li>
+            </ul>
+        </aside>
+
+        <aside class="b-tournament__aside2">
+            <div class="logo"><a href="/base/teams/empire/empire-dota2/">			<img src="/bitrix/cache/s1/virtus/image.show/142w_149h_clipBOTH/upload/iblock/013/5155421_medium.jpg" width="142" height="149" alt="" class="logo__img" border="0" title="Empire">
+
+            </a></div>
+            <h2 class="title"><% if @doc.entrant2_id : %><%- @doc.entrant2_id.name %><% end %></h2>
+            <p class="teamTitle">Состав команды:</p>
+
+            <ul class="b-tournament__team">
+                <li><a href="/base/gamers/elbegast/" class="nick ru">Elbegast [ K ]</a>
+                    Павел Семенов</li>
+                <li><a href="/base/gamers/lex/" class="nick ru">LeX </a>
+                    Aleksey Kolesnikov</li>
+                <li><a href="/base/gamers/slivko/" class="nick ru">sLivko </a>
+                    Артём Гаравцов</li>
+                <li><a href="/base/gamers/turuk/" class="nick ru">Turuk </a>
+                    Константин Аржавитин</li>
+                <li><a href="/base/gamers/Hooch/" class="nick ">Hooch </a>
+                    Дмитрий Богданов</li>
+                <li><a href="/base/gamers/evil/" class="nick ru">evil </a>
+                    Михаил Гаранин</li>
+                <li><a href="/base/gamers/dosia/" class="nick ru">Dosia </a>
+                    Михаил Столяров</li>
+            </ul>
+        </aside>
+
+        <div class="b-tournament__middle past">
+            <div class="tournamentTitle">			<img src="/bitrix/cache/s1/virtus/image.show/19w_19h_clipBOTH/upload/iblock/441/wcg.png" width="19" height="19" alt="" class="" border="0" title="World Cyber Games">
+
+                World Cyber Games</div>
+            <div class="status">test_mix  <span class="status__item">
+            Прошедший            </span> <%- @moment(@doc.date).format('DD.MM.YYYY HH:mm') %></div>
+
+            <div class="tournamentScore">[ <b class="tournamentScore__item"><%- @doc.entrant1_points %>:<%- @doc.entrant2_points %></b> ]</div>
+
+
+            <table class="b-profileMatches__history b-profileMatches__history_align_center">
+                <colgroup>
+                    <col width="40">
+                    <col>
+                    <col>
+                    <col width="40">
+                </colgroup>
+                <tbody><tr id="bx_887404810_31827">
+                    <td>			<img src="/bitrix/cache/s1/virtus/image.show/32w_32h_clipBOTH/upload/iblock/41d/ytuyuj.png" width="32" height="32" alt="" class="avatar" border="0" title="">
+
+                    </td>
+                    <td>                        			<img src="/bitrix/cache/s1/virtus/image.show/18w_11h_clipBOTH/upload/iblock/d85/protoss-icon.gif" width="18" height="11" alt="" class="" border="0" title="Протосы">
+
+                        <a href="/base/gamers/elbegast/">Elbegast</a></td>
+                    <td class="score">[ <span class="score__item">1 : <b>2</b></span> ]</td>
+                    <td>			<img src="/bitrix/cache/s1/virtus/image.show/32w_32h_clipBOTH/upload/iblock/86d/dfgsf.png" width="32" height="32" alt="" class="avatar" border="0" title="">
+
+                    </td>
+                    <td>                        			<img src="/bitrix/cache/s1/virtus/image.show/18w_11h_clipBOTH/upload/iblock/be7/terran-icon.gif" width="18" height="11" alt="" class="" border="0" title="Терраны">
+
+                        <a href="/base/gamers/atsky/">AtSky</a></td>
+                </tr>
+                <tr id="bx_887404810_31828">
+                    <td>			<img src="/bitrix/cache/s1/virtus/image.show/32w_32h_clipBOTH/upload/iblock/d92/sneg1.png" width="32" height="32" alt="" class="avatar" border="0" title="">
+
+                    </td>
+                    <td> <a href="/base/gamers/Sneg1/">Sneg1</a></td>
+                    <td class="score">[ <span class="score__item"><b>10</b> : 5</span> ]</td>
+                    <td>			<img src="/bitrix/cache/s1/virtus/image.show/32w_32h_clipBOTH/upload/iblock/dd5/heytpoh.png" width="32" height="32" alt="" class="avatar" border="0" title="">
+
+                    </td>
+                    <td> <a href="/base/gamers/neytpoh/">Neytpoh</a></td>
+                </tr>
+                <tr id="bx_887404810_31829">
+                    <td>			<img src="/bitrix/cache/s1/virtus/image.show/32w_32h_clipBOTH/upload/iblock/a7f/123.png" width="32" height="32" alt="" class="avatar" border="0" title="">
+
+                    </td>
+                    <td>                        			<img src="/bitrix/cache/s1/virtus/image.show/18w_11h_clipBOTH/upload/iblock/5fc/zerg-icon.gif" width="18" height="11" alt="" class="" border="0" title="Зерги">
+
+                        <a href="/base/gamers/lex/">LeX</a></td>
+                    <td class="score">[ <span class="score__item">5 : <b>6</b></span> ]</td>
+                    <td>			<img src="/bitrix/cache/s1/virtus/image.show/32w_32h_clipBOTH/upload/iblock/886/gjfh.png" width="32" height="32" alt="" class="avatar" border="0" title="">
+
+                    </td>
+                    <td>                        			<img src="/bitrix/cache/s1/virtus/image.show/18w_11h_clipBOTH/upload/iblock/be7/terran-icon.gif" width="18" height="11" alt="" class="" border="0" title="Терраны">
+
+                        <a href="/base/gamers/pomi/">Pomi</a></td>
+                </tr>
+                <tr id="bx_887404810_31830">
+                    <td>			<img src="/bitrix/cache/s1/virtus/image.show/32w_32h_clipBOTH/upload/iblock/cec/rttsw.png" width="32" height="32" alt="" class="avatar" border="0" title="">
+
+                    </td>
+                    <td>                        			<img src="/bitrix/cache/s1/virtus/image.show/18w_11h_clipBOTH/upload/iblock/6cc/random-icon.png" width="18" height="11" alt="" class="" border="0" title="рандом">
+
+                        <a href="/base/gamers/turuk/">Turuk</a></td>
+                    <td class="score">[ VS ]</td>
+                    <td>			<img src="/bitrix/cache/s1/virtus/image.show/32w_32h_clipBOTH/upload/iblock/ff9/dfss.png" width="32" height="32" alt="" class="avatar" border="0" title="">
+
+                    </td>
+                    <td>                        			<img src="/bitrix/cache/s1/virtus/image.show/18w_11h_clipBOTH/upload/iblock/d85/protoss-icon.gif" width="18" height="11" alt="" class="" border="0" title="Протосы">
+
+                        <a href="/base/gamers/innirvana/">inNirvana</a></td>
+                </tr>
+                </tbody></table>
+
+            <!-- profileMatches -->
+
+            <div class="b-profileBlock b-profileMatches">
+                <div class="historyTitle">История встреч: </div>
+                <div class="points">
+                    <div class="points__win">
+                        <span class="figure">0% побед</span>
+                        (0)
+                    </div>
+                    <div class="points__fail">
+                        <span class="figure">50% побед</span>
+                        (1)
+                    </div>
+                        <span class="points__graph" style="width: 252px;">
+                            <span class="points__graph__win" style="width: 0px;"></span>
+                            <span class="points__graph__fail" style="width: 125px;"></span>
+                        </span>
+                    <div class="points__drawn" style="padding-left:0px;"> <!-- win / 2 == 154 / 2 == 77 -->
+                        <span class="figure">50% ничьих</span>
+                        (1)
+                    </div>
+                </div>
+
+                <table class="b-profileMatches__history">
+                    <colgroup>
+                        <col width="30">
+                    </colgroup>
+                    <tbody><tr>
+                        <td>			<img src="/bitrix/cache/s1/virtus/image.show/19w_19h_clipBOTH/upload/iblock/bf4/cs.png" width="19" height="19" alt="" class="" border="0" title="Counter-Strike 1.6">
+
+                        </td>
+                        <td class="ru">
+                            <a href="/base/teams/virtuspro/virtus-pro-sc2/">Virtus.pro*BenQ</a></td>
+                        <td class="score">[ <span class="score__item">0 : 0</span> ]</td>
+                        <td class="ru"> <a href="/base/teams/empire/empire-dota2/">Empire</a></td>
+                    </tr>
+                    <tr>
+                        <td>			<img src="/bitrix/cache/s1/virtus/image.show/19w_19h_clipBOTH/upload/iblock/0df/sc2_39x39.png" width="19" height="19" alt="" class="" border="0" title="StarCraft 2">
+
+                        </td>
+                        <td class="ru">
+                            <a href="/base/teams/virtuspro/virtus-pro-sc2/">Virtus.pro*BenQ</a></td>
+                        <td class="score">[ <span class="score__item">5 : <b>6</b></span> ]</td>
+                        <td class="ru"> <a href="/base/teams/empire/empire-dota2/"><b>Empire</b></a></td>
+                    </tr>
+                    </tbody></table>
+
+                <!--//                <div class="more">
+                                    <a href="" class="more__link">Еще</a>
+                                </div>//-->
+            </div>
+            <!-- end profileMatches -->
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="b-closingBox">
+    <div id="comp_b77d00ce66044296b346cb701a576815">
+        <div class="b-profileBlock b-profileMatches" style="min-height: 30px;">
+            <p class="b-profileBlock__title">Матчи Virtus.pro*BenQ            <small>История сыгранных матчей команды Virtus.pro*BenQ</small>
+            </p>
+
+            <table class="b-profileMatches__history">
+                <colgroup>
+                    <col width="30">
+                </colgroup>
+                <tbody><tr>
+                    <td>
+                        <img src="/bitrix/cache/s1/virtus/image.show/19w_19h_clip/upload/iblock/bf4/cs.png" width="19" height="19" alt="" class="" border="0" title="Counter-Strike 1.6">
+
+                    </td>
+                    <td class="ru">
+                        <a href="/base/teams/virtuspro/virtus-pro-sc2/">Virtus.pro*BenQ</a></td>
+                    <td class="score">[ <span class="score__item">0 : 0</span> ]</td>
+                    <td class="">
+                        <a href="/base/teams/empire/empire-dota2/">Empire</a></td>
+                </tr>
+                <tr>
+                    <td>
+                        <img src="/bitrix/cache/s1/virtus/image.show/19w_19h_clip/upload/iblock/0df/sc2_39x39.png" width="19" height="19" alt="" class="" border="0" title="StarCraft 2">
+
+                    </td>
+                    <td class="ru">
+                        <a href="/base/teams/virtuspro/virtus-pro-sc2/">Virtus.pro*BenQ</a></td>
+                    <td class="score">[ <span class="score__item">5 : <b>6</b></span> ]</td>
+                    <td class="">
+                        <a href="/base/teams/empire/empire-dota2/"><b>Empire</b></a></td>
+                </tr>
+                <tr>
+                    <td>
+                        <img src="/bitrix/cache/s1/virtus/image.show/19w_19h_clip/upload/iblock/0df/sc2_39x39.png" width="19" height="19" alt="" class="" border="0" title="StarCraft 2">
+
+                    </td>
+                    <td class="ru">
+                        <a href="/base/teams/virtuspro/virtus-pro-sc2/">Virtus.pro*BenQ</a></td>
+                    <td class="score">[ <span class="score__item">0 : <b>7</b></span> ]</td>
+                    <td class="">
+                        <a href="/base/teams/empire/empire-dota2/"><b>Empire</b></a></td>
+                </tr>
+                </tbody></table>
+
+            <a href="/base/match/mixed/test-mix/?MTCH_CNT=10" onclick="BX.ajax.insertToNode('/base/match/mixed/test-mix/?MTCH_CNT=10&amp;bxajaxid=b77d00ce66044296b346cb701a576815', 'comp_b77d00ce66044296b346cb701a576815'); return false;" class="start_load_btn"></a>
+        </div></div>		<div id="comp_defb13544008ac20f51b137cbbe2344c">
+    <div class="b-profileBlock b-profileMatches" style="min-height: 30px;">
+        <p class="b-profileBlock__title">Матчи Empire            <small>История сыгранных матчей команды Empire</small>
+        </p>
+
+        <table class="b-profileMatches__history">
+            <colgroup>
+                <col width="30">
+            </colgroup>
+            <tbody><tr>
+                <td>
+                    <img src="/bitrix/cache/s1/virtus/image.show/19w_19h_clip/upload/iblock/bf4/cs.png" width="19" height="19" alt="" class="" border="0" title="Counter-Strike 1.6">
+
+                </td>
+                <td class="ru">
+                    <a href="/base/teams/empire/empire-dota2/">Empire</a></td>
+                <td class="score">[ <span class="score__item">0 : 0</span> ]</td>
+                <td class="">
+                    <a href="/base/teams/virtuspro/virtus-pro-sc2/">Virtus.pro*BenQ</a></td>
+            </tr>
+            <tr>
+                <td>
+                    <img src="/bitrix/cache/s1/virtus/image.show/19w_19h_clip/upload/iblock/0df/sc2_39x39.png" width="19" height="19" alt="" class="" border="0" title="StarCraft 2">
+
+                </td>
+                <td class="ru">
+                    <a href="/base/teams/empire/empire-dota2/"><b>Empire</b></a></td>
+                <td class="score">[ <span class="score__item"><b>6</b> : 5</span> ]</td>
+                <td class="">
+                    <a href="/base/teams/virtuspro/virtus-pro-sc2/">Virtus.pro*BenQ</a></td>
+            </tr>
+            <tr>
+                <td>
+                    <img src="/bitrix/cache/s1/virtus/image.show/19w_19h_clip/upload/iblock/0df/sc2_39x39.png" width="19" height="19" alt="" class="" border="0" title="StarCraft 2">
+
+                </td>
+                <td class="ru">
+                    <a href="/base/teams/empire/empire-dota2/"><b>Empire</b></a></td>
+                <td class="score">[ <span class="score__item"><b>7</b> : 0</span> ]</td>
+                <td class="">
+                    <a href="/base/teams/virtuspro/virtus-pro-sc2/">Virtus.pro*BenQ</a></td>
+            </tr>
+            </tbody></table>
+
+        <a href="/base/match/mixed/test-mix/?MTCH_CNT=10" onclick="BX.ajax.insertToNode('/base/match/mixed/test-mix/?MTCH_CNT=10&amp;bxajaxid=defb13544008ac20f51b137cbbe2344c', 'comp_defb13544008ac20f51b137cbbe2344c'); return false;" class="start_load_btn"></a>
+    </div></div></div>
+<div id="comp_d829a0e6a78f909d0672f6946909c104"><div class="i-comments i-comment_tabs">
+<ul class="b-commentsTab">
+    <li class="item active" data-tbl="normal_c"><a href="" class="item__btn">
+        <img class="item__teamLogo" src="/bitrix/templates/VIRTUS.PRO.TPL.MAIN/source/img/teams/logo/32x32/virtus.jpg" alt="" width="24" height="24">
+        Комментарии [5]
+    </a></li>
+    <li class="item" data-tbl="vk_c"><a href="#" class="item__btn vk">Вконтакте</a></li>
+    <li class="item" data-tbl="fb_c"><a href="#" class="item__btn fb">Facebook</a></li>
+    <!-- <li class="item" data-tbl="odkl_c"><a href="#" class="item__btn odnoklassniki">Одноклассники [ 0 ]</a></li>-->
+</ul>
+<ul style="display:none" id="vk_c" class="b-comments"><li class="item">
+    <!-- Put this script tag to the <head> of your page -->
+    <script type="text/javascript" src="//vk.com/js/api/openapi.js?89"></script>
+
+    <script type="text/javascript">
+        VK.init({apiId: 2653059, onlyWidgets: true});
+    </script>
+
+    <!-- Put this div tag to the place, where the Comments block will be -->
+    <div id="vk_comments" style="height: 157px; width: 740px; background-image: none; background-position: initial initial; background-repeat: initial initial;"><iframe name="fXD682f7" frameborder="0" src="http://vk.com/widget_comments.php?app=2653059&amp;width=740px&amp;limit=20&amp;height=0&amp;mini=auto&amp;norealtime=0&amp;page=0&amp;status_publish=1&amp;attach=*&amp;url=http%3A%2F%2Fv3.virtuspro.org%2Fbase%2Fmatch%2Fmixed%2Ftest-mix%2F&amp;title=VIRTUS.PRO%20%3A%3A%20%D0%94%D0%B5%D1%82%D0%B0%D0%BB%D1%8C%D0%BD%D0%B0%D1%8F%20%D0%B8%D0%BD%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BE%20%D0%BC%D0%B0%D1%82%D1%87%D0%B5&amp;description=VIRTUS.PRO%20%3A%3A%20%D0%9E%D1%84%D0%B8%D1%86%D0%B8%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9%20%D1%81%D0%B0%D0%B9%D1%82&amp;image=&amp;13e244c0a28" width="740" height="133" scrolling="no" id="vkwidget1" style="overflow: hidden; height: 157px;"></iframe></div>
+    <script type="text/javascript">
+        VK.Widgets.Comments("vk_comments", {limit: 20, width: "740", attach: "*"});
+    </script>
+</li></ul>
+<ul style="display:none" id="fb_c" class="b-comments"><li class="item">
+    <div class="fb-comments fb_iframe_widget" data-href="http://example.com" data-width="740" data-num-posts="20" fb-xfbml-state="rendered"><span style="height: 6940px; width: 740px;"><iframe id="f11b1312a8" name="f56225e28" scrolling="no" class="fb_ltr" src="https://www.facebook.com/plugins/comments.php?api_key=120237698173783&amp;locale=ru_RU&amp;sdk=joey&amp;channel_url=http%3A%2F%2Fstatic.ak.facebook.com%2Fconnect%2Fxd_arbiter.php%3Fversion%3D23%23cb%3Df3ad113ff8%26origin%3Dhttp%253A%252F%252Fv3.virtuspro.org%252Ff230ac5064%26domain%3Dv3.virtuspro.org%26relation%3Dparent.parent&amp;numposts=20&amp;width=740&amp;href=http%3A%2F%2Fexample.com" style="border: none; overflow: hidden; height: 6940px; width: 740px;"></iframe></span></div>
+</li></ul>
+<!--<ul style="display:none" id="odkl_c" class="b-comments"><li class="item">
+odnoklassniki
+</li></ul>-->
+
+<ul id="normal_c" class="b-comments">
+<li class="item" id="cid_100">
+    <div class="b-votes">
+        <span class="b-votes__points raiting_ajax r_ajax_100_4" data-rid="100_4">1</span>
+        <span class="b-votes__up raiting_ajax_vote" data-vote="+" data-rid="100_4"></span>
+        <span class="b-votes__down raiting_ajax_vote" data-vote="-" data-rid="100_4"></span>
+    </div>
+
+    <div class="item__avatar">
+        <img src="/bitrix/cache/s1/virtus/image.show/46w_46h_clipBOTH/upload/main/278/4.jpg" width="46" height="46" alt="" class="avatar general" border="0">
+
+        <!--//General//-->
+        <span class="points">0</span>
+    </div>
+    <b class="item__author">admin</b> 2013-02-26 02:53:46
+    <div class="item__comment">rwewerwer</div>
+
+    <div class="item__actions">
+        <a data-cid="100" class="answer" href="#" title="">Ответить</a>
+        <a data-cid="100" class="cite" href="#" title="">Цитировать</a>
+        <div style="position: absolute; left: 247px; top: 50px;">
+
+            <form action="/base/match/mixed/test-mix/" method="post" style="float: left; width: 130px;"><input type="hidden" name="bxajaxid" id="bxajaxid_d829a0e6a78f909d0672f6946909c104_15428" value="d829a0e6a78f909d0672f6946909c104"><input type="hidden" name="AJAX_CALL" value="Y"><script type="text/javascript">
+                function _processform_15428(){
+                    var obForm = top.BX('bxajaxid_d829a0e6a78f909d0672f6946909c104_15428').form;
+                    top.BX.bind(obForm, 'submit', function() {BX.ajax.submitComponentForm(this, 'comp_d829a0e6a78f909d0672f6946909c104', true)});
+                    top.BX.removeCustomEvent('onAjaxSuccess', _processform_15428);
+                }
+                if (top.BX('bxajaxid_d829a0e6a78f909d0672f6946909c104_15428'))
+                    _processform_15428();
+                else
+                    top.BX.addCustomEvent('onAjaxSuccess', _processform_15428);
+            </script>
+                <input name="action" type="hidden" value="active">
+                <input name="active" type="hidden" value="0">
+                <input name="idc" type="hidden" value="100">
+                <input type="submit" value="скрыть\показать">
+            </form>
+
+            <form action="/base/match/mixed/test-mix/" method="post" style="float: left; width: 110px;"><input type="hidden" name="bxajaxid" id="bxajaxid_d829a0e6a78f909d0672f6946909c104_75079" value="d829a0e6a78f909d0672f6946909c104"><input type="hidden" name="AJAX_CALL" value="Y"><script type="text/javascript">
+                function _processform_75079(){
+                    var obForm = top.BX('bxajaxid_d829a0e6a78f909d0672f6946909c104_75079').form;
+                    top.BX.bind(obForm, 'submit', function() {BX.ajax.submitComponentForm(this, 'comp_d829a0e6a78f909d0672f6946909c104', true)});
+                    top.BX.removeCustomEvent('onAjaxSuccess', _processform_75079);
+                }
+                if (top.BX('bxajaxid_d829a0e6a78f909d0672f6946909c104_75079'))
+                    _processform_75079();
+                else
+                    top.BX.addCustomEvent('onAjaxSuccess', _processform_75079);
+            </script>
+                <input name="action" type="hidden" value="del">
+                <input name="idc" type="hidden" value="100">
+                <input type="submit" value="удалить">
+            </form>
+        </div>
+    </div>
+</li>
+
+<li class="item" id="cid_101">
+    <div class="b-votes">
+        <span class="b-votes__points raiting_ajax r_ajax_101_4" data-rid="101_4">-1</span>
+        <span class="b-votes__up raiting_ajax_vote" data-vote="+" data-rid="101_4"></span>
+        <span class="b-votes__down raiting_ajax_vote" data-vote="-" data-rid="101_4"></span>
+    </div>
+
+    <div class="item__avatar">
+        <img src="/bitrix/cache/s1/virtus/image.show/46w_46h_clipBOTH/upload/main/278/4.jpg" width="46" height="46" alt="" class="avatar general" border="0">
+
+        <!--//General//-->
+        <span class="points">0</span>
+    </div>
+    <b class="item__author">admin</b> 2013-02-26 02:53:49
+    <div class="item__comment">werwerwer</div>
+
+    <div class="item__actions">
+        <a data-cid="101" class="answer" href="#" title="">Ответить</a>
+        <a data-cid="101" class="cite" href="#" title="">Цитировать</a>
+        <div style="position: absolute; left: 247px; top: 50px;">
+
+            <form action="/base/match/mixed/test-mix/" method="post" style="float: left; width: 130px;"><input type="hidden" name="bxajaxid" id="bxajaxid_d829a0e6a78f909d0672f6946909c104_60423" value="d829a0e6a78f909d0672f6946909c104"><input type="hidden" name="AJAX_CALL" value="Y"><script type="text/javascript">
+                function _processform_60423(){
+                    var obForm = top.BX('bxajaxid_d829a0e6a78f909d0672f6946909c104_60423').form;
+                    top.BX.bind(obForm, 'submit', function() {BX.ajax.submitComponentForm(this, 'comp_d829a0e6a78f909d0672f6946909c104', true)});
+                    top.BX.removeCustomEvent('onAjaxSuccess', _processform_60423);
+                }
+                if (top.BX('bxajaxid_d829a0e6a78f909d0672f6946909c104_60423'))
+                    _processform_60423();
+                else
+                    top.BX.addCustomEvent('onAjaxSuccess', _processform_60423);
+            </script>
+                <input name="action" type="hidden" value="active">
+                <input name="active" type="hidden" value="0">
+                <input name="idc" type="hidden" value="101">
+                <input type="submit" value="скрыть\показать">
+            </form>
+
+            <form action="/base/match/mixed/test-mix/" method="post" style="float: left; width: 110px;"><input type="hidden" name="bxajaxid" id="bxajaxid_d829a0e6a78f909d0672f6946909c104_3889" value="d829a0e6a78f909d0672f6946909c104"><input type="hidden" name="AJAX_CALL" value="Y"><script type="text/javascript">
+                function _processform_3889(){
+                    var obForm = top.BX('bxajaxid_d829a0e6a78f909d0672f6946909c104_3889').form;
+                    top.BX.bind(obForm, 'submit', function() {BX.ajax.submitComponentForm(this, 'comp_d829a0e6a78f909d0672f6946909c104', true)});
+                    top.BX.removeCustomEvent('onAjaxSuccess', _processform_3889);
+                }
+                if (top.BX('bxajaxid_d829a0e6a78f909d0672f6946909c104_3889'))
+                    _processform_3889();
+                else
+                    top.BX.addCustomEvent('onAjaxSuccess', _processform_3889);
+            </script>
+                <input name="action" type="hidden" value="del">
+                <input name="idc" type="hidden" value="101">
+                <input type="submit" value="удалить">
+            </form>
+        </div>
+    </div>
+</li>
+
+<li class="item" id="cid_102">
+    <div class="b-votes">
+        <span class="b-votes__points raiting_ajax r_ajax_102_4" data-rid="102_4">0</span>
+        <span class="b-votes__up raiting_ajax_vote" data-vote="+" data-rid="102_4"></span>
+        <span class="b-votes__down raiting_ajax_vote" data-vote="-" data-rid="102_4"></span>
+    </div>
+
+    <div class="item__avatar">
+        <img src="/bitrix/cache/s1/virtus/image.show/46w_46h_clipBOTH/upload/main/278/4.jpg" width="46" height="46" alt="" class="avatar general" border="0">
+
+        <!--//General//-->
+        <span class="points">0</span>
+    </div>
+    <b class="item__author">admin</b> 2013-02-26 02:53:51
+    <div class="item__comment">werwerwer</div>
+
+    <div class="item__actions">
+        <a data-cid="102" class="answer" href="#" title="">Ответить</a>
+        <a data-cid="102" class="cite" href="#" title="">Цитировать</a>
+        <div style="position: absolute; left: 247px; top: 50px;">
+
+            <form action="/base/match/mixed/test-mix/" method="post" style="float: left; width: 130px;"><input type="hidden" name="bxajaxid" id="bxajaxid_d829a0e6a78f909d0672f6946909c104_46023" value="d829a0e6a78f909d0672f6946909c104"><input type="hidden" name="AJAX_CALL" value="Y"><script type="text/javascript">
+                function _processform_46023(){
+                    var obForm = top.BX('bxajaxid_d829a0e6a78f909d0672f6946909c104_46023').form;
+                    top.BX.bind(obForm, 'submit', function() {BX.ajax.submitComponentForm(this, 'comp_d829a0e6a78f909d0672f6946909c104', true)});
+                    top.BX.removeCustomEvent('onAjaxSuccess', _processform_46023);
+                }
+                if (top.BX('bxajaxid_d829a0e6a78f909d0672f6946909c104_46023'))
+                    _processform_46023();
+                else
+                    top.BX.addCustomEvent('onAjaxSuccess', _processform_46023);
+            </script>
+                <input name="action" type="hidden" value="active">
+                <input name="active" type="hidden" value="0">
+                <input name="idc" type="hidden" value="102">
+                <input type="submit" value="скрыть\показать">
+            </form>
+
+            <form action="/base/match/mixed/test-mix/" method="post" style="float: left; width: 110px;"><input type="hidden" name="bxajaxid" id="bxajaxid_d829a0e6a78f909d0672f6946909c104_83751" value="d829a0e6a78f909d0672f6946909c104"><input type="hidden" name="AJAX_CALL" value="Y"><script type="text/javascript">
+                function _processform_83751(){
+                    var obForm = top.BX('bxajaxid_d829a0e6a78f909d0672f6946909c104_83751').form;
+                    top.BX.bind(obForm, 'submit', function() {BX.ajax.submitComponentForm(this, 'comp_d829a0e6a78f909d0672f6946909c104', true)});
+                    top.BX.removeCustomEvent('onAjaxSuccess', _processform_83751);
+                }
+                if (top.BX('bxajaxid_d829a0e6a78f909d0672f6946909c104_83751'))
+                    _processform_83751();
+                else
+                    top.BX.addCustomEvent('onAjaxSuccess', _processform_83751);
+            </script>
+                <input name="action" type="hidden" value="del">
+                <input name="idc" type="hidden" value="102">
+                <input type="submit" value="удалить">
+            </form>
+        </div>
+    </div>
+</li>
+
+<li class="item" id="cid_124">
+    <div class="b-votes">
+        <span class="b-votes__points raiting_ajax r_ajax_124_4" data-rid="124_4">1</span>
+        <span class="b-votes__up raiting_ajax_vote" data-vote="+" data-rid="124_4"></span>
+        <span class="b-votes__down raiting_ajax_vote" data-vote="-" data-rid="124_4"></span>
+    </div>
+
+    <div class="item__avatar">
+        <img src="" width="" height="" alt="" class="avatar general" border="0">
+
+        <!--//General//-->
+        <span class="points">0</span>
+    </div>
+    <b class="item__author">sneg1</b> 2013-04-08 23:11:35
+    <div class="item__comment">ho</div>
+
+    <div class="item__actions">
+        <a data-cid="124" class="answer" href="#" title="">Ответить</a>
+        <a data-cid="124" class="cite" href="#" title="">Цитировать</a>
+        <div style="position: absolute; left: 247px; top: 50px;">
+
+            <form action="/base/match/mixed/test-mix/" method="post" style="float: left; width: 130px;"><input type="hidden" name="bxajaxid" id="bxajaxid_d829a0e6a78f909d0672f6946909c104_21816" value="d829a0e6a78f909d0672f6946909c104"><input type="hidden" name="AJAX_CALL" value="Y"><script type="text/javascript">
+                function _processform_21816(){
+                    var obForm = top.BX('bxajaxid_d829a0e6a78f909d0672f6946909c104_21816').form;
+                    top.BX.bind(obForm, 'submit', function() {BX.ajax.submitComponentForm(this, 'comp_d829a0e6a78f909d0672f6946909c104', true)});
+                    top.BX.removeCustomEvent('onAjaxSuccess', _processform_21816);
+                }
+                if (top.BX('bxajaxid_d829a0e6a78f909d0672f6946909c104_21816'))
+                    _processform_21816();
+                else
+                    top.BX.addCustomEvent('onAjaxSuccess', _processform_21816);
+            </script>
+                <input name="action" type="hidden" value="active">
+                <input name="active" type="hidden" value="0">
+                <input name="idc" type="hidden" value="124">
+                <input type="submit" value="скрыть\показать">
+            </form>
+
+            <form action="/base/match/mixed/test-mix/" method="post" style="float: left; width: 110px;"><input type="hidden" name="bxajaxid" id="bxajaxid_d829a0e6a78f909d0672f6946909c104_74737" value="d829a0e6a78f909d0672f6946909c104"><input type="hidden" name="AJAX_CALL" value="Y"><script type="text/javascript">
+                function _processform_74737(){
+                    var obForm = top.BX('bxajaxid_d829a0e6a78f909d0672f6946909c104_74737').form;
+                    top.BX.bind(obForm, 'submit', function() {BX.ajax.submitComponentForm(this, 'comp_d829a0e6a78f909d0672f6946909c104', true)});
+                    top.BX.removeCustomEvent('onAjaxSuccess', _processform_74737);
+                }
+                if (top.BX('bxajaxid_d829a0e6a78f909d0672f6946909c104_74737'))
+                    _processform_74737();
+                else
+                    top.BX.addCustomEvent('onAjaxSuccess', _processform_74737);
+            </script>
+                <input name="action" type="hidden" value="del">
+                <input name="idc" type="hidden" value="124">
+                <input type="submit" value="удалить">
+            </form>
+        </div>
+    </div>
+</li>
+
+<li class="item" id="cid_125">
+    <div class="b-votes">
+        <span class="b-votes__points raiting_ajax r_ajax_125_4" data-rid="125_4">0</span>
+        <span class="b-votes__up raiting_ajax_vote" data-vote="+" data-rid="125_4"></span>
+        <span class="b-votes__down raiting_ajax_vote" data-vote="-" data-rid="125_4"></span>
+    </div>
+
+    <div class="item__avatar">
+        <img src="" width="" height="" alt="" class="avatar general" border="0">
+
+        <!--//General//-->
+        <span class="points">0</span>
+    </div>
+    <b class="item__author">titan007</b> 2013-04-09 02:02:46
+    <div class="item__comment">)))</div>
+
+    <div class="item__actions">
+        <a data-cid="125" class="answer" href="#" title="">Ответить</a>
+        <a data-cid="125" class="cite" href="#" title="">Цитировать</a>
+        <div style="position: absolute; left: 247px; top: 50px;">
+
+            <form action="/base/match/mixed/test-mix/" method="post" style="float: left; width: 130px;"><input type="hidden" name="bxajaxid" id="bxajaxid_d829a0e6a78f909d0672f6946909c104_77650" value="d829a0e6a78f909d0672f6946909c104"><input type="hidden" name="AJAX_CALL" value="Y"><script type="text/javascript">
+                function _processform_77650(){
+                    var obForm = top.BX('bxajaxid_d829a0e6a78f909d0672f6946909c104_77650').form;
+                    top.BX.bind(obForm, 'submit', function() {BX.ajax.submitComponentForm(this, 'comp_d829a0e6a78f909d0672f6946909c104', true)});
+                    top.BX.removeCustomEvent('onAjaxSuccess', _processform_77650);
+                }
+                if (top.BX('bxajaxid_d829a0e6a78f909d0672f6946909c104_77650'))
+                    _processform_77650();
+                else
+                    top.BX.addCustomEvent('onAjaxSuccess', _processform_77650);
+            </script>
+                <input name="action" type="hidden" value="active">
+                <input name="active" type="hidden" value="0">
+                <input name="idc" type="hidden" value="125">
+                <input type="submit" value="скрыть\показать">
+            </form>
+
+            <form action="/base/match/mixed/test-mix/" method="post" style="float: left; width: 110px;"><input type="hidden" name="bxajaxid" id="bxajaxid_d829a0e6a78f909d0672f6946909c104_18331" value="d829a0e6a78f909d0672f6946909c104"><input type="hidden" name="AJAX_CALL" value="Y"><script type="text/javascript">
+                function _processform_18331(){
+                    var obForm = top.BX('bxajaxid_d829a0e6a78f909d0672f6946909c104_18331').form;
+                    top.BX.bind(obForm, 'submit', function() {BX.ajax.submitComponentForm(this, 'comp_d829a0e6a78f909d0672f6946909c104', true)});
+                    top.BX.removeCustomEvent('onAjaxSuccess', _processform_18331);
+                }
+                if (top.BX('bxajaxid_d829a0e6a78f909d0672f6946909c104_18331'))
+                    _processform_18331();
+                else
+                    top.BX.addCustomEvent('onAjaxSuccess', _processform_18331);
+            </script>
+                <input name="action" type="hidden" value="del">
+                <input name="idc" type="hidden" value="125">
+                <input type="submit" value="удалить">
+            </form>
+        </div>
+    </div>
+</li>
+
+</ul>
+<div id="b-comments__form" style="margin-top: 30px;">
+    <a name="comment_31826">
+
+        <form class="b-comments__form" action="/base/match/mixed/test-mix/" method="post"><input type="hidden" name="bxajaxid" id="bxajaxid_d829a0e6a78f909d0672f6946909c104_45506" value="d829a0e6a78f909d0672f6946909c104"><input type="hidden" name="AJAX_CALL" value="Y"><script type="text/javascript">
+            function _processform_45506(){
+                var obForm = top.BX('bxajaxid_d829a0e6a78f909d0672f6946909c104_45506').form;
+                top.BX.bind(obForm, 'submit', function() {BX.ajax.submitComponentForm(this, 'comp_d829a0e6a78f909d0672f6946909c104', true)});
+                top.BX.removeCustomEvent('onAjaxSuccess', _processform_45506);
+            }
+            if (top.BX('bxajaxid_d829a0e6a78f909d0672f6946909c104_45506'))
+                _processform_45506();
+            else
+                top.BX.addCustomEvent('onAjaxSuccess', _processform_45506);
+        </script>
+            <!--//            <div class="b-attention">
+                            Извините, но только зарегестрированные пользователи имеют право оставлять комментарии. <a
+                                href="" title="">Войти</a> или
+                            <a href="" title="">Зарегистрироваться</a>
+                        </div>//-->
+
+            <p class="title">Оставить свой комментарий</p>
+
+            <div class="body">
+                <img src="" width="" height="" alt="" class="avatar" border="0">
+
+                <input name="action" type="hidden" value="ADD">
+                <input name="parent" type="hidden" value="0">
+                <textarea name="comment" placeholder="Введите Ваш комментарий" title="Введите Ваш комментарий"></textarea>
+                <!--//	                <input type="text" class="input" placeholder="Вставить изображение" title="Вставить изображение">
+                                    <span class="browse">Выбрать<input type="file" class="browse__file"></span>
+                                    <input type="text" class="input" placeholder="Вставить ссылку на видеоролик"
+                                           title="Вставить ссылку на видеоролик">//-->
+                <button class="submit" type="submit"></button>
+            </div>
+        </form>
+    </a></div><a name="comment_31826">
+</a></div></div><a name="comment_31826">                  </a>

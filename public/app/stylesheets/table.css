@@ -11,6 +11,15 @@
     width: 100%;
 }
 
+.table-row {
+    -webkit-transition-property: color, background-color;
+    -webkit-transition-duration: .3s;
+}
+
+.table-row:hover {
+    background-color: rgba(0,0,0,0.075);
+}
+
 .table th, .table .td {
     text-align: left;
 }

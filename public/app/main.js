@@ -143,7 +143,7 @@ require({
 });
 
 if (this.debug) {
-  var contentElement = document.getElementById('content');
+  var contentElement = document.querySelector('.b-content');
   var statusElement = document.createElement('div');
   statusElement.id = 'status';
   statusElement.className = 'status';
@@ -180,6 +180,10 @@ require([
   'modernizr.columns',
   'cs!./core'
 ], function(){
+  if (window.debug) {
+    var statusElement = document.getElementById('status');
+    statusElement.parentNode.removeChild(statusElement);
+  }
   require(['cs!application'], function(){
     console.profile('Loading');
     App.advanceReadiness();

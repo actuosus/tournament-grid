@@ -14,32 +14,25 @@
                 <div class="b-content">
                     <div id="content"></div>
                     <script type="text/javascript">
-                        window.currentReportId = '<%- @doc.id %>';
                         window.debug = true;
+                        window.grid = {
+                            reportId: '<%- @doc.id %>',
+                            config: {
+                                rootElement: '#content',
+                                languages: <%- JSON.stringify(@languages) %>
+                            }
+                        };
                     </script>
-
                     <% if @node_env is 'production': %>
                     <link rel="stylesheet" href="<%- @staticDomain %>/bundle/stylesheets/app.css" />
                     <% else: %>
                     <link rel="stylesheet" href="/app/stylesheets/main.css" />
                     <% end %>
-                    <link rel="icon" type="image/x-icon" href="<%- @staticDomain %>/favicon.ico" />
-
                     <% if @node_env is 'production': %>
-                    <script data-main="/bundle/app.js" src="/vendor/scripts/require.js"></script>
+                    <script data-main="/bundle/app.js" src="/vendor/scripts/require.min.js"></script>
                     <% else: %>
                     <script data-main="/app/main.js" src="/vendor/scripts/require.js"></script>
                     <% end %>
-
-                    <script type="text/javascript" id="grid-config">
-                        window.grid = {};
-                        window.grid.config = {
-                            languages: <%- JSON.stringify(@languages) %>
-
-                        };
-                    </script>
-
-                    <script type="text/x-handlebars" data-template-name="application"></script>
                 </div>
             </div>
         </div>

@@ -18,5 +18,7 @@ define [
   'cs!./controllers/round'
   'cs!./controllers/match'
 
+  'cs!./controllers/stages'
+
 #  'cs!controllers/socket'
 ]

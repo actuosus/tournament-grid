@@ -18,7 +18,6 @@ define [
   App.StageTabsView = App.TabView.extend
     classNames: ['stage-view']
 
-    content: null
     currentStage: null
 
     currentStageDidLoad: -> @setViewForStage @currentStage
@@ -71,7 +70,7 @@ define [
 
     tabBarView: Em.ContainerView.extend( App.ContextMenuSupport, {
       classNames: ['i-listsTabs', 'i-listsTabs_bd']
-      contentBinding: 'parentView.content'
+      contentBinding: 'parentView.controller'
       childViews: ['tabsView']
 
       tabsView: Em.CollectionView.extend

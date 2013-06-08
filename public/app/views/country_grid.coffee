@@ -5,7 +5,9 @@
  * Time: 23:10
 ###
 
-define ->
+define [
+  'cs!./country_flag'
+],->
   App.CountryGridView = Em.CollectionView.extend
     classNames: 'country-grid'
 

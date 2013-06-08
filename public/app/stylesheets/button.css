@@ -209,3 +209,10 @@
     box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.75);
     text-shadow: 0 1px 1px rgba(0,0,0,0.5);
 }
+
+.public-menu-btn {
+    position: absolute;
+    font-size: 19px;
+    color: gray;
+    font-weight: normal;
+}

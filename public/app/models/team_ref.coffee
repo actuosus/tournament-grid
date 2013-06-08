@@ -18,7 +18,6 @@ define ['cs!../core'],->
 
     players: DS.hasMany('App.Player', {inverse: 'teamRef'})
 
-
     hasCaptain: (-> @get 'captain' ).property('players.@each.isCaptain')
 
   App.TeamRef.toString = -> 'TeamRef'

@@ -6,7 +6,7 @@
 ###
 
 define [
-  'text!../../templates/match/form.handlebars'
+  'text!../../templates/match/form.hbs'
   'cs!../../core'
   'cs!../form'
 

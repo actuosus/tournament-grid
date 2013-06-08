@@ -7,7 +7,7 @@
 ###
 
 define [
-  'text!../../templates/match/filter_form.handlebars'
+  'text!../../templates/match/filter_form.hbs'
   'cs!../../core'
 ], (template)->
   Em.TEMPLATES.matchFilterForm = Em.Handlebars.compile template

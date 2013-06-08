@@ -6,7 +6,7 @@
 ###
 
 define [
-  'text!../../templates/match/group_table_item.handlebars'
+  'text!../../templates/match/group_table_item.hbs'
   'cs!./table_item'
 ], (template)->
   Em.TEMPLATES.matchesGroupTableItem = Em.Handlebars.compile template

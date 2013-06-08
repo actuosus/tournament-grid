@@ -7,7 +7,7 @@
 ###
 
 define [
-  'text!../../templates/team/form.handlebars'
+  'text!../../templates/team/form.hbs'
   'cs!../../core'
   'cs!../form'
 ], (template)->
