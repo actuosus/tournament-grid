@@ -1,8 +1,8 @@
 ###
- * reports
+ * countries
  * @author: actuosus
- * Date: 13/05/2013
- * Time: 02:58
+ * Date: 13/06/2013
+ * Time: 20:01
 ###
 
 request = require 'superagent'
@@ -11,9 +11,9 @@ api = require '../../app'
 Config = require '../../conf'
 conf = new Config
 
-describe 'Reports', ->
+describe 'Country', ->
 
-  entity = name: 'report', plural: 'reports'
+  entity = name: 'country', plural: 'countries'
   namespace = "api/#{entity.plural}"
 
   getItems = (done)->
@@ -30,14 +30,14 @@ describe 'Reports', ->
     api.app.set 'port', conf.port
     # Starting the server
     api.init ->
-      api.models.Report.create {title: 'Some good report'}, (err, doc)->
+      api.models.Country.create {name: 'Россия'}, (err, doc)->
         done()
 
   after (done)->
     api.teardown -> done()
 
   describe 'list', ->
-    it 'should return the list of reports', (done)->
+    it 'should return the list of items', (done)->
       request
         .get("http://#{conf.hostname}:#{conf.port}/#{namespace}")
         .end (res)->
@@ -47,7 +47,7 @@ describe 'Reports', ->
           done()
 
   describe 'item', ->
-    it 'should return the one report', (done)->
+    it 'should return the one item', (done)->
       getItems (docs)->
         item = docs[0]
         request
@@ -55,7 +55,7 @@ describe 'Reports', ->
           .end (res)->
             res.statusCode.should.equal 200
 
-            res.body[entity.name].title.should.equal item.title
+            res.body[entity.name].name.should.equal item.name
 
             done()
 
@@ -69,7 +69,7 @@ describe 'Reports', ->
 
     it 'should not be able to be created', (done)->
       data = {}
-      data[entity.name] = {some: 'thing'}
+      data[entity.name] = {name: 'Готсвана'}
       request
         .post("http://#{conf.hostname}:#{conf.port}/#{namespace}")
         .send(data)

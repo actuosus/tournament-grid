@@ -1,8 +1,8 @@
 ###
- * players
+ * brackets
  * @author: actuosus
- * Date: 13/05/2013
- * Time: 05:06
+ * Date: 13/06/2013
+ * Time: 21:09
 ###
 
 request = require 'superagent'
@@ -11,8 +11,8 @@ api = require '../../app'
 Config = require '../../conf'
 conf = new Config
 
-describe 'Players', ->
-  entity = name: 'player', plural: 'players'
+describe 'Brackets', ->
+  entity = name: 'bracket', plural: 'brackets'
   namespace = "api/#{entity.plural}"
 
   getItems = (done)->
@@ -24,22 +24,34 @@ describe 'Players', ->
         should.exist items
         done items
 
+  report = null
+  stage = null
+
   before (done)->
     # Configuring server port
     api.app.set 'port', conf.port
     # Starting the server
     api.init ->
-      api.models.Player.create {nickname: 'Jordan'}, (err, doc)->
-        api.models.Player.create {nickname: 'Funky'}, (err, doc)->
-          done()
+      api.models.Report.create {title: 'Some report'}, (err, report)->
+        throw err if err
+        api.models.Stage.create {title: 'Some stage', visual_type: 'grid', report_id: report._id}, (err, stageDoc)->
+          stage = stageDoc
+          throw err if err
+          api.models.Bracket.create {title: 'Winners', stage_id: stage._id}, (err, doc)->
+            api.models.Bracket.create {title: 'Lossers', stage_id: stage._id}, (err, doc)->
+              if doc then done() else throw err
 
   after (done)->
-    api.teardown -> done()
+    api.teardown ->
+      api.models.Report.collection.remove (err)-> console.log err
+      api.models.Stage.collection.remove (err)-> console.log err
+      api.models.Round.collection.remove (err)-> console.log err
+      done()
 
   describe 'list', ->
-    it 'should return the list of players', (done)->
+    it 'should return the list of items', (done)->
       request
-        .get("http://#{conf.hostname}:#{conf.port}/api/players")
+        .get("http://#{conf.hostname}:#{conf.port}/#{namespace}")
         .end (res)->
           res.statusCode.should.equal 200
           done()
@@ -64,32 +76,23 @@ describe 'Players', ->
 
               done()
 
-    it 'should return the list of items if querying by nickname substring', (done)->
+  describe 'item', ->
+    it 'should return the one item', (done)->
       request
         .get("http://#{conf.hostname}:#{conf.port}/#{namespace}")
-        .query(nickname: 'n')
         .end (res)->
           res.statusCode.should.equal 200
+          item = res.body[entity.plural][0]
+          request
+            .get("http://#{conf.hostname}:#{conf.port}/#{namespace}/#{item._id}")
+            .end (res)->
+              res.statusCode.should.equal 200
 
-          should.exist res.body[entity.plural]
+              res.body[entity.name].title.should.equal item.title
 
-          # TODO Refine assertion.
-          res.body[entity.plural].length.should.be.above 1
+              done()
 
-          done()
-
-  describe 'item', ->
-    it 'should return the one player', (done)->
-      api.models.Player.find (err, docs)->
-        player = docs[0]
-        request
-          .get("http://#{conf.hostname}:#{conf.port}/api/players/#{player._id}")
-          .end (res)->
-            res.statusCode.should.equal 200
-            res.body.player.nickname.should.equal player.nickname
-            done()
-
-    it 'should return not found message for unknown id', (done)->
+    it 'should return not found message', (done)->
       request
         .get("http://#{conf.hostname}:#{conf.port}/#{namespace}/unknown_id")
         .end (res)->
@@ -100,9 +103,8 @@ describe 'Players', ->
     it 'should create one item', (done)->
       data = {}
       data[entity.name] =
-        nickname: 'Master'
-        first_name: 'Вася'
-        last_name: 'Пупкин'
+        title: 'Some new round'
+        stage_id: stage._id
       request
         .post("http://#{conf.hostname}:#{conf.port}/#{namespace}")
         .send(data)
@@ -112,7 +114,7 @@ describe 'Players', ->
           item = res.body[entity.name]
           should.exist item
 
-          item.nickname.should.be.equal data[entity.name].nickname
+          item.title.should.be.equal data[entity.name].title
 
           done()
 
@@ -132,16 +134,16 @@ describe 'Players', ->
 
             done()
 
-    it 'should not be able to be deleted', (done)->
+    it 'should delete one item', (done)->
       getItems (docs)->
         item = docs[0]
         request
           .del("http://#{conf.hostname}:#{conf.port}/#{namespace}/#{item._id}")
           .end (res)->
-            res.statusCode.should.equal 404
+            res.statusCode.should.equal 204
 
-            done()
-
-    it 'should be addable to the team reference'
-    it 'should be movable from one team reference to another'
-    it 'should be removable from the team reference'
+            request
+              .get("http://#{conf.hostname}:#{conf.port}/#{namespace}/#{item._id}")
+              .end (res)->
+                res.statusCode.should.equal 404
+                done()
