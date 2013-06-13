@@ -15,7 +15,10 @@ exports.list = (req, res)->
 
 exports.item = (req, res)->
   Bracket.where('_id', req.params._id).findOne().exec (err, doc)->
-    res.send bracket: doc
+    if doc
+      res.send bracket: doc
+    else
+      res.send 404, error: 'nothing found'
 
 exports.create = (req, res) ->
   if req.body?.brackets
@@ -29,15 +32,15 @@ exports.create = (req, res) ->
     res.send brackets: brackets
   else if req.body?.bracket
     await Stage.findById req.body?.bracket.stage_id, defer err, stage
-    bracket = req.body?.bracket
-    r = new Bracket bracket
-    r.name = bracket.name
-    await r.save defer err, doc
-    console.log stage.brackets
-    stage.brackets.push r
-    await stage.save defer err, stage
-    console.log stage.brackets
-    res.send bracket: doc
+    if stage
+      bracket = req.body?.bracket
+      b = new Bracket bracket
+      await b.save defer err, doc
+      stage.brackets.push b
+      await stage.save defer err, stage
+      res.send bracket: doc
+    else
+      res.send 400, error: 'stage_id required'
   else
     res.send 400, error: "server error"
 
@@ -51,11 +54,12 @@ exports.update = (req, res)->
     res.send brackets: brackets
   else if req.body?.bracket
     bracket = req.body?.bracket
-    await Bracket.findById req.params._id, defer err, r
-    if r
-      await r.update(bracket, defer err, doc)
-      await Stage.findByIdAndUpdate bracket.stage_id, {$push: {brackets: r._id}}, defer updateErr, stage
-      res.send bracket: r
+    await Bracket.findById req.params._id, defer err, b
+    if b
+#      await b.update(bracket, defer err, doc)
+      await Bracket.findByIdAndUpdate req.params._id, { $set: bracket }, defer err, b
+      await Stage.findByIdAndUpdate bracket.stage_id, {$push: {brackets: b._id}}, defer updateErr, stage
+      res.send bracket: b
     else
       res.send 400, error: "server error"
   else
@@ -67,4 +71,4 @@ exports.delete = (req, res) ->
     await Bracket.findByIdAndRemove req.params._id, defer err
     res.send 204
   else
-    res.send 400, error: "server error"
+    res.send 404, error: "nothing found"

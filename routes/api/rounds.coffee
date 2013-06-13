@@ -16,7 +16,10 @@ exports.list = (req, res)->
 
 exports.item = (req, res)->
   Round.where('_id', req.params._id).findOne().exec (err, doc)->
-    res.send round: doc
+    if doc
+      res.send round: doc
+    else
+      res.send 404, error: 'nothing found'
 
 exports.create = (req, res) ->
   if req.body?.rounds
@@ -30,15 +33,16 @@ exports.create = (req, res) ->
     res.send rounds: rounds
   else if req.body?.round
     await Stage.findById req.body?.round.stage_id, defer err, stage
-    round = req.body?.round
-    r = new Round round
-    r.name = round.name
-    await r.save defer err, doc
-    console.log stage.rounds
-    stage.rounds.push r
-    await stage.save defer err, stage
-    console.log stage.rounds
-    res.send round: doc
+    if stage
+      round = req.body?.round
+      r = new Round round
+      r.name = round.name
+      await r.save defer err, doc
+      stage.rounds.push r
+      await stage.save defer err, stage
+      res.send round: doc
+    else
+      res.send 400, error: 'stage_id required'
   else
     res.send 400, error: "server error"
 
@@ -54,11 +58,12 @@ exports.update = (req, res)->
     round = req.body?.round
     await Round.findById req.params._id, defer err, r
     if r
-      await r.update(round, defer err, doc)
+#      await r.update(round, defer err, r)
+      await Round.findByIdAndUpdate req.params._id, { $set: round }, defer err, r
       await Stage.findByIdAndUpdate round.stage_id, {$push: {rounds: r._id}}, defer updateErr, stage
       res.send round: r
     else
-      res.send 400, error: "server error"
+      res.send 404, error: 'not found'
   else
     res.send 400, error: "server error"
 
@@ -68,12 +73,12 @@ exports.delete = (req, res)->
     if round
       Round.remove _id: req.params._id, (err)->
         # TODO Remove socket hack.
-        socket.send {action: 'remove', model: 'Round', _id: req.params._id}
+#        socket.send {action: 'remove', model: 'Round', _id: req.params._id}
 
         Stage.findByIdAndUpdate(round.stage_id, {$pull : {rounds: req.params._id}}) if round.stage_id
         res.status 204 unless err
         res.send()
     else
-      res.send 404, error: "server error"
+      res.send 404, error: 'not found'
   else
     res.send 400, error: "server error"

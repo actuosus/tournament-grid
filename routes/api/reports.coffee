@@ -20,7 +20,10 @@ exports.item = (req, res)->
   .where('_id', req.params._id)
   .findOne()
   .exec (err, doc)->
+    if doc
       res.send report: doc.toObject(virtuals: yes)
+    else
+      res.send 404, error: 'not found'
 
 exports.update = (req, res)->
   if req.body?.reports

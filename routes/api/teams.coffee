@@ -35,7 +35,6 @@ exports.item = (req, res)->
     else
       res.send 404
 
-
 exports.create = (req, res) ->
   if req.body?.team
     team = req.body.team

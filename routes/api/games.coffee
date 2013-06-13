@@ -16,7 +16,10 @@ exports.list = (req, res)->
 
 exports.item = (req, res)->
   Game.where('_id', req.params._id).findOne().exec (err, doc)->
-    res.send game: doc
+    if doc
+      res.send game: doc
+    else
+      res.send 404, error: 'nothing found'
 
 exports.create = (req, res)->
   if req.body?.games
@@ -29,13 +32,16 @@ exports.create = (req, res)->
     res.send games: games
   else if req.body?.game
     await Match.findById req.body?.game.match_id, defer err, match
-    game = req.body?.game
-    g = new Game game
-    g.name = game.name
-    await g.save defer err, doc
-    match.games.push g
-    await match.save defer err, match
-    res.send game: doc
+    if match
+      game = req.body?.game
+      g = new Game game
+      g.name = game.name
+      await g.save defer err, doc
+      match.games.push g
+      await match.save defer err, match
+      res.send game: doc
+    else
+      res.send 400, error: 'match_id required'
   else
     res.send 400, error: "server error"
 
@@ -46,3 +52,8 @@ exports.update = (req, res)->
     res.send game: doc
   else
     res.send 400, error: "server error"
+
+exports.delete = (req, res)->
+  Game.findByIdAndRemove req.params._id, (err)->
+    res.status 204 unless err
+    res.send()

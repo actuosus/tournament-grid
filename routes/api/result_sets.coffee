@@ -15,7 +15,10 @@ exports.list = (req, res)->
 
 exports.item = (req, res)->
   ResultSet.where('_id', req.params._id).findOne().exec (err, doc)->
-    res.send result_set: doc
+    if doc
+      res.send result_set: doc
+    else
+      res.send 404, error: 'nothing found'
 
 exports.create = (req, res)->
   if req.body.result_set

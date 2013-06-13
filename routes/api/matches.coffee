@@ -15,6 +15,13 @@ exports.list = (req, res)->
   query.where('team1_id').in(req.query?.team_id) if req.query?.team_id
   query.exec (err, docs)-> res.send matches: docs
 
+exports.item = (req, res)->
+  Match.findById req.params._id, (err, doc)->
+    if doc
+      res.send match: doc
+    else
+      res.send 404
+
 exports.create = (req, res)->
   if req.body?.matches
     matches = []

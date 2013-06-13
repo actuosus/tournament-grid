@@ -8,7 +8,6 @@
 
 exports.logs = require './logs'
 
-exports.championships = require './championships'
 exports.countries = require './countries'
 exports.games = require './games'
 exports.matches = require './matches'

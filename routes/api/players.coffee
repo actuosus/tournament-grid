@@ -32,7 +32,10 @@ exports.list = (req, res)->
 
 exports.item = (req, res)->
   Player.where('_id', req.params._id).findOne().exec (err, doc)->
-    res.send player: doc
+    if doc
+      res.send player: doc
+    else
+      res.send 404, error: 'nothing found'
 
 
 exports.create = (req, res) ->
@@ -105,7 +108,7 @@ exports.update = (req, res)->
   else
     res.send 400, error: "server error"
 
-
+# Should not be presented in API.
 exports.delete = (req, res) ->
   if req.body?.players
     players = []

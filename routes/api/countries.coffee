@@ -37,4 +37,7 @@ exports.namesList = (req, res)->
 
 exports.item = (req, res)->
   Country.where('_id', req.params._id).findOne().exec (err, doc)->
-    res.send country: doc
+    if doc
+      res.send country: doc
+    else
+      res.send 404, error: 'nothing found'

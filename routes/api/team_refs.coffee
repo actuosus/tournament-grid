@@ -36,7 +36,6 @@ exports.create = (req, res) ->
     teamRef = req.body.team_ref
     t = new TeamRef teamRef
     await t.save defer err, doc
-    console.log teamRef.report_id
     Round.findByIdAndUpdate(teamRef.round_id, {$push: {team_refs: t._id}}, ->) if teamRef.round_id
     Report.findByIdAndUpdate(teamRef.report_id, {$push: {team_refs: t._id}}, ->) if teamRef.report_id
     res.send team_ref: doc
@@ -48,7 +47,6 @@ exports.update = (req, res)->
   if req.body?.team_ref
     teamRef = req.body.team_ref
     await TeamRef.findByIdAndUpdate req.params._id, { $set: teamRef }, defer err, doc
-    console.log err, doc
     res.send team_ref: doc
   else
     res.send 400, error: "server error"
@@ -60,7 +58,6 @@ exports.delete = (req, res) ->
       # TODO Remove socket hack.
 #      socket.send {action: 'remove', model: 'TeamRef', _id: req.params._id}
 
-      console.log teamRef.report_id
       Report.findByIdAndUpdate(teamRef.report_id, {$pull: {team_refs: teamRef._id}}, ->) if teamRef.report_id
       res.status 204 unless err
       res.send()
