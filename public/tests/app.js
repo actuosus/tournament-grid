@@ -6,7 +6,9 @@
  * Time: 21:29
  */
 
-define(['superagent'], function(request){
+define(['superagent', 'conf'], function(request){
+  var hiddenAPI = 'http://'+ conf.hostname + ':' + conf.port + '/hidden/';
+
   function Collection() {
 
   }
@@ -29,7 +31,7 @@ define(['superagent'], function(request){
     dataToSend[this.name] = data
     self = this;
     request
-      .post('http://virtuspro.local:3000/hidden/'+ this.plural)
+      .post(hiddenAPI + this.plural)
       .send(dataToSend)
       .end(function(res){
       cb(err, res.body[self.name]);
@@ -39,7 +41,7 @@ define(['superagent'], function(request){
   Model.prototype.remove = function(data, cb){
 //    console.log('Removing a Model', this, data);
     var err = null;
-    request.del('http://virtuspro.local:3000/hidden/'+ this.plural).send(data).end(function(){
+    request.del(hiddenAPI + this.plural).send(data).end(function(){
       cb(err, data);
     });
   }
