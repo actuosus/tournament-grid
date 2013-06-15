@@ -6,7 +6,10 @@
  * Time: 05:47
 ###
 
-define ['spin', 'cs!../core'], (Spinner)->
+define [
+  'spin',
+  'cs!../mixins/editing'
+], (Spinner)->
   App.NamedContainerView = Em.ContainerView.extend App.Editing,
     classNames: ['block-container', 'named-container']
     classNameBindings: ['collapsed']
@@ -65,7 +68,8 @@ define ['spin', 'cs!../core'], (Spinner)->
 #        value: null
 #        template: Em.Handlebars.compile '{{view.value}}'
 
-    contentView: Em.View.extend()
+    contentView: Em.View.extend
+      templateBinding: 'parentView.template'
 
     helpButtonView: Em.View.extend
       tagName: 'button'

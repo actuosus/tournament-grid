@@ -45,16 +45,19 @@ exports.create = (req, res) ->
     # Always creating player
     await new Player(player).save defer err, p
 
-    if player.team_ref_id
-      await TeamRef.findByIdAndUpdate player.team_ref_id, {$push: {players: p._id}}, defer err, teamRef
-    else if player.report_id and not player.team_ref_id
-      await TeamRef.findOneAndUpdate {team_id: player.team_id, report_id: player.report_id}, {$push: {players: p._id}}, defer err, teamRef
-    else if req.query.report_id and not player.team_ref_id
-      await TeamRef.findOneAndUpdate {team_id: player.team_id, report_id: req.query.report_id}, {$push: {players: p._id}}, defer err, teamRef
+    if p
+      if player.team_ref_id
+        await TeamRef.findByIdAndUpdate player.team_ref_id, {$push: {players: p._id}}, defer err, teamRef
+      else if player.report_id and not player.team_ref_id
+        await TeamRef.findOneAndUpdate {team_id: player.team_id, report_id: player.report_id}, {$push: {players: p._id}}, defer err, teamRef
+      else if req.query.report_id and not player.team_ref_id
+        await TeamRef.findOneAndUpdate {team_id: player.team_id, report_id: req.query.report_id}, {$push: {players: p._id}}, defer err, teamRef
+      else
+        await Team.findByIdAndUpdate player.team_id, {$push: {players: p._id}}, defer err, team
+    #    socket.send {action: 'create', model: 'Player', _id: p._id}
+      res.send player: p
     else
-      await Team.findByIdAndUpdate player.team_id, {$push: {players: p._id}}, defer err, team
-  #    socket.send {action: 'create', model: 'Player', _id: p._id}
-    res.send player: p
+      res.send 404, error: 'not found'
   else
     res.send 400, error: "server error"
 

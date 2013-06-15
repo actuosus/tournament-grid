@@ -56,9 +56,7 @@
     color: gray;
 
     -webkit-appearance: none;
-
-    background-color: white;
-    box-shadow: 0 0 10px white;    
+    
     z-index: 3;
 }
 

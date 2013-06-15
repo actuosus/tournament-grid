@@ -30,10 +30,14 @@ define [
           when 65 # a
             App.toggleConfig()
           when 69 # e
-            notification = App.notificationsController.createNotification
+            notificationObject =
               icon: null
               title: 'Editing mode'
-              content: 'Editing mode changed.'
+            if App.get('isEditingMode')
+              notificationObject.content = 'Editing mode enabled.'
+            else
+              notificationObject.content = 'Editing mode disabled.'
+            notification = App.notificationsController.createNotification notificationObject
             notification?.show()
             App.set 'isEditingMode', not App.get('isEditingMode')
           when 90 # z
@@ -64,39 +68,7 @@ define [
 ##    TODO Socket support
 ##    App.socketController = App.SocketController.create()
 ##    App.socketController.connect()
-#
-#    # Preloading countries
-#    App.countries = App.Country.find()
-#
-#    App.get('report').didLoad = ->
-#      report = App.get 'report'
-#      stageTabsView.set 'content', report.get('stages')
-##      App.racesController.set 'content', report.get('races')
-#
-#      App.set 'reportTeamsController', App.ReportEntrantsController.create contentBinding: 'App.report.teamRefs'
-#
-#      if report?.get('match_type') is 'team'
-#        reportEntrants = App.ReportEntrantsController.create
-#          contentBinding: 'App.report.teamRefs'
-##        reportEntrants = App.EntrantsController.create
-##          sortProperties: ['team.name']
-##          contentBinding: 'App.report.teamRefs'
-#        lineupView = App.LineupView.create
-#          classNames: ['team-lineup-grid']
-#          controller: reportEntrants
-#          contentBinding: 'controller.arrangedContent'
-##          contentBinding: 'App.report.teamRefs'
-#
-#        window.lineupView = lineupView
-#        lineupContainerView = App.LineupContainerView.create contentView: lineupView
-#        lineupContainerView.appendTo '#content'
-#
-#        unless window.stageView.get('currentStage')
-#          window.stageView.get('controller')?.transitionToRoute 'stage', App.get('report.stages.firstObject')
-#
-#
-#    stageSelectorContainerView.appendTo '#content'
-#
+
 #    App.peroids = Em.ArrayController.create
 #      content: [
 #        Em.Object.create name:'Все', id: 'all'
@@ -121,14 +93,14 @@ define [
 #        Em.Object.create name:'_past_match_type'.loc(), id: 'past'
 #      ]
 #
-#    App.visualTypes = Em.ArrayController.create
-#      content: [
-#        Em.Object.create name:'_single'.loc(), id: 'single'
-#        Em.Object.create name:'_double'.loc(), id: 'double'
-#        Em.Object.create name:'_group'.loc(), id: 'group'
-#        Em.Object.create name:'_matrix'.loc(), id: 'matrix'
-#        Em.Object.create name:'_team'.loc(), id: 'team'
-#      ]
+    App.visualTypes = Em.ArrayController.create
+      content: [
+        Em.Object.create name:'_single'.loc(), id: 'single'
+        Em.Object.create name:'_double'.loc(), id: 'double'
+        Em.Object.create name:'_group'.loc(), id: 'group'
+        Em.Object.create name:'_matrix'.loc(), id: 'matrix'
+        Em.Object.create name:'_team'.loc(), id: 'team'
+      ]
 #
 ##    App.racesController = Em.ArrayController.create
 ##      content: [
@@ -164,4 +136,4 @@ define [
 ##          @set 'parentView.isVisible', no
 
 
-    console.profileEnd('Loading');
+    console.timeEnd('Loading');

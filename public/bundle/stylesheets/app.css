@@ -26,6 +26,7 @@
 .b-listsTabs .item.active {
     border-radius: 2px 2px 0 0;
     -webkit-font-smoothing: antialiased;
+    background: -webkit-linear-gradient(top, #3f3f3f, #232424);
 }
 .b-listsTabs .item:last-child {
     border-right: 0;
@@ -98,9 +99,28 @@ textarea {
 .is-saving {
     cursor: progress;
     opacity: 0.8;
+    -webkit-animation: isLoading 2s infinite;
 }
 .is-dirty {
     background-color: rgba(255,255,0,0.2);
+}
+.is-loading {
+    -webkit-animation: isLoading 1s infinite;
+}
+.is-error {
+    background-color: rgba(255,0,0,0.5);
+}
+@-webkit-keyframes isLoading {
+    0% {
+        opacity: 0.8;
+    }
+    50% {
+        opacity: 0.2;
+        background-color: rgba(255,255,0,0.8) !important;
+    }
+    100% {
+        opacity: 0.8;
+    }
 }
 .padded {
     padding: 20px;
@@ -1831,11 +1851,10 @@ body .ui-tooltip {
     top: 15px;
 }
 .games-info-bar {
-    list-style-type: none;
-    height: 15px;
+    height: 12px;
     overflow: hidden;
-    margin: 0;
-    padding: 0;
+    white-space: nowrap;
+    max-width: 105px;
 }
 .games-list {
     float: left;
@@ -1955,8 +1974,7 @@ body .ui-tooltip {
     font-weight: normal;
     color: gray;
     -webkit-appearance: none;
-    background-color: white;
-    box-shadow: 0 0 10px white;    
+    
     z-index: 3;
 }
 .autocomplete-text-field .text-field {
@@ -1973,10 +1991,8 @@ body .ui-tooltip {
     top: 50%;
 }
 .team-grid-item-container {
-    border: 1px solid #828282;
-    background-color: #efefef;
     width: 156px;
-    height: 23px;
+    height: 25px;
     overflow: hidden;
     position: relative;
     -webkit-transition-property: background-color, border-color, box-shadow;
@@ -2011,6 +2027,9 @@ body .ui-tooltip {
 .team-grid-item.is-updating {
     opacity: 0.5;
 }
+.team-grid-item.is-loading {
+    background: red !important;
+}
 .team-grid-item .autocomplete-text-field {
     position: absolute;
     width: auto;
@@ -2025,7 +2044,7 @@ body .ui-tooltip {
     padding-left: 5px;
 }
 .team-name {
-    width: 107px;
+    width: 108px;
     float: left;
     line-height: 20px;
     min-height: 20px;
@@ -2685,7 +2704,6 @@ body .ui-tooltip {
     float: left;
 }
 .tournament-grid-wrapper {
-    width: 885px;
     padding: 10px;
     overflow-y: scroll;
     position: relative;
@@ -2718,6 +2736,8 @@ body .ui-tooltip {
     width: 180px;
     -webkit-transition-duration: 0.3s;
     -webkit-transition-property: background-color;
+    padding: 10px 0;
+    border-radius: 4px;
 }
 .tournament-round-container:hover {
     background-color: rgba(0,0,0,0.025);
@@ -2726,7 +2746,6 @@ body .ui-tooltip {
     padding: 30px 10px 0 10px;
 }
 .tournament-match {
-    width: 160px;
     position: relative;
 }
 .tournament-match.is-dirty .match-info-bar .games-info-bar-label {
@@ -2745,10 +2764,15 @@ body .ui-tooltip {
 .tournament-match .team-grid-item-container {
     margin-bottom: 5px;
 }
+.tournament-match.is-past .match-start-date {
+    font-size: 10px;
+}
 .connector {
     position: absolute;
     z-index: 1;
     width: 24px;
+    pointer-events: none;
+    -webkit-user-select: none;
 }
 .connector .one {
     position: absolute;
@@ -2804,7 +2828,7 @@ body .ui-tooltip {
     font-weight: bold;
     text-transform: uppercase;
     font-size: 16px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 .csscolumns .team-lineup-grid .lineup-grid {
     -webkit-column-gap: 29px;
@@ -2843,7 +2867,7 @@ body .ui-tooltip {
 }
 .csscolumns .lineup-grid-item {
     float: none;
-    
+    width: auto;
     height: auto;
     margin: 0 0 29px 0;
     -webkit-column-break-inside: avoid;
@@ -2857,6 +2881,7 @@ body .ui-tooltip {
     right: 6px;
     top: 50%;
     margin-top: -6px;
+    white-space: nowrap;
 }
 .lineup-grid-item .public-menu-btn {
     right: 13px;
@@ -2890,7 +2915,7 @@ body .ui-tooltip {
     text-overflow: ellipsis;
     white-space: nowrap;
     
-    margin: 7px 0;
+    margin: 7px 0 7px 4px;
 }
 .lineup-grid-item-name a {
     color: #000000;
@@ -2947,7 +2972,7 @@ body .ui-tooltip {
     -webkit-transition-property: background-color, box-shadow;
 }
 .lineup-grid-item-player-row:hover {
-    background-color: #f2f2f2;;
+    background-color: #eeeeee;;
     box-shadow: 0 0 2px rgba(0,0,0,0.5);
     z-index: 3;
 }
@@ -2958,7 +2983,7 @@ body .ui-tooltip {
     border: 0;
 }
 .lineup-grid-item-name-container .country-flag-icon {
-    margin: 9px 8px 0 8px;
+    margin: 9px 4px 0 8px;
 }
 .lineup-grid-item-player-row .country-flag-icon {
     margin-top: 6px;
@@ -2967,7 +2992,7 @@ body .ui-tooltip {
 }
 .lineup-grid-item-name-container .count-btn {
     position: absolute;
-    top: 3px;
+    top: 5px;
     right: 50px;
 }
 .lineup-grid-item-name-container .remove-btn {
@@ -3006,7 +3031,6 @@ body .ui-tooltip {
     column-width: 428px;
 }
 .csscolumns .group-lineup-grid .lineup-grid-item {
-    width: 100%;
 }
 .lineup-grid-item-name-container .autocomplete-text-field {
     position: absolute;
@@ -3055,6 +3079,16 @@ body .ui-tooltip {
     border-radius: 3px;
     -webkit-transition: background-color 0.3s ease-in-out;
 }
+.match-grid-item-entrants {
+    clear: both;
+}
+.match-grid-item-entrants .team-grid-item {
+    border: 1px solid #828282;
+    background-color: #efefef;
+}
+.match-grid .team-grid-item:last-child {
+    margin-top: -1px;
+}
 .grid .match-grid-item {
     float: left;
     position: relative;
@@ -3085,9 +3119,6 @@ body .ui-tooltip {
 .match-grid-item-edit-controls .btn {
     margin-bottom: 2px;
 }
-.match-grid-item .team-grid-item-container:first-child {
-    border-bottom: 0;
-}
 .matches-table {
     border: 0;
 }
@@ -3103,6 +3134,7 @@ body .ui-tooltip {
 }
 .matches-table-item td {
     position: relative;
+    vertical-align: middle;
 }
 .matches-table-item.is-dirty td {
     background-color: rgba(255,255,0,0.2);
@@ -3428,6 +3460,7 @@ html {
     color: #828282;
     text-align: center;
     font-size: 13px;
+    margin: 0 10px;
 }
 .matches-table-container {
     border: 1px solid #bebebe;
@@ -3571,6 +3604,7 @@ html {
     min-width: 40px;
     min-height: 1em;
     line-height: 11px;
+    clear: right;
 }
 input.match-start-date {
     font-size: 11px;
@@ -3587,6 +3621,7 @@ input.match-start-date {
 }
 .match-info-bar {
     float: right;
+    margin-bottom: 3px;
 }
 .header-item {
     cursor: default;
@@ -3667,6 +3702,7 @@ input.match-start-date {
 }
 .team-cell {
     overflow: hidden;
+    white-space: nowrap;
 }
 .lineup-list-name-container {
     border-bottom: 3px solid #f35900;
@@ -3734,4 +3770,7 @@ input.match-start-date {
 }
 .date-with-popup:hover {
     outline: #da4600 auto 4px;
+}
+.stage-tab-item.is-updating {
+    box-shadow: 0 0 14px rgba(255, 255, 0, 0.9) !important;
 }

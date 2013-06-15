@@ -38,54 +38,30 @@ define [
             content.get 'country'
       ).property('parentView.content')
 
-    autocompleteView: App.AutocompleteTextField.extend
+    autocompleteView: App.TextField.extend
       isVisible: no
-      controllerBinding: 'App.reportTeamsController'
+      isAutocomplete: yes
 
-      filteredContent: (->
-        content = @get 'content'
-        entrants = @get 'parentView.match.round.stage.entrants'
-        if entrants
-          content.filter (item)-> not entrants.contains item
-        else
-          content
-      ).property().volatile()
+      autocompleteDelegate: (->
+        App.TeamsController.create()
+      ).property()
 
-      contentFilter: (content)->
-        return unless content
-        entrants = @get 'parentView.match.round.stage.entrants'
-        if entrants
-          @set 'content', content.filter (item)->
-            not entrants.contains item
-
-      selectionChanged: (->
-        oldTeam = @get 'parentView.content'
-        newTeam = @get 'selection'
-        identifier = oldTeam.get('identifier') if oldTeam
-        newTeam.set 'identifier', identifier
-        if App.TeamRef.detectInstance oldTeam
-          @set 'parentView.content.team', newTeam
-          @notifyPropertyChange('parentView.content')
-        else
-          @set 'parentView.content', newTeam
-        match = @get 'parentView.parentView.match'
-        match.set "entrant#{@get('parentView.contentIndex')+1}", newTeam if match
-        @set('isVisible', no)
-      ).observes('selection')
-
-      hasFocusChanged: (->
-        unless @get 'hasFocus'
-          @set('isVisible', no)
-        else
-          @set('isVisible', yes)
-      ).observes('hasFocus')
+      assignTeam: (team)->
+        @set 'parentView.content', team
+        match = @get 'parentView.match'
+        match.set "entrant#{@get('parentView.contentIndex')+1}", team if match
 
       insertNewline: ->
-        popup = @showAddForm(@)
-        popup.onShow = =>
-          popup.get('formView')?.focus()
-        popup.onHide = =>
-          @focus()
+        @assignTeam @get 'selection'
+        @_closeAutocompleteMenu()
+        @set 'isVisible', no
+
+      selectMenuItem: (team)->
+        @assignTeam team
+        @_closeAutocompleteMenu()
+        @set 'isVisible', no
+
+      focusOut: -> @set 'isVisible', no
 
     nameView: Em.View.extend
       tagName: 'a'

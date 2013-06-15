@@ -6,7 +6,7 @@
 ###
 
 request = require 'superagent'
-should = require 'should'
+chai = require 'chai'
 api = require '../../app'
 Config = require '../../conf'
 conf = new Config
@@ -20,9 +20,9 @@ describe 'Stages', ->
     request
       .get("http://#{conf.hostname}:#{conf.port}/#{namespace}")
       .end (res)->
-        res.statusCode.should.equal 200
+        res.status.should.equal 200
         items = res.body[entity.plural]
-        should.exist items
+        items.should.exist
         done items
 
   report = null
@@ -55,21 +55,21 @@ describe 'Stages', ->
       request
         .get("http://#{conf.hostname}:#{conf.port}/#{namespace}")
         .end (res)->
-          res.statusCode.should.equal 200
+          res.status.should.equal 200
           done()
 
     it 'should return the list of items by ids', (done)->
       request
         .get("http://#{conf.hostname}:#{conf.port}/#{namespace}")
         .end (res)->
-          res.statusCode.should.equal 200
+          res.status.should.equal 200
           ids = res.body[entity.plural].map (_)-> _._id
           query = 'ids=' + ids.join("&ids=")
           request
             .get("http://#{conf.hostname}:#{conf.port}/#{namespace}")
             .query(query)
             .end (res)->
-              res.statusCode.should.equal 200
+              res.status.should.equal 200
 
               recievedIds = res.body[entity.plural].map (_)-> _._id
 
@@ -83,12 +83,12 @@ describe 'Stages', ->
       request
         .get("http://#{conf.hostname}:#{conf.port}/#{namespace}")
         .end (res)->
-          res.statusCode.should.equal 200
+          res.status.should.equal 200
           item = res.body[entity.plural][0]
           request
             .get("http://#{conf.hostname}:#{conf.port}/#{namespace}/#{item._id}")
             .end (res)->
-              res.statusCode.should.equal 200
+              res.status.should.equal 200
 
               res.body[entity.name].title.should.equal item.title
 
@@ -98,7 +98,7 @@ describe 'Stages', ->
       request
         .get("http://#{conf.hostname}:#{conf.port}/#{namespace}/unknown_id")
         .end (res)->
-          res.statusCode.should.equal 404
+          res.status.should.equal 404
 
           done()
 
@@ -111,10 +111,10 @@ describe 'Stages', ->
         .post("http://#{conf.hostname}:#{conf.port}/#{namespace}")
         .send(data)
         .end (res)->
-          res.statusCode.should.equal 200
+          res.status.should.equal 200
 
           item = res.body[entity.name]
-          should.exist item
+          item.should.exist
 
           item.title.should.be.equal data[entity.name].title
 
@@ -130,7 +130,7 @@ describe 'Stages', ->
           .put("http://#{conf.hostname}:#{conf.port}/#{namespace}/#{item._id}")
           .send(data)
           .end (res)->
-            res.statusCode.should.equal 200
+            res.status.should.equal 200
 
             res.body[entity.name].title.should.equal newTitle
 
@@ -142,10 +142,10 @@ describe 'Stages', ->
         request
           .del("http://#{conf.hostname}:#{conf.port}/#{namespace}/#{item._id}")
           .end (res)->
-            res.statusCode.should.equal 204
+            res.status.should.equal 204
 
             request
               .get("http://#{conf.hostname}:#{conf.port}/#{namespace}/#{item._id}")
               .end (res)->
-                res.statusCode.should.equal 404
+                res.status.should.equal 404
                 done()

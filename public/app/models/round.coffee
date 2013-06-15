@@ -14,7 +14,7 @@ define ['cs!../core'],->
     # TODO History Ember.History,
 #    _trackProperties: ['name']
 
-    name: DS.attr('string', {loc: {keyPath: '_name', defaultLanguage: 'ru'}})
+    title: DS.attr('string', {loc: {keyPath: '_title', defaultLanguage: 'ru'}})
 
     # Relations
     matches: DS.hasMany 'App.Match'
@@ -26,8 +26,8 @@ define ['cs!../core'],->
     teamRefs: DS.hasMany 'App.TeamRef'
 
     # TODO Make localization
-#    _name: DS.attr('object')
-#    __name: (->
+#    _title: DS.attr('object')
+#    __title: (->
 #      nameHash = @get '_name'
 #      currentLanguage = App.get('currentLanguage')
 #      value = ''
@@ -36,7 +36,7 @@ define ['cs!../core'],->
 #      unless value
 #        value = @get 'name'
 #      value
-#    ).property('_name', 'App.currentLanguage').volatile()
+#    ).property('_title', 'App.currentLanguage').volatile()
 
     parentReference: 'stage'
     parent: (-> @get @get 'parentReference').property('stage')

@@ -28,6 +28,19 @@
     -webkit-transition: background-color 0.3s ease-in-out;
 }
 
+.match-grid-item-entrants {
+    clear: both;
+}
+
+.match-grid-item-entrants .team-grid-item {
+    border: 1px solid #828282;
+    background-color: #efefef;
+}
+
+.match-grid .team-grid-item:last-child {
+    margin-top: -1px;
+}
+
 .grid .match-grid-item {
     float: left;
     position: relative;
@@ -62,8 +75,4 @@
 
 .match-grid-item-edit-controls .btn {
     margin-bottom: 2px;
-}
-
-.match-grid-item .team-grid-item-container:first-child {
-    border-bottom: 0;
 }

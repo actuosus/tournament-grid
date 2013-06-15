@@ -35,7 +35,7 @@
 
 .csscolumns .lineup-grid-item {
     float: none;
-    /*width: auto;*/
+    width: auto;
     height: auto;
     margin: 0 0 29px 0;
     -webkit-column-break-inside: avoid;
@@ -51,6 +51,7 @@
     right: 6px;
     top: 50%;
     margin-top: -6px;
+    white-space: nowrap;
 }
 
 .lineup-grid-item .public-menu-btn {
@@ -87,7 +88,7 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     /*padding: 0 5px;*/
-    margin: 7px 0;
+    margin: 7px 0 7px 4px;
 }
 
 .lineup-grid-item-name a {
@@ -159,7 +160,7 @@
 }
 
 .lineup-grid-item-player-row:hover {
-    background-color: #f2f2f2;;
+    background-color: #eeeeee;;
     box-shadow: 0 0 2px rgba(0,0,0,0.5);
     z-index: 3;
 }
@@ -173,7 +174,7 @@
 }
 
 .lineup-grid-item-name-container .country-flag-icon {
-    margin: 9px 8px 0 8px;
+    margin: 9px 4px 0 8px;
 }
 
 .lineup-grid-item-player-row .country-flag-icon {
@@ -184,7 +185,7 @@
 
 .lineup-grid-item-name-container .count-btn {
     position: absolute;
-    top: 3px;
+    top: 5px;
     right: 50px;
 }
 
@@ -230,7 +231,6 @@
 }
 
 .csscolumns .group-lineup-grid .lineup-grid-item {
-    width: 100%;
 }
 
 .lineup-grid-item-name-container .autocomplete-text-field {

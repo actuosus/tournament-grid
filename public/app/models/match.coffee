@@ -25,28 +25,19 @@ define ['cs!../core'],->
 
     entrant1_race_id: DS.attr 'number'
     entrant2_race_id: DS.attr 'number'
-    editingStatus: DS.attr 'string'
+
+#    editingStatus: DS.attr 'string'
 
     # Relations
     round: DS.belongsTo 'App.Round'
     stage: DS.belongsTo 'App.Stage'
-
     games: DS.hasMany('App.Game', {inverse: 'match'})
 
     hasPoints: (->
       not Em.isEmpty(@get('entrant1_points')) and not Em.isEmpty(@get('entrant2_points'))
     ).property('entrant1_points', 'entrant2_points')
 
-    # Ember History
-#    _trackProperties: [
-#      'entrant1_points'
-#      'entrant2_points'
-#      'date'
-#    ]
-
-    link: (->
-      "/matches/#{@get 'id'}"
-    ).property('url')
+    link: (-> "/matches/#{@get 'id'}" ).property('url')
 
     currentStatus: (->
       status = @get 'status'
@@ -65,14 +56,6 @@ define ['cs!../core'],->
         currentStatus = 'future'
       currentStatus
     ).property('date', 'entrant1_points', 'entrant2_points')
-
-    isOpenable: (->
-      currentStatus = @get 'currentStatus'
-      date = @get 'date'
-      currentDate = new Date
-      reopenInterval = 1000 * 60 * 60 * 12
-      currentStatus is 'active' and ((date + reopenInterval) > currentDate)
-    ).property('currentStatus', 'date').volatile()
 
     open: ->
       @set 'status', 'opened'
@@ -104,42 +87,7 @@ define ['cs!../core'],->
         [@get('entrant1')]
       else
         [@get('entrant1'), @get('entrant2')]
-    ).property().volatile()
-
-    entrant1Changed: (->
-      isWinner = @get 'isWinner'
-      if isWinner
-        @set 'entrants', [@get('entrant1')]
-      else
-        @set 'entrants', [@get('entrant1'), @get('entrant2')]
-    ).observes 'entrant1'
-
-    entrant2Changed: (->
-      isWinner = @get 'isWinner'
-      if isWinner
-        @set 'entrants', [@get('entrant1')]
-      else
-        @set 'entrants', [@get('entrant1'), @get('entrant2')]
-    ).observes 'entrant2'
-
-    winnerChanged: (->
-      nextMatch = @get 'parentNode'
-      winner = @get 'winner'
-      matchIndex = @get 'itemIndex'
-      unless matchIndex
-        round = @get 'round'
-        if round
-          matches = round.get('matches')
-          if matches
-            matchIndex = matches.indexOf(@)
-      if nextMatch
-        if winner
-          nextMatch.get('entrants').replace matchIndex%2, 1, [winner]
-          nextMatch.set "entrant#{matchIndex%2+1}", winner
-        else
-          nextMatch.get('entrants').replace matchIndex%2, 1, [null]
-          nextMatch.set "entrant#{matchIndex%2+1}", null
-    ).observes('winner')
+    ).property('entrant1', 'entrant2')
 
     loser: (->
       if @get('entrant1_points') > @get('entrant2_points')
@@ -155,10 +103,8 @@ define ['cs!../core'],->
 
     winner: (->
       if @get('entrant1_points') > @get('entrant2_points')
-#        winner = @get 'entrant1'
         winner = @get('entrants')[0]
       else if @get('entrant1_points') < @get('entrant2_points')
-#        winner = @get 'entrant2'
         winner = @get('entrants')[1]
       else
         winner = undefined
@@ -171,11 +117,6 @@ define ['cs!../core'],->
 
     secondIsAWinner: (-> Em.isEqual(@get('entrant2'), @get('winner'))).property('winner')
     secondIsALoser: (-> Em.isEqual(@get('entrant2'), @get('loser'))).property('loser')
-
-    parent: (-> @get 'round').property('round')
-    children: (-> @get 'entrants').property('entrants')
-
-    treeItemChildren: (-> @get 'entrants').property('entrants')
 
     parentNode: (->
       parent = @get 'round.parent'
@@ -224,5 +165,13 @@ define ['cs!../core'],->
           @set 'rigthPath', rigthPath
           return parent.getByPath(rigthPath)
     ).property('rightPath')
+
+  # Ember History
+  #    _trackProperties: [
+  #      'entrant1_points'
+  #      'entrant2_points'
+  #      'date'
+  #    ]
+
 
   App.Match.toString = -> 'Match'

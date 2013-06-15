@@ -6,7 +6,7 @@
 ###
 
 request = require 'superagent'
-should = require 'should'
+chai = require 'chai'
 api = require '../../app'
 Config = require '../../conf'
 conf = new Config
@@ -14,6 +14,15 @@ conf = new Config
 describe 'Teams', ->
   entity = name: 'team', plural: 'teams'
   namespace = "api/#{entity.plural}"
+
+  getItems = (done)->
+    request
+      .get("http://#{conf.hostname}:#{conf.port}/#{namespace}")
+      .end (res)->
+        res.status.should.equal 200
+        items = res.body[entity.plural]
+        items.should.exist
+        done items
 
   before (done)->
     # Configuring server port
@@ -34,23 +43,25 @@ describe 'Teams', ->
       request
         .get("http://#{conf.hostname}:#{conf.port}/#{namespace}")
         .end (res)->
-          res.statusCode.should.equal 200
-          should.exist res.body.teams
+          res.status.should.equal 200
+          items = res.body[entity.plural]
+          items.should.exist
           done()
 
     it 'should return the list of items by ids', (done)->
       request
         .get("http://#{conf.hostname}:#{conf.port}/#{namespace}")
         .end (res)->
-          res.statusCode.should.equal 200
-          should.exist res.body.teams
+          res.status.should.equal 200
+          items = res.body[entity.plural]
+          items.should.exist
           ids = res.body.teams.map (_)-> _._id
           query = 'ids=' + ids.join("&ids=")
           request
             .get("http://#{conf.hostname}:#{conf.port}/#{namespace}")
             .query(query)
             .end (res)->
-              res.statusCode.should.equal 200
+              res.status.should.equal 200
 
               recievedIds = res.body.teams.map (_)-> _._id
 
@@ -64,22 +75,25 @@ describe 'Teams', ->
         .get("http://#{conf.hostname}:#{conf.port}/#{namespace}")
         .query(name: 'e')
         .end (res)->
-          res.statusCode.should.equal 200
+          res.status.should.equal 200
 
-          should.exist res.body[entity.plural]
+          items = res.body[entity.plural]
+          items.should.exist
 
           # TODO Refine assertion.
-          res.body[entity.plural].length.should.be.above 1
+          items.length.should.be.above 1
 
           done()
 
   describe 'item', ->
     it 'should return the one team', (done)->
-      api.models.Team.find (err, docs)->
+      getItems (docs)->
         team = docs[0]
         request
           .get("http://#{conf.hostname}:#{conf.port}/#{namespace}/#{team._id}")
           .end (res)->
-            res.statusCode.should.equal 200
-            res.body.team.name.should.equal team.name
+            res.status.should.equal 200
+            item = res.body[entity.name]
+            item.should.exist
+            item.name.should.equal team.name
             done()

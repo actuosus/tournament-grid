@@ -7,6 +7,7 @@
 ###
 
 exports.api = require './api'
+exports.hidden = require './hidden'
 
 exports.logs = require './logs'
 

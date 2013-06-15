@@ -26,6 +26,9 @@ IO = require './io'
 moment = require 'moment'
 
 models = require './models'
+
+#console.log models
+
 routes = require './routes'
 
 Config = require './conf'
@@ -44,15 +47,18 @@ passport.use new BasicStrategy (username, password, done)->
     return done null, false if not user.validPassword password
     return done null, user
 
-passport.serializeUser (user, done)-> done null, user._id
+passport.serializeUser (user, done)-> done null, user.id
 
 passport.deserializeUser (id, done)->
+  console.log id
+#  done null, user if user
+#  done 'No such user', false
   models.User.findById id, (err, user)-> done err, user
 
 cors = (req, res, next)->
   res.header 'Access-Control-Allow-Origin', '*'
   res.header 'Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE'
-  res.header 'Access-Control-Allow-Headers', 'Content-Type'
+  res.header 'Access-Control-Allow-Headers', 'Content-Type,X-Requested-With'
   next()
 
 random = ->
@@ -95,6 +101,8 @@ app.configure ->
   #  oneYear = 31557600000
   app.use express.static path.join(__dirname, 'public')
 
+  app.use '/test', express.static path.join(__dirname, 'test')
+
   # Post data support
   app.use express.cookieParser()
   app.use express.bodyParser()
@@ -115,9 +123,6 @@ app.configure ->
   app.use passport.initialize()
   app.use passport.session()
 
-  # Logging
-  app.use express.logger 'dev'
-
   app.use i18n.init
 
   app.use (req, res, next)->
@@ -137,14 +142,16 @@ app.configure ->
 
 app.configure 'development', ->
   mongoose.set 'debug', yes
+  # Logging
+  app.use express.logger 'dev'
   # Error handling
   app.use express.errorHandler dumpExceptions: yes, showStack: yes
 
-  app.use (req, res, next)->
-    if req.url.match /api/
-      waiter req, res, next
-    else
-      next()
+#  app.use (req, res, next)->
+#    if req.url.match /api/
+#      waiter req, res, next
+#    else
+#      next()
 
 app.configure 'production', ->
   # Compression
@@ -180,45 +187,62 @@ app.locals
 app.options '*', (req, res)->
   res.header 'Access-Control-Allow-Origin', '*'
   res.header 'Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS'
-  res.header 'Access-Control-Allow-Headers', 'accept, origin, content-type, referer, cache-control, pragma, user-agent'
+  res.header 'Access-Control-Allow-Headers', 'accept, origin, content-type, referer, cache-control, pragma, user-agent, X-Requested-With'
   res.header 'Access-Control-Max-Age', 1728000
   res.header 'Content-Length', 0
   res.send 204
 
 app.post '/api/logs', routes.api.logs.create
 
-app.get '/api/championships', routes.api.championships.list
-
 app.get '/api/countries', routes.api.countries.list
 app.get '/api/countries/names', routes.api.countries.namesList
 app.get '/api/countries/:_id', routes.api.countries.item
+
+app.post '/hidden/countries', routes.hidden.countries.create
 
 app.get '/api/games', routes.api.games.list
 app.get '/api/games/:_id', routes.api.games.item
 app.put '/api/games/:_id', routes.api.games.update
 app.post '/api/games', routes.api.games.create
+app.delete '/api/games/:_id', routes.api.games.delete
+
+app.post '/hidden/games', routes.api.games.create
 
 app.get '/api/matches', routes.api.matches.list
+app.get '/api/matches/:_id', routes.api.matches.item
 app.post '/api/matches', routes.api.matches.create
 app.put '/api/matches', routes.api.matches.update
 app.put '/api/matches/:_id', routes.api.matches.update
 app.delete '/api/matches/:_id', routes.api.matches.delete
 
+app.post '/hidden/matches', routes.api.matches.create
+app.delete '/hidden/matches/:_id', routes.api.matches.delete
+
 app.get '/api/players', routes.api.players.list
-app.post '/api/players', routes.api.players.create
 app.get '/api/players/:_id', routes.api.players.item
+app.post '/api/players', routes.api.players.create
 app.put '/api/players', routes.api.players.update
 app.put '/api/players/:_id', routes.api.players.update
-app.delete '/api/players/:_id', routes.api.players.delete
+
+app.post '/hidden/players', routes.api.players.create
+
+# Should not be presented.
+#app.delete '/api/players/:_id', routes.api.players.delete
 
 app.get '/api/reports', routes.api.reports.list
 app.get '/api/reports/:_id', routes.api.reports.item
+
+app.post '/hidden/reports', routes.hidden.reports.create
+app.put '/hidden/reports/:_id', routes.hidden.reports.update
+app.delete '/hidden/reports/:_id', routes.hidden.reports.delete
 
 app.get '/api/result_sets', routes.api.resultSets.list
 app.get '/api/result_sets/:_id', routes.api.resultSets.item
 app.post '/api/result_sets', routes.api.resultSets.create
 app.put '/api/result_sets/:_id', routes.api.resultSets.update
 app.delete '/api/result_sets/:_id', routes.api.resultSets.delete
+
+app.post '/hidden/result_sets', routes.api.resultSets.create
 
 app.get '/api/results', routes.api.results.list
 app.get '/api/results/:_id', routes.api.results.item
@@ -232,17 +256,24 @@ app.post '/api/rounds', routes.api.rounds.create
 app.put '/api/rounds/:_id', routes.api.rounds.update
 app.delete '/api/rounds/:_id', routes.api.rounds.delete
 
+app.post '/hidden/rounds', routes.api.rounds.create
+
 app.get '/api/brackets', routes.api.brackets.list
 app.get '/api/brackets/:_id', routes.api.brackets.item
 app.post '/api/brackets', routes.api.brackets.create
 app.put '/api/brackets/:_id', routes.api.brackets.update
-app.delete '/api/brackets/:_id', routes.api.brackets.update
+app.delete '/api/brackets/:_id', routes.api.brackets.delete
+
+app.post '/hidden/brackets', routes.api.brackets.create
 
 app.get '/api/stages', routes.api.stages.list
 app.get '/api/stages/:_id', routes.api.stages.item
 app.post '/api/stages', routes.api.stages.create
+app.put '/api/stages/:_id', routes.api.stages.update
 app.delete '/api/stages/:_id', routes.api.stages.delete
 app.delete '/api/stages/bulk', routes.api.stages.delete
+
+app.post '/hidden/stages', routes.api.stages.create
 
 app.get '/api/teams', routes.api.teams.list
 app.post '/api/teams', routes.api.teams.create
@@ -251,6 +282,8 @@ app.put '/api/teams/:_id', routes.api.teams.update
 app.delete '/api/teams/:_id', routes.api.teams.delete
 app.delete '/api/teams/bulk', routes.api.teams.delete
 
+app.post '/hidden/teams', routes.api.teams.create
+
 app.get '/api/team_refs', routes.api.team_refs.list
 app.post '/api/team_refs', routes.api.team_refs.create
 app.get '/api/team_refs/:_id', routes.api.team_refs.item
@@ -258,13 +291,15 @@ app.put '/api/team_refs/:_id', routes.api.team_refs.update
 app.delete '/api/team_refs/:_id', routes.api.team_refs.delete
 app.delete '/api/team_refs/bulk', routes.api.team_refs.delete
 
+app.post '/hidden/team_refs', routes.api.team_refs.create
+
 ensureAuthenticated = (req, res, next) ->
 #  console.log 'ensureAuthenticated', req.isAuthenticated()
   return next() if req.isAuthenticated()
   res.redirect '/'
 
 app.get '/', passport.authenticate('basic'), (req, res)->
-#  console.log req.user
+  console.log req.user
 #  res.header('cache-control', 'public, max-age=2592000')
   if req.user?.language and not req.cookies?.lang
     res.cookie 'lang', req.user.language
@@ -311,10 +346,10 @@ grid.init = (cb)->
 #  socket = IO.getSocket(conf)
 #  socket.start server
   grid.server.listen app.get('port'), ->
-    console.log "Express HTTP server listening on port #{app.get 'port'}"
+    console.log "Express HTTP server listening on port #{app.get 'port'}" unless app.settings.env is 'test'
     grid.mongoose = mongoose.connect conf.mongo, {}, (err, db)->
       unless err
-        console.log "DB connection initialized."
+        console.log "DB connection initialized." unless app.settings.env is 'test'
       else
         throw "Cannot connect to DB (#{err})."
 

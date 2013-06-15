@@ -62,11 +62,8 @@ define [
           stage = report.createStageByEntrants entrantsNumber
         when 'single'
           stage = report.get('stages').createRecord()
-          stage.createWinnerBracket null, entrantsNumber
         when 'double'
           stage = report.get('stages').createRecord()
-#          stage.createWinnerBracket null, entrantsNumber
-#          stage.createLoserBracket null, entrantsNumber
         when 'group'
           stage = report.createStageByRoundsNumber parseInt(@$('.group-number').val(), 10)
         when 'matrix'
@@ -88,3 +85,7 @@ define [
     submit: (event)->
       event.preventDefault()
       @createRecord()
+
+    click: (event)->
+      if $(event.target).hasClass('cancel-btn')
+        @trigger('cancel', event)

@@ -178,14 +178,16 @@ require([
   'ember-data',
 //  'ember-history',
   'modernizr.columns',
-  'cs!./core'
+  'cs!./core',
+//  'cs!./application'
 ], function(){
   if (window.debug) {
     var statusElement = document.getElementById('status');
     statusElement.parentNode.removeChild(statusElement);
   }
   require(['cs!application'], function(){
-    console.profile('Loading');
+    console.time('Loading');
+    if (window.hooks) { window.hooks() }
     App.advanceReadiness();
   });
 });

@@ -5,5 +5,5 @@
  * Time: 02:57
 ###
 
-exports.api = require './api'
-exports.models = require './models'
+require './api'
+require './models'

@@ -5,8 +5,10 @@
  * Time: 03:20
 ###
 
-define ['cs!./tabs'], ->
+define [
+  'cs!../named_container'
+  'cs!./tabs'
+], ->
   App.StagesContainerView = App.NamedContainerView.extend
     title: '_tournament_results_table'.loc()
-    contentView: App.StageTabsView.extend
-      contentBinding: 'parentView.controller'
+    contentView: App.StageTabsView

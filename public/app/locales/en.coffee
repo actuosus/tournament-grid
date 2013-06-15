@@ -98,4 +98,4 @@ define
   _map_type: 'Map type'
   _past_matches: 'Past matches'
   _future_matches: 'Future matches'
-  _waiting_to_be_filled: 'Wainting to be filled'
+  _waiting_to_be_filled: 'Waiting to be filled'

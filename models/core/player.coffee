@@ -8,7 +8,7 @@
 
 _ = require 'lodash'
 mongoose = require 'mongoose'
-socketNotifyPlugin = require '../lib/mongoose'
+socketNotifyPlugin = require '../../lib/mongoose'
 Schema = mongoose.Schema
 ObjectId = Schema.ObjectId
 
@@ -16,12 +16,12 @@ PlayerSchema = new Schema
   country_id: type: ObjectId, ref: 'Country'
   team_id: type: ObjectId, ref: 'Team'
 
-  nickname: type: String
+  nickname: type: String, required: yes
   first_name: type: String
   middle_name: type: String
   last_name: type: String
 
-  is_captain: type: Boolean
+  is_captain: type: Boolean, default: no
 
   # Extras
   gender: type: String, 'enum': ['male', 'female', 'undefined'], 'default': 'undefined'

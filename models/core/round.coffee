@@ -12,9 +12,8 @@ ObjectId = Schema.ObjectId
 
 RoundSchema = new Schema
   sort_index: type: Number
-  championship: type: ObjectId, ref: 'Championship'
-  name: type: String
-  _name:
+  title: type: String
+  _title:
     ru: type: String
     en: type: String
     de: type: String

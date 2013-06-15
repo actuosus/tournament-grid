@@ -5,7 +5,10 @@
  * Time: 05:36
 ###
 
-define ->
+define [
+  'cs!../country_flag'
+  'cs!../modal'
+],->
   App.EntrantMenuItem = Em.ContainerView.extend
     classNames: ['menu-item']
     classNameBindings: ['isSelected', 'isTeamRef']

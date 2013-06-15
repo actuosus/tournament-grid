@@ -8,8 +8,8 @@
 
 module.exports.Stage = [
   _id: '51121246b54802daae000008'
-  name: 'Отборочный'
-  _name:
+  title: 'Отборочный'
+  _title:
     ru: 'Отборочный'
     en: 'Qualification'
     de: 'Auswahlphase'
@@ -19,8 +19,8 @@ module.exports.Stage = [
   rounds: ['51142b464242d3110c000002']
 ,
   _id: '51121246b54802daae000009'
-  name: 'Групповой'
-  _name:
+  title: 'Групповой'
+  _title:
     ru: 'Групповой'
     en: 'Group'
     de: 'Gruppenspiele'
@@ -29,8 +29,8 @@ module.exports.Stage = [
   rounds: ['5114472b6da8bd2910000002', '5114472b6da8bd2910000003', '5114472b6da8bd2910000004', '5114472b6da8bd2910000005', '5114472b6da8bd2910000006', '5114472b6da8bd2910000007']
 ,
   _id: '51121246b54802daae00000a'
-  name: 'Single Elimination'
-  _name:
+  title: 'Single Elimination'
+  _title:
     ru: 'Олимпийская система'
     en: 'Single Elimination'
     de: 'K.-o.-System'
@@ -40,8 +40,8 @@ module.exports.Stage = [
   rounds: ['50fd4a58cbbf53a72a000002', '50fd4a58cbbf53a72a000003', '50fd4a58cbbf53a72a000004']
 ,
   _id: '51121246b54802daae00000c'
-  name: 'Double Elimination'
-  _name:
+  title: 'Double Elimination'
+  _title:
     ru: 'Двушка'
     en: 'Double Elimination'
     de: 'Doppel-K.-o.-System'
@@ -51,8 +51,8 @@ module.exports.Stage = [
   rounds: ['50fd4a58cbbf53a72a000002', '50fd4a58cbbf53a72a000003', '50fd4a58cbbf53a72a000004']
 ,
   _id: '51121246b54802daae00000b'
-  name: 'Командный'
-  _name:
+  title: 'Командный'
+  _title:
     ru: 'Командный'
     en: 'Team'
     de: 'Team'
@@ -62,6 +62,7 @@ module.exports.Stage = [
 
 ,
   _id: '51121246b54802daae00000f'
-  name: 'Игроки'
+  title: 'Игроки'
+  visual_type: 'matrix'
   report_id: '511211b49709aab1ae000002'
 ]

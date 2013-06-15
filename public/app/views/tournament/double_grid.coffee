@@ -9,21 +9,24 @@ define [
   'cs!../../core'
   'cs!../team/list'
   'cs!../round/tournament_grid_item'
+  'cs!../../mixins/map_control'
 ], ->
-  App.NewDoubleTournamentGridView = Em.ContainerView.extend App.ContextMenuSupport,
+  App.NewDoubleTournamentGridView = Em.ContainerView.extend App.MapControl, App.ContextMenuSupport,
     classNames: ['tournament-grid-wrapper']
     childViews: ['contentView']
 
     shouldShowContextMenuBinding: 'App.isEditingMode'
     contextMenuActions: ['showTeamList']
 
-    init: ->
-      console.timeStamp 'Render NewDoubleTournamentGridView'
-      console.time 'NewDoubleTournamentGridView'
-      @_super()
+#    init: ->
+#      console.timeStamp 'Render NewDoubleTournamentGridView'
+#      console.time 'NewDoubleTournamentGridView'
+#      console.profile 'NewDoubleTournamentGridView'
+#      @_super()
 
-    didInsertElement: ->
-      console.timeEnd 'NewDoubleTournamentGridView'
+#    didInsertElement: ->
+#      console.timeEnd 'NewDoubleTournamentGridView'
+#      console.profileEnd 'NewDoubleTournamentGridView'
 
     showTeamList: ->
       @teamListPopup = App.PopupView.createWithMixins(App.Movable, {showCloseButton: yes})
@@ -78,6 +81,7 @@ define [
           actualRound = stage?.getByPath "#{roundIndex}"
           round = App.RoundController.create
             content: actualRound
+            stage: stage
             index: roundIndex
             sort_index: roundIndex
             itemIndex: i
@@ -106,6 +110,7 @@ define [
         bracket
 
       createLoserBracket: ->
+        stage = @get('stage')
         entrantsNumber = @get('entrantsNumber')
         roundsCount = Math.log(entrantsNumber) / Math.log(2)-1
         rounds = []
@@ -117,8 +122,9 @@ define [
         for r in [roundsCount-1..0]
           for n in [1..0]
             round = App.RoundController.create
+              stage: stage
               index: roundsCount - rCount
-              sort_index: roundsCount - rCount
+              sort_index: r
               itemIndex: rCount--
               parentReference: 'bracket'
               bracket: bracket
@@ -215,8 +221,7 @@ define [
 
           titleView: Em.View.extend
             classNames: ['tournament-bracket-name']
-            contentBinding: 'parentView.content'
-            template: Em.Handlebars.compile '{{view.content.name}}'
+            template: Em.Handlebars.compile '{{view.parentView.content.name}}'
 
           contentView: Em.CollectionView.extend
             classNames: ['tournament-bracket']

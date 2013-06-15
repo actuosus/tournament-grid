@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>bench</title>
+    <meta name="Author" content="actuosus"/>
+    <meta name="Date" content="13/06/2013"/>
+
+    <script src="benchmark.js"></script>
+
+
+    <link rel="stylesheet" href="../../bundle/stylesheets/app.css" />
+    <script data-main="../../bundle/app.js" src="../../vendor/scripts/require.js"></script>
+</head>
+<body>
+    <script>
+        hooks = function() {
+            var view;
+
+            function fn() {
+                Ember.subscribe('render', {
+                    before: function(name, start, payload){
+                        return start
+                    },
+                    after: function(name, end, payload, start){
+                        var duration = Math.round(end - start);
+                        console.log(name, payload, duration, 'ms');
+//                        var template = payload.template
+//                        if (template){ // this is to filter out anonymous templates
+//                            console.log('rendered', template, 'took', duration, 'ms')
+//                        }
+                    }
+                });
+                Ember.run(function() {
+                    view = App.NewDoubleTournamentGridView.create({
+                        entrantsNumber: 64
+                    }).append();
+                });
+            }
+
+            fn()
+
+            var bench = new Benchmark('App.NewDoubleTournamentGridView', fn, {
+//                'setup': function() {
+//                    var mydiv = document.getElementById('mydiv');
+//                },
+                'teardown': function() {
+//                    view.destroy();
+                }
+            });
+
+            console.log('Benchmark starting…');
+//            bench.run();
+            window.bench = bench;
+        }
+    </script>
+</body>
+</html>

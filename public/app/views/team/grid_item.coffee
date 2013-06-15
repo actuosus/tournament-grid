@@ -8,26 +8,24 @@
 define [
   'cs!../autocomplete_text_field'
   'cs!../number'
-  'cs!../../mixins/moving_highlight'
 ], ->
   ###
   Represents team model in grid. Also can be used standalone.
   ###
-  App.TeamGridItemView = Em.ContainerView.extend App.MovingHightlight, App.Editing, App.ContextMenuSupport,
+  App.TeamGridItemView = Em.ContainerView.extend App.Editing, #App.ContextMenuSupport,
     classNames: ['team-grid-item']
-    classNameBindings: ['winnerClassName', 'isEditing', 'teamUndefined', 'isUpdating']
+    classNameBindings: ['winnerClassName', 'teamUndefined']
     childViews: ['countryFlagView', 'nameView', 'pointsView']
 
-    shouldShowContextMenuBinding: 'App.isEditingMode'
-    contextMenuActions: ['reset']
+#    shouldShowContextMenuBinding: 'App.isEditingMode'
+#    contextMenuActions: ['reset']
 
     editingChildViews: ['autocompleteView', 'resetButtonView']
 
     matchBinding: 'parentView.match'
-    isUpdatingBinding: 'match.isUpdating'
     pointsIsVisible: yes
 
-    teamUndefined: (-> !@get('content')).property('content')
+    teamUndefined: Em.computed.empty 'content'
 
     content: (->
       content = @get 'content'
@@ -48,71 +46,37 @@ define [
         App.TeamsController.create()
       ).property()
 
-    _autocompleteView: App.AutocompleteTextField.extend
-      isVisible: no
-
-      controllerBinding: 'App.reportTeamsController'
-
-      filteredContent: (->
-        content = @get 'content'
-        entrants = @get 'parentView.match.round.stage.entrants'
-        if entrants
-          content.filter (item)-> not entrants.contains item
-        else
-          content
-      ).property().volatile()
-
-      contentFilter: (content)->
-        return unless content
-        entrants = @get 'parentView.match.round.stage.entrants'
-        if entrants
-          @set 'content', content.filter (item)->
-            not entrants.contains item
-
-      selectionChanged: (->
-        oldTeam = @get 'parentView.content'
-        newTeam = @get 'selection'
-        identifier = oldTeam.get('identifier') if oldTeam
-        newTeam.set 'identifier', identifier
-        @set 'parentView.content', newTeam
-        match = @get 'parentView.parentView.match'
-        if match
-#          match.get('entrants')[@get 'parentView.contentIndex'] = newTeam
-          match.set "entrant#{@get('parentView.contentIndex')+1}", newTeam
-        @set('isVisible', no)
-      ).observes('selection')
-
-      hasFocusChanged: (->
-        unless @get 'hasFocus'
-          @set('isVisible', no)
-        else
-          @set('isVisible', yes)
-      ).observes('hasFocus')
+      assignTeam: (team)->
+        @set 'parentView.content', team
+        match = @get 'parentView.match'
+        match.set "entrant#{@get('parentView.contentIndex')+1}", team if match
 
       insertNewline: ->
-        popup = @showAddForm(@)
-        popup.onShow = =>
-          popup.get('formView')?.focus()
-        popup.onHide = =>
-          @focus()
+        @assignTeam @get 'selection'
+        @_closeAutocompleteMenu()
+        @set 'isVisible', no
+
+      selectMenuItem: (team)->
+        @assignTeam team
+        @_closeAutocompleteMenu()
+        @set 'isVisible', no
+
+      focusOut: -> @set 'isVisible', no
 
     nameView: Em.View.extend
       classNames: ['team-name']
-      contentBinding: 'parentView.content'
 #      href: (->
 #        "/teams/#{@get 'content.id'}"
 #      ).property('content')
-      template: Em.Handlebars.compile '{{view.content.name}}'#<a {{bindAttr href="view.href"}} target="_blank">
+      template: Em.Handlebars.compile '{{view.parentView.content.name}}'#<a {{bindAttr href="view.href"}} target="_blank">
 
       click: ->
         if @get('parentView.isEditable')
-          unless @get('parentView.match.isLocked')
-            @set('parentView.autocompleteView.isVisible', yes)
-            @get('parentView.autocompleteView').trigger('focus')
+          @set('parentView.autocompleteView.isVisible', yes)
+          @get('parentView.autocompleteView').trigger('focus')
 
     points: (->
-      contentIndex = @get('contentIndex')
-      @get("match.entrant#{contentIndex+1}_points")
+      @get("match.entrant#{@get('contentIndex')+1}_points")
     ).property('match.entrant1_points', 'match.entrant2_points')
 
     pointsView: App.NumberView.extend
@@ -123,11 +87,8 @@ define [
       valueBinding: 'parentView.points'
       isEditableBinding: 'parentView.isEditable'
       isVisibleBinding: 'parentView.pointsIsVisible'
-#      template: Em.Handlebars.compile '{{view.parentView.points}}'
       matchBinding: 'parentView.match'
       max: 99
-
-      mouseEnter: -> @get('parentView').shouldShowLineupPopup = no
 
       valueChanged: (->
         match = @get('match')
@@ -135,23 +96,6 @@ define [
         if points >= 0 and match
           match.set('entrant' + (@get('contentIndex')+1) + '_points', points)
       ).observes('value')
-
-#      click: ->
-#        if @get('parentView.isEditable')
-#          @$().css
-#            '-webkit-user-modify': 'read-write'
-#            '-webkit-user-select': 'text'
-#          @$().keyup =>
-#            match = @get('match')
-#            points = parseInt @$().text(), 10
-#            if points >= 0 and match
-#              match.set('entrant' + (@get('contentIndex')+1) + '_points', points)
-#          @$().blur => @$().unbind('keyup').css {'-webkit-user-modify': 'none'}
-#          @$().focus().select()
-#
-
-    isEditing: no,
-    isEditableBinding: 'App.isEditingMode'
 
     _isEditingBinding: 'App.isEditingMode'
 
@@ -174,33 +118,13 @@ define [
         unless @get('match.isLocked')
           @set 'resetButtonView.isVisible', yes if @get 'content'
       entrant = @get 'content'
-      if entrant
-        entrant.set('isHighlighted', yes)
-#      @shouldShowLineupPopup = yes
-#      Em.run.later =>
-#        @showTeamLineupPopup() if @shouldShowLineupPopup
-#      , 500
-
-    teamLineupPopup: null
-
-    showTeamLineupPopup: ->
-      if not @teamLineupPopup or @teamLineupPopup.isDestroyed
-        team = @get('content')
-        if team
-          @teamLineupPopup = App.PopupView.create(target: @, classNames: ['popup-lineup-grid-item'], showCloseButton: yes)
-          @teamLineupPopup.pushObject(App.TeamLineupGridItem.create(content: team))
-          @teamLineupPopup.append()
-      else
-        @teamLineupPopup.show()
+      entrant.set('isHighlighted', yes) if entrant
 
     mouseLeave: ->
       @set 'resetButtonView.isVisible', no
       entrant = @get 'content'
       if entrant
         entrant.set('isHighlighted', no)
-
-#      @shouldShowLineupPopup = no
-#      @teamLineupPopup?.hide()
 
     reset: ->
       @set 'content', null
@@ -224,5 +148,4 @@ define [
       ###
       Sets team binding to null.
       ###
-      click: ->
-        @get('parentView').reset()
+      click: -> @get('parentView').reset()

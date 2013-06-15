@@ -6,12 +6,10 @@
  * Time: 02:59
 ###
 
-Config = require '../conf'
-conf = new Config
 mongoose = require 'mongoose'
 Schema = mongoose.Schema
 ObjectId = Schema.ObjectId
-socketNotifyPlugin = require '../lib/mongoose'
+socketNotifyPlugin = require '../../lib/mongoose'
 
 MatchSchema = new Schema
   sort_index: type: Number

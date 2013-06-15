@@ -6,10 +6,8 @@
  */
 
 .team-grid-item-container {
-    border: 1px solid #828282;
-    background-color: #efefef;
     width: 156px;
-    height: 23px;
+    height: 25px;
     overflow: hidden;
     position: relative;
 
@@ -53,6 +51,10 @@
     opacity: 0.5;
 }
 
+.team-grid-item.is-loading {
+    background: red !important;
+}
+
 .team-grid-item .autocomplete-text-field {
     position: absolute;
     width: auto;
@@ -69,7 +71,7 @@
 }
 
 .team-name {
-    width: 107px;
+    width: 108px;
     float: left;
     line-height: 20px;
     min-height: 20px;

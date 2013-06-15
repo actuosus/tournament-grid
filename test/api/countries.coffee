@@ -6,7 +6,7 @@
 ###
 
 request = require 'superagent'
-should = require 'should'
+chai = require 'chai'
 api = require '../../app'
 Config = require '../../conf'
 conf = new Config
@@ -20,9 +20,9 @@ describe 'Country', ->
     request
       .get("http://#{conf.hostname}:#{conf.port}/#{namespace}")
       .end (res)->
-        res.statusCode.should.equal 200
+        res.status.should.equal 200
         items = res.body[entity.plural]
-        should.exist items
+        items.should.exist
         done items
 
   before (done)->
@@ -41,9 +41,9 @@ describe 'Country', ->
       request
         .get("http://#{conf.hostname}:#{conf.port}/#{namespace}")
         .end (res)->
-          res.statusCode.should.equal 200
+          res.status.should.equal 200
           items = res.body[entity.plural]
-          should.exist items
+          items.should.exist
           done()
 
   describe 'item', ->
@@ -53,7 +53,7 @@ describe 'Country', ->
         request
           .get("http://#{conf.hostname}:#{conf.port}/#{namespace}/#{item._id}")
           .end (res)->
-            res.statusCode.should.equal 200
+            res.status.should.equal 200
 
             res.body[entity.name].name.should.equal item.name
 
@@ -63,7 +63,7 @@ describe 'Country', ->
       request
         .get("http://#{conf.hostname}:#{conf.port}/#{namespace}/unknown_id")
         .end (res)->
-          res.statusCode.should.equal 404
+          res.status.should.equal 404
 
           done()
 
@@ -74,7 +74,7 @@ describe 'Country', ->
         .post("http://#{conf.hostname}:#{conf.port}/#{namespace}")
         .send(data)
         .end (res)->
-          res.statusCode.should.equal 404
+          res.status.should.equal 404
 
           done()
 
@@ -84,7 +84,7 @@ describe 'Country', ->
         request
           .put("http://#{conf.hostname}:#{conf.port}/#{namespace}/#{item._id}")
           .end (res)->
-            res.statusCode.should.equal 404
+            res.status.should.equal 404
 
             done()
 
@@ -94,6 +94,6 @@ describe 'Country', ->
         request
           .del("http://#{conf.hostname}:#{conf.port}/#{namespace}/#{item._id}")
           .end (res)->
-            res.statusCode.should.equal 404
+            res.status.should.equal 404
 
             done()

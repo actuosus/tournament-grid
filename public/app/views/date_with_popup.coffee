@@ -7,6 +7,7 @@
 
 define ->
   App.DateWithPopupView = Em.View.extend
+    tagName: 'span'
     classNames: ['date-with-popup']
     template: Em.Handlebars.compile '{{view.value}}'
     attributeBindings: ['title']

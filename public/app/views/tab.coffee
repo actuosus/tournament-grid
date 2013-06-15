@@ -8,20 +8,66 @@
 define ->
   App.TabView = Em.ContainerView.extend
     classNames: ['tab-view']
-    childViews: ['tabBarView', 'contentView']
-    tabs: null
+    childViews: ['tabBarView']
 
-    # We already have currentView with Ember.ContainerView
+    selection: null
 
-    tabBarView: Em.View.extend
+    tabBarView: Em.ContainerView.extend
       classNames: ['tab-bar-view', 'i-listsTabs', 'i-listsTabs_bd']
-      template: Em.Handlebars.compile '''
-                                      <ul class="b-listsTabs">
-                                      {{#each view.content}}
-                                      {{view view.itemViewClass contentBinding=this}}
-                                      {{/each}}
-                                      </ul>
-                                      '''
+      childViews: ['tabsView']
 
-    contentView: Em.View.extend
-      classNames: ['tab-content-view']
+      contentBinding: 'parentView.content'
+      selectionBinding: 'parentView.selection'
+
+      tabsView: Em.CollectionView.extend
+        tagName: 'ul'
+        classNames: 'b-listsTabs'
+        contentBinding: 'parentView.content'
+        selectionBinding: 'parentView.selection'
+        itemViewClass: Em.ContainerView.extend
+          tagName: 'li'
+          classNames: ['item']
+          classNameBindings: ['active']
+          attributeBindings: ['tabIndex']
+          tabIndexBinding: (-> @get('contentIndex')+1).property('contentIndex')
+          childViews: ['titleView']
+          selectionBinding: 'parentView.selection'
+
+          router: (->
+            @get('controller.container')?.lookup('router:main')
+          ).property('controller')
+
+          currentWhen: 'stage'
+
+          active: (->
+            router = @get 'router'
+            content = @get 'content'
+            return unless router
+            currentWithIndex = @currentWhen + '.index'
+            router.isActive.apply(router, [@currentWhen].concat(content)) or
+            router.isActive.apply(router, [currentWithIndex].concat(content))
+          ).property('namedRoute', 'router.url')
+
+          routeChanged: (->
+            @set 'selection', @ if @get 'active'
+          ).observes('router.url')
+
+          click: ->
+            @set 'selection', @
+
+            router = @get 'router'
+            router.transitionTo @currentWhen, @get 'content' if router
+
+          isActive: (->
+            Em.isEqual @get('selection'), @
+          ).property('selection')
+
+          titleView: Em.View.extend
+            template: Em.Handlebars.compile '{{view.parentView.content.id}}'
+
+    currentView: (->
+      if @get 'selection'
+        Em.View.create template: Em.Handlebars.compile @get('selection.content.id')
+      else
+        Em.View.create()
+    ).property('selection')

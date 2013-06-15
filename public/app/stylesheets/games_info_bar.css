@@ -6,11 +6,10 @@
  */
 
 .games-info-bar {
-    list-style-type: none;
-    height: 15px;
+    height: 12px;
     overflow: hidden;
-    margin: 0;
-    padding: 0;
+    white-space: nowrap;
+    max-width: 105px;
 }
 
 .games-list {

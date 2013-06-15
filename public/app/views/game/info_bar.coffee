@@ -13,7 +13,6 @@ define [
 ], ->
   App.GamesInfoBarView = Em.ContainerView.extend( App.Editing, {
     classNames: ['games-info-bar']
-    showInfoLabel: no
     isEditable: no
 
     _isEditingBinding: 'App.isEditingMode'
@@ -22,6 +21,8 @@ define [
     editingChildViews: ['addButtonView']
 
     matchBinding: 'parentView.content'
+    
+    showInfoLabel: Em.computed.bool 'content.length'
 
     infoLabelView: Em.View.extend
       classNames: ['games-info-bar-label']
@@ -55,8 +56,10 @@ define [
         classNames: 'games-list-item'
         classNameBindings: ['isUpdating']
         attributeBindings: ['title']
-        title: Em.computed.alias 'content.title'
-        template: Em.Handlebars.compile '<a target="_blank" {{bindAttr href="view.content.link" title="view.content.title"}}>{{view.content.contentIndex}}</a>'
+        titleBinding: 'content.title'
+        template: Em.Handlebars.compile '<a target="_blank" {{bindAttr href="view.content.link" title="view.content.title"}}>{{view.index}}</a>'
+        
+        index: (-> @get('contentIndex') + 1).property('contentIndex')
 
         shouldShowContextMenuBinding: 'App.isEditingMode'
         contextMenuActions: ['edit', 'deleteRecord']

@@ -1,14 +1,15 @@
 var view;
 
 before(function() {
-  var view;
-  window.App = Ember.Namespace.create();
-
-  App.View = Ember.View.extend({
-    template: Ember.Handlebars.compile("{{view}}")
-  });
-
-  App.View.create().destroy();
+  console.log(window.App);
+//  var view;
+//  window.App = Ember.Namespace.create();
+//
+//  App.View = Ember.View.extend({
+//    template: Ember.Handlebars.compile("{{view}}")
+//  });
+//
+//  App.View.create().destroy();
 });
 
 after(function() {

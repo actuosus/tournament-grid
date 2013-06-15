@@ -6,8 +6,6 @@
  * Time: 03:01
 ###
 
-Config = require '../conf'
-conf = new Config
 mongoose = require 'mongoose'
 Schema = mongoose.Schema
 ObjectId = Schema.ObjectId

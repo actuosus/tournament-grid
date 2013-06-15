@@ -10,10 +10,10 @@ define ['cs!../core'],->
   App.Stage = DS.Model.extend
     primaryKey: '_id'
 
-    name: DS.attr('string', {loc: {keyPath: '_name', defaultLanguage: 'ru'}})
+    title: DS.attr('string', {loc: {keyPath: '_title', defaultLanguage: 'ru'}})
 
     # TODO Translation.
-#    __name: ((a,b,c,d)->
+#    __title: ((a,b,c,d)->
 #      nameHash = @get '_name'
 #      currentLanguage = App.get('currentLanguage')
 #      value = ''
@@ -24,12 +24,11 @@ define ['cs!../core'],->
 #      value
 #    ).property('_name', 'App.currentLanguage')
 
-#    _name: DS.attr('object')
+#    _title: DS.attr('object')
 
     description: DS.attr 'string'
-    visual_type: DS.attr 'string'
-    sort_index: DS.attr 'number'
-    entrants_count: DS.attr 'number'
+    visualType: DS.attr 'string'
+    sortIndex: DS.attr 'number'
 
     isSingleElimination: yes
 

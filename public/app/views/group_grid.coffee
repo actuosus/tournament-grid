@@ -14,6 +14,9 @@ define [
   'cs!./match/table_container'
   'cs!./remove_button'
   'cs!../controllers/matches'
+  'cs!../mixins/context_menu_support'
+  'cs!../mixins/moving_highlight'
+  'cs!../mixins/editing'
 ], ->
   App.GroupGridView = App.GridView.extend App.ContextMenuSupport,
     classNames: ['lineup-grid', 'group-lineup-grid']
@@ -44,15 +47,15 @@ define [
       contentView: Em.ContainerView.extend( App.Editing, App.MovingHightlight, {
         contentBinding: 'parentView.content'
         classNames: ['lineup-grid-item-name-container']
-        childViews: ['nameView']
+        childViews: ['nametitleView']
 
         editingChildViews: ['automaticCountingButtonView', 'addButtonView', 'removeButtonView']
         _isEditingBinding: 'App.isEditingMode'
 
-        nameView: App.EditableLabel.extend
+        titleView: App.EditableLabel.extend
           isEditableBinding: 'App.isEditingMode'
           contentBinding: 'parentView.content'
-          valueBinding: 'content.name'
+          valueBinding: 'content.title'
           classNames: ['lineup-grid-item-name']
 
         addButtonView: Em.View.extend

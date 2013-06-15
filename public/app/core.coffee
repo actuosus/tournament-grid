@@ -90,7 +90,7 @@ define [
     customEvents:
       mousewheel: 'mouseWheel'
 
-#  appConfig.rootElement = config.rootElement if config.rootElement
+  appConfig.rootElement = config.rootElement if config.rootElement
 
   App = Em.Application.create appConfig
 
@@ -191,6 +191,11 @@ define [
         host: ''
         namespace: 'api'
     remote: config
+
+#  if window.grid.
+  $.ajaxSetup
+    username: 'virtus'
+    password: 'snegi'
 
   App.currentConfig = 'local'
 

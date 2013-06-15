@@ -24,6 +24,7 @@
 
 .matches-table-item td {
     position: relative;
+    vertical-align: middle;
 }
 
 .matches-table-item.is-dirty td {

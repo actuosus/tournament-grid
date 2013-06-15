@@ -12,7 +12,7 @@ define [
     tagName: 'button'
     contentBinding: 'parentView.content'
     isVisibleBinding: 'App.isEditingMode'
-    classNames: ['btn-clean', 'remove-btn', 'remove']
+    classNames: ['btn-clean', 'remove-btn', 'remove', 'non-selectable']
     attributeBindings: ['title']
     title: '_remove'.loc()
     confirmLabel: '_remove_confirmation'.loc()

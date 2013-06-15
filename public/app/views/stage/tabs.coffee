@@ -18,73 +18,69 @@ define [
   App.StageTabsView = App.TabView.extend
     classNames: ['stage-view']
 
-    currentStage: null
-
-    currentStageDidLoad: -> @setViewForStage @currentStage
-
-    setViewForStage: (stage)->
-      switch @currentStage.get 'visual_type'
+    currentView: ((stage)->
+      stage = @get 'selection.content'
+      return Em.View.create() unless stage
+      switch stage.get 'visualType'
         when 'single', 'grid'
-          @currentStage.get('matches')
+          stage.get('matches')
           contentView = App.NewTournamentGridView.create
-            stage: @currentStage
-            entrantsNumber: @currentStage.get('entrantsNumber')
+            stage: stage
+            entrantsNumber: stage.get('entrantsNumber')
         when 'double'
           contentView = App.NewDoubleTournamentGridView.create
-            stage: @currentStage
-            entrantsNumber: @currentStage.get('entrantsNumber')
+            stage: stage
+            entrantsNumber: stage.get('entrantsNumber')
         when 'group'
           contentView = App.GroupGridView.create
-            content: @currentStage.get 'rounds'
-            entrants: @currentStage.get 'entrants'
+            content: stage.get 'rounds'
+            entrants: stage.get 'entrants'
             showFilterForm: no
             tableItemViewClass: 'App.MatchGroupTableItemView'
         when 'matrix'
-          matchesController = App.MatchesController.create(stage: @currentStage, contentBinding: 'stage.matches')
+          matchesController = App.MatchesController.create(stage: stage, contentBinding: 'stage.matches')
           contentView = App.MatchGridContainer.create
-            stage: @currentStage
+            stage: stage
             content: matchesController
         when 'team'
           teamsController = App.ReportEntrantsController.create
             searchPath: 'name'
-            stage: @currentStage
+            stage: stage
             contentBinding: 'stage.entrants'
           matchesController = App.MatchesController.create
-            round: @currentStage.get('rounds.firstObject')
-            content: @currentStage.get('rounds.firstObject.matches')
+            round: stage.get('rounds.firstObject')
+            content: stage.get('rounds.firstObject.matches')
           contentView = App.StandingTableView.create
             classNames: ['for-team']
             entrants: teamsController
             matches: matchesController
             showFilterForm: yes
             tableItemViewClass: 'App.MatchTableItemView'
-      @set 'currentView', contentView
-
-    setCurrentTabView: (@currentTabView)->
-      @currentStage = @currentTabView.get 'content'
-      @get('controller.container')?.lookup('router:main').transitionTo('stage', @currentStage)
-      @currentStage.addObserver 'data', @, @currentStageDidLoad
-      @setViewForStage @currentStage
-
-    contentView: Em.View.extend()
+      contentView
+    ).property('selection')
 
     tabBarView: Em.ContainerView.extend( App.ContextMenuSupport, {
       classNames: ['i-listsTabs', 'i-listsTabs_bd']
       contentBinding: 'parentView.controller'
       childViews: ['tabsView']
 
+      selectionBinding: 'parentView.selection'
+
       tabsView: Em.CollectionView.extend
         tagName: 'ul'
         classNames: 'b-listsTabs'
         contentBinding: 'parentView.content'
+        selectionBinding: 'parentView.selection'
         itemViewClass: Em.ContainerView.extend( App.ContextMenuSupport, App.Editing, {
           tagName: 'li'
-          classNames: ['item']
-          classNameBindings: ['active', 'isFocused']
-          childViews: ['nameView']
+          classNames: ['item', 'stage-tab-item']
+          classNameBindings: ['active', 'isFocused', 'content.isDirty', 'content.isSaving', 'content.isUpdating', 'content.isError']
+          childViews: ['titleView']
           attributeBindings: ['title']
           _isEditingBinding: 'App.isEditingMode'
           editingChildViews: ['removeButtonView']
+
+          selectionBinding: 'parentView.selection'
 
           shouldShowContextMenuBinding: 'App.isEditingMode'
           contextMenuActions: ['edit', 'deleteRecord:delete']
@@ -109,42 +105,36 @@ define [
               router.isActive.apply(router, [currentWithIndex].concat(content))
           ).property('namedRoute', 'router.url')
 
+          routeChanged: (->
+            @set 'selection', @ if @get 'active'
+          ).observes('router.url')
+
           router: (->
             @get('controller.container')?.lookup('router:main')
           ).property('controller')
 
-          nameView: Em.View.extend
-            contentBinding: 'parentView.content'
-            template: Em.Handlebars.compile '{{view.content.name}}'
+          titleView: Em.View.extend
+            template: Em.Handlebars.compile '{{view.parentView.content.title}}'
 
           removeButtonView: App.RemoveButtonView.extend
             title: '_remove_stage'.loc()
             deleteRecord: -> @get('parentView').deleteRecord()
             click: (event)->
               event.stopPropagation()
-  #            @_super()
 
           click: ->
+            @set 'selection', @
+
             router = @get 'router'
-            router.transitionTo 'stage', @get 'content' if router
-            @get('parentView.parentView').selectChildView(@)
+            router.transitionTo @currentWhen, @get 'content' if router
         })
 
-#      template: Em.Handlebars.compile '''
-#                                      <ul class="b-listsTabs">
-#                                        {{#each view.content}}
-#                                          {{view view.itemViewClass contentBinding=this}}
-#                                        {{/each}}
-#                                        {{#if App.isEditingMode}}
-#                                          <li {{bindAttr class=":item :add view.addActive:active"}}><button class="btn-clean add">+</button></li>
-#                                        {{/if}}
-#                                      </ul>
-#                                      '''
-#
       shouldShowContextMenuBinding: 'App.isEditingMode'
       contextMenuActions: ['add']
 
       add: -> @addItem()
+
+      doubleClick: -> @addItem()
 
       addActive: (->
         router = @get 'router'
@@ -159,15 +149,12 @@ define [
       addItem: ->
         router = @get 'router'
         router.transitionTo 'stages.new' if router
-        @set 'parentView.currentView', App.StageForm.create(classNames: ['padded'], report: App.report)
+        stageForm = App.StageForm.create(classNames: ['padded'], report: App.report)
+        stageForm.on 'cancel', =>
+          window.history.back()
+        @set 'parentView.currentView', stageForm
 
       click: (event)->
         if $(event.target).hasClass('add')
           @addItem()
-
-      selectChildView: (childView)->
-        @get('childViews.firstObject.childViews').forEach (child)=>
-          properChild = child #.get('childViews').objectAt 0
-          if Em.isEqual(properChild , childView)
-            @get('parentView').setCurrentTabView properChild
     })

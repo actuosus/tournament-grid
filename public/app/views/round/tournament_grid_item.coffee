@@ -13,23 +13,25 @@ define [
   App.RoundGridItemView = Em.ContainerView.extend
     classNames: 'tournament-round-container'
     classNameBindings: ['content.isDirty']
-    childViews: ['nameView', 'contentView']
+    childViews: ['titleView', 'contentView']
 
-    nameView: App.EditableLabel.extend
-      classNames: 'round-name'
-      valueBinding: 'parentView.content.name'
+    titleView: App.EditableLabel.extend
+      # TODO Rename to round-title in CSS
+      classNames: ['round-name', 'round-title']
+      valueBinding: 'parentView.content.title'
       isEditableBinding: 'App.isEditingMode'
 
     contentView: Em.CollectionView.extend
-      classNames: 'tournament-round'
+      classNames: ['tournament-round']
       roundBinding: 'content'
       contentBinding: 'parentView.content.matches'
 
       entrantsNumberBinding: 'parentView.entrantsNumber'
 
       itemViewClass: App.MatchItemView.extend
-        classNames: 'tournament-match'
-        childViews: ['dateView', 'infoBarView', 'connectorView', 'contentView']
+        classNames: ['tournament-match']
+        classNameBindings: ['content.isFinal']
+        childViews: ['dateView', 'infoBarView', 'contentView', 'connectorView']
         roundIndexBinding: 'parentView.parentView.contentIndex'
         roundsBinding: 'parentView.parentView.parentView.content'
         entrantsNumberBinding: 'parentView.entrantsNumber'
@@ -118,10 +120,10 @@ define [
               # TODO Revise weird formula
               index = (n)-> Math.ceil(Math.pow(2, Math.floor((n)/2 + ((n)%2))) - 1)
 
+              entrantsNumber = @get('entrantsNumber')
               unless bracket.get('isWinnerBracket')
                 currentIndex = index(roundIndex) - index(roundIndex-1)
                 if match.get('round.itemIndex') is 0
-                  entrantsNumber = @get('entrantsNumber')
                   _height = (index(roundIndex-1) * height) + 30 + 13 + 20 + 15 + (entrantsNumber/2 * height) + 6
                   styles.top = -_height
                   styles.height = _height + 15 + 24
@@ -130,7 +132,6 @@ define [
                   return
               else
                 if match.get('round.itemIndex') is 0
-                  entrantsNumber = @get('entrantsNumber')
                   styles.top = 39
                   styles.height = 0
                   styles.width = 181 * (Math.log(entrantsNumber) / Math.log(2) - 2) + 24
@@ -152,11 +153,10 @@ define [
           matchBinding: 'parentView.content'
           contentBinding: 'parentView.content.entrants'
 
-          itemViewClass: App.TeamGridItemContainerView.extend( App.Droppable, {
-            matchBinding: 'parentView.match'
-            pointsIsVisible: (->
-              !@get('match.isFinal')
-            ).property()
+          itemViewClass: App.TeamGridItemView.extend( App.Droppable, {
+            matchBinding: 'parentView.parentView.match'
+
+            pointsIsVisible: Em.computed.not 'match.isFinal'
 
             drop: (event)->
               viewId = event.originalEvent.dataTransfer.getData 'Text'

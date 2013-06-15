@@ -72,6 +72,7 @@ html {
     color: #828282;
     text-align: center;
     font-size: 13px;
+    margin: 0 10px;
 }
 
 .matches-table-container {
@@ -252,6 +253,7 @@ html {
     min-width: 40px;
     min-height: 1em;
     line-height: 11px;
+    clear: right;
 }
 
 input.match-start-date {
@@ -270,6 +272,7 @@ input.match-start-date {
 
 .match-info-bar {
     float: right;
+    margin-bottom: 3px;
 }
 
 .header-item {
@@ -370,6 +373,7 @@ input.match-start-date {
 
 .team-cell {
     overflow: hidden;
+    white-space: nowrap;
 }
 
 .lineup-list-name-container {
@@ -455,4 +459,8 @@ input.match-start-date {
 
 .date-with-popup:hover {
     outline: #da4600 auto 4px;
+}
+
+.stage-tab-item.is-updating {
+    box-shadow: 0 0 14px rgba(255, 255, 0, 0.9) !important;
 }

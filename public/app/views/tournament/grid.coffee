@@ -8,8 +8,9 @@
 define [
   'cs!../../core'
   'cs!../round/tournament_grid_item'
+  'cs!../../mixins/map_control'
 ], ->
-  App.NewTournamentGridView = Em.ContainerView.extend
+  App.NewTournamentGridView = Em.ContainerView.extend App.MapControl,
     classNames: ['tournament-grid-container']
 
     childViews: ['contentView']
@@ -42,6 +43,7 @@ define [
         roundIndex = roundsCount - i
         actualRound = stage?.getByPath "#{roundIndex}"
         round = App.RoundController.create
+          stage: stage
           content: actualRound
           index: roundIndex
           itemIndex: i
@@ -67,9 +69,11 @@ define [
           round.get('matches').push match
         rounds.push round
       finalRound = App.RoundController.create
+        stage: stage
         name: '_winner'.loc()
         itemIndex: -1
         parentReference: 'stage'
+        isFinal: yes
         matches: []
       finalRound.get('matches').push App.MatchController.create
         isWinner: yes

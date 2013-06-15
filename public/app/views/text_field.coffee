@@ -21,13 +21,19 @@ define [
 
     textFieldView: Em.TextField.extend
       classNames: 'text-field'
-      isVisibleBinding: 'parentView.isVisible'
+#      isVisibleBinding: 'parentView.isVisible'
       isAutocompleteBinding: 'parentView.isAutocomplete'
       nameBinding: 'parentView.name'
       requiredBinding: 'parentView.required'
       placeholderBinding: 'parentView.placeholder'
       actionBinding: 'parentView.action'
       valueBinding: 'parentView.value'
+
+      focusIn: (event)->
+        @get('parentView').trigger('focusIn')
+
+      focusOut: (event)->
+        @get('parentView').trigger('focusIn')
 
       keyDown: (event)->
         switch event.keyCode
@@ -55,6 +61,8 @@ define [
 
       insertNewline: (event)->
         @get('parentView').insertNewline(event)
+
+    focus: (event)-> @get('textFieldView').$().focus()
 
     insertNewline: Em.K
 

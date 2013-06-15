@@ -11,7 +11,7 @@ Schema = mongoose.Schema
 ObjectId = Schema.ObjectId
 
 GameSchema = new Schema
-  name: type: String
+  title: type: String
   link: type: String
   match_id: type: ObjectId, ref: 'Match'
 

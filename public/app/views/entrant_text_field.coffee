@@ -16,3 +16,19 @@ define ['cs!./text_field'], ->
       title: '_add_entrant'.loc()
       template: Em.Handlebars.compile '+'
       click: -> @get('parentView').showAddForm(@)
+
+    showAddForm: (target)->
+      popup = App.PopupView.create target: target
+      formView = @get 'autocompleteDelegate.formView'
+      form = formView.create
+        value: @get('textFieldView').$().val()
+        popupView: popup
+        entrant: @get('entrant')
+        didCreate: (entrant)=>
+          @set('value', entrant)
+          popup.hide(entrant)
+      popup.set 'formView', form
+      popup.set 'contentView', form
+      popup.pushObject form
+      popup.append()
+      popup

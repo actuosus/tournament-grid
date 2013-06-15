@@ -36,6 +36,7 @@ define [
           click: -> @set('parentView.textFieldView.value', '')
 
         textFieldView: Em.TextField.extend
+          type: 'search'
           classNames: ['search-field']
           placeholder: '_filter'.loc()
           keyUp: (event)->
@@ -83,6 +84,26 @@ define [
 
         selectMenuItem: (team)->
           @addTeam team
+
+        showAddForm: (target)->
+          popup = App.PopupView.create target: target
+          formView = @get 'autocompleteDelegate.formView'
+          form = formView.create
+            value: @get('textFieldView').$().val()
+            popupView: popup
+            didCreate: (entrant)=>
+              report = App.get('report')
+              teamRef = report.get('teamRefs').createRecord
+                team: entrant
+                report: report
+              Em.run.later ->
+                teamRef.store.commit()
+              , 2000
+              popup.hide()
+          popup.set 'formView', form
+          popup.set 'contentView', form
+          popup.pushObject form
+          popup.append()
 
 
 #      _autocompleteTextFieldView: App.AutocompleteTextField.extend

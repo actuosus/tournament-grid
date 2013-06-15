@@ -7,12 +7,13 @@
 
 define ->
   App.CountryFlagView = Em.View.extend
-    tagName: 'i'
+    tagName: 'img'
     classNames: ['country-flag-icon', 'team-country-flag-icon']
     classNameBindings: ['countryFlagClassName', 'hasFlag']
-    attributeBindings: ['title']
-    title: (-> @get 'content.name').property('content')
-    hasFlag: (-> !!@get 'content.code').property('content')
+    attributeBindings: ['title', 'alt']
+    title: Em.computed.alias 'content.name'
+    alt: Em.computed.alias 'content.name'
+    hasFlag: Em.computed.notEmpty 'content.code'
     countryFlagClassName: (->
       "country-flag-icon-#{@get 'content.code'}"
     ).property('content.code')

@@ -39,6 +39,7 @@
 .b-listsTabs .item.active {
     border-radius: 2px 2px 0 0;
     -webkit-font-smoothing: antialiased;
+    background: -webkit-linear-gradient(top, #3f3f3f, #232424);
 }
 
 .b-listsTabs .item:last-child {

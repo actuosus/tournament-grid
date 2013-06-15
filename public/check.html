@@ -1,0 +1,39 @@
+<html>
+<head>
+    <link rel="stylesheet" href="http://virtus-pro.herokuapp.com/agamapro-virtus.pro-ebb4d51390f8/css/style.css" media="screen,projection"/>
+
+    <style type="text/css">
+        body {
+            background: black;
+        }
+    </style>
+</head>
+<body>
+<div class="i-wrapper cf">
+    <div class="i-container cf">
+        <div class="b-content">
+            <div id="content"></div>
+            <script type="text/javascript">
+                window.debug = true;
+                window.grid = {
+                    reportId: 33664,
+                    config: {
+                        api: {
+                            host: 'http://v3.virtuspro.org',
+                            namespace: 'api'
+                        },
+                        auth: {
+                          username: 'virtus',
+                          password: 'snegi'
+                        },
+                        rootElement: '#content'
+                    }
+                };
+            </script>
+            <link rel="stylesheet" href="http://virtus-pro.herokuapp.com//bundle/stylesheets/app.css" />
+            <script data-main="http://virtuspro.local:3000/bundle/app.js" src="http://virtus-pro.herokuapp.com//vendor/scripts/require.min.js"></script>
+        </div>
+    </div>
+</div>
+</body>
+</html>

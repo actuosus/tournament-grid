@@ -36,8 +36,30 @@ textarea {
 .is-saving {
     cursor: progress;
     opacity: 0.8;
+    -webkit-animation: isLoading 2s infinite;
 }
 
 .is-dirty {
     background-color: rgba(255,255,0,0.2);
+}
+
+.is-loading {
+    -webkit-animation: isLoading 1s infinite;
+}
+
+.is-error {
+    background-color: rgba(255,0,0,0.5);
+}
+
+@-webkit-keyframes isLoading {
+    0% {
+        opacity: 0.8;
+    }
+    50% {
+        opacity: 0.2;
+        background-color: rgba(255,255,0,0.8) !important;
+    }
+    100% {
+        opacity: 0.8;
+    }
 }

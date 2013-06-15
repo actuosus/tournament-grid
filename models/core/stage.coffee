@@ -11,17 +11,20 @@ Schema = mongoose.Schema
 ObjectId = Schema.ObjectId
 
 StageSchema = new Schema
-  name: type: String
-  _name:
+  title: type: String, required: yes
+  _title:
     ru: type: String
     en: type: String
     de: type: String
   description: type: String
-  report_id: type: ObjectId, ref: 'Report'
-  visual_type: type: String # html
+  visual_type: type: String, required: yes # TODO What about html?
   sort_index: type: Number
-  entrants_number: type: Number
-  rounds: [type: ObjectId, ref: 'Round']
   rating: type: Number
+  entrants_number: type: Number
+
+  # Relations
+  report_id: type: ObjectId, ref: 'Report', required: yes
+  brackets: [type: ObjectId, ref: 'Bracket']
+  rounds: [type: ObjectId, ref: 'Round']
 
 module.exports = StageSchema

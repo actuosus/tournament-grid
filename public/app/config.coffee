@@ -11,4 +11,8 @@ define ['jquery'], ->
 #      host: '//virtus-pro.herokuapp.com'
       namespace: 'api'
     languages: ['ru', 'en', 'de']
-  $.extend defaults, window.grid.config
+  if window.grid?.config
+    config = $.extend defaults, window.grid.config
+  else
+    config = defaults
+  config
