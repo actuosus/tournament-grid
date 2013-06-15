@@ -6,7 +6,8 @@
  * Time: 21:29
  */
 
-define(['superagent', 'conf'], function(request){
+define(['superagent', 'conf'], function(request, conf){
+  conf = new conf
   var hiddenAPI = 'http://'+ conf.hostname + ':' + conf.port + '/hidden/';
 
   function Collection() {
