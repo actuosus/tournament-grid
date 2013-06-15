@@ -1,5 +1,6 @@
 require({
   paths: {
+    'jquery': '/vendor/scripts/jquery',
     'cs': '/vendor/scripts/cs',
     'coffee-script': '/vendor/scripts/coffee-script',
     'mocha': '/vendor/scripts/mocha',

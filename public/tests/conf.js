@@ -7,10 +7,18 @@
  */
 
 define(function(){
+  function getParameterByName(name) {
+    var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
+    return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
+  }
+
+  var hostname = getParameterByName('hostname') || 'virtuspro.local';
+  var port = getParameterByName('port') || 3000;
+
   return function() {
     return {
-      hostname: 'virtuspro.local',
-      port: 3000
+      hostname: hostname,
+      port: port
     }
   };
 });
