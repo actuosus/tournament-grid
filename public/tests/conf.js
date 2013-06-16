@@ -12,8 +12,8 @@ define(function(){
     return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
   }
 
-  var hostname = getParameterByName('hostname') || 'virtuspro.local';
-  var port = getParameterByName('port') || 3000;
+  var hostname = getParameterByName('hostname') || window.location.hostname;
+  var port = getParameterByName('port') || window.location.port;
 
   return function() {
     return {
