@@ -48,9 +48,13 @@ exports.delete = (req, res) ->
   if req.params?._id?
     await Stage.findById req.params._id, defer err, stage
 #    await Report.findById stage.report_id, defer err, report
-    Stage.remove {_id: req.params._id}, (err)->
-      Report.update({_id: stage.report_id}, {$pull : {stages : req.params._id}}) if stage?.report_id
-      res.status 204 unless err
-      res.send()
+    if stage
+      console.log stage
+      Stage.remove {_id: req.params._id}, (err)->
+        Report.findByIdAndUpdate(stage.report_id, {$pull : {stages : req.params._id}}, ->) if stage?.report_id
+        res.status 204 unless err
+        res.send()
+    else
+      res.send 404, error: 'nothing found'
   else
     res.send 400, error: "server error"

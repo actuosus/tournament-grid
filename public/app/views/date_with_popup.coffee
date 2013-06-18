@@ -53,4 +53,4 @@ define ->
           @$().datetimepicker 'setDate', date if date
         willDestroyElement: -> @$().datetimepicker 'destroy'
       @popup.pushObject @picker
-      @popup.append()
+      @popup.appendTo App.get 'rootElement'

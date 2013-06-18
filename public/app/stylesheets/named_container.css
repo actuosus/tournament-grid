@@ -32,16 +32,16 @@
 .named-container .search-field {
     border-radius: 15px;
     outline: none;
+    -webkit-appearance: none;
+    border: 1px solid #c3c3c3;
+    padding: 0 0 0 10px;
+    min-height: 21px;
 }
 
 .named-container .search-bar .remove-btn {
     right: 7px;
     background: #a5a5a5;
     color: white;
-}
-
-.named-container .search-field:focus {
-    box-shadow: 0 0 8px #da4600;
 }
 
 .named-container-title {

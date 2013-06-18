@@ -88,7 +88,7 @@ define ->
               template: Em.Handlebars.compile "{{loc '_ok'}}"
               click: -> @get('parentView.parentView.parentView').trigger('ok')
         )
-        modalView.append()
+        modalView.appendTo App.get 'rootElement'
 
       click: (event)->
         event.preventDefault()

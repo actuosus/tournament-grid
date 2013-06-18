@@ -1,14 +1,14 @@
 ###
- * locales
+ * index
  * @author: actuosus
- * Date: 22/03/2013
- * Time: 17:56
+ * Date: 18/06/2013
+ * Time: 17:12
 ###
 
 define [
-  'cs!./locales/ru'
-  'cs!./locales/en'
-  'cs!./locales/de'
+  'cs!./ru'
+  'cs!./en'
+  'cs!./de'
 
   'jquery.ui.datepicker-ru'
   'jquery.ui.datepicker-it'

@@ -9,47 +9,27 @@ define [
   'cs!./cell'
 ],->
   App.TeamStandingCellView = App.TeamCellView.extend
-    autocompleteView: App.AutocompleteTextField.extend
+    autocompleteView: App.TextField.extend
       isVisible: no
-      controllerBinding: 'App.reportTeamsController'
+      isAutocomplete: yes
 
-      filteredContent: (->
-        content = @get 'content'
-        entrants = @get 'parentView.match.round.resultSetEntrants'
-        if entrants
-          content.filter (item)-> not entrants.contains item
-        else
-          content
-      ).property().volatile()
+      autocompleteDelegate: (->
+        App.TeamsController.create()
+      ).property()
 
-      contentFilter: (content)->
-        return unless content
-        entrants = @get 'parentView.match.round.stage.entrants'
-        if entrants
-          @set 'content', content.filter (item)->
-            not entrants.contains item
-
-      selectionChanged: (->
-#        oldTeam = @get 'parentView.content'
-        newTeam = @get 'selection'
-        teamRef = App.get('report.teamRefs').find (item)-> Em.isEqual(item.get('team'), newTeam)
-
-        @set 'parentView.content', teamRef
-        @notifyPropertyChange('parentView.content')
-
-        @set('isVisible', no)
-      ).observes('selection')
-
-      hasFocusChanged: (->
-        unless @get 'hasFocus'
-          @set('isVisible', no)
-        else
-          @set('isVisible', yes)
-      ).observes('hasFocus')
+      assignTeam: (team)->
+        @set 'parentView.content', team
+        match = @get 'parentView.match'
+        match.set "entrant#{@get('parentView.contentIndex')+1}", team if match
 
       insertNewline: ->
-        popup = @showAddForm(@)
-        popup.onShow = =>
-          popup.get('formView')?.focus()
-        popup.onHide = =>
-          @focus()
+        @assignTeam @get 'selection'
+        @_closeAutocompleteMenu()
+        @set 'isVisible', no
+
+      selectMenuItem: (team)->
+        @assignTeam team
+        @_closeAutocompleteMenu()
+        @set 'isVisible', no
+
+      focusOut: -> @set 'isVisible', no

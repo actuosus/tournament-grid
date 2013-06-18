@@ -21,7 +21,7 @@ define ->
         y: event.pageY
       maskView.on 'didInsertElement', ->
         maskView.$().css(left: event.pageX + 1, top: event.pageY + 1)
-      maskView.append()
+      maskView.appendTo App.get 'rootElement'
       @set 'maskView', maskView
 
     onDocumentMouseMove: (event)->
@@ -63,7 +63,8 @@ define ->
       $(document.body).removeClass 'non-selectable'
       $(document.body).unbind 'mousemove.selectable'
       $(document.body).unbind 'mouseup.selectable'
-      @get('maskView')?.$().animate({opacity: 0}, 300, => @get('maskView').destroy())
+      if @get('maskView') and @get('maskView').$()
+        @get('maskView').$().animate({opacity: 0}, 300, => @get('maskView').destroy())
 
     mouseOut: (event)-> @mouseUp event
 

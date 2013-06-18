@@ -42,4 +42,4 @@ define ->
         sender: event
         content: @get 'contextMenuItems'
         target: @get('contextMenuTarget') or @
-      @contextMenuView.append()
+      @contextMenuView.appendTo App.get 'rootElement'

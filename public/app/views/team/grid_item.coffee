@@ -71,7 +71,7 @@ define [
       template: Em.Handlebars.compile '{{view.parentView.content.name}}'#<a {{bindAttr href="view.href"}} target="_blank">
 
       click: ->
-        if @get('parentView.isEditable')
+        if @get('parentView._isEditing')
           @set('parentView.autocompleteView.isVisible', yes)
           @get('parentView.autocompleteView').trigger('focus')
 
@@ -85,7 +85,7 @@ define [
       contentBinding: 'parentView.content'
       contentIndexBinding: 'parentView.contentIndex'
       valueBinding: 'parentView.points'
-      isEditableBinding: 'parentView.isEditable'
+      isEditableBinding: 'parentView._isEditing'
       isVisibleBinding: 'parentView.pointsIsVisible'
       matchBinding: 'parentView.match'
       max: 99
@@ -100,7 +100,7 @@ define [
     _isEditingBinding: 'App.isEditingMode'
 
     isWinner: (->
-      @get('parentView.match.winner.clientId') is @get('content.clientId')
+      @get('match.winner.clientId') is @get('content.clientId')
     ).property 'points', 'match.winner'
 
     winnerClassName: (->

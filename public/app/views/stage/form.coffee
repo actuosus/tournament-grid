@@ -21,8 +21,8 @@ define [
 
     visualType: 'grid'
 
-    name: null
     rating: null
+    title: null
     description: null
 
     didCreate: Em.K
@@ -73,14 +73,17 @@ define [
 ##      stage = App.Stage.createRecord
 #      stage.set 'name', @$('.name').val()
       stage.set 'report', report
-      stage.set 'name', @get 'name'
+      stage.set 'title', @get 'title'
       stage.set 'rating', @get 'rating'
       stage.set 'entrantsNumber', entrantsNumber
 #      stage.set 'description', @$('.description').val()
       stage.set 'description', @get 'description'
-      stage.set 'visual_type', @get 'visualType.id'
+      stage.set 'visualType', @get 'visualType.id'
 
       report.get('stages').pushObject stage if report
+
+      # TODO Kind of hacky.
+      @didCreate stage
 
     submit: (event)->
       event.preventDefault()

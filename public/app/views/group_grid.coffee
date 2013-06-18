@@ -47,7 +47,7 @@ define [
       contentView: Em.ContainerView.extend( App.Editing, App.MovingHightlight, {
         contentBinding: 'parentView.content'
         classNames: ['lineup-grid-item-name-container']
-        childViews: ['nametitleView']
+        childViews: ['titleView']
 
         editingChildViews: ['automaticCountingButtonView', 'addButtonView', 'removeButtonView']
         _isEditingBinding: 'App.isEditingMode'

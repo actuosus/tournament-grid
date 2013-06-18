@@ -65,9 +65,9 @@ define ->
           titleView: Em.View.extend
             template: Em.Handlebars.compile '{{view.parentView.content.id}}'
 
-    currentView: (->
+    selectionChanged: (->
       if @get 'selection'
         Em.View.create template: Em.Handlebars.compile @get('selection.content.id')
       else
         Em.View.create()
-    ).property('selection')
+    ).observes('selection')

@@ -30,5 +30,5 @@ define ['cs!./text_field'], ->
       popup.set 'formView', form
       popup.set 'contentView', form
       popup.pushObject form
-      popup.append()
+      popup.appendTo App.get 'rootElement'
       popup

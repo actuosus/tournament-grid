@@ -8,8 +8,8 @@
 
 define [
   'cs!./core'
-  'cs!./models'
-  'cs!./views'
+  'cs!./models/index'
+  'cs!./views/index'
 ], ->
   App.Router.map ->
     @resource 'report', {path: '/'}, ->
@@ -27,7 +27,7 @@ define [
 
 #      App.set 'isEditingMode', yes
       
-      console.debug 'Setting up report controller'
+      console.log 'Setting up report controller'
       App.set 'router', @router
       App.set 'report', model
       App.overrideAdapterAjax model
@@ -46,12 +46,12 @@ define [
 
   App.StagesRoute = Em.Route.extend
     model: ->
-      console.debug 'App.report', App.get('report')
+      console.log 'App.report', App.get('report')
       App.get('report.stages')
 
     setupController: (controller, model)->
-      console.debug 'Setting up stages controller'
-      console.debug 'stages', controller, model
+      console.log 'Setting up stages controller'
+      console.log 'stages', controller, model
       controller.set 'model', App.get('report.stages')
     renderTemplate: (controller, model)->
       @render()

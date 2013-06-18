@@ -24,6 +24,6 @@ define ->
           description: @get 'match.description'
           didUpdate: => popup.hide()
       )
-      popup.append()
+      popup.appendTo App.get 'rootElement'
 
     deleteRecord: -> @get('content').deleteRecord()

@@ -43,7 +43,7 @@ define [
             description: @get 'match.description'
             didUpdate: => popup.hide()
         )
-        popup.append()
+        popup.appendTo App.get 'rootElement'
 
 
     gamesView: Em.CollectionView.extend
@@ -76,7 +76,7 @@ define [
               link: @get 'content.link'
               didUpdate: => popup.hide()
           )
-          popup.append()
+          popup.appendTo App.get 'rootElement'
 
         deleteRecord: -> @get('content').deleteRecord()
         click: (event)->
@@ -103,5 +103,5 @@ define [
             match: @get('match')
             didCreate: => popup.hide()
         )
-        popup.append()
+        popup.appendTo App.get 'rootElement'
   })

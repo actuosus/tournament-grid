@@ -51,6 +51,12 @@ define ['cs!../core'],->
         sender
         offset = {left: sender.pageX, top: sender.pageY}
 
+      rootElement = App.get('rootElement')
+      if rootElement
+        rootElementOffset = $(rootElement).offset()
+        offset.top -= rootElementOffset.top
+        offset.left -= rootElementOffset.left
+
       target.set 'isFocused', yes if target
 
       $(element).css({transformOrigin: "#{target.$().width()/2} 0"})

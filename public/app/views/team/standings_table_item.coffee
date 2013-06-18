@@ -38,7 +38,7 @@ define [
           origin: 'top'
           entrant: entrant
           controller: controller
-        @matchesPopup.append()
+        @matchesPopup.appendTo App.get 'rootElement'
 
     mouseLeave: -> @matchesPopup?.hide()
 

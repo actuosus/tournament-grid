@@ -8,12 +8,12 @@
 
 define [
   'cs!./core'
-  'cs!./system'
-  'cs!./mixins'
+  'cs!./system/index'
+  'cs!./mixins/index'
 
-  'cs!./controllers'
-  'cs!./views'
-  'cs!./models'
+  'cs!./controllers/index'
+  'cs!./views/index'
+  'cs!./models/index'
 #  'cs!./fixtures'
 
   'cs!./router'
@@ -30,22 +30,22 @@ define [
           when 65 # a
             App.toggleConfig()
           when 69 # e
-            notificationObject =
-              icon: null
-              title: 'Editing mode'
-            if App.get('isEditingMode')
-              notificationObject.content = 'Editing mode enabled.'
-            else
-              notificationObject.content = 'Editing mode disabled.'
-            notification = App.notificationsController.createNotification notificationObject
-            notification?.show()
+#            notificationObject =
+#              icon: null
+#              title: 'Editing mode'
+#            if App.get('isEditingMode')
+#              notificationObject.content = 'Editing mode enabled.'
+#            else
+#              notificationObject.content = 'Editing mode disabled.'
+#            notification = App.notificationsController.createNotification notificationObject
+#            notification?.show()
             App.set 'isEditingMode', not App.get('isEditingMode')
           when 90 # z
             History.undo()
           when 192 # Paragraph
             popup = App.PopupView.create(showCloseButton: yes)
             popup.pushObject App.ServerDebugView.create()
-            popup.append()
+            popup.appendTo App.get 'rootElement'
 
   App.ready = ->
 #    App.set 'entrantsController', App.EntrantsController.create()
@@ -53,46 +53,36 @@ define [
 #    App.set 'teamsController', App.TeamsController.create()
 #    App.set 'playersController', App.PlayersController.create()
 
-    App.NotificationsController = Em.ArrayController.extend
-      requestPermission: ->
-        window.webkitNotifications.requestPermission()
-      createNotification: (options)->
-        if window.webkitNotifications.checkPermission() is 0
-          window.webkitNotifications.createNotification(options.icon, options.title, options.content)
-        else
-          @requestPermission()
-
-
     App.set 'notificationsController', App.NotificationsController.create()
 #
 ##    TODO Socket support
 ##    App.socketController = App.SocketController.create()
 ##    App.socketController.connect()
 
-#    App.peroids = Em.ArrayController.create
-#      content: [
-#        Em.Object.create name:'Все', id: 'all'
-#
-#        Em.Object.create name:'Период', id: 'period'
-#        Em.Object.create name:'Дата', id: 'date'
-#        Em.Object.create name:'Сегодня', id: 'today'
-#        Em.Object.create name:'Завтра', id: 'tomorrow'
-#        Em.Object.create name:'Вчера', id: 'yesterday'
-#        Em.Object.create name:'Неделя', id: 'week'
-#        Em.Object.create name:'Месяц', id: 'month'
-#        Em.Object.create name:'Год', id: 'year'
-#      ]
-#
-#    App.matchTypes = Em.ArrayController.create
-#      content: [
-#        Em.Object.create name:'Все', id: 'all'
-#
-#        Em.Object.create name:'_future_match_type'.loc(), id: 'future'
-#        Em.Object.create name:'_active_match_type'.loc(), id: 'active'
-#        Em.Object.create name:'_delayed_match_type'.loc(), id: 'delayed'
-#        Em.Object.create name:'_past_match_type'.loc(), id: 'past'
-#      ]
-#
+    App.peroids = Em.ArrayController.create
+      content: [
+        Em.Object.create name:'Все', id: 'all'
+
+        Em.Object.create name:'Период', id: 'period'
+        Em.Object.create name:'Дата', id: 'date'
+        Em.Object.create name:'Сегодня', id: 'today'
+        Em.Object.create name:'Завтра', id: 'tomorrow'
+        Em.Object.create name:'Вчера', id: 'yesterday'
+        Em.Object.create name:'Неделя', id: 'week'
+        Em.Object.create name:'Месяц', id: 'month'
+        Em.Object.create name:'Год', id: 'year'
+      ]
+
+    App.matchTypes = Em.ArrayController.create
+      content: [
+        Em.Object.create name:'Все', id: 'all'
+
+        Em.Object.create name:'_future_match_type'.loc(), id: 'future'
+        Em.Object.create name:'_active_match_type'.loc(), id: 'active'
+        Em.Object.create name:'_delayed_match_type'.loc(), id: 'delayed'
+        Em.Object.create name:'_past_match_type'.loc(), id: 'past'
+      ]
+
     App.visualTypes = Em.ArrayController.create
       content: [
         Em.Object.create name:'_single'.loc(), id: 'single'

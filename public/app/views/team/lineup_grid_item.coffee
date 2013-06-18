@@ -99,7 +99,7 @@ define [
               entrant: @get('parentView.entrant')
               didUpdate: (entrant)=> popup.hide()
           )
-          popup.append()
+          popup.appendTo App.get 'rootElement'
 
       deleteRecord: ->
         team = @get 'content'
@@ -192,7 +192,7 @@ define [
 ##              content: [player]
 #            modalView.pushObject askMoveForm
 ##            modalView.pushObject howIsTheCaptainForm
-#            modalView.append()
+#            modalView.appendTo App.get 'rootElement'
 #            return
 #
 #          player.set 'teamRef', teamRef

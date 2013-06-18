@@ -33,7 +33,7 @@ define [
         @get('parentView').trigger('focusIn')
 
       focusOut: (event)->
-        @get('parentView').trigger('focusIn')
+        @get('parentView').trigger('focusOut')
 
       keyDown: (event)->
         switch event.keyCode
@@ -89,6 +89,7 @@ define [
     _fetchAutocompleteResults: ->
       newValue = @$('input').val()
       if newValue
+        @cancelFetchingOfAutocompleteResults()
         @set 'isLoading', yes
         @get('autocompleteDelegate').fetchAutocompleteResults newValue, @
       else
@@ -112,11 +113,14 @@ define [
           selectionBinding: 'target.selection'
         menuViewOptions.itemViewClass = menuItemViewClass if menuItemViewClass
         @_autocompleteMenu = App.MenuView.create menuViewOptions
-        @_autocompleteMenu.append()
+        @_autocompleteMenu.appendTo App.get('rootElement')
       else if not @_autocompleteMenu?.isDestroyed
         @_autocompleteMenu.set 'content', results
 
     selectMenuItem: Em.K
+
+    becameHidden: ->
+      @_closeAutocompleteMenu()
 
     _closeAutocompleteMenu: ->
       if @_autocompleteMenu

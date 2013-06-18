@@ -36,7 +36,7 @@ define [
         controller: reportEntrants
         contentBinding: 'controller.arrangedContent'
       @teamListPopup.pushObject listView
-      @teamListPopup.append()
+      @teamListPopup.appendTo App.get 'rootElement'
 
     entrantsNumber: 32
 

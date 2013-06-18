@@ -44,6 +44,7 @@ module.exports.Round = [
     de: 'Gruppe A'
   stage_id: '51121246b54802daae000009'
   matches: ['51142bdc323f4b360c000007', '51142bdc323f4b360c000008', '51142bdc323f4b360c00000f']
+  result_sets: ['51c064df415720ea14000020']
 ,
   _id: '5114472b6da8bd2910000003'
   title: 'Группа B'
@@ -57,7 +58,7 @@ module.exports.Round = [
   _id: '5114472b6da8bd2910000004'
   title: 'Группа C'
   _title:
-    ru: 'Группа A'
+    ru: 'Группа C'
     en: 'Group C'
     de: 'Gruppe C'
   stage_id: '51121246b54802daae000009'

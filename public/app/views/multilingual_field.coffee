@@ -103,7 +103,7 @@ define ['cs!../mixins/translatable', 'cs!./language_menu'], ->
           menu = App.LanguageMenuView.create
             target: @
             parentView: @get 'parentView'
-          menu.append()
+          menu.appendTo App.get 'rootElement'
         mouseLeave: ->
 
       providersView: Em.View.extend()

@@ -34,7 +34,7 @@ define [
       click: ->
         @popup = App.PopupView.create target: @
         @popup.pushObject App.CountryGridView.create content: App.Country.all()
-        @popup.append()
+        @popup.appendTo App.get 'rootElement'
 
     raceFlagView: Em.View.extend
       tagName: 'i'

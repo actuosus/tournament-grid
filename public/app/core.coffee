@@ -10,8 +10,9 @@ define [
   'jquery.cookie'
   'ember'
   'ember-data'
-  'cs!./locales'
+  'cs!./locales/index'
   'cs!./config'
+  'cs!./helpers/index'
 #  'cs!lib/array'
 ] , (cookie, ember, emberData, locales, config)->
   window.onerror = (errorMsg, url, lineNumber)->
@@ -36,51 +37,6 @@ define [
     lang = language
 
   localize lang
-
-  ###
-   * Localization Handlebars helper.
-  ###
-  Em.Handlebars.registerHelper 'loc', (property, fn)->
-    if fn.contexts and typeof fn.contexts[0] is 'string'
-      str = fn.contexts[0]
-    else if property[0] is '_'
-      str = property
-    else if /[A-Z]/.test property[0]
-      str = Em.get window, property
-    else
-      str = this.get property
-    new Handlebars.SafeString (str || '').loc('')
-
-  Em.Handlebars.registerBoundHelper '_loc', (value, options)->
-    if options.contexts and typeof options.contexts[0] is 'string'
-      str = options.contexts[0]
-    else if typeof value is 'object'
-      str = value[App.currentLanguage]
-    else if value is '_'
-      str = value
-    else if /[A-Z]/.test value
-      str = Em.get window, value
-    else
-      str = this.get "_#{value}.#{App.currentLanguage}"
-    new Handlebars.SafeString (str || '').loc('')
-
-  Ember.Handlebars.registerBoundHelper 'moment', (value, options)->
-    new Handlebars.SafeString(moment(value).format(options.hash.format))
-
-  Ember.Handlebars.registerBoundHelper 'highlight', (value, options)->
-    if options.hash?.partBinding
-      part = options.data.view.get options.hash.partBinding
-      re = new RegExp(part, 'gi')
-      match = value.match(re)
-
-      if part and match
-        value = value.replace re, (substring, position, string)->
-          "<span class=\"highlight\">#{substring}</span>"
-      else
-        value = Handlebars.Utils.escapeExpression value
-    else
-      value = Handlebars.Utils.escapeExpression value
-    new Handlebars.SafeString value
 
   TournamentGrid = Em.Namespace.create
 
@@ -193,9 +149,9 @@ define [
     remote: config
 
 #  if window.grid.
-  $.ajaxSetup
-    username: 'virtus'
-    password: 'snegi'
+#  $.ajaxSetup
+#    username: 'virtus'
+#    password: 'snegi'
 
   App.currentConfig = 'local'
 

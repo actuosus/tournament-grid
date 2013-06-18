@@ -318,10 +318,15 @@ input.match-start-date {
 
 .stage-view .i-listsTabs_bd {
     border: 0;
+    position: relative;
 }
 
 .stage-view .grid, .stage-view .match-grid {
     margin-top: 14px;
+}
+
+.stage-view .add-btn {
+    right: 10px;
 }
 
 .b-profileBlock__toggle-button {
@@ -463,4 +468,8 @@ input.match-start-date {
 
 .stage-tab-item.is-updating {
     box-shadow: 0 0 14px rgba(255, 255, 0, 0.9) !important;
+}
+
+.ember-application {
+    position: relative;
 }

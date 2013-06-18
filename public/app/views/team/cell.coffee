@@ -8,6 +8,7 @@
 define [
   'cs!../autocomplete_text_field'
   'cs!./lineup_popup'
+  'cs!../../mixins/editing'
 ], ->
   ###
   Represents team model in grid. Also can be used standalone.
@@ -93,7 +94,7 @@ define [
               target: @
               content: @get 'content'
               origin: 'top'
-            @lineupPopup.append()
+            @lineupPopup.appendTo App.get 'rootElement'
         , 300
 
       mouseLeave: ->

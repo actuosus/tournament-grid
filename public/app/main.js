@@ -33,6 +33,8 @@ require({
     'spin': '/vendor/scripts/spin',
     'cs': '/vendor/scripts/cs',
     'text': '/vendor/scripts/text',
+    'normalize': '/vendor/scripts/normalize',
+    'css': '/vendor/scripts/css',
     'coffee-script': '/vendor/scripts/coffee-script',
 //    'iced-coffee-script': '/vendor/scripts/coffee-script-iced-large',
     'transit': '/vendor/scripts/jquery.transit.min',
@@ -157,6 +159,10 @@ if (this.debug) {
     statusElement.innerHTML = 'Loading ' + map.name + '…';
   }
 
+  requirejs.onCompile = function() {
+    console.log('some');
+  }
+
   requirejs.onError = function(err) {
     contentElement.appendChild(errorElement);
     errorElement.innerHTML = err;
@@ -165,6 +171,7 @@ if (this.debug) {
 }
 
 require([
+//  'css!./stylesheets/main',
   'jquery',
   'jquery.mousewheel',
   'jquery.scrollTo',
@@ -179,7 +186,7 @@ require([
 //  'ember-history',
   'modernizr.columns',
   'cs!./core',
-//  'cs!./application'
+  'cs!./application'
 ], function(){
   if (window.debug) {
     var statusElement = document.getElementById('status');

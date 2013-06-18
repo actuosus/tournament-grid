@@ -132,7 +132,7 @@ define [
                   return
               else
                 if match.get('round.itemIndex') is 0
-                  styles.top = 39
+                  styles.top = 42
                   styles.height = 0
                   styles.width = 181 * (Math.log(entrantsNumber) / Math.log(2) - 2) + 24
                   @$().css styles
@@ -142,7 +142,7 @@ define [
               styles.top = -(currentIndex * height) + height
               @$().addClass('diff')
             else
-              styles.top = 39
+              styles.top = 42
             if match.get('round.matches.length') is 1
               styles.height = 0
 
@@ -154,7 +154,7 @@ define [
           contentBinding: 'parentView.content.entrants'
 
           itemViewClass: App.TeamGridItemView.extend( App.Droppable, {
-            matchBinding: 'parentView.parentView.match'
+            matchBinding: 'parentView.parentView.content'
 
             pointsIsVisible: Em.computed.not 'match.isFinal'
 

@@ -49,6 +49,12 @@ define ['cs!../core'],->
         targetWidth = target.$().width()
         targetHeight = target.$().height()
 
+        rootElement = App.get('rootElement')
+        if rootElement
+          rootElementOffset = $(rootElement).offset()
+          offset.top -= rootElementOffset.top
+          offset.left -= rootElementOffset.left
+
         # Right
         offset.left += targetWidth
         offset.top += targetHeight/2 - 30

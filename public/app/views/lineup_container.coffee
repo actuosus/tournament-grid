@@ -103,7 +103,7 @@ define [
           popup.set 'formView', form
           popup.set 'contentView', form
           popup.pushObject form
-          popup.append()
+          popup.appendTo App.get 'rootElement'
 
 
 #      _autocompleteTextFieldView: App.AutocompleteTextField.extend
@@ -157,7 +157,7 @@ define [
 #          popup.set 'formView', form
 #          popup.set 'contentView', form
 #          popup.pushObject form
-#          popup.append()
+#          popup.appendTo App.get 'rootElement'
 #
 #  #      insertNewline: ->
 #  #        player = @get 'value'

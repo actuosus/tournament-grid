@@ -132,7 +132,7 @@ textarea {
     background-color: white;
     box-shadow: inset 0px 1px 2px rgba(0, 0, 0, 0.1);
     position: relative;
-    
+    overflow: hidden;
     display: inline-block;
     min-width: 6em;
 }
@@ -161,7 +161,11 @@ textarea {
 .select select {
     opacity: 0;
     z-index: 2;
-    
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
 }
 .select .current-value {
     position: absolute;
@@ -169,6 +173,10 @@ textarea {
     top: 50%;
     font-size: 13px;
     margin-top: -7px;
+    right: 27px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 .country-select {
     min-width: 12.3em;
@@ -526,6 +534,7 @@ input[type="date"].input-large {
     background-color: rgba(255,255,255,0);
     -webkit-transition-duration: 0.3s;
     -webkit-transition-property: color, background-color, width;
+    white-space: nowrap;
 }
 .remove-btn:hover {
     color: white;
@@ -1813,14 +1822,15 @@ body .ui-tooltip {
 .named-container .search-field {
     border-radius: 15px;
     outline: none;
+    -webkit-appearance: none;
+    border: 1px solid #c3c3c3;
+    padding: 0 0 0 10px;
+    min-height: 21px;
 }
 .named-container .search-bar .remove-btn {
     right: 7px;
     background: #a5a5a5;
     color: white;
-}
-.named-container .search-field:focus {
-    box-shadow: 0 0 8px #da4600;
 }
 .named-container-title {
     font-size: 19px;
@@ -3658,9 +3668,13 @@ input.match-start-date {
 }
 .stage-view .i-listsTabs_bd {
     border: 0;
+    position: relative;
 }
 .stage-view .grid, .stage-view .match-grid {
     margin-top: 14px;
+}
+.stage-view .add-btn {
+    right: 10px;
 }
 .b-profileBlock__toggle-button {
     position: absolute;
@@ -3773,4 +3787,7 @@ input.match-start-date {
 }
 .stage-tab-item.is-updating {
     box-shadow: 0 0 14px rgba(255, 255, 0, 0.9) !important;
+}
+.ember-application {
+    position: relative;
 }

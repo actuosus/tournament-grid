@@ -147,7 +147,7 @@ define [
             selectionBinding: 'autocompleteView.selection'
             itemViewClass: @get('controller.menuItemViewClass')
             target: @
-          menuView.append()
+          menuView.appendTo App.get 'rootElement'
           setTimeout((->
             if @get('textFieldView').$()
               offset = @$().offset()
@@ -190,7 +190,7 @@ define [
       popup.set 'formView', form
       popup.set 'contentView', form
       popup.pushObject form
-      popup.append()
+      popup.appendTo App.get 'rootElement'
       popup
 
     cancelButtomView: Em.View.extend

@@ -18,8 +18,9 @@ define [
   App.StageTabsView = App.TabView.extend
     classNames: ['stage-view']
 
-    currentView: ((stage)->
+    selectionChanged: ((stage)->
       stage = @get 'selection.content'
+      console.log 'Selection changed', stage
       return Em.View.create() unless stage
       switch stage.get 'visualType'
         when 'single', 'grid'
@@ -56,21 +57,31 @@ define [
             matches: matchesController
             showFilterForm: yes
             tableItemViewClass: 'App.MatchTableItemView'
-      contentView
-    ).property('selection')
+      @set 'currentView', contentView
+    ).observes('selection')
 
-    tabBarView: Em.ContainerView.extend( App.ContextMenuSupport, {
+    tabBarView: Em.ContainerView.extend( App.ContextMenuSupport, App.Editing, {
       classNames: ['i-listsTabs', 'i-listsTabs_bd']
       contentBinding: 'parentView.controller'
       childViews: ['tabsView']
 
+      _isEditingBinding: 'App.isEditingMode'
+      editingChildViews: ['addItemView']
+
       selectionBinding: 'parentView.selection'
+
+      addItemView: Em.View.extend
+        tagName: 'button'
+        classNames: ['btn-clean', 'add-btn', 'add']
+        template: Em.Handlebars.compile '+'
+        click: -> @get('parentView').addItem()
 
       tabsView: Em.CollectionView.extend
         tagName: 'ul'
         classNames: 'b-listsTabs'
         contentBinding: 'parentView.content'
         selectionBinding: 'parentView.selection'
+
         itemViewClass: Em.ContainerView.extend( App.ContextMenuSupport, App.Editing, {
           tagName: 'li'
           classNames: ['item', 'stage-tab-item']
@@ -90,20 +101,22 @@ define [
           edit: ->
             @popup = App.PopupView.create target: @
             @popup.pushObject App.StageForm.create content: @get 'content'
-            @popup.append()
+            @popup.appendTo App.get 'rootElement'
 
           deleteRecord: -> @get('content').deleteRecord()
 
           currentWhen: 'stage'
 
           active: (->
+            selection = @get 'selection'
             router = @get 'router'
             content = @get 'content'
             return unless router
             currentWithIndex = @currentWhen + '.index'
             router.isActive.apply(router, [@currentWhen].concat(content)) or
-              router.isActive.apply(router, [currentWithIndex].concat(content))
-          ).property('namedRoute', 'router.url')
+              router.isActive.apply(router, [currentWithIndex].concat(content)) or
+                Em.isEqual selection, @
+          ).property('selection', 'namedRoute', 'router.url')
 
           routeChanged: (->
             @set 'selection', @ if @get 'active'
@@ -118,13 +131,18 @@ define [
 
           removeButtonView: App.RemoveButtonView.extend
             title: '_remove_stage'.loc()
-            deleteRecord: -> @get('parentView').deleteRecord()
+            deleteRecord: ->
+              @get('parentView').deleteRecord()
+              App.store.commit()
             click: (event)->
               event.stopPropagation()
+              if @get 'shouldShowConfirmation'
+                @deleteRecord()
+              else
+                @set 'shouldShowConfirmation', yes
 
           click: ->
             @set 'selection', @
-
             router = @get 'router'
             router.transitionTo @currentWhen, @get 'content' if router
         })
@@ -149,12 +167,22 @@ define [
       addItem: ->
         router = @get 'router'
         router.transitionTo 'stages.new' if router
-        stageForm = App.StageForm.create(classNames: ['padded'], report: App.report)
-        stageForm.on 'cancel', =>
-          window.history.back()
+        stageForm = App.StageForm.create
+          classNames: ['padded']
+          report: App.report
+          didCreate: (stage)->
+            App.store.commit()
+            stage.on 'didLoad', => router.transitionTo 'stage', stage
+            stage.on 'didReload', => router.transitionTo 'stage', stage
+            stage.on 'didCreate', (stage)=> router.transitionTo 'stage', stage
+            stage.on 'didCommit', => router.transitionTo 'stage', stage
+            stage.on 'didUpdate', => router.transitionTo 'stage', stage
+            stage.on 'didChangeData', => router.transitionTo 'stage', stage
+            stage.on 'loadedData', => router.transitionTo 'stage', stage
+            router.transitionTo 'stage', stage
+        stageForm.on 'cancel', => window.history.back()
         @set 'parentView.currentView', stageForm
 
       click: (event)->
-        if $(event.target).hasClass('add')
-          @addItem()
+        @addItem() if $(event.target).hasClass('add')
     })
