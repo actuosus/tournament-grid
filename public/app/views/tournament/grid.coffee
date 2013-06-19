@@ -30,8 +30,9 @@ define [
 
   # Rounds
     content: (->
-      stage = @get('stage')
-      entrantsNumber = @get('entrantsNumber')
+      stage = @get 'stage'
+      entrantsNumber = @get 'entrantsNumber'
+      Em.assert "You should provide entrantsNumber", entrantsNumber
       roundsCount = Math.log(entrantsNumber) / Math.log(2)-1
       rounds = []
       for i in [roundsCount..0]
@@ -70,7 +71,7 @@ define [
         rounds.push round
       finalRound = App.RoundController.create
         stage: stage
-        name: '_winner'.loc()
+        title: '_winner'.loc()
         itemIndex: -1
         parentReference: 'stage'
         isFinal: yes

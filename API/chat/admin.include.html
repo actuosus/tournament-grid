@@ -1,0 +1,10 @@
+$("b.moderated").live('contextmenu', function(e){
+	e.preventDefault();
+	user = $(this).html()
+	console.log(user);
+	ban = prompt('Укажите время бана1:');
+	if(ban){
+		ws.send($.toJSON({'command':'ban', 'data':{'user': user, 'time': ban}}))
+	}
+	return false;
+});

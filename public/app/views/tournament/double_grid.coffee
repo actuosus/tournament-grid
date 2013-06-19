@@ -64,6 +64,7 @@ define [
       createWinnerBracket: ->
         stage = @get('stage')
         entrantsNumber = @get('entrantsNumber')
+        Em.assert "You should provide entrantsNumber", entrantsNumber
         roundsCount = Math.log(entrantsNumber) / Math.log(2)-1
         rounds = []
         bracket = Em.Object.create
@@ -112,6 +113,7 @@ define [
       createLoserBracket: ->
         stage = @get('stage')
         entrantsNumber = @get('entrantsNumber')
+        Em.assert "You should provide entrantsNumber", entrantsNumber
         roundsCount = Math.log(entrantsNumber) / Math.log(2)-1
         rounds = []
         matchesCount = entrantsNumber/4
@@ -171,7 +173,7 @@ define [
             round: finalRound
           rounds.push finalRound
           winnerRound = App.RoundController.create
-            name: '_winner'.loc()
+            title: '_winner'.loc()
             itemIndex: -1
             parentReference: 'stage'
             matches: []

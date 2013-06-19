@@ -39,7 +39,7 @@ ReportSchema = new Schema
 
   stages: [type: ObjectId, ref: 'Stage']
   # Тип матча
-  match_type: type: String # team, player
+  match_type: type: String, enum: ['team', 'player']
   # Game type
   discipline: type: String
 

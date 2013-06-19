@@ -17,22 +17,25 @@
             var view;
 
             function fn() {
-                Ember.subscribe('render', {
-                    before: function(name, start, payload){
-                        return start
-                    },
-                    after: function(name, end, payload, start){
-                        var duration = Math.round(end - start);
-                        console.log(name, payload, duration, 'ms');
-//                        var template = payload.template
-//                        if (template){ // this is to filter out anonymous templates
-//                            console.log('rendered', template, 'took', duration, 'ms')
-//                        }
-                    }
-                });
+//                Ember.subscribe('render', {
+//                    before: function(name, start, payload){
+//                        return start
+//                    },
+//                    after: function(name, end, payload, start){
+//                        var duration = Math.round(end - start);
+//                        console.log(name, payload, duration, 'ms');
+////                        var template = payload.template
+////                        if (template){ // this is to filter out anonymous templates
+////                            console.log('rendered', template, 'took', duration, 'ms')
+////                        }
+//                    }
+//                });
                 Ember.run(function() {
-                    view = App.NewDoubleTournamentGridView.create({
-                        entrantsNumber: 64
+//                    view = App.NewDoubleTournamentGridView.create({
+//                        entrantsNumber: 64
+//                    }).append();
+                    view = App.NewTournamentGridView.create({
+                        entrantsNumber: undefined
                     }).append();
                 });
             }
@@ -49,7 +52,7 @@
             });
 
             console.log('Benchmark starting…');
-//            bench.run();
+            bench.run();
             window.bench = bench;
         }
     </script>

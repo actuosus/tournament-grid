@@ -27,24 +27,31 @@ define(['superagent', 'conf'], function(request, conf){
 
   Model.prototype.create = function(data, cb){
 //    console.log('Creating a Model', this, data);
+    // TODO Hacky
+    cb(null, data);
     var err = null;
-    dataToSend = {}
+    var dataToSend = {};
     dataToSend[this.name] = data
-    self = this;
-    request
-      .post(hiddenAPI + this.plural)
-      .send(dataToSend)
-      .end(function(res){
-      cb(err, res.body[self.name]);
-    });
+    var self = this;
+
+//    request
+//      .post(hiddenAPI + this.plural)
+//      .send(dataToSend)
+//      .end(function(res){
+//      cb(err, res.body[self.name]);
+//    });
   }
 
   Model.prototype.remove = function(data, cb){
 //    console.log('Removing a Model', this, data);
-    var err = null;
-    request.del(hiddenAPI + this.plural).send(data).end(function(){
-      cb(err, data);
-    });
+
+    // TODO Hacky
+    cb(null, data);
+
+//    var err = null;
+//    request.del(hiddenAPI + this.plural).send(data).end(function(){
+//      cb(err, data);
+//    });
   }
   return {
     app: {

@@ -60916,7 +60916,7 @@ define('text!templates/match/filter_form.hbs',[],function () { return '<!--\n * 
     return App.GroupGridView = App.GridView.extend(App.ContextMenuSupport, {
       classNames: ['lineup-grid', 'group-lineup-grid'],
       shouldShowContextMenuBinding: 'App.isEditingMode',
-      contextMenuActions: ['add:addMatch'],
+      contextMenuActions: ['add:addRound'],
       add: function() {
         return this.get('content').createRecord();
       },
@@ -62028,6 +62028,7 @@ define('text!templates/match/form.hbs',[],function () { return '<div class="cont
         var actualRound, entrantsNumber, finalRound, i, j, leftPath, match, matchesCount, rightPath, round, roundIndex, roundName, rounds, roundsCount, stage, _i, _j;
         stage = this.get('stage');
         entrantsNumber = this.get('entrantsNumber');
+        Em.assert("You should provide entrantsNumber", entrantsNumber);
         roundsCount = Math.log(entrantsNumber) / Math.log(2) - 1;
         rounds = [];
         for (i = _i = roundsCount; roundsCount <= 0 ? _i <= 0 : _i >= 0; i = roundsCount <= 0 ? ++_i : --_i) {
@@ -62075,7 +62076,7 @@ define('text!templates/match/form.hbs',[],function () { return '<div class="cont
         }
         finalRound = App.RoundController.create({
           stage: stage,
-          name: '_winner'.loc(),
+          title: '_winner'.loc(),
           itemIndex: -1,
           parentReference: 'stage',
           isFinal: true,
@@ -62230,6 +62231,7 @@ define('text!templates/match/form.hbs',[],function () { return '<div class="cont
           var actualRound, bracket, entrantsNumber, i, j, leftPath, match, matches, matchesCount, rightPath, round, roundIndex, roundName, rounds, roundsCount, stage, _i, _j;
           stage = this.get('stage');
           entrantsNumber = this.get('entrantsNumber');
+          Em.assert("You should provide entrantsNumber", entrantsNumber);
           roundsCount = Math.log(entrantsNumber) / Math.log(2) - 1;
           rounds = [];
           bracket = Em.Object.create({
@@ -62287,6 +62289,7 @@ define('text!templates/match/form.hbs',[],function () { return '<div class="cont
           var bracket, entrantsNumber, m, match, matchesCount, n, parentNodePath, r, rCount, round, rounds, roundsCount, stage, _i, _j, _k, _ref;
           stage = this.get('stage');
           entrantsNumber = this.get('entrantsNumber');
+          Em.assert("You should provide entrantsNumber", entrantsNumber);
           roundsCount = Math.log(entrantsNumber) / Math.log(2) - 1;
           rounds = [];
           matchesCount = entrantsNumber / 4;
@@ -62350,7 +62353,7 @@ define('text!templates/match/form.hbs',[],function () { return '<div class="cont
             }));
             rounds.push(finalRound);
             winnerRound = App.RoundController.create({
-              name: '_winner'.loc(),
+              title: '_winner'.loc(),
               itemIndex: -1,
               parentReference: 'stage',
               matches: []

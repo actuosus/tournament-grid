@@ -22,7 +22,7 @@ define [
     classNames: ['lineup-grid', 'group-lineup-grid']
 
     shouldShowContextMenuBinding: 'App.isEditingMode'
-    contextMenuActions: ['add:addMatch']
+    contextMenuActions: ['add:addRound']
 
     add: -> @get('content').createRecord()
 
