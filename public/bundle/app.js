@@ -56419,7 +56419,9 @@ define("jquery.ui.timepicker-de", ["jquery.ui.timepicker"], function(){});
         return this.get('content').close();
       },
       save: function() {
-        return this.get('content.store').commit();
+        var store;
+        store = this.get('content.store') || this.get('content.content.store');
+        return store.commit();
       },
       edit: function() {
         var popup,
