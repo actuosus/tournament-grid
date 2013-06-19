@@ -12,7 +12,7 @@ TeamRef = require('../../models').TeamRef
 Round = require('../../models').Round
 Report = require('../../models').Report
 
-socket = require('../../io').getSocket()
+#socket = require('../../io').getSocket()
 
 exports.list = (req, res)->
 #  unless req.query?.report_id

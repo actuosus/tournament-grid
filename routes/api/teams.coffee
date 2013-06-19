@@ -12,7 +12,7 @@ Team = require('../../models').Team
 TeamRef = require('../../models').TeamRef
 Report = require('../../models').Report
 
-socket = require('../../io').getSocket()
+#socket = require('../../io').getSocket()
 
 random = ->
   func = arguments[Math.floor(Math.random() * arguments.length)]
@@ -96,7 +96,7 @@ exports.delete = (req, res) ->
     if team
       Team.remove _id: req.params._id, (err)->
         # TODO Remove socket hack.
-        socket.send {action: 'remove', model: 'Team', _id: req.params._id}
+#        socket.send {action: 'remove', model: 'Team', _id: req.params._id}
 
         Report.findByIdAndUpdate(team.report_id, {$pull : {teams: req.params._id}}) if team.report_id
         res.status 204 unless err

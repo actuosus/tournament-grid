@@ -14,7 +14,7 @@ TeamRef = require('../../models').TeamRef
 Player = require('../../models').Player
 Report = require('../../models').Report
 
-socket = require('../../io').getSocket()
+#socket = require('../../io').getSocket()
 
 exports.list = (req, res)->
   setTimeout ->
@@ -125,7 +125,7 @@ exports.delete = (req, res) ->
     Player.findByIdAndRemove req.params._id, (removeErr)->
 
       # TODO Remove socket hack.
-      socket.send {action: 'remove', model: 'Player', _id: req.params._id}
+#      socket.send {action: 'remove', model: 'Player', _id: req.params._id}
 
       Team.findByIdAndUpdate player.team_id, {$pull: {players: req.params._id}}, (updateErr, numberAffected, rawResponse)->
         Report.findByIdAndUpdate player.report_id, {$pull : {players: req.params._id}} if player.report_id
