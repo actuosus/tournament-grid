@@ -31,9 +31,15 @@ define [
   # Rounds
     content: (->
       stage = @get 'stage'
-      entrantsNumber = @get 'entrantsNumber'
-      Em.assert "You should provide entrantsNumber", entrantsNumber
-      roundsCount = Math.log(entrantsNumber) / Math.log(2)-1
+      entrantsNumber = @get('entrantsNumber') or stage?.get('entrantsNumber')
+      roundsLength = stage?.get('round.length')
+      if entrantsNumber
+        roundsCount = Math.log(entrantsNumber) / Math.log(2)-1
+      else if roundsLength
+        roundsCount = roundsLength
+      else
+        return []
+
       rounds = []
       for i in [roundsCount..0]
         matchesCount = Math.pow(2, i)-1

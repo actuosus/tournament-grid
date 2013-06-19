@@ -62025,11 +62025,17 @@ define('text!templates/match/form.hbs',[],function () { return '<div class="cont
         })
       }),
       content: (function() {
-        var actualRound, entrantsNumber, finalRound, i, j, leftPath, match, matchesCount, rightPath, round, roundIndex, roundName, rounds, roundsCount, stage, _i, _j;
+        var actualRound, entrantsNumber, finalRound, i, j, leftPath, match, matchesCount, rightPath, round, roundIndex, roundName, rounds, roundsCount, roundsLength, stage, _i, _j;
         stage = this.get('stage');
-        entrantsNumber = this.get('entrantsNumber');
-        Em.assert("You should provide entrantsNumber", entrantsNumber);
-        roundsCount = Math.log(entrantsNumber) / Math.log(2) - 1;
+        entrantsNumber = this.get('entrantsNumber') || (stage != null ? stage.get('entrantsNumber') : void 0);
+        roundsLength = stage != null ? stage.get('round.length') : void 0;
+        if (entrantsNumber) {
+          roundsCount = Math.log(entrantsNumber) / Math.log(2) - 1;
+        } else if (roundsLength) {
+          roundsCount = roundsLength;
+        } else {
+          return [];
+        }
         rounds = [];
         for (i = _i = roundsCount; roundsCount <= 0 ? _i <= 0 : _i >= 0; i = roundsCount <= 0 ? ++_i : --_i) {
           matchesCount = Math.pow(2, i) - 1;

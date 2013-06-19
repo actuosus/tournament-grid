@@ -10,10 +10,10 @@ require 'iced-coffee-script'
 
 path = require 'path'
 http = require 'http'
-redis = require 'redis'
+#redis = require 'redis'
 #spdy = require 'spdy'
 express = require 'express'
-RedisStore = require('connect-redis')(express)
+#RedisStore = require('connect-redis')(express)
 
 i18n = require 'i18n'
 
@@ -21,7 +21,7 @@ mongoose = require 'mongoose'
 passport = require 'passport'
 BasicStrategy = require('passport-http').BasicStrategy
 
-IO = require './io'
+#IO = require './io'
 
 moment = require 'moment'
 

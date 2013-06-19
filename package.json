@@ -26,18 +26,13 @@
   "dependencies": {
     "lodash": "latest",
     "express": "latest",
-    "jade": "latest",
     "ect": "latest",
     "iced-coffee-script": "latest",
     "mongoose": "latest",
-    "spdy": "latest",
     "passport": "latest",
     "passport-http": "latest",
     "moment": "latest",
-    "i18n": "latest",
-    "socket.io":"latest",
-    "redis":"latest",
-    "connect-redis":"latest"
+    "i18n": "latest"
   },
   "devDependencies": {
     "async": "latest",
