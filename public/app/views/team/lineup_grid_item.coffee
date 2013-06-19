@@ -132,11 +132,13 @@ define [
           App.PlayersController.create()
         ).property()
 
+        entrantBinding: 'parentView.parentView.content'
         teamRefBinding: 'parentView.parentView.content'
 
         insertNewline: ->
           player = @get 'selection'
           player.set 'teamRef', @get('teamRef')
+          player.set 'report', App.get('report')
           player.store.commit()
 
           if not @_autocompleteMenu.isDestroyed
@@ -144,6 +146,7 @@ define [
 
         selectMenuItem: (player)->
           player.set 'teamRef', @get('teamRef')
+          player.set 'report', App.get('report')
           player.store.commit()
 
 

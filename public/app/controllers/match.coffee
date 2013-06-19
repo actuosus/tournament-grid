@@ -27,6 +27,22 @@ define ->
       content = @get('content')
       content.close() if content
 
+    save: -> @get('content.store').commit()
+    edit: ->
+      popup = App.PopupView.create target: @
+      popup.pushObject(
+        App.MatchForm.create
+          popupView: popup
+          match: @get('content')
+          content: @get('content')
+          title: @get 'match.title'
+          description: @get 'match.description'
+          didUpdate: => popup.hide()
+      )
+      popup.appendTo App.get 'rootElement'
+
+    deleteRecord: -> @get('content').deleteRecord()
+
     createRecord: ->
       record = App.Match.createRecord sort_index: @sort_index
       round = @get 'round.content'

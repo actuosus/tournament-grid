@@ -57020,7 +57020,11 @@ define('text!templates/player/form.hbs',[],function () { return '<div class="con
         player.set('middleName', this.$('.middle-name').val());
         player.set('lastName', this.$('.last-name').val());
         player.set('isCaptain', this.get('isCaptain'));
+        player.set('report', report);
         player.set('team', team);
+        if (players) {
+          players.addObject(player);
+        }
         player.on('didCreate', function() {
           return _this.didCreate(player);
         });
@@ -57813,6 +57817,12 @@ define('text!templates/team/form.hbs',[],function () { return '<div class="contr
     return App.RoundController = Em.ObjectController.extend({
       isSelected: false,
       content: null,
+      save: function() {
+        return this.get('content.store').commit();
+      },
+      deleteRecord: function() {
+        return this.get('content').deleteRecord();
+      },
       createRecord: function() {
         var record;
         record = App.Round.createRecord({
@@ -57863,6 +57873,30 @@ define('text!templates/team/form.hbs',[],function () { return '<div class="contr
         if (content) {
           return content.close();
         }
+      },
+      save: function() {
+        return this.get('content.store').commit();
+      },
+      edit: function() {
+        var popup,
+          _this = this;
+        popup = App.PopupView.create({
+          target: this
+        });
+        popup.pushObject(App.MatchForm.create({
+          popupView: popup,
+          match: this.get('content'),
+          content: this.get('content'),
+          title: this.get('match.title'),
+          description: this.get('match.description'),
+          didUpdate: function() {
+            return popup.hide();
+          }
+        }));
+        return popup.appendTo(App.get('rootElement'));
+      },
+      deleteRecord: function() {
+        return this.get('content').deleteRecord();
       },
       createRecord: function() {
         var record, round;
@@ -62590,7 +62624,7 @@ define('text!templates/match/form.hbs',[],function () { return '<div class="cont
           popupView: popup,
           entrant: this.get('entrant'),
           didCreate: function(entrant) {
-            _this.set('value', entrant);
+            _this.set('selection', entrant);
             return popup.hide(entrant);
           }
         });
@@ -62913,11 +62947,13 @@ define('text!templates/match/form.hbs',[],function () { return '<div class="cont
           autocompleteDelegate: (function() {
             return App.PlayersController.create();
           }).property(),
+          entrantBinding: 'parentView.parentView.content',
           teamRefBinding: 'parentView.parentView.content',
           insertNewline: function() {
             var player;
             player = this.get('selection');
             player.set('teamRef', this.get('teamRef'));
+            player.set('report', App.get('report'));
             player.store.commit();
             if (!this._autocompleteMenu.isDestroyed) {
               return this._autocompleteMenu.hide();
@@ -62925,6 +62961,7 @@ define('text!templates/match/form.hbs',[],function () { return '<div class="cont
           },
           selectMenuItem: function(player) {
             player.set('teamRef', this.get('teamRef'));
+            player.set('report', App.get('report'));
             return player.store.commit();
           }
         })

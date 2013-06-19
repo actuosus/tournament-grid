@@ -10,6 +10,10 @@ define ->
     isSelected: no
     content: null
 
+    save: -> @get('content.store').commit()
+
+    deleteRecord: -> @get('content').deleteRecord()
+
     createRecord: ->
       record = App.Round.createRecord sort_index: @sort_index
       record.set 'stage', @get 'stage'

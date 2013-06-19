@@ -20,7 +20,6 @@ MatchSchema = new Schema
   map_type: type: String # editable
   type: type: String
   status: type: String, default: 'opened'
-  championship: type: ObjectId, ref: 'Championship'
 
   entrant1_id: type: ObjectId, ref: 'Team' # editable
   entrant2_id: type: ObjectId, ref: 'Team' # editable

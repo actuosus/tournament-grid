@@ -25,7 +25,7 @@ define ['cs!./text_field'], ->
         popupView: popup
         entrant: @get('entrant')
         didCreate: (entrant)=>
-          @set('value', entrant)
+          @set('selection', entrant)
           popup.hide(entrant)
       popup.set 'formView', form
       popup.set 'contentView', form

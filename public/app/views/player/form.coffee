@@ -62,9 +62,10 @@ define [
       player.set 'lastName', @$('.last-name').val()
       player.set 'isCaptain', @get 'isCaptain'
 
-#      player.set 'report', report
+      player.set 'report', report
       player.set 'team', team
-#      players.addObject player
+
+      players.addObject player if players
 
       player.on 'didCreate', => @didCreate player
       player.on 'becameError', =>
