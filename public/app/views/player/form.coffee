@@ -69,7 +69,7 @@ define [
 
       player.on 'didCreate', => @didCreate player
       player.on 'becameError', =>
-        @$('.save-btn').removeAttattr('disabled')
+        @$('.save-btn').removeAttr('disabled')
         player.destroy()
       transaction.commit()
 

@@ -57029,7 +57029,7 @@ define('text!templates/player/form.hbs',[],function () { return '<div class="con
           return _this.didCreate(player);
         });
         player.on('becameError', function() {
-          _this.$('.save-btn').removeAttattr('disabled');
+          _this.$('.save-btn').removeAttr('disabled');
           return player.destroy();
         });
         return transaction.commit();
@@ -57255,7 +57255,7 @@ define('text!templates/team/form.hbs',[],function () { return '<div class="contr
           return _this.didCreate(team);
         });
         team.on('becameError', function() {
-          return _this.$('.save-btn').removeAttattr('disabled');
+          return _this.$('.save-btn').removeAttr('disabled');
         });
         return transaction.commit();
       },

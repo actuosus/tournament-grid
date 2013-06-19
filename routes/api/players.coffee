@@ -66,9 +66,9 @@ exports.update = (req, res)->
   if req.body?.player
     player = req.body.player
 
-    if not player.team_ref_id and player.report_id
+    if not player.team_ref_id and player.report_id and player.team_id
       # Removing from team ref
-      await TeamRef.findOneAndUpdate {team_id: player.team_id, report_id: player.report_id}, {$pull: {players: p._id}}, defer err, teamRef
+      await TeamRef.findOneAndUpdate {team_id: player.team_id, report_id: player.report_id}, {$pull: {players: req.params._id}}, defer err, teamRef
     else if player.team_ref_id and player.report_id
       # It's moving from another team ref
       await TeamRef.find({report_id: player.report_id}).exec defer err, teamRefs
@@ -76,7 +76,7 @@ exports.update = (req, res)->
         teamRefs.forEach (teamRef)->
           playerIndexes = []
           teamRef.players.forEach (item, idx)->
-            playerIndexes.push idx if item._id.toString() is req.params._id
+            playerIndexes.push idx if item.toString() is req.params._id
           if playerIndexes.length
             playerIndexes.forEach (idx)-> teamRef.players.splice(idx, 1)
             teamRef.save()

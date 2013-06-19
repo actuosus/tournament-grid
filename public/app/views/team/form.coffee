@@ -39,7 +39,7 @@ define [
       team.set 'name', @$('.name').val()
       team.set 'report', report
       team.on 'didCreate', => @didCreate team
-      team.on 'becameError', => @$('.save-btn').removeAttattr('disabled')
+      team.on 'becameError', => @$('.save-btn').removeAttr('disabled')
       transaction.commit()
 
     submit: (event)->
