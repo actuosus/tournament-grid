@@ -48,6 +48,8 @@ define [
             popup.appendTo App.get 'rootElement'
 
   App.ready = ->
+    window.onAppReady?(App)
+
 #    App.set 'entrantsController', App.EntrantsController.create()
 #    App.set 'countriesController', App.CountriesController.create()
 #    App.set 'teamsController', App.TeamsController.create()

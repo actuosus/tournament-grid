@@ -64672,6 +64672,9 @@ define('text!templates/application.hbs',[],function () { return '{{outlet stages
       }
     });
     return App.ready = function() {
+      if (typeof window.onAppReady === "function") {
+        window.onAppReady(App);
+      }
       App.set('notificationsController', App.NotificationsController.create());
       App.peroids = Em.ArrayController.create({
         content: [
