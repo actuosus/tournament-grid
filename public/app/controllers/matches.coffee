@@ -20,7 +20,7 @@ define [
 
     round: null
 
-    sortProperties: ['date', 'sort_index']
+    sortProperties: ['date', 'sortIndex']
 
     matchTypeFilter: null
     entrantFilter: null

@@ -27,13 +27,18 @@ define [
     updateRecord: ->
       @$('.save-btn').attr('disabled', 'disabled')
       content = @get 'content'
-      transaction = content.get('store').transaction()
-      transaction.add content
+#      transaction = content.get('store').transaction()
+#      transaction.add content
       content.on 'didUpdate', => @didUpdate content
-      content.set 'title', @get 'title'
-      content.set 'map_type', @get 'map_type'
-      content.set 'description', @get 'description'
-      transaction.commit()
+#      content.set 'title', @get 'title'
+#      content.set 'map_type', @get 'map_type'
+#      content.set 'description', @get 'description'
+#      transaction.commit()
+      content.get('store').commit()
+
+    cancel: ->
+      @get('content')?.rollback()
+      @popupView?.hide()
 
     submit: (event)->
       event.preventDefault()
@@ -50,4 +55,4 @@ define [
         else
           @createRecord()
       if $(event.target).hasClass('cancel-btn')
-        @popupView.hide() if @popupView
+        @cancel()

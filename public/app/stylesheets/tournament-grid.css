@@ -9,9 +9,11 @@
     padding: 10px;
     overflow-y: scroll;
     position: relative;
+    width: 390px;
 }
 
 .tournament-grid-container {
+    overflow: hidden;
 
 }
 

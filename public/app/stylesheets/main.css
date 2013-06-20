@@ -49,13 +49,13 @@
 
 @import "toolbar.css";
 
-html {
-    min-width: 0 !important;
-}
+/*html {*/
+    /*min-width: 0 !important;*/
+/*}*/
 
-.i-wrapper {
-    width: auto !important;
-}
+/*.i-wrapper {*/
+    /*width: auto !important;*/
+/*}*/
 
 
 .b-content :first-child[class="block-container"] {
@@ -272,7 +272,7 @@ input.match-start-date {
 
 .match-info-bar {
     float: right;
-    margin-bottom: 3px;
+    padding-bottom: 3px;
 }
 
 .header-item {

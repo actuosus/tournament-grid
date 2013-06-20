@@ -57,8 +57,27 @@ define [
             matches: matchesController
             showFilterForm: yes
             tableItemViewClass: 'App.MatchTableItemView'
+        else
+          contentView = Em.View.create
+            classNames: ['padded']
+            template: Em.Handlebars.compile 'Unknown visual type'
+
+#      @height = @$().height()
+#      console.log @height
+#      @$().height @height
+#
+#      contentView.on 'didInsertElement', =>
+#        currentView = @get 'currentView'
+#        console.log currentView.state
+#        height = @get('tabBarView').$().height()
+#        if currentView.state is 'inDOM'
+#          currentView.$().css({opacity: 0})
+#          currentView.$().animate({opacity: 1}, 500)
+#          @$().animate({height: height + currentView.$().outerHeight()}, 500)
       @set 'currentView', contentView
     ).observes('selection')
+
+#    height: null
 
     tabBarView: Em.ContainerView.extend( App.ContextMenuSupport, App.Editing, {
       classNames: ['i-listsTabs', 'i-listsTabs_bd']
@@ -94,7 +113,9 @@ define [
           selectionBinding: 'parentView.selection'
 
           shouldShowContextMenuBinding: 'App.isEditingMode'
-          contextMenuActions: ['edit', 'deleteRecord:delete']
+          contextMenuActions: ['edit', 'save', 'deleteRecord:delete']
+
+          axis: 'x'
 
           titleBinding: 'content.description'
 
@@ -102,6 +123,9 @@ define [
             @popup = App.PopupView.create target: @
             @popup.pushObject App.StageForm.create content: @get 'content'
             @popup.appendTo App.get 'rootElement'
+
+          save: ->
+            @get('content.store').commit()
 
           deleteRecord: -> @get('content').deleteRecord()
 

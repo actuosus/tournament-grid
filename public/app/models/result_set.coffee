@@ -8,7 +8,7 @@
 define ->
   App.ResultSet = DS.Model.extend
     primaryKey: '_id'
-    sort_index: DS.attr 'number'
+    sortIndex: DS.attr 'number'
     isSelected: DS.attr 'boolean'
 
     # Relations

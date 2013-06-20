@@ -24,7 +24,8 @@ define [
 #      console.profile 'NewDoubleTournamentGridView'
 #      @_super()
 
-#    didInsertElement: ->
+    didInsertElement: ->
+      @$().css width: @get('parentView').$().width()
 #      console.timeEnd 'NewDoubleTournamentGridView'
 #      console.profileEnd 'NewDoubleTournamentGridView'
 
@@ -84,7 +85,7 @@ define [
             content: actualRound
             stage: stage
             index: roundIndex
-            sort_index: roundIndex
+            sortIndex: roundIndex
             itemIndex: i
             name: roundName
             parentReference: 'bracket'
@@ -99,7 +100,7 @@ define [
             match = App.MatchController.create
               index: j
               itemIndex: j
-              sort_index: j
+              sortIndex: j
               leftPath: leftPath
               rightPath: rightPath
               parentNodePath: "#{roundsCount-i+1}.#{Math.floor(j/2)}"
@@ -126,7 +127,7 @@ define [
             round = App.RoundController.create
               stage: stage
               index: roundsCount - rCount
-              sort_index: r
+              sortIndex: r
               itemIndex: rCount--
               parentReference: 'bracket'
               bracket: bracket
@@ -139,7 +140,7 @@ define [
               match = App.MatchController.create
                 index: m
                 itemIndex: m
-                sort_index: m
+                sortIndex: m
                 parentNodePath: parentNodePath
                 entrants: [null, null]
                 round: round

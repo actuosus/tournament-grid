@@ -9,4 +9,4 @@ define [
   'cs!../core'
 ],->
   App.RoundsController = Em.ArrayController.extend
-    sortProperties: ['sort_index']
+    sortProperties: ['sortIndex']

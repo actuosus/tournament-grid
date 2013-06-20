@@ -14,7 +14,7 @@ define ->
 #      unless content
 #        content = App.Match.createRecord()
 #        content.set property, @get property
-#        content.set 'sort_index', @get 'sort_index'
+#        content.set 'sortIndex', @get 'sortIndex'
 #        content.set 'round', @get 'round.content'
 #        @set 'content', content
 #    ).observes('entrant1', 'entrant2')
@@ -44,7 +44,7 @@ define ->
     deleteRecord: -> @get('content').deleteRecord()
 
     createRecord: ->
-      record = App.Match.createRecord sort_index: @sort_index
+      record = App.Match.createRecord sortIndex: @sortIndex
       round = @get 'round.content'
       unless round
         round = @get('round').createRecord()
@@ -61,7 +61,7 @@ define ->
 
     content: (->
       Em.run.later =>
-        match = @get('round.content.matches')?.objectAtContent @get 'sort_index'
+        match = @get('round.content.matches')?.objectAtContent @get 'sortIndex'
         @set('entrants', match.get('entrants')) if match
         @set 'content', match if match
       ,1000

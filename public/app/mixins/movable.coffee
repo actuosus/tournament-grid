@@ -7,7 +7,10 @@
 
 define ->
   App.Movable = Em.Mixin.create
+    isMovable: yes
     isMoving: no
+
+    axis: 'both'
 
     mouseDown: (event)->
       @set 'isMoving', yes
@@ -25,9 +28,17 @@ define ->
       @doMove newPosition
 
     doMove: (newPosition)->
-      @$().css
-        x: newPosition.x
-        y: newPosition.y
+      axis = @get 'axis'
+      switch axis
+        when 'x'
+          style = x: newPosition.x
+        when 'y'
+          style = y: newPosition.y
+        else
+          style =
+            x: newPosition.x
+            y: newPosition.y
+      @$().css style
       @set 'lastPosition', newPosition
 
     mouseUp: ->

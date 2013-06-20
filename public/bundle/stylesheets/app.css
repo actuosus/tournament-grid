@@ -2072,6 +2072,9 @@ body .ui-tooltip {
     border-radius: 2px;
     min-height: 17px;
 }
+.is-final .team-undefined .team-name {
+    width: 132px;
+}
 .team-undefined .team-name:hover {
     border: 1px dashed #5f5f60;
 }
@@ -2717,8 +2720,10 @@ body .ui-tooltip {
     padding: 10px;
     overflow-y: scroll;
     position: relative;
+    width: 390px;
 }
 .tournament-grid-container {
+    overflow: hidden;
 }
 .tournament-grid-container .fullscreen-btn {
     position: absolute;
@@ -3452,12 +3457,8 @@ body .ui-tooltip {
     right: 10px;
     top: 10px;
 }
-html {
-    min-width: 0 !important;
-}
-.i-wrapper {
-    width: auto !important;
-}
+    
+    
 .b-content :first-child[class="block-container"] {
     margin-top: 0;
 }
@@ -3631,7 +3632,7 @@ input.match-start-date {
 }
 .match-info-bar {
     float: right;
-    margin-bottom: 3px;
+    padding-bottom: 3px;
 }
 .header-item {
     cursor: default;

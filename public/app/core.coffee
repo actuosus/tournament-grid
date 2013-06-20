@@ -29,7 +29,7 @@ define [
       type: 'POST'
     })
 
-  lang = $.cookie 'lang'
+  lang = config.currentLanguage or $.cookie 'lang'
 
   localize = (language)->
     language ?= (window.navigator.userLanguage or window.navigator.language).substring(0, 2)

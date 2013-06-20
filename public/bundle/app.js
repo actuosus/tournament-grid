@@ -55797,7 +55797,7 @@ define("jquery.ui.timepicker-de", ["jquery.ui.timepicker"], function(){});
         type: 'POST'
       });
     };
-    lang = $.cookie('lang');
+    lang = config.currentLanguage || $.cookie('lang');
     localize = function(language) {
       if (language == null) {
         language = (window.navigator.userLanguage || window.navigator.language).substring(0, 2);
@@ -56185,11 +56185,15 @@ define("jquery.ui.timepicker-de", ["jquery.ui.timepicker"], function(){});
     return App.Draggable = Em.Mixin.create({
       attributeBindings: 'draggable',
       draggable: 'true',
+      isDraggable: true,
       mouseDown: function(event) {
         return event.stopPropagation();
       },
       dragStart: function(event) {
         var dataTransfer;
+        if (!this.get('isDraggable')) {
+          return;
+        }
         dataTransfer = event.originalEvent.dataTransfer;
         return dataTransfer.setData('Text', this.get('elementId'));
       }
@@ -56237,7 +56241,9 @@ define("jquery.ui.timepicker-de", ["jquery.ui.timepicker"], function(){});
 
   define('cs!mixins/movable',[],function() {
     return App.Movable = Em.Mixin.create({
+      isMovable: true,
       isMoving: false,
+      axis: 'both',
       mouseDown: function(event) {
         this.set('isMoving', true);
         $(document.body).addClass('non-selectable');
@@ -56257,10 +56263,26 @@ define("jquery.ui.timepicker-de", ["jquery.ui.timepicker"], function(){});
         return this.doMove(newPosition);
       },
       doMove: function(newPosition) {
-        this.$().css({
-          x: newPosition.x,
-          y: newPosition.y
-        });
+        var axis, style;
+        axis = this.get('axis');
+        switch (axis) {
+          case 'x':
+            style = {
+              x: newPosition.x
+            };
+            break;
+          case 'y':
+            style = {
+              y: newPosition.y
+            };
+            break;
+          default:
+            style = {
+              x: newPosition.x,
+              y: newPosition.y
+            };
+        }
+        this.$().css(style);
         return this.set('lastPosition', newPosition);
       },
       mouseUp: function() {
@@ -56302,10 +56324,11 @@ define("jquery.ui.timepicker-de", ["jquery.ui.timepicker"], function(){});
           x: event.pageX,
           y: event.pageY
         };
+        this.offset = $(App.get('rootElement')).offset();
         maskView.on('didInsertElement', function() {
           return maskView.$().css({
-            left: event.pageX + 1,
-            top: event.pageY + 1
+            left: event.pageX + 1 - this.offset.left,
+            top: event.pageY + 1 - this.offset.top
           });
         });
         maskView.appendTo(App.get('rootElement'));
@@ -56318,14 +56341,14 @@ define("jquery.ui.timepicker-de", ["jquery.ui.timepicker"], function(){});
         height = event.pageY - this.startMousePosition.y;
         $maskView = this.get('maskView').$();
         if (width < 0) {
-          $maskView.css('left', this.startMousePosition.x - Math.abs(width));
+          $maskView.css('left', this.startMousePosition.x - Math.abs(width) - this.offset.left);
         } else {
-          $maskView.css('left', this.startMousePosition.x);
+          $maskView.css('left', this.startMousePosition.x - this.offset.left);
         }
         if (height < 0) {
-          $maskView.css('top', this.startMousePosition.y - Math.abs(height));
+          $maskView.css('top', this.startMousePosition.y - Math.abs(height) - this.offset.top);
         } else {
-          $maskView.css('top', this.startMousePosition.y);
+          $maskView.css('top', this.startMousePosition.y - this.offset.top);
         }
         $maskView.css({
           width: Math.abs(width),
@@ -57828,7 +57851,7 @@ define('text!templates/team/form.hbs',[],function () { return '<div class="contr
       createRecord: function() {
         var record;
         record = App.Round.createRecord({
-          sort_index: this.sort_index
+          sortIndex: this.sortIndex
         });
         record.set('stage', this.get('stage'));
         return record;
@@ -57903,7 +57926,7 @@ define('text!templates/team/form.hbs',[],function () { return '<div class="contr
       createRecord: function() {
         var record, round;
         record = App.Match.createRecord({
-          sort_index: this.sort_index
+          sortIndex: this.sortIndex
         });
         round = this.get('round.content');
         if (!round) {
@@ -57926,7 +57949,7 @@ define('text!templates/team/form.hbs',[],function () { return '<div class="contr
         var _this = this;
         Em.run.later(function() {
           var match, _ref;
-          match = (_ref = _this.get('round.content.matches')) != null ? _ref.objectAtContent(_this.get('sort_index')) : void 0;
+          match = (_ref = _this.get('round.content.matches')) != null ? _ref.objectAtContent(_this.get('sortIndex')) : void 0;
           if (match) {
             _this.set('entrants', match.get('entrants'));
           }
@@ -57958,6 +57981,7 @@ define('text!templates/team/form.hbs',[],function () { return '<div class="contr
 
   define('cs!controllers/stages',[],function() {
     return App.StagesController = Em.ArrayController.extend({
+      sortProperties: ['sortIndex', ''],
       content: null
     });
   });
@@ -60640,7 +60664,7 @@ define('text!templates/match/filter_form.hbs',[],function () { return '<!--\n * 
     return App.MatchesController = Em.ArrayController.extend({
       lastResults: null,
       round: null,
-      sortProperties: ['date', 'sort_index'],
+      sortProperties: ['date', 'sortIndex'],
       matchTypeFilter: null,
       entrantFilter: null,
       periodFilter: null,
@@ -61469,19 +61493,21 @@ define('text!templates/match/form.hbs',[],function () { return '<div class="cont
         return console.debug('Should implement match creation.');
       },
       updateRecord: function() {
-        var content, transaction,
+        var content,
           _this = this;
         this.$('.save-btn').attr('disabled', 'disabled');
         content = this.get('content');
-        transaction = content.get('store').transaction();
-        transaction.add(content);
         content.on('didUpdate', function() {
           return _this.didUpdate(content);
         });
-        content.set('title', this.get('title'));
-        content.set('map_type', this.get('map_type'));
-        content.set('description', this.get('description'));
-        return transaction.commit();
+        return content.get('store').commit();
+      },
+      cancel: function() {
+        var _ref, _ref1;
+        if ((_ref = this.get('content')) != null) {
+          _ref.rollback();
+        }
+        return (_ref1 = this.popupView) != null ? _ref1.hide() : void 0;
       },
       submit: function(event) {
         event.preventDefault();
@@ -61501,9 +61527,7 @@ define('text!templates/match/form.hbs',[],function () { return '<div class="cont
           }
         }
         if ($(event.target).hasClass('cancel-btn')) {
-          if (this.popupView) {
-            return this.popupView.hide();
-          }
+          return this.cancel();
         }
       }
     });
@@ -62050,6 +62074,11 @@ define('text!templates/match/form.hbs',[],function () { return '<div class="cont
       childViews: ['contentView'],
       entrantsNumber: 4,
       isSingle: true,
+      didInsertElement: function() {
+        return this.$().css({
+          width: this.get('parentView').$().width()
+        });
+      },
       toolboxView: Em.ContainerView.extend({
         classNames: ['toolbox'],
         childViews: ['triggerButtonView'],
@@ -62090,7 +62119,7 @@ define('text!templates/match/form.hbs',[],function () { return '<div class="cont
             content: actualRound,
             index: roundIndex,
             itemIndex: i,
-            sort_index: roundIndex,
+            sortIndex: roundIndex,
             name: roundName,
             parentReference: 'stage',
             matches: []
@@ -62104,7 +62133,7 @@ define('text!templates/match/form.hbs',[],function () { return '<div class="cont
             match = App.MatchController.create({
               index: j,
               itemIndex: j,
-              sort_index: j,
+              sortIndex: j,
               date: new Date(),
               leftPath: leftPath,
               rightPath: rightPath,
@@ -62234,6 +62263,11 @@ define('text!templates/match/form.hbs',[],function () { return '<div class="cont
       childViews: ['contentView'],
       shouldShowContextMenuBinding: 'App.isEditingMode',
       contextMenuActions: ['showTeamList'],
+      didInsertElement: function() {
+        return this.$().css({
+          width: this.get('parentView').$().width()
+        });
+      },
       showTeamList: function() {
         var listView, reportEntrants;
         this.teamListPopup = App.PopupView.createWithMixins(App.Movable, {
@@ -62296,7 +62330,7 @@ define('text!templates/match/form.hbs',[],function () { return '<div class="cont
               content: actualRound,
               stage: stage,
               index: roundIndex,
-              sort_index: roundIndex,
+              sortIndex: roundIndex,
               itemIndex: i,
               name: roundName,
               parentReference: 'bracket',
@@ -62313,7 +62347,7 @@ define('text!templates/match/form.hbs',[],function () { return '<div class="cont
               match = App.MatchController.create({
                 index: j,
                 itemIndex: j,
-                sort_index: j,
+                sortIndex: j,
                 leftPath: leftPath,
                 rightPath: rightPath,
                 parentNodePath: "" + (roundsCount - i + 1) + "." + (Math.floor(j / 2)),
@@ -62345,7 +62379,7 @@ define('text!templates/match/form.hbs',[],function () { return '<div class="cont
               round = App.RoundController.create({
                 stage: stage,
                 index: roundsCount - rCount,
-                sort_index: r,
+                sortIndex: r,
                 itemIndex: rCount--,
                 parentReference: 'bracket',
                 bracket: bracket,
@@ -62360,7 +62394,7 @@ define('text!templates/match/form.hbs',[],function () { return '<div class="cont
                 match = App.MatchController.create({
                   index: m,
                   itemIndex: m,
-                  sort_index: m,
+                  sortIndex: m,
                   parentNodePath: parentNodePath,
                   entrants: [null, null],
                   round: round
@@ -62853,6 +62887,7 @@ define('text!templates/match/form.hbs',[],function () { return '<div class="cont
         classNames: ['lineup-grid-item-name-container'],
         childViews: ['countryFlagView', 'nameView'],
         _isEditingBinding: 'parentView._isEditing',
+        isDraggableBinding: '_isEditing',
         editingChildViews: ['removeButtonView'],
         countryFlagView: App.CountryFlagView.extend({
           contentBinding: 'parentView.content.country'
@@ -63212,7 +63247,7 @@ define('text!templates/match/form.hbs',[],function () { return '<div class="cont
 
 }).call(this);
 
-define('text!templates/stage/form.hbs',[],function () { return '\n<div class="control-row">\n    <label for="name">{{loc \'_title\'}}:</label>\n    {{view App.MultilingualTextField name="title" classNames="title" valueBinding="view.title" languagesBinding="App.languages" selectedLanguage=App.currentLanguage required="required" title="The name is required."}}\n</div>\n\n<div class="control-row">\n    <label for="name">{{loc \'_description\'}}:</label>\n    {{view App.MultilingualTextArea name="description" classNames="description" cols="90" valueBinding="view.description" languagesBinding="App.languages" selectedLanguage=App.currentLanguage}}\n</div>\n\n<div class="control-row">\n    <label for="visual_type">{{loc \'_type\'}}:</label>\n    {{view App.SelectView contentBinding="App.visualTypes" valueBinding="view.visualType"}}\n</div>\n\n<div class="control-row">\n    <label for="rating">{{loc \'_rating\'}}:</label>\n    <input type="number" name="rating" class="rating" size="2" maxlength="4" min="0" step="0.1"/>\n</div>\n\n{{#if view.isGridType}}\n<div class="control-section control-section-tournament-grid">\n    <div class="control-row">\n        <label for="entrants-number">{{loc \'_entrants_number\'}}:</label>\n        <!--<input type="number" name="entrants-number" class="entrants-number" size="2" maxlength="4" min="1" required="required"/>-->\n        {{view App.NumberInputView name="entrants-number" class="entrants-number" size="2" min="2" max="1024" maxlength="4" required="required" value="2"}}\n    </div>\n</div>\n{{/if}}\n\n{{#if view.isDoubleType}}\n    <div class="control-section control-section-tournament-grid">\n        <div class="control-row">\n            <label for="entrants-number">{{loc \'_entrants_number\'}}:</label>\n            {{view App.NumberInputView name="entrants-number" class="entrants-number" size="2" min="4" max="1024" maxlength="4" required="required" value="4"}}\n        </div>\n    </div>\n{{/if}}\n\n{{#if view.isGroupType}}\n<div class="control-section control-section-group">\n    <div class="control-row">\n        <label for="group-number">{{loc \'_group_number\'}}:</label>\n        <input type="number" name="group-number" class="group-number" size="2" maxlength="4" min="1" required="required"/>\n    </div>\n</div>\n{{/if}}\n\n{{#if view.isMatrixType}}\n<div class="control-section control-section-group">\n    <div class="control-row">\n        <label for="matches-number">{{loc \'_matches_number\'}}:</label>\n        <input type="number" name="matches-number" class="matrix-matches-number" size="2" min="1" maxlength="4" required="required"/>\n    </div>\n</div>\n{{/if}}\n\n{{#if view.isTeamType}}\n<div class="control-section control-section-group">\n    <div class="control-row">\n        <label for="entrants-number">{{loc \'_entrants_number\'}}:</label>\n        <input type="number" name="entrants-number" class="team-entrants-number" size="2" min="1" maxlength="4" required="required"/>\n    </div>\n    <div class="control-row">\n        <label for="matches-number">{{loc \'_matches_number\'}}:</label>\n        <input type="number" name="matches-number" class="team-matches-number" size="2" min="1" maxlength="4" required="required"/>\n    </div>\n</div>\n{{/if}}\n\n<div class="control-row">\n    <button type="submit" class="btn btn-primary save-btn">{{loc \'_create\'}}</button>\n    <button type="button" class="btn cancel-btn">{{loc \'_cancel\'}}</button>\n</div>';});
+define('text!templates/stage/form.hbs',[],function () { return '\n<div class="control-row">\n    <label for="name">{{loc \'_title\'}}:</label>\n    {{view App.MultilingualTextField name="title" classNames="title" valueBinding="view.content.title" languagesBinding="App.languages" selectedLanguage=App.currentLanguage required="required" title="The name is required."}}\n</div>\n\n<div class="control-row">\n    <label for="name">{{loc \'_description\'}}:</label>\n    {{view App.MultilingualTextArea name="description" classNames="description" cols="90" valueBinding="view.content.description" languagesBinding="App.languages" selectedLanguage=App.currentLanguage}}\n</div>\n\n<div class="control-row">\n    <label for="visual_type">{{loc \'_type\'}}:</label>\n    {{view App.SelectView contentBinding="App.visualTypes" valueBinding="view.visualType"}}\n</div>\n\n<div class="control-row">\n    <label for="rating">{{loc \'_rating\'}}:</label>\n    <input type="number" name="rating" class="rating" size="2" maxlength="4" min="0" step="0.1" {{bindAttr value="view.content.rating"}}/>\n</div>\n\n{{#if view.isGridType}}\n<div class="control-section control-section-tournament-grid">\n    <div class="control-row">\n        <label for="entrants-number">{{loc \'_entrants_number\'}}:</label>\n        <!--<input type="number" name="entrants-number" class="entrants-number" size="2" maxlength="4" min="1" required="required"/>-->\n        {{view App.NumberInputView name="entrants-number" class="entrants-number" size="2" min="2" max="1024" maxlength="4" required="required" value="2"}}\n    </div>\n</div>\n{{/if}}\n\n{{#if view.isDoubleType}}\n    <div class="control-section control-section-tournament-grid">\n        <div class="control-row">\n            <label for="entrants-number">{{loc \'_entrants_number\'}}:</label>\n            {{view App.NumberInputView name="entrants-number" class="entrants-number" size="2" min="4" max="1024" maxlength="4" required="required" value="4"}}\n        </div>\n    </div>\n{{/if}}\n\n{{#if view.isGroupType}}\n<div class="control-section control-section-group">\n    <div class="control-row">\n        <label for="group-number">{{loc \'_group_number\'}}:</label>\n        <input type="number" name="group-number" class="group-number" size="2" maxlength="4" min="1" required="required"/>\n    </div>\n</div>\n{{/if}}\n\n{{#if view.isMatrixType}}\n<div class="control-section control-section-group">\n    <div class="control-row">\n        <label for="matches-number">{{loc \'_matches_number\'}}:</label>\n        <input type="number" name="matches-number" class="matrix-matches-number" size="2" min="1" maxlength="4" required="required"/>\n    </div>\n</div>\n{{/if}}\n\n{{#if view.isTeamType}}\n<div class="control-section control-section-group">\n    <div class="control-row">\n        <label for="entrants-number">{{loc \'_entrants_number\'}}:</label>\n        <input type="number" name="entrants-number" class="team-entrants-number" size="2" min="1" maxlength="4" required="required"/>\n    </div>\n    <div class="control-row">\n        <label for="matches-number">{{loc \'_matches_number\'}}:</label>\n        <input type="number" name="matches-number" class="team-matches-number" size="2" min="1" maxlength="4" required="required"/>\n    </div>\n</div>\n{{/if}}\n\n<div class="control-row">\n    <button type="submit" class="btn btn-primary save-btn">{{loc \'_create\'}}</button>\n    <button type="button" class="btn cancel-btn">{{loc \'_cancel\'}}</button>\n</div>';});
 
 
 /*
@@ -63306,12 +63341,20 @@ define('text!templates/stage/form.hbs',[],function () { return '\n<div class="co
         }
         return this.didCreate(stage);
       },
+      cancel: function() {
+        var _ref, _ref1;
+        if ((_ref = this.get('content')) != null) {
+          _ref.rollback();
+        }
+        return (_ref1 = this.popupView) != null ? _ref1.hide() : void 0;
+      },
       submit: function(event) {
         event.preventDefault();
         return this.createRecord();
       },
       click: function(event) {
         if ($(event.target).hasClass('cancel-btn')) {
+          this.cancel();
           return this.trigger('cancel', event);
         }
       }
@@ -63478,6 +63521,12 @@ define('text!templates/stage/form.hbs',[],function () { return '\n<div class="co
               showFilterForm: true,
               tableItemViewClass: 'App.MatchTableItemView'
             });
+            break;
+          default:
+            contentView = Em.View.create({
+              classNames: ['padded'],
+              template: Em.Handlebars.compile('Unknown visual type')
+            });
         }
         return this.set('currentView', contentView);
       }).observes('selection'),
@@ -63511,7 +63560,8 @@ define('text!templates/stage/form.hbs',[],function () { return '\n<div class="co
             editingChildViews: ['removeButtonView'],
             selectionBinding: 'parentView.selection',
             shouldShowContextMenuBinding: 'App.isEditingMode',
-            contextMenuActions: ['edit', 'deleteRecord:delete'],
+            contextMenuActions: ['edit', 'save', 'deleteRecord:delete'],
+            axis: 'x',
             titleBinding: 'content.description',
             edit: function() {
               this.popup = App.PopupView.create({
@@ -63521,6 +63571,9 @@ define('text!templates/stage/form.hbs',[],function () { return '\n<div class="co
                 content: this.get('content')
               }));
               return this.popup.appendTo(App.get('rootElement'));
+            },
+            save: function() {
+              return this.get('content.store').commit();
             },
             deleteRecord: function() {
               return this.get('content').deleteRecord();
@@ -63860,7 +63913,7 @@ define('text!templates/application.hbs',[],function () { return '{{outlet stages
       defaultValue: 'opened'
     }, {
       type: DS.attr('string'),
-      sort_index: DS.attr('number'),
+      sortIndex: DS.attr('number'),
       entrant1: DS.belongsTo('App.Team'),
       entrant2: DS.belongsTo('App.Team'),
       entrant1_points: DS.attr('number'),
@@ -64126,7 +64179,7 @@ define('text!templates/application.hbs',[],function () { return '{{outlet stages
   define('cs!models/result_set',[],function() {
     App.ResultSet = DS.Model.extend({
       primaryKey: '_id',
-      sort_index: DS.attr('number'),
+      sortIndex: DS.attr('number'),
       isSelected: DS.attr('boolean'),
       entrant: DS.belongsTo('App.TeamRef'),
       round: DS.belongsTo('App.Round', {
@@ -64198,7 +64251,7 @@ define('text!templates/application.hbs',[],function () { return '{{outlet stages
   define('cs!models/round',['cs!../core'], function() {
     App.Round = DS.Model.extend({
       primaryKey: '_id',
-      sort_index: DS.attr('number'),
+      sortIndex: DS.attr('number'),
       title: DS.attr('string', {
         loc: {
           keyPath: '_title',

@@ -46,6 +46,7 @@ define [
       childViews: ['countryFlagView', 'nameView']
 
       _isEditingBinding: 'parentView._isEditing'
+      isDraggableBinding: '_isEditing'
 
       editingChildViews: ['removeButtonView']
 

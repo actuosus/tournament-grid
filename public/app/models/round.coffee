@@ -9,7 +9,7 @@
 define ['cs!../core'],->
   App.Round = DS.Model.extend
     primaryKey: '_id'
-    sort_index: DS.attr 'number'
+    sortIndex: DS.attr 'number'
 
     # TODO History Ember.History,
 #    _trackProperties: ['name']

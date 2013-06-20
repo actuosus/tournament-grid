@@ -17,7 +17,7 @@ define ['cs!../core'],->
     map_type: DS.attr 'string'
     status: DS.attr 'string', {defaultValue: 'opened'}
     type: DS.attr 'string'
-    sort_index: DS.attr 'number'
+    sortIndex: DS.attr 'number'
     entrant1: DS.belongsTo 'App.Team'
     entrant2: DS.belongsTo 'App.Team'
     entrant1_points: DS.attr 'number'

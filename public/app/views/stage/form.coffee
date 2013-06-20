@@ -85,10 +85,15 @@ define [
       # TODO Kind of hacky.
       @didCreate stage
 
+    cancel: ->
+      @get('content')?.rollback()
+      @popupView?.hide()
+
     submit: (event)->
       event.preventDefault()
       @createRecord()
 
     click: (event)->
       if $(event.target).hasClass('cancel-btn')
+        @cancel()
         @trigger('cancel', event)

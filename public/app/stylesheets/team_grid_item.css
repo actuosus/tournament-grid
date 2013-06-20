@@ -92,6 +92,10 @@
     min-height: 17px;
 }
 
+.is-final .team-undefined .team-name {
+    width: 132px;
+}
+
 .team-undefined .team-name:hover {
     border: 1px dashed #5f5f60;
 }

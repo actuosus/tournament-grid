@@ -17,7 +17,7 @@ StageSchema = new Schema
     en: type: String
     de: type: String
   description: type: String
-  visual_type: type: String, required: yes # TODO What about html?
+  visual_type: type: String, required: yes, enum: ['matrix', 'single', 'double', 'team', 'group'] # TODO What about html?
   sort_index: type: Number
   rating: type: Number
   entrants_number: type: Number

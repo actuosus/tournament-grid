@@ -19,8 +19,11 @@ define ->
       @startMousePosition =
         x: event.pageX
         y: event.pageY
+      @offset = $(App.get 'rootElement').offset()
       maskView.on 'didInsertElement', ->
-        maskView.$().css(left: event.pageX + 1, top: event.pageY + 1)
+        maskView.$().css
+          left: event.pageX + 1 - @offset.left
+          top: event.pageY + 1 - @offset.top
       maskView.appendTo App.get 'rootElement'
       @set 'maskView', maskView
 
@@ -29,13 +32,13 @@ define ->
       height = event.pageY - @startMousePosition.y
       $maskView = @get('maskView').$()
       if width < 0
-        $maskView.css 'left', @startMousePosition.x - Math.abs(width)
+        $maskView.css 'left', @startMousePosition.x - Math.abs(width) - @offset.left
       else
-        $maskView.css 'left', @startMousePosition.x
+        $maskView.css 'left', @startMousePosition.x - @offset.left
       if height < 0
-        $maskView.css 'top', @startMousePosition.y - Math.abs(height)
+        $maskView.css 'top', @startMousePosition.y - Math.abs(height) - @offset.top
       else
-        $maskView.css 'top', @startMousePosition.y
+        $maskView.css 'top', @startMousePosition.y - @offset.top
       $maskView.css
         width: Math.abs(width)
         height: Math.abs(height)

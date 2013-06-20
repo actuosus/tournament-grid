@@ -15,7 +15,7 @@ define ->
     deleteRecord: -> @get('content').deleteRecord()
 
     createRecord: ->
-      record = App.Round.createRecord sort_index: @sort_index
+      record = App.Round.createRecord sortIndex: @sortIndex
       record.set 'stage', @get 'stage'
       record
 

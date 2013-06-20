@@ -19,6 +19,9 @@ define [
 
     isSingle: yes
 
+    didInsertElement: ->
+      @$().css width: @get('parentView').$().width()
+
     toolboxView: Em.ContainerView.extend
       classNames: ['toolbox']
       childViews: ['triggerButtonView']
@@ -54,7 +57,7 @@ define [
           content: actualRound
           index: roundIndex
           itemIndex: i
-          sort_index: roundIndex
+          sortIndex: roundIndex
           name: roundName
           parentReference: 'stage'
           matches: []
@@ -66,7 +69,7 @@ define [
           match = App.MatchController.create
             index: j
             itemIndex: j
-            sort_index: j
+            sortIndex: j
             date: new Date()
             leftPath: leftPath
             rightPath: rightPath
