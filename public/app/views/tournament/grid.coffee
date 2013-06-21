@@ -58,7 +58,7 @@ define [
           index: roundIndex
           itemIndex: i
           sortIndex: roundIndex
-          name: roundName
+          title: roundName
           parentReference: 'stage'
           matches: []
         for j in [0..matchesCount]

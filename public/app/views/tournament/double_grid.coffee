@@ -87,7 +87,7 @@ define [
             index: roundIndex
             sortIndex: roundIndex
             itemIndex: i
-            name: roundName
+            title: roundName
             parentReference: 'bracket'
             bracket: bracket
             matches: []
@@ -164,7 +164,7 @@ define [
         content: (->
           rounds = []
           finalRound = App.RoundController.create
-            name: '_final'.loc()
+            title: '_final'.loc()
             itemIndex: -1
             parentReference: 'stage'
             matches: []

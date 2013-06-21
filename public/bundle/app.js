@@ -62120,7 +62120,7 @@ define('text!templates/match/form.hbs',[],function () { return '<div class="cont
             index: roundIndex,
             itemIndex: i,
             sortIndex: roundIndex,
-            name: roundName,
+            title: roundName,
             parentReference: 'stage',
             matches: []
           });
@@ -62332,7 +62332,7 @@ define('text!templates/match/form.hbs',[],function () { return '<div class="cont
               index: roundIndex,
               sortIndex: roundIndex,
               itemIndex: i,
-              name: roundName,
+              title: roundName,
               parentReference: 'bracket',
               bracket: bracket,
               matches: []
@@ -62417,7 +62417,7 @@ define('text!templates/match/form.hbs',[],function () { return '<div class="cont
             var finalRound, rounds, winnerRound;
             rounds = [];
             finalRound = App.RoundController.create({
-              name: '_final'.loc(),
+              title: '_final'.loc(),
               itemIndex: -1,
               parentReference: 'stage',
               matches: []
@@ -63331,10 +63331,10 @@ define('text!templates/stage/form.hbs',[],function () { return '\n<div class="co
             stage = report.createStageByMatchesNumber(parseInt(this.$('.team-matches-number').val(), 10));
         }
         stage.set('report', report);
-        stage.set('title', this.get('title'));
-        stage.set('rating', this.get('rating'));
+        stage.set('title', this.get('content.title'));
+        stage.set('rating', this.get('content.rating'));
         stage.set('entrantsNumber', entrantsNumber);
-        stage.set('description', this.get('description'));
+        stage.set('description', this.get('content.description'));
         stage.set('visualType', this.get('visualType.id'));
         if (report) {
           report.get('stages').pushObject(stage);
@@ -63657,6 +63657,7 @@ define('text!templates/stage/form.hbs',[],function () { return '\n<div class="co
           stageForm = App.StageForm.create({
             classNames: ['padded'],
             report: App.report,
+            content: Em.Object.create(),
             didCreate: function(stage) {
               var _this = this;
               App.store.commit();

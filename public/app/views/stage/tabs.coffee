@@ -194,6 +194,7 @@ define [
         stageForm = App.StageForm.create
           classNames: ['padded']
           report: App.report
+          content: Em.Object.create()
           didCreate: (stage)->
             App.store.commit()
             stage.on 'didLoad', => router.transitionTo 'stage', stage

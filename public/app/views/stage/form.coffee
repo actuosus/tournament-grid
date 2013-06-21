@@ -73,11 +73,11 @@ define [
 ##      stage = App.Stage.createRecord
 #      stage.set 'name', @$('.name').val()
       stage.set 'report', report
-      stage.set 'title', @get 'title'
-      stage.set 'rating', @get 'rating'
+      stage.set 'title', @get 'content.title'
+      stage.set 'rating', @get 'content.rating'
       stage.set 'entrantsNumber', entrantsNumber
 #      stage.set 'description', @$('.description').val()
-      stage.set 'description', @get 'description'
+      stage.set 'description', @get 'content.description'
       stage.set 'visualType', @get 'visualType.id'
 
       report.get('stages').pushObject stage if report
