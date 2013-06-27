@@ -186,7 +186,7 @@ require([
 //  'ember-history',
   'modernizr.columns',
   'cs!./core',
-  'cs!./application'
+//  'cs!./application'
 ], function(){
   if (window.debug) {
     var statusElement = document.getElementById('status');
