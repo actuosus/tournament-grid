@@ -49,6 +49,7 @@ define ->
       unless round
         round = @get('round').createRecord()
       record.set 'round', round
+      round.get('matches').addObject record
       record
 
     setUnknownProperty: (key, value)->
@@ -61,10 +62,11 @@ define ->
 
     content: (->
       Em.run.later =>
-        match = @get('round.content.matches')?.objectAtContent @get 'sortIndex'
+#        console.log 'sortIndex', @get 'sortIndex'
+        match = @get('round.content.matches')?.find (_)=>_.get('sortIndex') is @get('sortIndex')
         @set('entrants', match.get('entrants')) if match
         @set 'content', match if match
-      ,1000
+      ,200
       null
     ).property('some', 'round.content.matches.@each.isLoaded')
 

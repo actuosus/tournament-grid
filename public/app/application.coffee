@@ -8,6 +8,7 @@
 
 define [
   'cs!./core'
+  'cs!./helpers/index'
   'cs!./system/index'
   'cs!./mixins/index'
 

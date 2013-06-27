@@ -13,7 +13,9 @@ define [
   App.RoundGridItemView = Em.ContainerView.extend
     classNames: 'tournament-round-container'
     classNameBindings: ['content.isDirty']
+    attributeBindings: ['title']
     childViews: ['titleView', 'contentView']
+    titleBinding: 'content.sortIndex'
 
     titleView: App.EditableLabel.extend
       # TODO Rename to round-title in CSS

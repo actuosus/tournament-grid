@@ -23,6 +23,8 @@ define ['cs!../core'],->
     stage: DS.belongsTo('App.Stage', {inverse: 'rounds'})
     bracket: DS.belongsTo('App.Bracket', {inverse: 'rounds'})
 
+    bracketName: DS.attr 'string'
+
     teamRefs: DS.hasMany 'App.TeamRef'
 
     # TODO Make localization

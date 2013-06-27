@@ -26,7 +26,7 @@ exports.create = (req, res)->
     await ResultSet.findByIdAndUpdate result.result_set_id, {$push: {results: r._id}}, defer err, rs if result.result_set_id
     res.send result: r
   else
-    res.send 400, error: 'server error'
+    res.send 400, errors: 'server error'
 
 exports.update = (req, res)->
   if req.body.result_set
@@ -36,11 +36,11 @@ exports.update = (req, res)->
 #    await ResultSet.findByIdAndUpdate result.result_set_id, {$push: {results: r._id}}, defer err, rs if result.result_set_id
     res.send result: r
   else
-    res.send 400, error: 'server error'
+    res.send 400, errors: 'server error'
 
 exports.delete = (req, res)->
   Result.findByIdAndRemove req.param._id, (err)->
     unless err
       res.send 204
     else
-      res.send 400, error: err
+      res.send 400, errors: err

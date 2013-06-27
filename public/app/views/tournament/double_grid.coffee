@@ -80,9 +80,9 @@ define [
             when 1
               roundName = '_semifinal'.loc()
           roundIndex = roundsCount - i
-          actualRound = stage?.getByPath "#{roundIndex}"
+#          actualRound = stage?.getByPath "#{roundIndex}"
           round = App.RoundController.create
-            content: actualRound
+#            content: actualRound
             stage: stage
             index: roundIndex
             sortIndex: roundIndex
@@ -90,6 +90,7 @@ define [
             title: roundName
             parentReference: 'bracket'
             bracket: bracket
+            bracketName: 'winner'
             matches: []
           matches = round.get 'matches'
           for j in [0..matchesCount]
@@ -122,15 +123,17 @@ define [
         bracket = Em.Object.create
           name: 'Loser bracket'
           isWinnerBracket: no
+        counter = 0
         for r in [roundsCount-1..0]
           for n in [1..0]
             round = App.RoundController.create
               stage: stage
               index: roundsCount - rCount
-              sortIndex: r
+              sortIndex: counter
               itemIndex: rCount--
               parentReference: 'bracket'
               bracket: bracket
+              bracketName: 'loser'
               matches: []
             for m in [0...matchesCount]
               if rCount > 0
@@ -146,6 +149,7 @@ define [
                 round: round
               round.get('matches').push match
             rounds.push round
+            counter++
           matchesCount /= 2
 
         bracket.set 'rounds', rounds

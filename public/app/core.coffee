@@ -12,7 +12,6 @@ define [
   'ember-data'
   'cs!./locales/index'
   'cs!./config'
-  'cs!./helpers/index'
 #  'cs!lib/array'
 ] , (cookie, ember, emberData, locales, config)->
   window.onerror = (errorMsg, url, lineNumber)->
@@ -43,6 +42,7 @@ define [
   appConfig =
     VERSION: '0.1'
     autoinit: false
+    Store: DS.Store
     customEvents:
       mousewheel: 'mouseWheel'
 
@@ -58,29 +58,29 @@ define [
   window.TournamentGrid = TournamentGrid
   window.App = App
 
-  DS.RecordArray.reopen
-    onLoad: (callback)->
-      if @get 'isLoaded'
-        callback this
-      else
-        that = @
-        isLoadedFn = ->
-          if that.get 'isLoaded'
-            that.removeObserver 'isLoaded', isLoadedFn
-            callback that
-      @addObserver 'isLoaded', isLoadedFn
-      @
-
-  DS.RESTAdapter.reopen
-    findQuery: (store, type, query, recordArray)->
-      root = @rootForType type
-
-      req = @ajax @buildURL(root), 'GET',
-        data: query,
-        success: (json)->
-          Ember.run @, -> @didFindQuery(store, type, json, recordArray)
-      recordArray.req = req
-      req
+#  DS.RecordArray.reopen
+#    onLoad: (callback)->
+#      if @get 'isLoaded'
+#        callback this
+#      else
+#        that = @
+#        isLoadedFn = ->
+#          if that.get 'isLoaded'
+#            that.removeObserver 'isLoaded', isLoadedFn
+#            callback that
+#      @addObserver 'isLoaded', isLoadedFn
+#      @
+#
+#  DS.RESTAdapter.reopen
+#    findQuery: (store, type, query, recordArray)->
+#      root = @rootForType type
+#
+#      req = @ajax @buildURL(root), 'GET',
+#        data: query,
+#        success: (json)->
+#          Ember.run @, -> @didFindQuery(store, type, json, recordArray)
+#      recordArray.req = req
+#      req
 
   DS.RESTAdapter.configure 'plurals',
     country: 'countries'
@@ -109,37 +109,86 @@ define [
     serialize: (deserialized)->
       if Em.isNone(deserialized) then null else String(deserialized)
 
-  App.store = DS.Store.create
-    revision: 11
-    adapter: DS.RESTAdapter.create
-      bulkCommit: no
+  App.Adapter = DS.RESTAdapter.extend
+    bulkCommit: no
+
+    waitForParents: (record, callback, context, args)->
+      observers = new Ember.Set()
+
+      record.eachRelationship (name, meta)->
+        relationship = record.cacheFor name
+
+        if meta.kind is 'belongsTo' and relationship and Em.get(relationship, 'isNew')
+          observer = ->
+            relationship.removeObserver('id', context, observer)
+            observers.remove(name)
+            finish()
+
+          relationship.addObserver('id', context, observer)
+          observers.add name
+
+      finish = -> callback.apply(context, args) if observers.length is 0
+      finish()
+
+    createRecord: (store, type, record)->
+      sup = @_super
+      @waitForParents record, sup, @, arguments
+
+    updateRecord: (store, type, record)->
+      sup = @_super
+      @waitForParents record, sup, @, arguments
+
+    serializer: DS.JSONSerializer.extend
+      keyForAttributeName: (type, name)-> Ember.String.decamelize name
+      keyForBelongsTo: (type, name)->
+        key = @keyForAttributeName type, name
+        if @embeddedType(type, name)
+          return key
+        key + '_id'
+
+  App.store = App.Store.create
+#    revision: 12
+    adapter: App.Adapter.create()
 
   App.store.adapter.url = config.api.host
   App.store.adapter.namespace = config.api.namespace
   App.store.adapter.serializer.primaryKey = -> '_id'
 
+  App.store.adapter.dirtyRecordsForHasManyChange = (dirtySet, record, relationship)->
+    embeddedType = @get('serializer').embeddedType(record.constructor, relationship.secondRecordName)
+
+    if embeddedType is 'always'
+      relationship.childReference.parent = relationship.parentReference
+      @_dirtyTree dirtySet, record
+
+#    if relationship.secondRecordName is "matches"
+#      relationship.childReference.parent = relationship.parentReference;
+##      @_dirtyTree(dirtySet, record);
+#      dirtySet.add record
+
+#
   App.overrideAdapterAjax = (report)->
-    App.store.adapter.ajax = (url, type, hash)->
-      hash.url = url
-      hash.type = type
-      hash.dataType = 'json'
-      hash.contentType = 'application/json; charset=utf-8'
-      hash.context = @
-
-      if hash.data
-        if type isnt 'GET'
-          hash.url += "?report_id=#{report.get 'id'}"
-          if App.debug?.wait?
-            hash.url += '&' + jQuery.param({start: App.get('debug.wait.start'), end: App.get('debug.wait.end')})
-          hash.data = JSON.stringify hash.data
-        else
-          hash.data.report_id = report.get 'id'
-      else
-        hash.url += "?report_id=#{report.get 'id'}"
-        if App.debug?.wait?
-          hash.url += '&' + jQuery.param({start: App.get('debug.wait.start'), end: App.get('debug.wait.end')})
-
-      jQuery.ajax hash
+#    App.store.adapter.ajax = (url, type, hash)->
+#      hash.url = url
+#      hash.type = type
+#      hash.dataType = 'json'
+#      hash.contentType = 'application/json; charset=utf-8'
+#      hash.context = @
+#
+#      if hash.data
+#        if type isnt 'GET'
+#          hash.url += "?report_id=#{report.get 'id'}"
+#          if App.debug?.wait?
+#            hash.url += '&' + jQuery.param({start: App.get('debug.wait.start'), end: App.get('debug.wait.end')})
+#          hash.data = JSON.stringify hash.data
+#        else
+#          hash.data.report_id = report.get 'id'
+#      else
+#        hash.url += "?report_id=#{report.get 'id'}"
+#        if App.debug?.wait?
+#          hash.url += '&' + jQuery.param({start: App.get('debug.wait.start'), end: App.get('debug.wait.end')})
+#
+#      jQuery.ajax hash
 
   App.config =
     local:

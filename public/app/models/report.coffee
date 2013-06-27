@@ -25,9 +25,9 @@ define ['cs!../core'],->
 
     match_type: DS.attr 'string'
 
-    stages: DS.hasMany('App.Stage', {inverse: 'report'})
+    stages: DS.hasMany('App.Stage', {inverse: 'report', key: 'stages'})
 
-    teamRefs: DS.hasMany('App.TeamRef', {inverse: 'report'})
+    teamRefs: DS.hasMany('App.TeamRef', {inverse: 'report', key: 'team_refs'})
 
     players: (->
       teamRefs = @get 'teamRefs'

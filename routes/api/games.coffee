@@ -19,7 +19,7 @@ exports.item = (req, res)->
     if doc
       res.send game: doc
     else
-      res.send 404, error: 'nothing found'
+      res.send 404, errors: 'nothing found'
 
 exports.create = (req, res)->
   if req.body?.games
@@ -41,9 +41,9 @@ exports.create = (req, res)->
       await match.save defer err, match
       res.send game: doc
     else
-      res.send 400, error: 'match_id required'
+      res.send 400, errors: 'match_id required'
   else
-    res.send 400, error: "server error"
+    res.send 400, errors: "server error"
 
 exports.update = (req, res)->
   if req.body?.game
@@ -51,7 +51,7 @@ exports.update = (req, res)->
     await Game.findByIdAndUpdate req.params._id, { $set: game }, defer err, doc
     res.send game: doc
   else
-    res.send 400, error: "server error"
+    res.send 400, errors: "server error"
 
 exports.delete = (req, res)->
   Game.findByIdAndRemove req.params._id, (err)->

@@ -40,7 +40,7 @@ define ['cs!../core'],->
     left: null
     right: null
 
-    report: DS.belongsTo 'App.Report'
+    report: DS.belongsTo('App.Report', {key: 'stages'})
 
     rounds: DS.hasMany 'App.Round'
     brackets: DS.hasMany 'App.Bracket'

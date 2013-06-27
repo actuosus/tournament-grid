@@ -20,6 +20,8 @@ RoundSchema = new Schema
   stage_id: type: ObjectId, ref: 'Stage'
   matches: [type: ObjectId, ref: 'Match']
 
+  bracket_name: type: String
+
   team_refs: [type: ObjectId, ref: 'TeamRef']
 
   result_sets: [type: ObjectId, ref: 'ResultSet']

@@ -41,8 +41,9 @@ define [
           outlet: 'lineup',
           into: 'application'
           controller: 'reportEntrants'
-    model: ->
-      App.Report.find window.grid.reportId
+    model: (params)->
+      console.log arguments
+      App.store.findById App.Report, window.grid.reportId
 
   App.StagesRoute = Em.Route.extend
     model: ->

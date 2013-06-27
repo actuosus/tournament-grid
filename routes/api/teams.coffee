@@ -43,7 +43,7 @@ exports.create = (req, res) ->
 #    await Report.findByIdAndUpdate team.report_id, {$push: {team_refs: teamRef._id}}, defer updateErr, report if teamRef
     res.send team: t
   else
-    res.send 400, error: "server error"
+    res.send 400, errors: "server error"
 
 
 exports.update = (req, res)->
@@ -80,7 +80,7 @@ exports.update = (req, res)->
 #        socket.send {action: 'update', model: 'Report', _id: doc.report_id}
     res.send team: doc
   else
-    res.send 400, error: "server error"
+    res.send 400, errors: "server error"
 
 
 exports.delete = (req, res) ->
@@ -102,6 +102,6 @@ exports.delete = (req, res) ->
         res.status 204 unless err
         res.send()
     else
-      res.send 404, error: "server error"
+      res.send 404, errors: "server error"
   else
-    res.send 400, error: "server error"
+    res.send 400, errors: "server error"

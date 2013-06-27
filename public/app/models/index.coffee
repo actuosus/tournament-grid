@@ -11,7 +11,7 @@ define [
   'cs!./game'
   'cs!./match'
   'cs!./player'
-#  'cs!./race'
+  'cs!./race'
   'cs!./report'
   'cs!./result_set'
   'cs!./result'

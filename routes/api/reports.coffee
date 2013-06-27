@@ -23,4 +23,4 @@ exports.item = (req, res)->
     if doc
       res.send report: doc.toObject(virtuals: yes)
     else
-      res.send 404, error: 'not found'
+      res.send 404, errors: 'not found'

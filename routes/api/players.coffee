@@ -35,7 +35,7 @@ exports.item = (req, res)->
     if doc
       res.send player: doc
     else
-      res.send 404, error: 'nothing found'
+      res.send 404, errors: 'nothing found'
 
 
 exports.create = (req, res) ->
@@ -57,9 +57,9 @@ exports.create = (req, res) ->
     #    socket.send {action: 'create', model: 'Player', _id: p._id}
       res.send player: p
     else
-      res.send 404, error: 'not found'
+      res.send 404, errors: 'not found'
   else
-    res.send 400, error: "server error"
+    res.send 400, errors: "server error"
 
 
 exports.update = (req, res)->
@@ -109,7 +109,7 @@ exports.update = (req, res)->
     # TODO Hacky
     res.send player: player
   else
-    res.send 400, error: "server error"
+    res.send 400, errors: "server error"
 
 # Should not be presented in API.
 exports.delete = (req, res) ->
@@ -132,4 +132,4 @@ exports.delete = (req, res) ->
         res.status 204 unless updateErr
         res.send()
   else
-    res.send 400, error: "server error"
+    res.send 400, errors: "server error"

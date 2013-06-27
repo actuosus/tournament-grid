@@ -18,7 +18,7 @@ exports.item = (req, res)->
     if doc
       res.send result_set: doc
     else
-      res.send 404, error: 'nothing found'
+      res.send 404, errors: 'nothing found'
 
 exports.create = (req, res)->
   if req.body.result_set
@@ -28,7 +28,7 @@ exports.create = (req, res)->
     await Round.findByIdAndUpdate result_set.round_id, {$push: {result_sets: rs._id}}, defer err, r if result_set.round_id
     res.send result_set: rs
   else
-    res.send 400, error: 'server error'
+    res.send 400, errors: 'server error'
 
 exports.update = (req, res)->
   if req.body.result_set
@@ -38,7 +38,7 @@ exports.update = (req, res)->
 #    await Round.findByIdAndUpdate resultSet.round_id, {$push: {result_sets: rs._id}}, defer err, r if resultSet.round_id
     res.send result_set: rs
   else
-    res.send 400, error: 'server error'
+    res.send 400, errors: 'server error'
 
 exports.delete = (req, res) ->
   await ResultSet.findById req.params._id, defer err, resultSet
@@ -52,4 +52,4 @@ exports.delete = (req, res) ->
       res.status 204 unless err
       res.send()
   else
-    res.send 400, error: "server error"
+    res.send 400, errors: "server error"

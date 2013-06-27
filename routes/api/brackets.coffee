@@ -18,7 +18,7 @@ exports.item = (req, res)->
     if doc
       res.send bracket: doc
     else
-      res.send 404, error: 'nothing found'
+      res.send 404, errors: 'nothing found'
 
 exports.create = (req, res) ->
   if req.body?.brackets
@@ -40,9 +40,9 @@ exports.create = (req, res) ->
       await stage.save defer err, stage
       res.send bracket: doc
     else
-      res.send 400, error: 'stage_id required'
+      res.send 400, errors: 'stage_id required'
   else
-    res.send 400, error: "server error"
+    res.send 400, errors: "server error"
 
 exports.update = (req, res)->
   if req.body?.brackets
@@ -61,9 +61,9 @@ exports.update = (req, res)->
       await Stage.findByIdAndUpdate bracket.stage_id, {$push: {brackets: b._id}}, defer updateErr, stage
       res.send bracket: b
     else
-      res.send 400, error: "server error"
+      res.send 400, errors: "server error"
   else
-    res.send 400, error: "server error"
+    res.send 400, errors: "server error"
 
 exports.delete = (req, res) ->
   await Bracket.findById req.params._id, defer err, bracket
@@ -71,4 +71,4 @@ exports.delete = (req, res) ->
     await Bracket.findByIdAndRemove req.params._id, defer err
     res.send 204
   else
-    res.send 404, error: "nothing found"
+    res.send 404, errors: "nothing found"

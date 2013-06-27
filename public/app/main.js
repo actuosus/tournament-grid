@@ -6,7 +6,7 @@
  * Time: 07:28
  */
 
-require({
+requirejs.config({
   baseUrl: '/app',
   name: 'app',
   paths: {
@@ -38,12 +38,12 @@ require({
     'coffee-script': '/vendor/scripts/coffee-script',
 //    'iced-coffee-script': '/vendor/scripts/coffee-script-iced-large',
     'transit': '/vendor/scripts/jquery.transit.min',
-    'handlebars': '/vendor/scripts/handlebars-1.0.0-rc.3',
+    'handlebars': '/vendor/scripts/handlebars',
     'ember': [
-      '/vendor/scripts/ember-1.0.0-rc.3',
+      '/vendor/scripts/ember-1.0.0-rc.5',
       '/vendor/scripts/ember.prod'
     ],
-    'ember-data': '/vendor/scripts/ember-data',
+    'ember-data': '/vendor/scripts/ember-data.r13',
     'ember-history': '/vendor/scripts/ember-history',
 //    'ember-table': '/vendor/scripts/ember-table',
     'modernizr.columns': '/vendor/scripts/modernizr/columns',

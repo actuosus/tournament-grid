@@ -19,7 +19,7 @@ exports.item = (req, res)->
     if doc
       res.send stage: doc
     else
-      res.send 404, error: 'not found'
+      res.send 404, errors: 'not found'
 
 exports.create = (req, res)->
   if req.body?.stage
@@ -32,9 +32,9 @@ exports.create = (req, res)->
       await report.save defer err, report
       res.send stage: s
     else
-      res.send 400, error: "server error"
+      res.send 400, errors: "server error"
   else
-    res.send 400, error: "server error"
+    res.send 400, errors: "server error"
 
 exports.update = (req, res)->
   if req.body?.stage
@@ -42,19 +42,31 @@ exports.update = (req, res)->
     await Stage.findByIdAndUpdate req.params._id, { $set: stage }, defer err, doc
     res.send stage: doc
   else
-    res.send 400, error: "server error"
+    res.send 400, errors: "server error"
 
 exports.delete = (req, res) ->
-  if req.params?._id?
-    await Stage.findById req.params._id, defer err, stage
-#    await Report.findById stage.report_id, defer err, report
+  id = req.params._id
+  if id
+    await Stage.findById id, defer err, stage
     if stage
       console.log stage
-      Stage.remove {_id: req.params._id}, (err)->
-        Report.findByIdAndUpdate(stage.report_id, {$pull : {stages : req.params._id}}, ->) if stage?.report_id
+      Stage.remove {_id: id}, (err)->
+        Report.findByIdAndUpdate(stage.report_id, {$pull : {stages : id}}, ->) if stage?.report_id
         res.status 204 unless err
         res.send()
     else
-      res.send 404, error: 'nothing found'
+      # Trying to delete all references from all reports
+      Report.find().exec (err, reports)->
+        if reports
+          reports.forEach (report)->
+            stagesIds = report.stages.filter (stage)-> stage.toString() is id
+            console.log 'Found stages', stagesIds
+            if stagesIds.length
+              stagesIds.forEach (stageId)->
+                Report.findByIdAndUpdate report._id, {$pull: {stages: stageId}}, ->
+          res.status 204 unless err
+          res.send()
+        else
+          res.send 404, errors: 'nothing found'
   else
-    res.send 400, error: "server error"
+    res.send 400, errors: "server error"

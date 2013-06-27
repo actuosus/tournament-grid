@@ -19,7 +19,7 @@ exports.item = (req, res)->
     if doc
       res.send round: doc
     else
-      res.send 404, error: 'nothing found'
+      res.send 404, errors: 'nothing found'
 
 exports.create = (req, res) ->
   if req.body?.rounds
@@ -42,9 +42,9 @@ exports.create = (req, res) ->
       await stage.save defer err, stage
       res.send round: doc
     else
-      res.send 400, error: 'stage_id required'
+      res.send 400, errors: 'stage_id required'
   else
-    res.send 400, error: "server error"
+    res.send 400, errors: "server error"
 
 exports.update = (req, res)->
   if req.body?.rounds
@@ -63,9 +63,9 @@ exports.update = (req, res)->
       await Stage.findByIdAndUpdate round.stage_id, {$push: {rounds: r._id}}, defer updateErr, stage
       res.send round: r
     else
-      res.send 404, error: 'not found'
+      res.send 404, errors: 'not found'
   else
-    res.send 400, error: "server error"
+    res.send 400, errors: "server error"
 
 exports.delete = (req, res)->
   if req.params?._id?
@@ -79,6 +79,6 @@ exports.delete = (req, res)->
         res.status 204 unless err
         res.send()
     else
-      res.send 404, error: 'not found'
+      res.send 404, errors: 'not found'
   else
-    res.send 400, error: "server error"
+    res.send 400, errors: "server error"

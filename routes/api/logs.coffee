@@ -22,4 +22,4 @@ exports.create = (req, res)->
     await l.save defer err, doc
     res.send log: doc
   else
-    res.send 500, error: "server error"
+    res.send 500, errors: "server error"

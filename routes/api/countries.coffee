@@ -40,4 +40,4 @@ exports.item = (req, res)->
     if doc
       res.send country: doc
     else
-      res.send 404, error: 'nothing found'
+      res.send 404, errors: 'nothing found'

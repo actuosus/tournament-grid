@@ -68,11 +68,12 @@ define ['cs!../core'],->
 
     _valueChanged: (->
       if @$()
-        switch @get 'valueType'
-          when 'text'
-            @$().text(@get 'value')
-          when 'html'
-            @$().html(@get 'value')
+        if @get('value') isnt null
+          switch @get 'valueType'
+            when 'text'
+              @$().text(@get 'value')
+            when 'html'
+              @$().html(@get 'value')
     ).observes('value')
 
 #    keyUp: ->

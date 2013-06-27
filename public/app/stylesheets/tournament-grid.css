@@ -56,6 +56,10 @@
     background-color: rgba(0,0,0,0.025);
 }
 
+.tournament-round-container.is-dirty:hover {
+    background-color: rgba(125,125,0,0.15);
+}
+
 .tournament-round {
     padding: 30px 10px 0 10px;
 }

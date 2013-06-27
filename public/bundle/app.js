@@ -55636,6 +55636,239 @@ define("jquery.ui.timepicker-de", ["jquery.ui.timepicker"], function(){});
 
 
 /*
+ * core
+ * @author: actuosus
+ * @fileOverview Application preconfiguration.
+ * Date: 21/01/2013
+ * Time: 07:32
+*/
+
+
+(function() {
+
+  define('cs!core',['jquery.cookie', 'ember', 'ember-data', 'cs!./locales/index', 'cs!./config'], function(cookie, ember, emberData, locales, config) {
+    var App, TournamentGrid, appConfig, lang, localize, _ref, _ref1;
+    window.onerror = function(errorMsg, url, lineNumber) {
+      var data;
+      data = {
+        log: {
+          message: errorMsg,
+          date: new Date(),
+          data: {
+            url: url,
+            lineNumber: lineNumber
+          }
+        }
+      };
+      return $.ajax('/api/logs', {
+        data: JSON.stringify(data),
+        contentType: 'application/json',
+        type: 'POST'
+      });
+    };
+    lang = config.currentLanguage || $.cookie('lang');
+    localize = function(language) {
+      if (language == null) {
+        language = (window.navigator.userLanguage || window.navigator.language).substring(0, 2);
+      }
+      Em.STRINGS = locales[language];
+      return lang = language;
+    };
+    localize(lang);
+    TournamentGrid = Em.Namespace.create;
+    appConfig = {
+      VERSION: '0.1',
+      autoinit: false,
+      Store: DS.Store,
+      customEvents: {
+        mousewheel: 'mouseWheel'
+      }
+    };
+    if (config.rootElement) {
+      appConfig.rootElement = config.rootElement;
+    }
+    App = Em.Application.create(appConfig);
+    if (window.debug) {
+      App.LOG_TRANSITIONS = true;
+      App.LOG_VIEW_LOOKUPS = true;
+    }
+    App.deferReadiness();
+    window.TournamentGrid = TournamentGrid;
+    window.App = App;
+    DS.RESTAdapter.configure('plurals', {
+      country: 'countries',
+      match: 'matches'
+    });
+    DS.RESTAdapter.map('App.Report', {
+      races: {
+        embedded: 'always'
+      }
+    });
+    DS.JSONTransforms.object = {
+      serialize: function(deserialized) {
+        var o;
+        if (!Em.isNone(deserialized)) {
+          if (deserialized.keys && deserialized.values) {
+            o = {};
+            deserialized.forEach(function(key, value) {
+              return o[key] = value;
+            });
+            return o;
+          }
+        }
+        if (Em.isNone(deserialized)) {
+          return {};
+        } else {
+          return deserialized;
+        }
+      },
+      deserialize: function(serialized) {
+        if (Em.isNone(serialized)) {
+          return {};
+        } else {
+          return serialized;
+        }
+      }
+    };
+    DS.JSONTransforms.string = {
+      deserialize: function(serialized) {
+        if (Em.isNone(serialized)) {
+          return null;
+        } else {
+          return String(serialized);
+        }
+      },
+      serialize: function(deserialized) {
+        if (Em.isNone(deserialized)) {
+          return null;
+        } else {
+          return String(deserialized);
+        }
+      }
+    };
+    App.Adapter = DS.RESTAdapter.extend({
+      bulkCommit: false,
+      waitForParents: function(record, callback, context, args) {
+        var finish, observers;
+        observers = new Ember.Set();
+        record.eachRelationship(function(name, meta) {
+          var observer, relationship;
+          relationship = record.cacheFor(name);
+          if (meta.kind === 'belongsTo' && relationship && Em.get(relationship, 'isNew')) {
+            observer = function() {
+              relationship.removeObserver('id', context, observer);
+              observers.remove(name);
+              return finish();
+            };
+            relationship.addObserver('id', context, observer);
+            return observers.add(name);
+          }
+        });
+        finish = function() {
+          if (observers.length === 0) {
+            return callback.apply(context, args);
+          }
+        };
+        return finish();
+      },
+      createRecord: function(store, type, record) {
+        var sup;
+        sup = this._super;
+        return this.waitForParents(record, sup, this, arguments);
+      },
+      updateRecord: function(store, type, record) {
+        var sup;
+        sup = this._super;
+        return this.waitForParents(record, sup, this, arguments);
+      },
+      serializer: DS.JSONSerializer.extend({
+        keyForAttributeName: function(type, name) {
+          return Ember.String.decamelize(name);
+        },
+        keyForBelongsTo: function(type, name) {
+          var key;
+          key = this.keyForAttributeName(type, name);
+          if (this.embeddedType(type, name)) {
+            return key;
+          }
+          return key + '_id';
+        }
+      })
+    });
+    App.store = App.Store.create({
+      adapter: App.Adapter.create()
+    });
+    App.store.adapter.url = config.api.host;
+    App.store.adapter.namespace = config.api.namespace;
+    App.store.adapter.serializer.primaryKey = function() {
+      return '_id';
+    };
+    App.store.adapter.dirtyRecordsForHasManyChange = function(dirtySet, record, relationship) {
+      var embeddedType;
+      embeddedType = this.get('serializer').embeddedType(record.constructor, relationship.secondRecordName);
+      if (embeddedType === 'always') {
+        relationship.childReference.parent = relationship.parentReference;
+        return this._dirtyTree(dirtySet, record);
+      }
+    };
+    App.overrideAdapterAjax = function(report) {};
+    App.config = {
+      local: {
+        api: {
+          host: '',
+          namespace: 'api'
+        }
+      },
+      remote: config
+    };
+    App.currentConfig = 'local';
+    App.toggleConfig = function() {
+      if (App.currentConfig === 'local') {
+        App.currentConfig = 'remote';
+      } else {
+        App.currentConfig = 'local';
+      }
+      switch (App.currentConfig) {
+        case 'local':
+          App.store.adapter.url = App.config.local.api.host;
+          return App.store.adapter.namespace = App.config.local.api.namespace;
+        case 'remote':
+          App.store.adapter.url = App.config.remote.api.host;
+          return App.store.adapter.namespace = App.config.remote.api.namespace;
+      }
+    };
+    App.languages = Em.ArrayController.create({
+      content: config.languages
+    });
+    App.set('currentLanguage', lang);
+    App.LanguageObserver = Em.Object.extend({
+      currentLanguageChanged: (function() {
+        return localize(App.get('currentLanguage'));
+      }).observes('App.currentLanguage')
+    });
+    App.languageObserver = App.LanguageObserver.create();
+    if ((_ref = $.datepicker) != null) {
+      _ref.setDefaults($.datepicker.regional[App.get('currentLanguage')]);
+    }
+    if ((_ref1 = $.timepicker) != null) {
+      _ref1.setDefaults($.timepicker.regional[App.get('currentLanguage')]);
+    }
+    App.animation = {
+      duration: 300
+    };
+    App.set('debug', Em.Object.create({
+      wait: {
+        start: 1000,
+        end: 3000
+      }
+    }));
+    return App;
+  });
+
+}).call(this);
+
+
+/*
  * _loc
  * @author: actuosus
  * Date: 18/06/2013
@@ -55762,250 +55995,6 @@ define("jquery.ui.timepicker-de", ["jquery.ui.timepicker"], function(){});
 (function() {
 
   define('cs!helpers/index',['cs!./_loc', 'cs!./loc', 'cs!./highlight', 'cs!./moment']);
-
-}).call(this);
-
-
-/*
- * core
- * @author: actuosus
- * @fileOverview Application preconfiguration.
- * Date: 21/01/2013
- * Time: 07:32
-*/
-
-
-(function() {
-
-  define('cs!core',['jquery.cookie', 'ember', 'ember-data', 'cs!./locales/index', 'cs!./config', 'cs!./helpers/index'], function(cookie, ember, emberData, locales, config) {
-    var App, TournamentGrid, appConfig, lang, localize, _ref, _ref1;
-    window.onerror = function(errorMsg, url, lineNumber) {
-      var data;
-      data = {
-        log: {
-          message: errorMsg,
-          date: new Date(),
-          data: {
-            url: url,
-            lineNumber: lineNumber
-          }
-        }
-      };
-      return $.ajax('/api/logs', {
-        data: JSON.stringify(data),
-        contentType: 'application/json',
-        type: 'POST'
-      });
-    };
-    lang = config.currentLanguage || $.cookie('lang');
-    localize = function(language) {
-      if (language == null) {
-        language = (window.navigator.userLanguage || window.navigator.language).substring(0, 2);
-      }
-      Em.STRINGS = locales[language];
-      return lang = language;
-    };
-    localize(lang);
-    TournamentGrid = Em.Namespace.create;
-    appConfig = {
-      VERSION: '0.1',
-      autoinit: false,
-      customEvents: {
-        mousewheel: 'mouseWheel'
-      }
-    };
-    if (config.rootElement) {
-      appConfig.rootElement = config.rootElement;
-    }
-    App = Em.Application.create(appConfig);
-    if (window.debug) {
-      App.LOG_TRANSITIONS = true;
-      App.LOG_VIEW_LOOKUPS = true;
-    }
-    App.deferReadiness();
-    window.TournamentGrid = TournamentGrid;
-    window.App = App;
-    DS.RecordArray.reopen({
-      onLoad: function(callback) {
-        var isLoadedFn, that;
-        if (this.get('isLoaded')) {
-          callback(this);
-        } else {
-          that = this;
-          isLoadedFn = function() {
-            if (that.get('isLoaded')) {
-              that.removeObserver('isLoaded', isLoadedFn);
-              return callback(that);
-            }
-          };
-        }
-        this.addObserver('isLoaded', isLoadedFn);
-        return this;
-      }
-    });
-    DS.RESTAdapter.reopen({
-      findQuery: function(store, type, query, recordArray) {
-        var req, root;
-        root = this.rootForType(type);
-        req = this.ajax(this.buildURL(root), 'GET', {
-          data: query,
-          success: function(json) {
-            return Ember.run(this, function() {
-              return this.didFindQuery(store, type, json, recordArray);
-            });
-          }
-        });
-        recordArray.req = req;
-        return req;
-      }
-    });
-    DS.RESTAdapter.configure('plurals', {
-      country: 'countries',
-      match: 'matches'
-    });
-    DS.RESTAdapter.map('App.Report', {
-      races: {
-        embedded: 'always'
-      }
-    });
-    DS.JSONTransforms.object = {
-      serialize: function(deserialized) {
-        var o;
-        if (!Em.isNone(deserialized)) {
-          if (deserialized.keys && deserialized.values) {
-            o = {};
-            deserialized.forEach(function(key, value) {
-              return o[key] = value;
-            });
-            return o;
-          }
-        }
-        if (Em.isNone(deserialized)) {
-          return {};
-        } else {
-          return deserialized;
-        }
-      },
-      deserialize: function(serialized) {
-        if (Em.isNone(serialized)) {
-          return {};
-        } else {
-          return serialized;
-        }
-      }
-    };
-    DS.JSONTransforms.string = {
-      deserialize: function(serialized) {
-        if (Em.isNone(serialized)) {
-          return null;
-        } else {
-          return String(serialized);
-        }
-      },
-      serialize: function(deserialized) {
-        if (Em.isNone(deserialized)) {
-          return null;
-        } else {
-          return String(deserialized);
-        }
-      }
-    };
-    App.store = DS.Store.create({
-      revision: 11,
-      adapter: DS.RESTAdapter.create({
-        bulkCommit: false
-      })
-    });
-    App.store.adapter.url = config.api.host;
-    App.store.adapter.namespace = config.api.namespace;
-    App.store.adapter.serializer.primaryKey = function() {
-      return '_id';
-    };
-    App.overrideAdapterAjax = function(report) {
-      return App.store.adapter.ajax = function(url, type, hash) {
-        var _ref, _ref1;
-        hash.url = url;
-        hash.type = type;
-        hash.dataType = 'json';
-        hash.contentType = 'application/json; charset=utf-8';
-        hash.context = this;
-        if (hash.data) {
-          if (type !== 'GET') {
-            hash.url += "?report_id=" + (report.get('id'));
-            if (((_ref = App.debug) != null ? _ref.wait : void 0) != null) {
-              hash.url += '&' + jQuery.param({
-                start: App.get('debug.wait.start'),
-                end: App.get('debug.wait.end')
-              });
-            }
-            hash.data = JSON.stringify(hash.data);
-          } else {
-            hash.data.report_id = report.get('id');
-          }
-        } else {
-          hash.url += "?report_id=" + (report.get('id'));
-          if (((_ref1 = App.debug) != null ? _ref1.wait : void 0) != null) {
-            hash.url += '&' + jQuery.param({
-              start: App.get('debug.wait.start'),
-              end: App.get('debug.wait.end')
-            });
-          }
-        }
-        return jQuery.ajax(hash);
-      };
-    };
-    App.config = {
-      local: {
-        api: {
-          host: '',
-          namespace: 'api'
-        }
-      },
-      remote: config
-    };
-    App.currentConfig = 'local';
-    App.toggleConfig = function() {
-      if (App.currentConfig === 'local') {
-        App.currentConfig = 'remote';
-      } else {
-        App.currentConfig = 'local';
-      }
-      switch (App.currentConfig) {
-        case 'local':
-          App.store.adapter.url = App.config.local.api.host;
-          return App.store.adapter.namespace = App.config.local.api.namespace;
-        case 'remote':
-          App.store.adapter.url = App.config.remote.api.host;
-          return App.store.adapter.namespace = App.config.remote.api.namespace;
-      }
-    };
-    App.languages = Em.ArrayController.create({
-      content: config.languages
-    });
-    App.set('currentLanguage', lang);
-    App.LanguageObserver = Em.Object.extend({
-      currentLanguageChanged: (function() {
-        return localize(App.get('currentLanguage'));
-      }).observes('App.currentLanguage')
-    });
-    App.languageObserver = App.LanguageObserver.create();
-    if ((_ref = $.datepicker) != null) {
-      _ref.setDefaults($.datepicker.regional[App.get('currentLanguage')]);
-    }
-    if ((_ref1 = $.timepicker) != null) {
-      _ref1.setDefaults($.timepicker.regional[App.get('currentLanguage')]);
-    }
-    App.animation = {
-      duration: 300
-    };
-    App.set('debug', Em.Object.create({
-      wait: {
-        start: 1000,
-        end: 3000
-      }
-    }));
-    return App;
-  });
 
 }).call(this);
 
@@ -57841,7 +57830,6 @@ define('text!templates/team/form.hbs',[],function () { return '<div class="contr
   define('cs!controllers/round',[],function() {
     return App.RoundController = Em.ObjectController.extend({
       isSelected: false,
-      content: null,
       save: function() {
         return this.get('content.store').commit();
       },
@@ -57851,7 +57839,8 @@ define('text!templates/team/form.hbs',[],function () { return '<div class="contr
       createRecord: function() {
         var record;
         record = App.Round.createRecord({
-          sortIndex: this.sortIndex
+          sortIndex: this.sortIndex,
+          bracketName: this.bracketName
         });
         record.set('stage', this.get('stage'));
         return record;
@@ -57865,7 +57854,24 @@ define('text!templates/team/form.hbs',[],function () { return '<div class="contr
           this.set('content', content);
         }
         return content.set(key, value);
-      }
+      },
+      content: (function() {
+        var _this = this;
+        Em.run.later(function() {
+          var round, _ref;
+          round = (_ref = _this.get('stage.rounds')) != null ? _ref.find(function(_) {
+            return _.get('sortIndex') === _this.get('sortIndex') && _.get('bracketName') === _this.get('bracketName');
+          }) : void 0;
+          if (round) {
+            return _this.set('content', round);
+          }
+        }, 200);
+        return null;
+      }).property('some', 'stage.rounds.@each.isLoaded'),
+      some: null,
+      stageContentIsLoaded: (function() {
+        return this.set('some', this.get('stage.sortIndex'));
+      }).observes('stage.isLoaded')
     });
   });
 
@@ -57933,6 +57939,7 @@ define('text!templates/team/form.hbs',[],function () { return '<div class="contr
           round = this.get('round').createRecord();
         }
         record.set('round', round);
+        round.get('matches').addObject(record);
         return record;
       },
       setUnknownProperty: function(key, value) {
@@ -57949,14 +57956,16 @@ define('text!templates/team/form.hbs',[],function () { return '<div class="contr
         var _this = this;
         Em.run.later(function() {
           var match, _ref;
-          match = (_ref = _this.get('round.content.matches')) != null ? _ref.objectAtContent(_this.get('sortIndex')) : void 0;
+          match = (_ref = _this.get('round.content.matches')) != null ? _ref.find(function(_) {
+            return _.get('sortIndex') === _this.get('sortIndex');
+          }) : void 0;
           if (match) {
             _this.set('entrants', match.get('entrants'));
           }
           if (match) {
             return _this.set('content', match);
           }
-        }, 1000);
+        }, 200);
         return null;
       }).property('some', 'round.content.matches.@each.isLoaded'),
       some: null,
@@ -58649,11 +58658,13 @@ define('text!templates/team/form.hbs',[],function () { return '<div class="contr
       },
       _valueChanged: (function() {
         if (this.$()) {
-          switch (this.get('valueType')) {
-            case 'text':
-              return this.$().text(this.get('value'));
-            case 'html':
-              return this.$().html(this.get('value'));
+          if (this.get('value') !== null) {
+            switch (this.get('valueType')) {
+              case 'text':
+                return this.$().text(this.get('value'));
+              case 'html':
+                return this.$().html(this.get('value'));
+            }
           }
         }
       }).observes('value')
@@ -61776,7 +61787,9 @@ define('text!templates/match/form.hbs',[],function () { return '<div class="cont
     return App.RoundGridItemView = Em.ContainerView.extend({
       classNames: 'tournament-round-container',
       classNameBindings: ['content.isDirty'],
+      attributeBindings: ['title'],
       childViews: ['titleView', 'contentView'],
+      titleBinding: 'content.sortIndex',
       titleView: App.EditableLabel.extend({
         classNames: ['round-name', 'round-title'],
         valueBinding: 'parentView.content.title',
@@ -62304,7 +62317,7 @@ define('text!templates/match/form.hbs',[],function () { return '<div class="cont
           return this.setupWidth();
         },
         createWinnerBracket: function() {
-          var actualRound, bracket, entrantsNumber, i, j, leftPath, match, matches, matchesCount, rightPath, round, roundIndex, roundName, rounds, roundsCount, stage, _i, _j;
+          var bracket, entrantsNumber, i, j, leftPath, match, matches, matchesCount, rightPath, round, roundIndex, roundName, rounds, roundsCount, stage, _i, _j;
           stage = this.get('stage');
           entrantsNumber = this.get('entrantsNumber');
           Em.assert("You should provide entrantsNumber", entrantsNumber);
@@ -62325,9 +62338,7 @@ define('text!templates/match/form.hbs',[],function () { return '<div class="cont
                 roundName = '_semifinal'.loc();
             }
             roundIndex = roundsCount - i;
-            actualRound = stage != null ? stage.getByPath("" + roundIndex) : void 0;
             round = App.RoundController.create({
-              content: actualRound,
               stage: stage,
               index: roundIndex,
               sortIndex: roundIndex,
@@ -62335,6 +62346,7 @@ define('text!templates/match/form.hbs',[],function () { return '<div class="cont
               title: roundName,
               parentReference: 'bracket',
               bracket: bracket,
+              bracketName: 'winner',
               matches: []
             });
             matches = round.get('matches');
@@ -62362,7 +62374,7 @@ define('text!templates/match/form.hbs',[],function () { return '<div class="cont
           return bracket;
         },
         createLoserBracket: function() {
-          var bracket, entrantsNumber, m, match, matchesCount, n, parentNodePath, r, rCount, round, rounds, roundsCount, stage, _i, _j, _k, _ref;
+          var bracket, counter, entrantsNumber, m, match, matchesCount, n, parentNodePath, r, rCount, round, rounds, roundsCount, stage, _i, _j, _k, _ref;
           stage = this.get('stage');
           entrantsNumber = this.get('entrantsNumber');
           Em.assert("You should provide entrantsNumber", entrantsNumber);
@@ -62374,15 +62386,17 @@ define('text!templates/match/form.hbs',[],function () { return '<div class="cont
             name: 'Loser bracket',
             isWinnerBracket: false
           });
+          counter = 0;
           for (r = _i = _ref = roundsCount - 1; _ref <= 0 ? _i <= 0 : _i >= 0; r = _ref <= 0 ? ++_i : --_i) {
             for (n = _j = 1; _j >= 0; n = --_j) {
               round = App.RoundController.create({
                 stage: stage,
                 index: roundsCount - rCount,
-                sortIndex: r,
+                sortIndex: counter,
                 itemIndex: rCount--,
                 parentReference: 'bracket',
                 bracket: bracket,
+                bracketName: 'loser',
                 matches: []
               });
               for (m = _k = 0; 0 <= matchesCount ? _k < matchesCount : _k > matchesCount; m = 0 <= matchesCount ? ++_k : --_k) {
@@ -62402,6 +62416,7 @@ define('text!templates/match/form.hbs',[],function () { return '<div class="cont
                 round.get('matches').push(match);
               }
               rounds.push(round);
+              counter++;
             }
             matchesCount /= 2;
           }
@@ -63576,7 +63591,11 @@ define('text!templates/stage/form.hbs',[],function () { return '\n<div class="co
               return this.get('content.store').commit();
             },
             deleteRecord: function() {
-              return this.get('content').deleteRecord();
+              var content;
+              content = this.get('content');
+              if (content) {
+                return content.deleteRecord();
+              }
             },
             currentWhen: 'stage',
             active: (function() {
@@ -64088,6 +64107,28 @@ define('text!templates/application.hbs',[],function () { return '{{outlet stages
 
 
 /*
+ * race
+ * @author: actuosus
+ * Date: 09/04/2013
+ * Time: 22:23
+*/
+
+
+(function() {
+
+  define('cs!models/race',['cs!../core'], function() {
+    return App.Race = DS.Model.extend({
+      primaryKey: '_id',
+      identifier: DS.attr('string'),
+      icon_url: DS.attr('string'),
+      title: DS.attr('string')
+    });
+  });
+
+}).call(this);
+
+
+/*
  * report
  * @author: actuosus
  * @fileOverview Report model.
@@ -64109,10 +64150,12 @@ define('text!templates/application.hbs',[],function () { return '{{outlet stages
       place: DS.attr('string'),
       match_type: DS.attr('string'),
       stages: DS.hasMany('App.Stage', {
-        inverse: 'report'
+        inverse: 'report',
+        key: 'stages'
       }),
       teamRefs: DS.hasMany('App.TeamRef', {
-        inverse: 'report'
+        inverse: 'report',
+        key: 'team_refs'
       }),
       players: (function() {
         var result, teamRefs;
@@ -64267,6 +64310,7 @@ define('text!templates/application.hbs',[],function () { return '{{outlet stages
       bracket: DS.belongsTo('App.Bracket', {
         inverse: 'rounds'
       }),
+      bracketName: DS.attr('string'),
       teamRefs: DS.hasMany('App.TeamRef'),
       parentReference: 'stage',
       parent: (function() {
@@ -64360,7 +64404,9 @@ define('text!templates/application.hbs',[],function () { return '{{outlet stages
       }).property('rounds'),
       left: null,
       right: null,
-      report: DS.belongsTo('App.Report'),
+      report: DS.belongsTo('App.Report', {
+        key: 'stages'
+      }),
       rounds: DS.hasMany('App.Round'),
       brackets: DS.hasMany('App.Bracket'),
       rating: DS.attr('number'),
@@ -64507,7 +64553,7 @@ define('text!templates/application.hbs',[],function () { return '{{outlet stages
 
 (function() {
 
-  define('cs!models/index',['cs!./bracket', 'cs!./country', 'cs!./game', 'cs!./match', 'cs!./player', 'cs!./report', 'cs!./result_set', 'cs!./result', 'cs!./round', 'cs!./stage', 'cs!./team', 'cs!./team_ref']);
+  define('cs!models/index',['cs!./bracket', 'cs!./country', 'cs!./game', 'cs!./match', 'cs!./player', 'cs!./race', 'cs!./report', 'cs!./result_set', 'cs!./result', 'cs!./round', 'cs!./stage', 'cs!./team', 'cs!./team_ref']);
 
 }).call(this);
 
@@ -64562,8 +64608,9 @@ define('text!templates/application.hbs',[],function () { return '{{outlet stages
           });
         }
       },
-      model: function() {
-        return App.Report.find(window.grid.reportId);
+      model: function(params) {
+        console.log(arguments);
+        return App.store.findById(App.Report, window.grid.reportId);
       }
     });
     App.StagesRoute = Em.Route.extend({
@@ -64650,7 +64697,7 @@ define('text!templates/application.hbs',[],function () { return '{{outlet stages
 
 (function() {
 
-  define('cs!application',['cs!./core', 'cs!./system/index', 'cs!./mixins/index', 'cs!./controllers/index', 'cs!./views/index', 'cs!./models/index', 'cs!./router', 'cs!./mixins/translatable', 'cs!./mixins/collapsable', 'cs!./translators/yandex'], function() {
+  define('cs!application',['cs!./core', 'cs!./helpers/index', 'cs!./system/index', 'cs!./mixins/index', 'cs!./controllers/index', 'cs!./views/index', 'cs!./models/index', 'cs!./router', 'cs!./mixins/translatable', 'cs!./mixins/collapsable', 'cs!./translators/yandex'], function() {
     $(document.body).keydown(function(event) {
       var popup;
       if (event.ctrlKey) {
@@ -64763,7 +64810,7 @@ define('text!templates/application.hbs',[],function () { return '{{outlet stages
  * Time: 07:28
  */
 
-require({
+requirejs.config({
   baseUrl: '/app',
   name: 'app',
   paths: {
@@ -64795,12 +64842,12 @@ require({
     'coffee-script': '/vendor/scripts/coffee-script',
 //    'iced-coffee-script': '/vendor/scripts/coffee-script-iced-large',
     'transit': '/vendor/scripts/jquery.transit.min',
-    'handlebars': '/vendor/scripts/handlebars-1.0.0-rc.3',
+    'handlebars': '/vendor/scripts/handlebars',
     'ember': [
-      '/vendor/scripts/ember-1.0.0-rc.3',
+      '/vendor/scripts/ember-1.0.0-rc.5',
       '/vendor/scripts/ember.prod'
     ],
-    'ember-data': '/vendor/scripts/ember-data',
+    'ember-data': '/vendor/scripts/ember-data.r13',
     'ember-history': '/vendor/scripts/ember-history',
 //    'ember-table': '/vendor/scripts/ember-table',
     'modernizr.columns': '/vendor/scripts/modernizr/columns',

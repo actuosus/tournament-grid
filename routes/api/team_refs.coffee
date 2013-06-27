@@ -40,7 +40,7 @@ exports.create = (req, res) ->
     Report.findByIdAndUpdate(teamRef.report_id, {$push: {team_refs: t._id}}, ->) if teamRef.report_id
     res.send team_ref: doc
   else
-    res.send 400, error: "server error"
+    res.send 400, errors: "server error"
 
 
 exports.update = (req, res)->
@@ -49,7 +49,7 @@ exports.update = (req, res)->
     await TeamRef.findByIdAndUpdate req.params._id, { $set: teamRef }, defer err, doc
     res.send team_ref: doc
   else
-    res.send 400, error: "server error"
+    res.send 400, errors: "server error"
 
 exports.delete = (req, res) ->
   await TeamRef.findById req.params._id, defer err, teamRef
@@ -62,4 +62,4 @@ exports.delete = (req, res) ->
       res.status 204 unless err
       res.send()
   else
-    res.send 400, error: "server error"
+    res.send 400, errors: "server error"

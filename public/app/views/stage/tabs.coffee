@@ -127,7 +127,11 @@ define [
           save: ->
             @get('content.store').commit()
 
-          deleteRecord: -> @get('content').deleteRecord()
+          deleteRecord: ->
+            content = @get('content')
+            if content
+#              content.on 'didDelete', -> App.get('report.stages').removeObject(content)
+              content.deleteRecord()
 
           currentWhen: 'stage'
 
