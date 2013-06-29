@@ -55675,6 +55675,52 @@ define("jquery.ui.timepicker-de", ["jquery.ui.timepicker"], function(){});
         }
       }
     };
+    DS.JSONTransforms.date = {
+      deserialize: function(serialized) {
+        var type;
+        type = typeof serialized;
+        if (type === 'string') {
+          if (type === '') {
+            return null;
+          } else {
+            return new Date(Ember.Date.parse(serialized));
+          }
+        } else if (type === 'number') {
+          return new Date(serialized);
+        } else if (serialized === null || serialized === void 0) {
+          return serialized;
+        } else {
+          return null;
+        }
+      },
+      serialize: function(date) {
+        var dayOfMonth, dayOfWeek, days, month, months, pad, utcDay, utcDayOfMonth, utcHours, utcMinutes, utcMonth, utcSeconds, utcYear;
+        if (date instanceof Date) {
+          days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+          months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+          pad = function(num) {
+            if (num < 10) {
+              return "0" + num;
+            } else {
+              return "" + num;
+            }
+          };
+          utcYear = date.getUTCFullYear();
+          utcMonth = date.getUTCMonth();
+          utcDayOfMonth = date.getUTCDate();
+          utcDay = date.getUTCDay();
+          utcHours = date.getUTCHours();
+          utcMinutes = date.getUTCMinutes();
+          utcSeconds = date.getUTCSeconds();
+          dayOfWeek = days[utcDay];
+          dayOfMonth = pad(utcDayOfMonth);
+          month = months[utcMonth];
+          return dayOfWeek + ", " + dayOfMonth + " " + month + " " + utcYear + " " + pad(utcHours) + ":" + pad(utcMinutes) + ":" + pad(utcSeconds) + " GMT";
+        } else {
+          return null;
+        }
+      }
+    };
     App.Adapter = DS.RESTAdapter.extend({
       bulkCommit: false,
       waitForParents: function(record, callback, context, args) {

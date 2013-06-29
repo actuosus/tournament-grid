@@ -109,6 +109,45 @@ define [
     serialize: (deserialized)->
       if Em.isNone(deserialized) then null else String(deserialized)
 
+  DS.JSONTransforms.date =
+    deserialize: (serialized)->
+      type = typeof serialized
+      if type is 'string'
+        if type is ''
+          return null
+        else
+          return new Date Ember.Date.parse serialized
+      else if type is 'number'
+        return new Date serialized
+      else if serialized is null or serialized is undefined
+        return serialized
+      else
+        return null
+
+    serialize: (date)->
+      if date instanceof Date
+        days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+        months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+
+        pad = (num)-> if num < 10 then "0"+num else ""+num
+
+        utcYear = date.getUTCFullYear()
+        utcMonth = date.getUTCMonth()
+        utcDayOfMonth = date.getUTCDate()
+        utcDay = date.getUTCDay()
+        utcHours = date.getUTCHours()
+        utcMinutes = date.getUTCMinutes()
+        utcSeconds = date.getUTCSeconds()
+
+        dayOfWeek = days[utcDay]
+        dayOfMonth = pad(utcDayOfMonth)
+        month = months[utcMonth]
+
+        dayOfWeek + ", " + dayOfMonth + " " + month + " " + utcYear + " " +
+          pad(utcHours) + ":" + pad(utcMinutes) + ":" + pad(utcSeconds) + " GMT"
+      else
+        return null
+
   App.Adapter = DS.RESTAdapter.extend
     bulkCommit: no
 
