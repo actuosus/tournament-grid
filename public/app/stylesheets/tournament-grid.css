@@ -96,7 +96,7 @@
 .connector {
     position: absolute;
     z-index: 1;
-    width: 24px;
+    width: 21px;
     pointer-events: none;
     -webkit-user-select: none;
 }

@@ -30,6 +30,14 @@ define [
 
       entrantsNumberBinding: 'parentView.entrantsNumber'
 
+      didInsertElement: ->
+        round = @get 'parentView.content'
+        console.log round
+        roundIndex = round.get('sortIndex')
+        bracketName = round.get 'bracketName'
+        if bracketName is 'loser' and roundIndex%2
+          @$().css('padding-top', 45)
+
       itemViewClass: App.MatchItemView.extend
         classNames: ['tournament-match']
         classNameBindings: ['content.isFinal']
@@ -116,7 +124,7 @@ define [
             match = @get 'content'
             bracket = match.get('round.bracket')
 
-            styles = {left: 156}
+            styles = {left: 159}
 
             if bracket
               # TODO Revise weird formula

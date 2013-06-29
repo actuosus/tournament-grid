@@ -61729,6 +61729,16 @@ define('text!templates/match/form.hbs',[],function () { return '<div class="cont
         roundBinding: 'content',
         contentBinding: 'parentView.content.matches',
         entrantsNumberBinding: 'parentView.entrantsNumber',
+        didInsertElement: function() {
+          var bracketName, round, roundIndex;
+          round = this.get('parentView.content');
+          console.log(round);
+          roundIndex = round.get('sortIndex');
+          bracketName = round.get('bracketName');
+          if (bracketName === 'loser' && roundIndex % 2) {
+            return this.$().css('padding-top', 45);
+          }
+        },
         itemViewClass: App.MatchItemView.extend({
           classNames: ['tournament-match'],
           classNameBindings: ['content.isFinal'],
@@ -61828,7 +61838,7 @@ define('text!templates/match/form.hbs',[],function () { return '<div class="cont
               match = this.get('content');
               bracket = match.get('round.bracket');
               styles = {
-                left: 156
+                left: 159
               };
               if (bracket) {
                 index = function(n) {
