@@ -56,9 +56,7 @@ define [
       nameView: Em.View.extend
         contentBinding: 'parentView.content'
         classNames: ['lineup-grid-item-name']
-        href: (->
-          '/teams/%@'.fmt @get 'content.id'
-        ).property('content')
+        href: Em.computed.alias 'content.link'
         attributeBindings: ['title']
         title: (->
           @get('content.id') if App.get('isEditingMode')

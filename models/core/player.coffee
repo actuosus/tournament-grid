@@ -21,6 +21,8 @@ PlayerSchema = new Schema
   middle_name: type: String
   last_name: type: String
 
+  link: type: String
+
   is_captain: type: Boolean, default: no
 
   # Extras

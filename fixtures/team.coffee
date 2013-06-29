@@ -13,6 +13,7 @@ teams = [
   _id: '50fcdf189c68d90f07000001',
   name: 'Umitara',
   country_id: '50fcdaf969f206c106000005'
+  link: 'http://umi.ru'
 ,
   _id: '50fcdf189c68d90f07000002',
   name: 'Wikipediots',
@@ -173,6 +174,7 @@ for i in [0..Faker.Helpers.randomNumber(200)]
   teams.push {
     name: Faker.Company.companyName()
     country_id: countries[Faker.Helpers.randomNumber(countries.length)]._id
+    link: "http://#{Faker.Internet.domainName()}/"
   }
 
 module.exports.Team = teams

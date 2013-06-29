@@ -168,27 +168,36 @@ define [
 
 #
   App.overrideAdapterAjax = (report)->
-#    App.store.adapter.ajax = (url, type, hash)->
-#      hash.url = url
-#      hash.type = type
-#      hash.dataType = 'json'
-#      hash.contentType = 'application/json; charset=utf-8'
-#      hash.context = @
-#
-#      if hash.data
-#        if type isnt 'GET'
-#          hash.url += "?report_id=#{report.get 'id'}"
-#          if App.debug?.wait?
-#            hash.url += '&' + jQuery.param({start: App.get('debug.wait.start'), end: App.get('debug.wait.end')})
-#          hash.data = JSON.stringify hash.data
-#        else
-#          hash.data.report_id = report.get 'id'
-#      else
-#        hash.url += "?report_id=#{report.get 'id'}"
-#        if App.debug?.wait?
-#          hash.url += '&' + jQuery.param({start: App.get('debug.wait.start'), end: App.get('debug.wait.end')})
-#
-#      jQuery.ajax hash
+    App.store.adapter.ajax = (url, type, hash)->
+      adapter = @
+      new Ember.RSVP.Promise (resolve, reject)->
+        hash = hash or {}
+        hash.url = url
+        hash.type = type
+        hash.dataType = 'json'
+        hash.contentType = 'application/json; charset=utf-8'
+        hash.context = adapter
+
+        if hash.data
+          if type isnt 'GET'
+            hash.url += "?report_id=#{report.get 'id'}"
+            if App.debug?.wait?
+              hash.url += '&' + jQuery.param({start: App.get('debug.wait.start'), end: App.get('debug.wait.end')})
+            hash.data = JSON.stringify hash.data
+          else
+            hash.data.report_id = report.get 'id'
+        else
+          hash.url += "?report_id=#{report.get 'id'}"
+          if App.debug?.wait?
+            hash.url += '&' + jQuery.param({start: App.get('debug.wait.start'), end: App.get('debug.wait.end')})
+
+        hash.success = (json)->
+          Ember.run(null, resolve, json)
+
+        hash.error = (jqXHR, textStatus, errorThrown)->
+          Ember.run(null, reject, jqXHR)
+
+        Ember.$.ajax(hash);
 
   App.config =
     local:

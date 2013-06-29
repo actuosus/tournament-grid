@@ -9,6 +9,8 @@ define ['cs!../core'],->
   App.TeamRef = DS.Model.extend
     primaryKey: '_id'
 
+    link: Em.computed.alias 'team.link'
+
     # Relations
     team: DS.belongsTo 'App.Team'
     report: DS.belongsTo('App.Report', {inverse: 'teamRefs'})

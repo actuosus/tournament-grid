@@ -20,6 +20,16 @@ define ['cs!../core'],->
 
     isSelected: no
 
+    link: DS.attr 'string'
+
+    url: (->
+      link = @get 'link'
+      if link
+        link
+      else
+        "/teams/#{@get 'id'}"
+    ).property('link')
+
     # Just for creation marking
     report: DS.belongsTo 'App.Report'
 

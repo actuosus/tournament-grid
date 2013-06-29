@@ -16,6 +16,8 @@ TeamSchema = new Schema
   description: type: String
   is_pro: type: Boolean, default: no
 
+  link: type: String
+
   # Relations
   country_id: type: ObjectId, ref: 'Country'
   profile_url: type: String

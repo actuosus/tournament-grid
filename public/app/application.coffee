@@ -31,15 +31,15 @@ define [
           when 65 # a
             App.toggleConfig()
           when 69 # e
-#            notificationObject =
-#              icon: null
-#              title: 'Editing mode'
-#            if App.get('isEditingMode')
-#              notificationObject.content = 'Editing mode enabled.'
-#            else
-#              notificationObject.content = 'Editing mode disabled.'
-#            notification = App.notificationsController.createNotification notificationObject
-#            notification?.show()
+            notificationObject =
+              icon: null
+              title: 'Editing mode'
+            if App.get('isEditingMode')
+              notificationObject.content = 'Editing mode disabled.'
+            else
+              notificationObject.content = 'Editing mode enabled.'
+            notification = App.notificationsController.createNotification notificationObject
+            notification?.show()
             App.set 'isEditingMode', not App.get('isEditingMode')
           when 90 # z
             History.undo()

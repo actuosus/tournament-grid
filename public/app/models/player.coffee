@@ -22,6 +22,16 @@ define ['cs!../core'],->
 
     matches: DS.hasMany 'App.Match'
 
+    link: DS.attr 'string'
+
+    url: (->
+      link = @get 'link'
+      if link
+        link
+      else
+        "/players/#{@get 'id'}"
+    ).property('link')
+
     # TODO Should be moved to team reference
     isCaptain: DS.attr 'boolean'
 

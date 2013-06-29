@@ -67,6 +67,7 @@ for i in [0..Faker.Helpers.randomNumber(200)]
     first_name: Faker.Name.firstName()
     last_name: Faker.Name.lastName()
     country_id: countries[Faker.Helpers.randomNumber(countries.length)]._id
+    link: "http://#{Faker.Internet.domainName()}/"
   }
 
 module.exports.Player = players

@@ -168,6 +168,7 @@ if (this.debug) {
     errorElement.innerHTML = err;
     throw err;
   }
+
 }
 
 require([
