@@ -83,19 +83,19 @@ requirejs.config({
     },
 
     'jquery.ui.datepicker-ru': {
-      deps: ['jquery-ui']
+      deps: ['jquery', 'jquery-ui']
     },
 
     'jquery.ui.datepicker-it': {
-      deps: ['jquery-ui']
+      deps: ['jquery', 'jquery-ui']
     },
 
     'jquery.ui.datepicker-de': {
-      deps: ['jquery-ui']
+      deps: ['jquery', 'jquery-ui']
     },
 
     'jquery.ui.timepicker': {
-      deps: ['jquery-ui']
+      deps: ['jquery', 'jquery-ui']
     },
 
 

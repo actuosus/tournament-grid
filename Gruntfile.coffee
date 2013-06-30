@@ -41,8 +41,8 @@ module.exports = (grunt)->
       compile:
         options:
 #          useSourceUrl: yes
-#          optimize: 'uglify2'
-          optimize: 'none'
+          optimize: 'uglify2'
+#          optimize: 'none'
 #          generateSourceMaps: yes
 #          preserveLicenseComments: no
           locale: "en-us",
