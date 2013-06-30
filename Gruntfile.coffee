@@ -41,8 +41,8 @@ module.exports = (grunt)->
       compile:
         options:
 #          useSourceUrl: yes
-          optimize: 'uglify2'
-#          optimize: 'none'
+#          optimize: 'uglify2'
+          optimize: 'none'
 #          generateSourceMaps: yes
 #          preserveLicenseComments: no
           locale: "en-us",
@@ -52,11 +52,10 @@ module.exports = (grunt)->
 #          appDir: 'public/app'
 #          dir: 'public/bundle'
           paths: {
-#            'jquery': '../vendor/scripts/jquery',
-            'jquery': 'empty:',
-            'jquery.mousewheel': 'empty:',
+            'jquery': '../vendor/scripts/jquery',
+            'jquery.mousewheel': '../vendor/scripts/jquery.mousewheel',
             'jquery.isotope': '../vendor/scripts/jquery.isotope',
-            'jquery.cookie': 'empty:',
+            'jquery.cookie': '../vendor/scripts/jquery.cookie',
             'jquery.scrollTo': '../vendor/scripts/jquery.scrollTo.min',
             'moment': '../vendor/scripts/moment',
             'Faker': '../vendor/scripts/Faker',
@@ -79,7 +78,7 @@ module.exports = (grunt)->
             'bootstrap.tooltip': '../vendor/scripts/bootstrap/bootstrap-tooltip',
             'three': '../vendor/scripts/three',
             'screenfull': '../vendor/scripts/screenfull.min',
-            'jquery-ui': 'empty:',
+            'jquery-ui': '../vendor/scripts/jquery-ui-1.10.1.custom.min',
             'jquery.ui.datepicker-ru': '../vendor/scripts/jquery.ui.datepicker-ru',
             'jquery.ui.datepicker-it': '../vendor/scripts/jquery.ui.datepicker-it',
             'jquery.ui.datepicker-de': '../vendor/scripts/jquery.ui.datepicker-de',
