@@ -5,7 +5,7 @@
  * Time: 18:55
 ###
 
-define ->
+define ['cs!../views/country_flag'],->
   App.ReportEntrantsController = Em.ArrayController.extend
 #    sortProperties: ['team.name']
     searchResults: []
@@ -17,12 +17,11 @@ define ->
     searchQuery: ''
     searchByPlayer: no
 
-    arrangedContent: (->
+    filterWithQuery: (query)->
       content = @get 'content'
-      searchQuery = @get 'searchQuery'
       searchPath = @get 'searchPath'
-      if searchQuery
-        reg = new RegExp searchQuery, 'gi'
+      if query
+        reg = new RegExp query, 'gi'
         result = content.filter (item)->
           name = item.get searchPath
           matches = no
@@ -32,11 +31,21 @@ define ->
         result = content
       result.set 'isLoaded', yes
       result
+
+    arrangedContent: (->
+      searchQuery = @get 'searchQuery'
+      @filterWithQuery searchQuery
     ).property('content', 'searchQuery')
 
     all: ->
       @set 'arrangedContent', @get 'stage.entrants'
       @set 'arrangedContent.isLoaded', yes
+
+    cancelFetchingOfAutocompleteResults: ->
+
+    fetchAutocompleteResults: (value, target)->
+      @set 'autocompleteTarget', target
+      @get('autocompleteTarget').didFetchAutocompleteResults @filterWithQuery value
 
     menuItemViewClass: Em.ContainerView.extend
       classNames: ['menu-item']
@@ -55,22 +64,12 @@ define ->
       titleBinding: 'team._id'
       childViews: ['countryFlagView', 'nameView']
 
-      countryFlagView: Em.View.extend
-        tagName: 'i'
-        classNames: ['country-flag-icon', 'team-country-flag-icon']
-        classNameBindings: ['countryFlagClassName', 'hasFlag']
-        attributeBindings: ['title']
-        contentBinding: 'parentView.team'
-        title: (-> @get 'content.country.name').property('content.country')
-        hasFlag: (-> !!@get 'content.country.code').property('content.country')
-        countryFlagClassName: (->
-          'country-flag-icon-%@'.fmt @get 'content.country.code'
-        ).property('content.country.code')
+      countryFlagView: App.CountryFlagView.extend
+        contentBinding: 'parentView.team.country'
 
       nameView: Em.View.extend
-        contentBinding: 'parentView.team'
         classNames: ['lineup-grid-item-name']
-        template: Em.Handlebars.compile '{{view.content.name}}'
+        template: Em.Handlebars.compile '{{view.parentView.team.name}}'
 
       showAddingNotify: ->
         modalView = App.ModalView.create
@@ -93,6 +92,7 @@ define ->
       click: (event)->
         event.preventDefault()
         event.stopPropagation()
+        @get('parentView').selectMenuItem? @get 'content'
         @get('parentView').click(event)
         @set 'parentView.selection', @get 'team'
         @set 'parentView.value', @get 'team'

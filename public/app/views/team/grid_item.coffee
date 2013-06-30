@@ -43,7 +43,9 @@ define [
       isAutocomplete: yes
 
       autocompleteDelegate: (->
-        App.TeamsController.create()
+        console.log @get 'container'
+#        App.TeamsController.create()
+        @get('container').lookup('controller:reportEntrants')
       ).property()
 
       assignTeam: (team)->
@@ -52,11 +54,15 @@ define [
         match.set "entrant#{@get('parentView.contentIndex')+1}", team if match
 
       insertNewline: ->
-        @assignTeam @get 'selection'
+        team = @get 'selection'
+        team = team.get 'team' if App.TeamRef.detectInstance team
+        @assignTeam team
         @_closeAutocompleteMenu()
         @set 'isVisible', no
 
-      selectMenuItem: (team)->
+      selectMenuItem: (entrant)->
+        team = entrant
+        team = entrant.get 'team' if App.TeamRef.detectInstance entrant
         @assignTeam team
         @_closeAutocompleteMenu()
         @set 'isVisible', no
@@ -100,7 +106,7 @@ define [
     _isEditingBinding: 'App.isEditingMode'
 
     isWinner: (->
-      @get('match.winner.clientId') is @get('content.clientId')
+      Em.isEqual @get('match.winner'), @get('content')
     ).property 'points', 'match.winner'
 
     winnerClassName: (->

@@ -26,14 +26,17 @@ define [
         when 'single', 'grid'
           stage.get('matches')
           contentView = App.NewTournamentGridView.create
+            container: @get 'container'
             stage: stage
             entrantsNumber: stage.get('entrantsNumber')
         when 'double'
           contentView = App.NewDoubleTournamentGridView.create
+            container: @get 'container'
             stage: stage
             entrantsNumber: stage.get('entrantsNumber')
         when 'group'
           contentView = App.GroupGridView.create
+            container: @get 'container'
             content: stage.get 'rounds'
             entrants: stage.get 'entrants'
             showFilterForm: no
@@ -41,6 +44,7 @@ define [
         when 'matrix'
           matchesController = App.MatchesController.create(stage: stage, contentBinding: 'stage.matches')
           contentView = App.MatchGridContainer.create
+            container: @get 'container'
             stage: stage
             content: matchesController
         when 'team'
@@ -52,6 +56,7 @@ define [
             round: stage.get('rounds.firstObject')
             content: stage.get('rounds.firstObject.matches')
           contentView = App.StandingTableView.create
+            container: @get 'container'
             classNames: ['for-team']
             entrants: teamsController
             matches: matchesController

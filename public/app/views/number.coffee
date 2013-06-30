@@ -47,6 +47,8 @@ define [
           @stepDown()
 
     keyDown: (event)->
+      console.log(event)
+      @_super(event)
       if @get 'isEditable'
         switch event.keyCode
           when 38 # up

@@ -76,9 +76,6 @@ define ['cs!../core'],->
       @_super()
       @show()
 
-    mouseDown: (event)->
-      event.stopPropagation()
-
     onDocumentMouseDown: (event)->
       $(document.body).unbind('mousedown.menu')
       @hide()
@@ -95,6 +92,9 @@ define ['cs!../core'],->
       target.set 'isFocused', no if target
       if @$()
         @$().transition({ scale: 0 }, 300, (=> @onHide(args); @destroy()))
+
+    mouseDown: (event)->
+      event.stopPropagation()
 
     click: (event)->
       eventDelegate = @get 'eventDelegate'

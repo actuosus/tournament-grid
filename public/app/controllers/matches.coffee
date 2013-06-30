@@ -144,7 +144,7 @@ define [
 
     entrants: (->
       @get('round.resultSets').map (item)-> item.get 'entrant'
-    ).property('round.resultSets.length')
+    ).property('round.resultSets.@each.entrant.isLoaded')
 
     _results: (->
         incrementPropertyForEntrant = (entrant, property, increment)->

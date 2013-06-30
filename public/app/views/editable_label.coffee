@@ -37,7 +37,7 @@ define ['cs!../core'],->
         @$().attr 'contentEditable', ''
         @$().attr 'tabIndex', 0
         @$().focus()
-        @$().select()
+#        @$().select()
 
     mouseEnter: ->
       if @get 'isEditable'
@@ -48,6 +48,7 @@ define ['cs!../core'],->
         @$().removeClass('active')
 
     focusIn: ->
+      console.log 'focusIn', @
       @set 'hasFocus', yes
 #      @$().select()
 
@@ -76,5 +77,9 @@ define ['cs!../core'],->
               @$().html(@get 'value')
     ).observes('value')
 
-#    keyUp: ->
+    keyDown: (event)->
+      console.log 'keyDown', event
+
+    keyUp: (event)->
+      console.log 'keyUp', event
 #      @set 'value', @$().text()

@@ -216,7 +216,7 @@ module.exports.Match = [
   entrant2_id: '5116163383cf2f2534000002',
   entrant1_points: 4,
   entrant2_points: 7,
-  date: new Date '03.24.2013'
+  date: ''
   round_id: '5114472b6da8bd2910000008'
   map_type: 'Комарин'
   description: 'Короткое описание основного текста, для того'

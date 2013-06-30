@@ -15,6 +15,7 @@
 
 .team-standings-table-item .team-name {
     width: auto;
+    max-width: 150px;
 }
 
 .team-standings-table-item .name a {

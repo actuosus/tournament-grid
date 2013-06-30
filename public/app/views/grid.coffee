@@ -11,19 +11,19 @@ define ['cs!../core'],->
     templateName: 'grid'
     classNames: ['grid']
 
-    reorderDelegate: null
+#    reorderDelegate: null
 
     emptyView: App.EmptyView
 
-    didReorderContent: (content)->
-      delegate = @get 'reorderDelegate'
-      if delegate
-        Ember.run.next ->
-          delegate.didReorderContent content
-
-    isValidDrop: (itemDragged, newParent, dropTarget)->
-      delegate = @get 'reorderDelegate'
-      if delegate and delegate.isValidDrop
-        delegate.isValidDrop(itemDragged, newParent, dropTarget)
-      else
-        return yes
+#    didReorderContent: (content)->
+#      delegate = @get 'reorderDelegate'
+#      if delegate
+#        Ember.run.next ->
+#          delegate.didReorderContent content
+#
+#    isValidDrop: (itemDragged, newParent, dropTarget)->
+#      delegate = @get 'reorderDelegate'
+#      if delegate and delegate.isValidDrop
+#        delegate.isValidDrop(itemDragged, newParent, dropTarget)
+#      else
+#        return yes

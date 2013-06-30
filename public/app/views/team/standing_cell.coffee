@@ -14,7 +14,9 @@ define [
       isAutocomplete: yes
 
       autocompleteDelegate: (->
-        App.TeamsController.create()
+        console.debug @get 'container'
+#        App.TeamsController.create()
+        @get('container').lookup('controller:reportEntrants')
       ).property()
 
       assignTeam: (team)->

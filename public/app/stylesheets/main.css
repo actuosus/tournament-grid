@@ -182,6 +182,7 @@
 
 .lineup-grid-item .team-standings-table td {
     padding: 3px 8px 2px;
+    position: relative;
 }
 
 .matches-group-table td {
@@ -325,7 +326,7 @@ input.match-start-date {
     margin-top: 14px;
 }
 
-.stage-view .add-btn {
+.stage-view .i-listsTabs .add-btn {
     right: 10px;
 }
 

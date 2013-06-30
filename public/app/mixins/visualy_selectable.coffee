@@ -20,7 +20,7 @@ define ->
         x: event.pageX
         y: event.pageY
       @offset = $(App.get 'rootElement').offset()
-      maskView.on 'didInsertElement', ->
+      maskView.on 'didInsertElement', =>
         maskView.$().css
           left: event.pageX + 1 - @offset.left
           top: event.pageY + 1 - @offset.top

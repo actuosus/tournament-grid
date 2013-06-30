@@ -2968,6 +2968,10 @@ body .ui-tooltip {
     top: 2px;
     right: 21px;
 }
+.lineup-grid-item-name-container .add-btn {
+    right: 20px;
+    margin-top: -5px;
+}
 .lineup-grid-item-players {
     max-height: 125px;
     
@@ -3197,6 +3201,7 @@ body .ui-tooltip {
 }
 .team-standings-table-item .team-name {
     width: auto;
+    max-width: 150px;
 }
 .team-standings-table-item .name a {
     color: #2a2a2a;
@@ -3560,6 +3565,7 @@ body .ui-tooltip {
 }
 .lineup-grid-item .team-standings-table td {
     padding: 3px 8px 2px;
+    position: relative;
 }
 .matches-group-table td {
     padding: 2px 8px;
@@ -3677,7 +3683,7 @@ input.match-start-date {
 .stage-view .grid, .stage-view .match-grid {
     margin-top: 14px;
 }
-.stage-view .add-btn {
+.stage-view .i-listsTabs .add-btn {
     right: 10px;
 }
 .b-profileBlock__toggle-button {

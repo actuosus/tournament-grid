@@ -21,7 +21,7 @@ define ->
 
     title: (->
       date = @get 'content'
-      if date
+      if date and moment(date).isValid()
         moment(date).format @get 'titleFormat'
       else
         ''
@@ -29,7 +29,7 @@ define ->
 
     value: (->
       date = @get 'content'
-      if date
+      if date and moment(date).isValid()
         moment(date).format @get 'format'
       else
         ''

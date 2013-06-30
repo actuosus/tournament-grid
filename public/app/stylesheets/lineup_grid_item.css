@@ -132,6 +132,11 @@
     right: 21px;
 }
 
+.lineup-grid-item-name-container .add-btn {
+    right: 20px;
+    margin-top: -5px;
+}
+
 .lineup-grid-item-players {
     max-height: 125px;
     /*overflow: scroll;*/

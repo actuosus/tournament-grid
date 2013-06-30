@@ -56318,7 +56318,8 @@ define("jquery.ui.timepicker-de", ["jquery.ui.timepicker"], function(){});
     return App.VisualySelectable = Em.Mixin.create({
       maskView: null,
       mouseDown: function(event) {
-        var maskView;
+        var maskView,
+          _this = this;
         this._super(event);
         this.visualyDeselect();
         $(document.body).addClass('non-selectable');
@@ -56334,8 +56335,8 @@ define("jquery.ui.timepicker-de", ["jquery.ui.timepicker"], function(){});
         this.offset = $(App.get('rootElement')).offset();
         maskView.on('didInsertElement', function() {
           return maskView.$().css({
-            left: event.pageX + 1 - this.offset.left,
-            top: event.pageY + 1 - this.offset.top
+            left: event.pageX + 1 - _this.offset.left,
+            top: event.pageY + 1 - _this.offset.top
           });
         });
         maskView.appendTo(App.get('rootElement'));
@@ -57738,7 +57739,7 @@ define('text!templates/team/form.hbs',[],function () { return '<div class="contr
 
 (function() {
 
-  define('cs!controllers/report_entrants',[],function() {
+  define('cs!controllers/report_entrants',['cs!../views/country_flag'], function() {
     return App.ReportEntrantsController = Em.ArrayController.extend({
       searchResults: [],
       search: function(options) {
@@ -57747,13 +57748,12 @@ define('text!templates/team/form.hbs',[],function () { return '<div class="contr
       searchPath: 'team.name',
       searchQuery: '',
       searchByPlayer: false,
-      arrangedContent: (function() {
-        var content, reg, result, searchPath, searchQuery;
+      filterWithQuery: function(query) {
+        var content, reg, result, searchPath;
         content = this.get('content');
-        searchQuery = this.get('searchQuery');
         searchPath = this.get('searchPath');
-        if (searchQuery) {
-          reg = new RegExp(searchQuery, 'gi');
+        if (query) {
+          reg = new RegExp(query, 'gi');
           result = content.filter(function(item) {
             var matches, name;
             name = item.get(searchPath);
@@ -57768,10 +57768,20 @@ define('text!templates/team/form.hbs',[],function () { return '<div class="contr
         }
         result.set('isLoaded', true);
         return result;
+      },
+      arrangedContent: (function() {
+        var searchQuery;
+        searchQuery = this.get('searchQuery');
+        return this.filterWithQuery(searchQuery);
       }).property('content', 'searchQuery'),
       all: function() {
         this.set('arrangedContent', this.get('stage.entrants'));
         return this.set('arrangedContent.isLoaded', true);
+      },
+      cancelFetchingOfAutocompleteResults: function() {},
+      fetchAutocompleteResults: function(value, target) {
+        this.set('autocompleteTarget', target);
+        return this.get('autocompleteTarget').didFetchAutocompleteResults(this.filterWithQuery(value));
       },
       menuItemViewClass: Em.ContainerView.extend({
         classNames: ['menu-item'],
@@ -57791,26 +57801,12 @@ define('text!templates/team/form.hbs',[],function () { return '<div class="contr
         }).property('content'),
         titleBinding: 'team._id',
         childViews: ['countryFlagView', 'nameView'],
-        countryFlagView: Em.View.extend({
-          tagName: 'i',
-          classNames: ['country-flag-icon', 'team-country-flag-icon'],
-          classNameBindings: ['countryFlagClassName', 'hasFlag'],
-          attributeBindings: ['title'],
-          contentBinding: 'parentView.team',
-          title: (function() {
-            return this.get('content.country.name');
-          }).property('content.country'),
-          hasFlag: (function() {
-            return !!this.get('content.country.code');
-          }).property('content.country'),
-          countryFlagClassName: (function() {
-            return 'country-flag-icon-%@'.fmt(this.get('content.country.code'));
-          }).property('content.country.code')
+        countryFlagView: App.CountryFlagView.extend({
+          contentBinding: 'parentView.team.country'
         }),
         nameView: Em.View.extend({
-          contentBinding: 'parentView.team',
           classNames: ['lineup-grid-item-name'],
-          template: Em.Handlebars.compile('{{view.content.name}}')
+          template: Em.Handlebars.compile('{{view.parentView.team.name}}')
         }),
         showAddingNotify: function() {
           var modalView;
@@ -57841,8 +57837,12 @@ define('text!templates/team/form.hbs',[],function () { return '<div class="contr
           return modalView.appendTo(App.get('rootElement'));
         },
         click: function(event) {
+          var _base;
           event.preventDefault();
           event.stopPropagation();
+          if (typeof (_base = this.get('parentView')).selectMenuItem === "function") {
+            _base.selectMenuItem(this.get('content'));
+          }
           this.get('parentView').click(event);
           this.set('parentView.selection', this.get('team'));
           this.set('parentView.value', this.get('team'));
@@ -58657,8 +58657,7 @@ define('text!templates/team/form.hbs',[],function () { return '<div class="contr
         if (this.get('isEditable')) {
           this.$().attr('contentEditable', '');
           this.$().attr('tabIndex', 0);
-          this.$().focus();
-          return this.$().select();
+          return this.$().focus();
         }
       },
       mouseEnter: function() {
@@ -58672,6 +58671,7 @@ define('text!templates/team/form.hbs',[],function () { return '<div class="contr
         }
       },
       focusIn: function() {
+        console.log('focusIn', this);
         return this.set('hasFocus', true);
       },
       focusOut: function() {
@@ -58705,7 +58705,13 @@ define('text!templates/team/form.hbs',[],function () { return '<div class="contr
             }
           }
         }
-      }).observes('value')
+      }).observes('value'),
+      keyDown: function(event) {
+        return console.log('keyDown', event);
+      },
+      keyUp: function(event) {
+        return console.log('keyUp', event);
+      }
     });
   });
 
@@ -59174,9 +59180,6 @@ define('text!templates/team/form.hbs',[],function () { return '<div class="contr
         this._super();
         return this.show();
       },
-      mouseDown: function(event) {
-        return event.stopPropagation();
-      },
       onDocumentMouseDown: function(event) {
         $(document.body).unbind('mousedown.menu');
         return this.hide();
@@ -59208,6 +59211,9 @@ define('text!templates/team/form.hbs',[],function () { return '<div class="contr
             return _this.destroy();
           }));
         }
+      },
+      mouseDown: function(event) {
+        return event.stopPropagation();
       },
       click: function(event) {
         var eventDelegate;
@@ -59536,7 +59542,7 @@ define('text!templates/team/form.hbs',[],function () { return '<div class="contr
       title: (function() {
         var date;
         date = this.get('content');
-        if (date) {
+        if (date && moment(date).isValid()) {
           return moment(date).format(this.get('titleFormat'));
         } else {
           return '';
@@ -59545,7 +59551,7 @@ define('text!templates/team/form.hbs',[],function () { return '<div class="contr
       value: (function() {
         var date;
         date = this.get('content');
-        if (date) {
+        if (date && moment(date).isValid()) {
           return moment(date).format(this.get('format'));
         } else {
           return '';
@@ -59631,26 +59637,7 @@ define('text!templates/team/form.hbs',[],function () { return '<div class="contr
     return App.GridView = Em.CollectionView.extend({
       templateName: 'grid',
       classNames: ['grid'],
-      reorderDelegate: null,
-      emptyView: App.EmptyView,
-      didReorderContent: function(content) {
-        var delegate;
-        delegate = this.get('reorderDelegate');
-        if (delegate) {
-          return Ember.run.next(function() {
-            return delegate.didReorderContent(content);
-          });
-        }
-      },
-      isValidDrop: function(itemDragged, newParent, dropTarget) {
-        var delegate;
-        delegate = this.get('reorderDelegate');
-        if (delegate && delegate.isValidDrop) {
-          return delegate.isValidDrop(itemDragged, newParent, dropTarget);
-        } else {
-          return true;
-        }
-      }
+      emptyView: App.EmptyView
     });
   });
 
@@ -59850,7 +59837,10 @@ define('text!templates/team/standings_table_item.hbs',[],function () { return '<
         isVisible: false,
         isAutocomplete: true,
         autocompleteDelegate: (function() {
-          return App.TeamsController.create();
+          return App.ReportEntrantsController.create({
+            table: this.get('parentView.parentView.parentView'),
+            contentBinding: 'table.entrants'
+          });
         }).property(),
         assignTeam: function(team) {
           var match;
@@ -59861,11 +59851,21 @@ define('text!templates/team/standings_table_item.hbs',[],function () { return '<
           }
         },
         insertNewline: function() {
-          this.assignTeam(this.get('selection'));
+          var team;
+          team = this.get('selection');
+          if (App.TeamRef.detectInstance(team)) {
+            team = team.get('team');
+          }
+          this.assignTeam(team);
           this._closeAutocompleteMenu();
           return this.set('isVisible', false);
         },
-        selectMenuItem: function(team) {
+        selectMenuItem: function(entrant) {
+          var team;
+          team = entrant;
+          if (App.TeamRef.detectInstance(entrant)) {
+            team = entrant.get('team');
+          }
           this.assignTeam(team);
           this._closeAutocompleteMenu();
           return this.set('isVisible', false);
@@ -59996,7 +59996,8 @@ define('text!templates/team/standings_table_item.hbs',[],function () { return '<
         isVisible: false,
         isAutocomplete: true,
         autocompleteDelegate: (function() {
-          return App.TeamsController.create();
+          console.debug(this.get('container'));
+          return this.get('container').lookup('controller:reportEntrants');
         }).property(),
         assignTeam: function(team) {
           var match;
@@ -60854,7 +60855,7 @@ define('text!templates/match/filter_form.hbs',[],function () { return '<!--\n * 
         return this.get('round.resultSets').map(function(item) {
           return item.get('entrant');
         });
-      }).property('round.resultSets.length'),
+      }).property('round.resultSets.@each.entrant.isLoaded'),
       _results: (function() {
         var controller, incrementPropertyForEntrant, lastResults, resultSets, results, resultsArray, teamRefs;
         incrementPropertyForEntrant = function(entrant, property, increment) {
@@ -61195,6 +61196,8 @@ define('text!templates/match/filter_form.hbs',[],function () { return '<!--\n * 
         }
       },
       keyDown: function(event) {
+        console.log(event);
+        this._super(event);
         if (this.get('isEditable')) {
           switch (event.keyCode) {
             case 38:
@@ -61258,7 +61261,8 @@ define('text!templates/match/filter_form.hbs',[],function () { return '<!--\n * 
         isVisible: false,
         isAutocomplete: true,
         autocompleteDelegate: (function() {
-          return App.TeamsController.create();
+          console.log(this.get('container'));
+          return this.get('container').lookup('controller:reportEntrants');
         }).property(),
         assignTeam: function(team) {
           var match;
@@ -61269,11 +61273,21 @@ define('text!templates/match/filter_form.hbs',[],function () { return '<!--\n * 
           }
         },
         insertNewline: function() {
-          this.assignTeam(this.get('selection'));
+          var team;
+          team = this.get('selection');
+          if (App.TeamRef.detectInstance(team)) {
+            team = team.get('team');
+          }
+          this.assignTeam(team);
           this._closeAutocompleteMenu();
           return this.set('isVisible', false);
         },
-        selectMenuItem: function(team) {
+        selectMenuItem: function(entrant) {
+          var team;
+          team = entrant;
+          if (App.TeamRef.detectInstance(entrant)) {
+            team = entrant.get('team');
+          }
           this.assignTeam(team);
           this._closeAutocompleteMenu();
           return this.set('isVisible', false);
@@ -61316,7 +61330,7 @@ define('text!templates/match/filter_form.hbs',[],function () { return '<!--\n * 
       }),
       _isEditingBinding: 'App.isEditingMode',
       isWinner: (function() {
-        return this.get('match.winner.clientId') === this.get('content.clientId');
+        return Em.isEqual(this.get('match.winner'), this.get('content'));
       }).property('points', 'match.winner'),
       winnerClassName: (function() {
         if (this.get('match.winner')) {
@@ -63535,18 +63549,21 @@ define('text!templates/stage/form.hbs',[],function () { return '\n<div class="co
           case 'grid':
             stage.get('matches');
             contentView = App.NewTournamentGridView.create({
+              container: this.get('container'),
               stage: stage,
               entrantsNumber: stage.get('entrantsNumber')
             });
             break;
           case 'double':
             contentView = App.NewDoubleTournamentGridView.create({
+              container: this.get('container'),
               stage: stage,
               entrantsNumber: stage.get('entrantsNumber')
             });
             break;
           case 'group':
             contentView = App.GroupGridView.create({
+              container: this.get('container'),
               content: stage.get('rounds'),
               entrants: stage.get('entrants'),
               showFilterForm: false,
@@ -63559,6 +63576,7 @@ define('text!templates/stage/form.hbs',[],function () { return '\n<div class="co
               contentBinding: 'stage.matches'
             });
             contentView = App.MatchGridContainer.create({
+              container: this.get('container'),
               stage: stage,
               content: matchesController
             });
@@ -63574,6 +63592,7 @@ define('text!templates/stage/form.hbs',[],function () { return '\n<div class="co
               content: stage.get('rounds.firstObject.matches')
             });
             contentView = App.StandingTableView.create({
+              container: this.get('container'),
               classNames: ['for-team'],
               entrants: teamsController,
               matches: matchesController,
@@ -64634,8 +64653,8 @@ define('text!templates/application.hbs',[],function () { return '{{outlet stages
     });
     App.ReportRoute = Em.Route.extend({
       setupController: function(controller, model) {
+        console.debug('Preloading countries…');
         App.countries = App.Country.find();
-        console.log('Setting up report controller');
         App.set('router', this.router);
         App.set('report', model);
         App.overrideAdapterAjax(model);
@@ -64654,18 +64673,14 @@ define('text!templates/application.hbs',[],function () { return '{{outlet stages
         }
       },
       model: function(params) {
-        console.log(arguments);
         return App.store.findById(App.Report, window.grid.reportId);
       }
     });
     App.StagesRoute = Em.Route.extend({
       model: function() {
-        console.log('App.report', App.get('report'));
         return App.get('report.stages');
       },
       setupController: function(controller, model) {
-        console.log('Setting up stages controller');
-        console.log('stages', controller, model);
         return controller.set('model', App.get('report.stages'));
       },
       renderTemplate: function(controller, model) {
@@ -64678,7 +64693,9 @@ define('text!templates/application.hbs',[],function () { return '{{outlet stages
       }
     });
     return App.StageRoute = Ember.Route.extend({
-      setupController: function(controller, model) {},
+      setupController: function(controller, model) {
+        return console.debug('Setting up stage route');
+      },
       model: function(params) {
         return App.Stage.find(params.stage_id);
       }
@@ -64874,7 +64891,7 @@ requirejs.config({
   paths: {
     'jquery': [
       'http://yandex.st/jquery/2.0.0/jquery.min',
-      '//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min',
+//      '//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min',
       '/vendor/scripts/jquery'
     ],
     'jquery.mousewheel': [

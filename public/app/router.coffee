@@ -23,11 +23,10 @@ define [
   App.ReportRoute = Em.Route.extend
     setupController: (controller, model)->
       # Preloading countries
+      console.debug 'Preloading countries…'
       App.countries = App.Country.find()
 
 #      App.set 'isEditingMode', yes
-      
-      console.log 'Setting up report controller'
       App.set 'router', @router
       App.set 'report', model
       App.overrideAdapterAjax model
@@ -42,18 +41,14 @@ define [
           into: 'application'
           controller: 'reportEntrants'
     model: (params)->
-      console.log arguments
       App.store.findById App.Report, window.grid.reportId
 
   App.StagesRoute = Em.Route.extend
-    model: ->
-      console.log 'App.report', App.get('report')
-      App.get('report.stages')
+    model: -> App.get 'report.stages'
 
     setupController: (controller, model)->
-      console.log 'Setting up stages controller'
-      console.log 'stages', controller, model
       controller.set 'model', App.get('report.stages')
+
     renderTemplate: (controller, model)->
       @render()
 
@@ -64,6 +59,7 @@ define [
 
   App.StageRoute = Ember.Route.extend
     setupController: (controller, model)->
+      console.debug 'Setting up stage route'
 #      window.stageView.set('controller', controller)
 #      window.stageView.set('currentStage', model)
 #      window.stageView.get('currentStage').addObserver 'data', window.stageView, window.stageView.currentStageDidLoad
