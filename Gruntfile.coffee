@@ -52,7 +52,8 @@ module.exports = (grunt)->
 #          appDir: 'public/app'
 #          dir: 'public/bundle'
           paths: {
-            'jquery': '../vendor/scripts/jquery',
+#            'jquery': '../vendor/scripts/jquery',
+            'jquery': 'http://yandex.st/jquery/2.0.0/jquery.min',
             'jquery.mousewheel': '../vendor/scripts/jquery.mousewheel',
             'jquery.isotope': '../vendor/scripts/jquery.isotope',
             'jquery.cookie': '../vendor/scripts/jquery.cookie',
