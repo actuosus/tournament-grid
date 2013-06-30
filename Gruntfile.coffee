@@ -53,10 +53,10 @@ module.exports = (grunt)->
 #          dir: 'public/bundle'
           paths: {
 #            'jquery': '../vendor/scripts/jquery',
-            'jquery': 'http://yandex.st/jquery/2.0.0/jquery.min',
-            'jquery.mousewheel': '../vendor/scripts/jquery.mousewheel',
+            'jquery': 'empty:',
+            'jquery.mousewheel': 'empty:',
             'jquery.isotope': '../vendor/scripts/jquery.isotope',
-            'jquery.cookie': '../vendor/scripts/jquery.cookie',
+            'jquery.cookie': 'empty:',
             'jquery.scrollTo': '../vendor/scripts/jquery.scrollTo.min',
             'moment': '../vendor/scripts/moment',
             'Faker': '../vendor/scripts/Faker',
@@ -79,7 +79,7 @@ module.exports = (grunt)->
             'bootstrap.tooltip': '../vendor/scripts/bootstrap/bootstrap-tooltip',
             'three': '../vendor/scripts/three',
             'screenfull': '../vendor/scripts/screenfull.min',
-            'jquery-ui': '../vendor/scripts/jquery-ui-1.10.1.custom.min',
+            'jquery-ui': 'empty:',
             'jquery.ui.datepicker-ru': '../vendor/scripts/jquery.ui.datepicker-ru',
             'jquery.ui.datepicker-it': '../vendor/scripts/jquery.ui.datepicker-it',
             'jquery.ui.datepicker-de': '../vendor/scripts/jquery.ui.datepicker-de',

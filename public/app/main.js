@@ -12,7 +12,7 @@ requirejs.config({
   paths: {
     'jquery': [
       'http://yandex.st/jquery/2.0.0/jquery.min',
-//      '//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min',
+      '//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min',
       '/vendor/scripts/jquery'
     ],
     'jquery.mousewheel': [
