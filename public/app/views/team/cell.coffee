@@ -88,7 +88,7 @@ define [
 
       click: ->
         autocompleteView = @get 'parentView.autocompleteView'
-        if autocompleteView
+        if autocompleteView and not autocompleteView.isClass
           autocompleteView.set 'isVisible', yes
           autocompleteView.focus()
 

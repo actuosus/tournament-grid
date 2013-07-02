@@ -17,7 +17,7 @@
 {{/if}}
 <td class="matches-table-team2">{{view App.TeamCellView contentBinding=view.content.entrant2 matchBinding=view.content contentIndex=1}}</td>
 <td>
-    {{view App.GamesInfoBarView contentBinding=view.content.games showInfoLabelBinding=App.isEditingMode}}
+    {{view App.GamesInfoBarView contentBinding=view.content.games showInfoLabelBinding=false}}
 </td>
 {{#if App.isEditingMode}}
 <td>

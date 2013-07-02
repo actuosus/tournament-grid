@@ -41,7 +41,7 @@ define [
       itemViewClass: App.MatchItemView.extend
         classNames: ['tournament-match']
         classNameBindings: ['content.isFinal']
-        childViews: ['dateView', 'infoBarView', 'contentView', 'connectorView']
+        childViews: ['dateView', 'infoBarView', 'contentView', 'connectorView', 'lockView']
         roundIndexBinding: 'parentView.parentView.contentIndex'
         roundsBinding: 'parentView.parentView.parentView.content'
         entrantsNumberBinding: 'parentView.entrantsNumber'

@@ -72,12 +72,13 @@
 
 .team-name {
     width: 108px;
-    float: left;
     line-height: 20px;
     min-height: 20px;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    display: inline-block;
+    float: left;
 }
 
 .team-name a {
@@ -86,7 +87,7 @@
 }
 
 .team-undefined .team-name {
-    width: 111px;
+    width: 96px;
     border: 1px dashed #858586;
     border-radius: 2px;
     min-height: 17px;
@@ -105,7 +106,6 @@
 }
 
 .team-country-flag-icon {
-    float: left;
     margin: 4px 2px;
     background-color: #9b9b9b;
     box-shadow: 0 0 2px rgba(0, 0, 0, .3);
@@ -116,6 +116,7 @@
 
     -webkit-transition-duration: 0.5s;
     -webkit-transition-property: background-size, box-shadow;
+    float: left;
 }
 
 .team-country-flag-icon.has-flag {

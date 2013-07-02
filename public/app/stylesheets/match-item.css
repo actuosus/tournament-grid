@@ -29,3 +29,9 @@
 .match-item.is-selected {
     background-color: rgba(0,0,0,0.05);
 }
+
+.match-item .icon-lock {
+    position: absolute;
+    left: 4em;
+    top: 0px;
+}

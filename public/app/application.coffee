@@ -51,10 +51,27 @@ define [
   App.ready = ->
     window.onAppReady?(App)
 
+    Ember.subscribe 'render',
+      before: (name, start, payload)-> start
+      after: (name, end, payload, start)->
+        duration = Math.round(end - start)
+#        console.log(name, payload, duration, 'ms')
+        if payload?.object?.match /MatchGridContainer/
+          console.log('rendered', payload, 'took', duration, 'ms')
+#        template = payload.template
+#        if template
+#          console.log('rendered', template, 'took', duration, 'ms')
+
 #    App.set 'entrantsController', App.EntrantsController.create()
 #    App.set 'countriesController', App.CountriesController.create()
 #    App.set 'teamsController', App.TeamsController.create()
 #    App.set 'playersController', App.PlayersController.create()
+
+    App.addObserver 'isEditingMode', ->
+      if App.get 'isEditingMode'
+        $(App.get('rootElement')).addClass 'is-editing'
+      else
+        $(App.get('rootElement')).removeClass 'is-editing'
 
     App.set 'notificationsController', App.NotificationsController.create()
 #
@@ -94,6 +111,7 @@ define [
         Em.Object.create name:'_matrix'.loc(), id: 'matrix'
         Em.Object.create name:'_team'.loc(), id: 'team'
       ]
+
 #
 ##    App.racesController = Em.ArrayController.create
 ##      content: [

@@ -65,6 +65,9 @@ define ['cs!../core'],->
       @set 'status', 'closed'
       @store.commit()
 
+    isOpened: (-> @get('status') is 'opened').property('status')
+    isClosed: Em.computed.not 'isOpened'
+
     isPast: (->
       new Date > @get 'date'
     ).property('date')

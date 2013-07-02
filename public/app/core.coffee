@@ -52,6 +52,7 @@ define [
 
   if window.debug
     App.LOG_TRANSITIONS = yes
+    App.LOG_TRANSITIONS_INTERNAL = yes
     App.LOG_VIEW_LOOKUPS = yes
   App.deferReadiness()
 

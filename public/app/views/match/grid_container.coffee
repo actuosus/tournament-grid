@@ -9,7 +9,7 @@ define [
   'cs!../../core'
   'cs!./grid_item'
 ], ->
-  App.MatchGridContainer = Em.ContainerView.extend App.ContextMenuSupport, App.VisualySelectable,
+  App.MatchGridContainer = Em.ContainerView.extend App.ContextMenuSupport,# App.VisualySelectable,
     classNames: ['grid-container', 'match-grid-container']
     childViews: ['contentView']
 

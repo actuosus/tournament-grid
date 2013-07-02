@@ -12,6 +12,8 @@
 
 /*jslint evil: true, white: false, undef: false, nomen: false */
 
+define('jquery.ui.timepicker', ['jquery-ui'], function(){
+
 (function($) {
 
 	/*
@@ -2101,3 +2103,4 @@
 	$.timepicker.version = "1.3";
 
 })(jQuery);
+});

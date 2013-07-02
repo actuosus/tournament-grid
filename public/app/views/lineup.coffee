@@ -10,7 +10,7 @@ define [
   'cs!./grid'
   'cs!./team/lineup_grid_item'
 ], ->
-  App.LineupView = Em.ContainerView.extend App.ContextMenuSupport, App.VisualySelectable,
+  App.LineupView = Em.ContainerView.extend App.ContextMenuSupport, #App.VisualySelectable,
     childViews: ['contentView']
 
     shouldShowContextMenuBinding: 'App.isEditingMode'

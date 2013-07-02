@@ -11,10 +11,10 @@ define [
 ], ->
   App.MatchItemView = Em.ContainerView.extend App.MatchDelegate,
     classNames: ['match-item']
-    childViews: ['dateView', 'infoBarView', 'contentView']
+    childViews: ['dateView', 'infoBarView', 'lockView', 'contentView']
     classNameBindings: [
       'content.isSelected',
-      'content.isVisualySelected',
+#      'content.isVisualySelected',
       'content.isDirty',
       'content.isSaving',
       'content.isPast',
@@ -25,7 +25,7 @@ define [
     isEditable: (->
       isEditingMode = App.get('isEditingMode')
       status = @get 'content.status'
-      isEditingMode and status is 'opened'
+      isEditingMode # and status is 'opened'
     ).property('App.isEditingMode', 'content.status')
 
     _isEditingBinding: 'isEditable'
@@ -52,6 +52,18 @@ define [
       contentBinding: 'parentView.content.date'
       format: 'DD.MM.YY'
       showPopupBinding: 'App.isEditingMode'
+
+    lockView: Em.View.extend
+      tagName: 'i'
+      classNames: ['icon-lock']
+      classNameBindings: ['parentView.content.isOpened']
+      isVisibleBinding: 'parentView._isEditing'
+
+      doubleClick: ->
+        if @get 'parentView.content.isOpened'
+          @get('parentView').close()
+        else
+          @get('parentView').open()
 
     infoBarView: App.GamesInfoBarView.extend
       contentBinding: 'parentView.content.games'

@@ -11,16 +11,16 @@ requirejs.config({
   name: 'app',
   paths: {
     'jquery': [
-      'http://yandex.st/jquery/2.0.0/jquery.min',
-      '//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min',
+//      'http://yandex.st/jquery/2.0.0/jquery.min',
+//      '//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min',
       '/vendor/scripts/jquery'
     ],
     'jquery.mousewheel': [
-      'http://yandex.st/jquery/mousewheel/3.0.6/jquery.mousewheel.min',
+//      'http://yandex.st/jquery/mousewheel/3.0.6/jquery.mousewheel.min',
       '/vendor/scripts/jquery.mousewheel'
     ],
     'jquery.cookie': [
-      'http://yandex.st/jquery/cookie/1.0/jquery.cookie.min',
+//      'http://yandex.st/jquery/cookie/1.0/jquery.cookie.min',
       '/vendor/scripts/jquery.cookie'
     ],
     'jquery.scrollTo': '/vendor/scripts/jquery.scrollTo.min',
@@ -64,52 +64,19 @@ requirejs.config({
     'socket.io': 'http://' + document.location.host + '/socket.io/socket.io.js'
   },
   shim: {
-    'jquery.cookie': {
-      deps: ['jquery']
-    },
-    'jquery.mousewheel': {
-      deps: ['jquery']
-    },
-    'jquery.isotope': {
-      deps: ['jquery']
-    },
+    'jquery.cookie': ['jquery'],
+    'jquery.mousewheel': ['jquery'],
+    'jquery.scrollTo': ['jquery'],
+    'jquery-ui': ['jquery'],
+    'jquery.ui.datepicker-ru': ['jquery', 'jquery-ui'],
+    'jquery.ui.datepicker-it': ['jquery', 'jquery-ui'],
+    'jquery.ui.datepicker-de': ['jquery', 'jquery-ui'],
+    'jquery.ui.timepicker': ['jquery', 'jquery-ui'],
+    'jquery.ui.timepicker-ru': ['jquery.ui.timepicker'],
 
-    'jquery.scrollTo': {
-      deps: ['jquery']
-    },
+    'jquery.ui.timepicker-it': ['jquery.ui.timepicker'],
 
-    'jquery-ui': {
-      deps: ['jquery']
-    },
-
-    'jquery.ui.datepicker-ru': {
-      deps: ['jquery', 'jquery-ui']
-    },
-
-    'jquery.ui.datepicker-it': {
-      deps: ['jquery', 'jquery-ui']
-    },
-
-    'jquery.ui.datepicker-de': {
-      deps: ['jquery', 'jquery-ui']
-    },
-
-    'jquery.ui.timepicker': {
-      deps: ['jquery', 'jquery-ui']
-    },
-
-
-    'jquery.ui.timepicker-ru': {
-      deps: ['jquery.ui.timepicker']
-    },
-
-    'jquery.ui.timepicker-it': {
-      deps: ['jquery.ui.timepicker']
-    },
-
-    'jquery.ui.timepicker-de': {
-      deps: ['jquery.ui.timepicker']
-    },
+    'jquery.ui.timepicker-de': ['jquery.ui.timepicker'],
 
     'handlebars': {
       exports: 'Handlebars'
@@ -131,16 +98,9 @@ requirejs.config({
         }
       }
     },
-    'ember-data': {
-      deps: ['ember']
-    },
-    'ember-history': {
-      deps: ['ember']
-    },
-
-    'transit': {
-      deps: ['jquery']
-    }
+    'ember-data': ['ember'],
+    'ember-history': ['ember'],
+    'transit': ['jquery']
   }
 });
 

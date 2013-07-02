@@ -42,5 +42,7 @@ define [
 
   'cs!./application'
 
+  'cs!./no_report'
+
   'cs!./server_debug'
 ]

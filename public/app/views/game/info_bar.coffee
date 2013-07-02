@@ -62,7 +62,7 @@ define [
         index: (-> @get('contentIndex') + 1).property('contentIndex')
 
         shouldShowContextMenuBinding: 'App.isEditingMode'
-        contextMenuActions: ['edit', 'deleteRecord']
+        contextMenuActions: ['edit', 'deleteRecord:delete']
 
         edit: ->
           popup = App.PopupView.create target: @
@@ -78,7 +78,7 @@ define [
           )
           popup.appendTo App.get 'rootElement'
 
-        deleteRecord: -> @get('content').deleteRecord()
+        deleteRecord: -> @get('content').deleteRecord().commit()
         click: (event)->
           return unless App.get('isEditingMode')
           event.preventDefault()
