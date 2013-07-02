@@ -13,6 +13,7 @@ define [
 ], ->
   App.Router.map ->
     @route 'index', path: '*.'
+    @route 'index', path: ''
     @resource 'stages', ->
       @route 'new'
       @resource 'stage', path: '/:stage_id'
