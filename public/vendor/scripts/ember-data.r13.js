@@ -1,6 +1,7 @@
 // Version: v0.13-50-g83f9f6b
 // Last commit: 83f9f6b (2013-06-25 10:35:47 -0700)
 
+define('ember-data', ['ember'], function(){
 
 (function() {
 var define, requireModule;
@@ -8905,3 +8906,5 @@ DS.RESTAdapter = DS.Adapter.extend({
 
 
 })();
+
+});

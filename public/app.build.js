@@ -9,9 +9,10 @@
 requirejs.config({
   baseUrl: '.',
   name: 'app/main',
+//  modules: [{name: 'app'}],
   out: 'bundle/app.js',
 //  insertRequire: ['app/main'],
-  wrap: true,
+//  wrap: true,
   optimize: 'uglify2',
 //  optimize: 'none',
   preserveLicenseComments: false,
@@ -47,7 +48,8 @@ requirejs.config({
     'bootstrap.tooltip': 'vendor/scripts/bootstrap/bootstrap-tooltip',
     'three': 'vendor/scripts/three',
     'screenfull': 'vendor/scripts/screenfull.min',
-    'jquery-ui': 'empty:',
+//    'jquery-ui': 'empty:',
+    'jquery-ui': 'vendor/scripts/jquery-ui-1.10.3.custom',
     'jquery.ui.datepicker-ru': 'vendor/scripts/jquery.ui.datepicker-ru',
     'jquery.ui.datepicker-it': 'vendor/scripts/jquery.ui.datepicker-it',
     'jquery.ui.datepicker-de': 'vendor/scripts/jquery.ui.datepicker-de',
@@ -71,6 +73,7 @@ requirejs.config({
 
     'jquery.scrollTo': ['jquery'],
 
+
     'jquery-ui': {
       deps: ['jquery']
     },
@@ -87,10 +90,10 @@ requirejs.config({
       deps: ['jquery', 'jquery-ui']
     },
 
+
     'jquery.ui.timepicker': {
       deps: ['jquery', 'jquery-ui']
     },
-
 
     'jquery.ui.timepicker-ru': {
       deps: ['jquery.ui.timepicker']

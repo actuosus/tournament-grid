@@ -1,5 +1,6 @@
 /* German translation for the jQuery Timepicker Addon */
 /* Written by Marvin */
+define('jquery.ui.timepicker.de', ['jquery.ui.timepicker'], function(){
 (function($) {
   $.timepicker.regional['de'] = {
     timeOnlyTitle: 'Zeit Wählen',
@@ -19,3 +20,4 @@
   };
   $.timepicker.setDefaults($.timepicker.regional['de']);
 })(jQuery);
+});

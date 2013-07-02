@@ -37,10 +37,7 @@ module.exports = (grunt)->
         }
       }
     }
-    requirejs:
-      compile:
-        options:
-          mainConfigFile: "public/app.build.js"
+    requirejs: compile: options: mainConfigFile: 'public/app.build.js'
     handlebars:
       options:
         namespace: 'Em.TEMPLATES'

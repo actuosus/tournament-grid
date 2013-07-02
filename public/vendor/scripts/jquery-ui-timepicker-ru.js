@@ -1,5 +1,6 @@
 /* Russian translation for the jQuery Timepicker Addon */
 /* Written by Trent Richardson */
+define('jquery.ui.timepicker.ru', ['jquery.ui.timepicker'], function(){
 (function($) {
   $.timepicker.regional['ru'] = {
     timeOnlyTitle: 'Выберите время',
@@ -19,3 +20,4 @@
   };
   $.timepicker.setDefaults($.timepicker.regional['ru']);
 })(jQuery);
+});

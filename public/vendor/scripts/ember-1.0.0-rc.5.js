@@ -1,7 +1,7 @@
 // Version: v1.0.0-rc.5-30-gc5ea0e2
 // Last commit: c5ea0e2 (2013-06-05 19:59:58 -0700)
 
-define('ember', ['jquery'], function(){
+define('ember', ['jquery', 'handlebars'], function(jQuery, Handlebars){
 (function() {
   /*global __fail__*/
 
