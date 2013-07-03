@@ -13,7 +13,7 @@ define [
 ], ->
   App.Router.map ->
     @route 'index', path: '*.'
-    @route 'index', path: ''
+#    @route 'index', path: ''
     @resource 'stages', ->
       @route 'new'
       @resource 'stage', path: '/:stage_id'
@@ -23,7 +23,7 @@ define [
     setupController: (controller, model)->
 #      @_super controller, model
       # Preloading countries
-      console.debug 'Preloading countries…'
+      console.debug 'Preloading countries…' if window.DEBUG
       App.countries = App.Country.find()
 
 #      App.set 'isEditingMode', yes

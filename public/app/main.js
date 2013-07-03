@@ -37,17 +37,16 @@ require([
   'ember-data',
 //  'ember-history',
   'modernizr.columns',
-  'cs!app/core',
-//  'cs!app/application'
+  'cs!app/core'
 ], function(){
-  if (window.debug) {
+  if (window.DEBUG) {
     var statusElement = document.getElementById('status');
     if (statusElement && statusElement.parentNode) {
       statusElement.parentNode.removeChild(statusElement);
     }
   }
   require(['cs!app/application'], function(){
-    console.time('Loading');
+    if (window.DEBUG) console.time('Loading');
     if (window.hooks) { window.hooks() }
     App.advanceReadiness();
   });

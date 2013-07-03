@@ -20,7 +20,7 @@ define [
 
     selectionChanged: ((stage)->
       stage = @get 'selection.content'
-      console.log 'Selection changed', stage
+#      console.log 'Selection changed', stage
       return Em.View.create() unless stage
       switch stage.get 'visualType'
         when 'single', 'grid'

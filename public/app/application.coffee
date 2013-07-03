@@ -51,21 +51,17 @@ define [
   App.ready = ->
     window.onAppReady?(App)
 
-    Ember.subscribe 'render',
-      before: (name, start, payload)-> start
-      after: (name, end, payload, start)->
-        duration = Math.round(end - start)
-#        console.log(name, payload, duration, 'ms')
-        if payload?.object?.match /MatchGridContainer|GridView/
-          console.log('rendered', payload, 'took', duration, 'ms')
-#        template = payload.template
-#        if template
-#          console.log('rendered', template, 'took', duration, 'ms')
-
-#    App.set 'entrantsController', App.EntrantsController.create()
-#    App.set 'countriesController', App.CountriesController.create()
-#    App.set 'teamsController', App.TeamsController.create()
-#    App.set 'playersController', App.PlayersController.create()
+    if window.DEBUG
+      Ember.subscribe 'render',
+        before: (name, start, payload)-> start
+        after: (name, end, payload, start)->
+          duration = Math.round(end - start)
+  #        console.log(name, payload, duration, 'ms')
+          if payload?.object?.match /MatchGridContainer|GridView/
+            console.log('rendered', payload, 'took', duration, 'ms')
+  #        template = payload.template
+  #        if template
+  #          console.log('rendered', template, 'took', duration, 'ms')
 
     App.addObserver 'isEditingMode', ->
       if App.get 'isEditingMode'
@@ -148,4 +144,4 @@ define [
 ##          @set 'parentView.isVisible', no
 
 
-    console.timeEnd('Loading');
+    console.timeEnd('Loading') if window.DEBUG

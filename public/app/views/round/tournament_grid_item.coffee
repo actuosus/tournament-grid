@@ -32,7 +32,7 @@ define [
 
       didInsertElement: ->
         round = @get 'parentView.content'
-        console.log round
+#        console.log round
         roundIndex = round.get('sortIndex')
         bracketName = round.get 'bracketName'
         if bracketName is 'loser' and roundIndex%2

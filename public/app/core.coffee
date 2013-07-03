@@ -50,7 +50,7 @@ define [
 
   App = Em.Application.create appConfig
 
-  if window.debug
+  if window.DEBUG
     App.LOG_TRANSITIONS = yes
     App.LOG_TRANSITIONS_INTERNAL = yes
     App.LOG_VIEW_LOOKUPS = yes
