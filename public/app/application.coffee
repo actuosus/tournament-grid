@@ -56,7 +56,7 @@ define [
       after: (name, end, payload, start)->
         duration = Math.round(end - start)
 #        console.log(name, payload, duration, 'ms')
-        if payload?.object?.match /MatchGridContainer/
+        if payload?.object?.match /MatchGridContainer|GridView/
           console.log('rendered', payload, 'took', duration, 'ms')
 #        template = payload.template
 #        if template

@@ -1,5 +1,7 @@
 /* Italian initialisation for the jQuery UI date picker plugin. */
 /* Written by Antonello Pasella (antonello.pasella@gmail.com). */
+
+define('jquery.ui.datepicker-de', ['jquery-ui'], function () {
 jQuery(function($){
 	$.datepicker.regional['it'] = {
 		closeText: 'Chiudi',
@@ -20,4 +22,5 @@ jQuery(function($){
 		showMonthAfterYear: false,
 		yearSuffix: ''};
 	$.datepicker.setDefaults($.datepicker.regional['it']);
+});
 });

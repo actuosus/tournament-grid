@@ -8,7 +8,7 @@
 
 define ['cs!../core'],->
   App.GridView = Em.CollectionView.extend
-    templateName: 'grid'
+#    templateName: 'grid'
     classNames: ['grid']
 
 #    reorderDelegate: null

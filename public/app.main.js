@@ -38,10 +38,9 @@ requirejs.config({
     'coffee-script': '/vendor/scripts/coffee-script',
 //    'iced-coffee-script': '/vendor/scripts/coffee-script-iced-large',
     'transit': '/vendor/scripts/jquery.transit.min',
-    'handlebars': '/vendor/scripts/handlebars',
+    'handlebars': '/vendor/scripts/handlebars-1.0.0',
     'ember': [
-      '/vendor/scripts/ember-1.0.0-rc.5',
-      '/vendor/scripts/ember.prod'
+      '/vendor/scripts/ember-1.0.0-rc.6'
     ],
     'ember-data': '/vendor/scripts/ember-data.r13',
     'ember-history': '/vendor/scripts/ember-history',

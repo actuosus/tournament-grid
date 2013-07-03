@@ -7,7 +7,7 @@
 
 define [
   'cs!../../core'
-  'cs!./grid_item'
+  'cs!./item'
 ], ->
   App.MatchGridContainer = Em.ContainerView.extend App.ContextMenuSupport,# App.VisualySelectable,
     classNames: ['grid-container', 'match-grid-container']
@@ -50,6 +50,7 @@ define [
 
     contentView: App.GridView.extend
       classNames: ['match-grid']
-      itemViewClass: App.MatchGridItemView
+      itemViewClass: App.MatchItemView.extend
+        classNames: ['match-grid-item']
       stageBinding: 'parentView.stage'
       contentBinding: 'parentView.content'

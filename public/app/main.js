@@ -8,14 +8,23 @@
 
 requirejs.config({
   paths: {
-    'jquery': 'http://yandex.st/jquery/2.0.2/jquery.min.js',
+    'jquery': 'http://yandex.st/jquery/2.0.2/jquery.min',
+    'jquery.cookie': 'http://yandex.st/jquery/cookie/1.0/jquery.cookie.min',
+    'jquery-ui': 'http://yandex.st/jquery-ui/1.10.3/jquery-ui.min',
+    'jquery.mousewheel': 'http://yandex.st/jquery/mousewheel/3.0.6/jquery.mousewheel.min',
     'socket.io': 'http://v3.virtuspro.org:33891/socket.io/socket.io'
+  },
+  shim: {
+    'jquery-ui': ['jquery'],
+    'jquery.cookie': ['jquery'],
+    'jquery.mousewheel': ['jquery'],
+    'ember': ['jquery', 'handlebars']
   }
 })
 
 require([
 //  'css!./stylesheets/main',
-  'jquery',
+//  'jquery',
   'jquery.mousewheel',
   'jquery.scrollTo',
   'jquery.cookie',
@@ -29,11 +38,13 @@ require([
 //  'ember-history',
   'modernizr.columns',
   'cs!app/core',
-  'cs!app/application'
+//  'cs!app/application'
 ], function(){
   if (window.debug) {
     var statusElement = document.getElementById('status');
-    statusElement.parentNode.removeChild(statusElement);
+    if (statusElement && statusElement.parentNode) {
+      statusElement.parentNode.removeChild(statusElement);
+    }
   }
   require(['cs!app/application'], function(){
     console.time('Loading');
