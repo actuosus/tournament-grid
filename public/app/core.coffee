@@ -186,6 +186,29 @@ define [
           return key
         key + '_id'
 
+
+    didCreateRecord: (store, type, record, payload)->
+      @_super(store, type, record, payload)
+      App.get('socketController').socket.emit 'message', JSON.stringify
+        action: 'create'
+        model: type.toString()
+        _id: @serializer.extractId(type, payload[@serializer.rootForType(type)])
+
+    didUpdateRecord: (store, type, record, payload)->
+      @_super(store, type, record, payload)
+      App.get('socketController').socket.emit 'message', JSON.stringify
+        action: 'update'
+        model: type.toString()
+        _id: @serializer.extractId(type, payload[@serializer.rootForType(type)])
+
+    didDeleteRecord: (store, type, record, payload)->
+      @_super(store, type, record, payload)
+      App.get('socketController').socket.emit 'message', JSON.stringify
+        action: 'remove'
+        model: type.toString()
+        _id: @serializer.extractId(type, payload[@serializer.rootForType(type)])
+
+
   App.store = App.Store.create
 #    revision: 12
     adapter: App.Adapter.create()

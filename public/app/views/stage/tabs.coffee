@@ -42,7 +42,9 @@ define [
             showFilterForm: no
             tableItemViewClass: 'App.MatchGroupTableItemView'
         when 'matrix'
-          matchesController = App.MatchesController.create(stage: stage, contentBinding: 'stage.matches')
+          matchesController = App.MatchesController.create
+            stage: stage
+            contentBinding: 'stage.rounds.firstObject.matches'
           contentView = App.MatchGridContainer.create
             container: @get 'container'
             stage: stage
