@@ -164,6 +164,26 @@ define [
 
       addAttribute: (hash, key, value)-> hash[key] = value if value
 
+      addBelongsTo: (hash, record, key, relationship)->
+        type = record.constructor
+        name = relationship.key
+        value = null
+        includeType = relationship.options and relationship.options.polymorphic
+
+        if @embeddedType type, name
+          if embeddedChild = Em.get record, name
+            value = @serialize embeddedChild, { includeId: true, includeType: includeType }
+          hash[key] = value if value
+        else
+          child = Em.get(record, relationship.key)
+          id = Em.get(child, 'id')
+
+          if relationship.options and relationship.options.polymorphic and not Ember.isNone(id)
+            @addBelongsToPolymorphic hash, key, id, child.constructor
+          else
+            serializedId = @serializeId id
+            hash[key] = serializedId if serializedId
+
     didCreateRecord: (store, type, record, payload)->
       @_super(store, type, record, payload)
       App.get('socketController').socket.emit 'message', JSON.stringify

@@ -8,9 +8,15 @@
 
 requirejs.config({
   paths: {
-    'jquery': 'http://yandex.st/jquery/2.0.2/jquery.min',
+    'jquery': [
+      'http://yandex.st/jquery/2.0.2/jquery.min',
+      '//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min'
+    ],
     'jquery.cookie': 'http://yandex.st/jquery/cookie/1.0/jquery.cookie.min',
-    'jquery-ui': 'http://yandex.st/jquery-ui/1.10.3/jquery-ui.min',
+    'jquery-ui': [
+      'http://yandex.st/jquery-ui/1.10.3/jquery-ui.min',
+      '//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min'
+    ],
     'jquery.mousewheel': 'http://yandex.st/jquery/mousewheel/3.0.6/jquery.mousewheel.min',
     'socket.io': 'http://v3.virtuspro.org:33891/socket.io/socket.io'
   },
@@ -20,7 +26,7 @@ requirejs.config({
     'jquery.mousewheel': ['jquery'],
     'ember': ['jquery', 'handlebars']
   }
-})
+});
 
 require([
 //  'css!./stylesheets/main',
@@ -46,8 +52,8 @@ require([
     }
   }
   require(['cs!app/application'], function(){
-    if (window.DEBUG) console.time('Loading');
-    if (window.hooks) { window.hooks() }
+    if (window.DEBUG) { console.time('Loading'); }
+    if (window.hooks) { window.hooks(); }
     App.advanceReadiness();
   });
 });
