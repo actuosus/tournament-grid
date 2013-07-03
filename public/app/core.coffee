@@ -59,30 +59,6 @@ define [
   window.TournamentGrid = TournamentGrid
   window.App = App
 
-#  DS.RecordArray.reopen
-#    onLoad: (callback)->
-#      if @get 'isLoaded'
-#        callback this
-#      else
-#        that = @
-#        isLoadedFn = ->
-#          if that.get 'isLoaded'
-#            that.removeObserver 'isLoaded', isLoadedFn
-#            callback that
-#      @addObserver 'isLoaded', isLoadedFn
-#      @
-#
-#  DS.RESTAdapter.reopen
-#    findQuery: (store, type, query, recordArray)->
-#      root = @rootForType type
-#
-#      req = @ajax @buildURL(root), 'GET',
-#        data: query,
-#        success: (json)->
-#          Ember.run @, -> @didFindQuery(store, type, json, recordArray)
-#      recordArray.req = req
-#      req
-
   DS.RESTAdapter.configure 'plurals',
     country: 'countries'
     match: 'matches'
@@ -186,6 +162,7 @@ define [
           return key
         key + '_id'
 
+      addAttribute: (hash, key, value)-> hash[key] = value if value
 
     didCreateRecord: (store, type, record, payload)->
       @_super(store, type, record, payload)
