@@ -467,13 +467,13 @@ input.match-start-date {
 .icon-lock {
     width: 10px;
     height: 12px;
-    background-image: url('/images/lock.svg');
+    background-image: url('/images/unlock.svg');
     background-repeat: no-repeat;
     background-position: center;
     background-size: 100%;
     opacity: 0.3;
 }
 
-.icon-lock.is-opened {
-    background-image: url('/images/unlock.svg');
+.icon-lock.is-closed {
+    background-image: url('/images/lock.svg');
 }

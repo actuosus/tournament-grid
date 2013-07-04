@@ -2725,6 +2725,7 @@ body .ui-tooltip {
 }
 .tournament-grid-container {
     overflow: hidden;
+    position: relative;
 }
 .tournament-grid-container .fullscreen-btn {
     position: absolute;
@@ -2735,6 +2736,10 @@ body .ui-tooltip {
     position: absolute;
     top: 20px;
     right: 20px;
+    z-index: 10;
+    background-color: rgba(255,255,255,0.75);
+    padding: 10px;
+    border-radius: 5px;
 }
 .tournament-grid {
     overflow: hidden;
@@ -3814,12 +3819,12 @@ input.match-start-date {
 .icon-lock {
     width: 10px;
     height: 12px;
-    background-image: url('/images/lock.svg');
+    background-image: url('/images/unlock.svg');
     background-repeat: no-repeat;
     background-position: center;
     background-size: 100%;
     opacity: 0.3;
 }
-.icon-lock.is-opened {
-    background-image: url('/images/unlock.svg');
+.icon-lock.is-closed {
+    background-image: url('/images/lock.svg');
 }

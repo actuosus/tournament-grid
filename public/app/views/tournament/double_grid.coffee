@@ -10,10 +10,10 @@ define [
   'cs!../team/list'
   'cs!../round/tournament_grid_item'
   'cs!../../mixins/map_control'
+  'cs!./grid'
 ], ->
-  App.NewDoubleTournamentGridView = Em.ContainerView.extend App.MapControl, App.ContextMenuSupport,
+  App.NewDoubleTournamentGridView = App.TournamentGridView.extend App.ContextMenuSupport,
     classNames: ['tournament-grid-wrapper']
-    childViews: ['contentView']
 
     shouldShowContextMenuBinding: 'App.isEditingMode'
     contextMenuActions: ['showTeamList']

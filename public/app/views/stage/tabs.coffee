@@ -8,7 +8,8 @@
 define [
   'cs!../../core'
   'cs!../group_grid'
-  'cs!../grid'
+  'cs!../tournament/single_grid'
+  'cs!../tournament/double_grid'
   'cs!../standing_table'
   'cs!../match/grid_container'
   'cs!../../controllers/matches'

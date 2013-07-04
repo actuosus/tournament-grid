@@ -56,7 +56,7 @@ define [
     lockView: Em.View.extend
       tagName: 'i'
       classNames: ['icon-lock']
-      classNameBindings: ['parentView.content.isOpened']
+      classNameBindings: ['parentView.content.isClosed']
       isVisibleBinding: 'parentView._isEditing'
 
       doubleClick: ->

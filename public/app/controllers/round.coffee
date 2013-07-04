@@ -16,6 +16,7 @@ define ->
     createRecord: ->
       record = App.Round.createRecord
         sortIndex: @sortIndex
+        title: @title
         bracketName: @bracketName
       record.set 'stage', @get 'stage'
       record
