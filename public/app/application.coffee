@@ -70,11 +70,10 @@ define [
         $(App.get('rootElement')).removeClass 'is-editing'
 
     App.set 'notificationsController', App.NotificationsController.create()
-#
-##    TODO Socket support
-#    App.socketController = App.SocketController.create()
-#    App.socketController.connect()
-#    App.socketController.join()
+
+    App.socketController = App.SocketController.create()
+    App.socketController.connect()
+    App.socketController.join()
 
     App.peroids = Em.ArrayController.create
       content: [

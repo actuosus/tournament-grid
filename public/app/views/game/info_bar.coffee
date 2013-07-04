@@ -26,7 +26,8 @@ define [
 
     infoLabelView: Em.View.extend
       tagName: 'a'
-      attributeBindings: ['href']
+      attributeBindings: ['href', 'target']
+      target: '_blank'
       hrefBinding: 'match.link'
       classNames: ['games-info-bar-label']
       isVisibleBinding: 'parentView.showInfoLabel'
