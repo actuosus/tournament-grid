@@ -120,7 +120,7 @@ define [
     ).property('match.winner')
 
     mouseEnter: ->
-      if @get('isEditable')
+      if @get('_isEditing')
         @set 'resetButtonView.isVisible', yes if @get 'content'
       entrant = @get 'content'
       entrant.set('isHighlighted', yes) if entrant

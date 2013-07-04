@@ -13,7 +13,7 @@ define [
   App.NewTournamentGridView = Em.ContainerView.extend App.MapControl,
     classNames: ['tournament-grid-container']
 
-    childViews: ['contentView']
+    childViews: ['toolboxView', 'contentView']
 
     entrantsNumber: 4
 
@@ -24,12 +24,27 @@ define [
 
     toolboxView: Em.ContainerView.extend
       classNames: ['toolbox']
-      childViews: ['triggerButtonView']
+      childViews: ['resetButtonView', 'zoomInButtonView', 'zoomOutButtonView']
 
-      triggerButtonView: Em.View.extend
+      mapViewBinding: 'parentView'
+
+      zoomInButtonView: Em.View.extend
         tagName: 'button'
-        click: ->
-          @toggleProperty 'parentView.parentView.isSingle'
+        mapViewBinding: 'parentView.mapView'
+        template: Em.Handlebars.compile '+'
+        click: -> @get('mapView').zoomIn(animated = yes)
+
+      zoomOutButtonView: Em.View.extend
+        tagName: 'button'
+        mapViewBinding: 'parentView.mapView'
+        template: Em.Handlebars.compile '-'
+        click: -> @get('mapView').zoomOut(animated = yes)
+
+      resetButtonView: Em.View.extend
+        tagName: 'button'
+        mapViewBinding: 'parentView.mapView'
+        template: Em.Handlebars.compile '☒'
+        click: -> @get('mapView').resetPosition(animated = yes)
 
   # Rounds
     content: (->

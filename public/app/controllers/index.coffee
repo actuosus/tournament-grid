@@ -20,5 +20,5 @@ define [
 
   'cs!./notifications'
 
-  'cs!./socket'
+#  'cs!./socket'
 ]

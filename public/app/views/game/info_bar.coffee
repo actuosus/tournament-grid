@@ -22,9 +22,12 @@ define [
 
     matchBinding: 'parentView.content'
     
-    showInfoLabel: Em.computed.bool 'content.length'
+    showInfoLabel: Em.computed.notEmpty 'match.link'
 
     infoLabelView: Em.View.extend
+      tagName: 'a'
+      attributeBindings: ['href']
+      hrefBinding: 'match.link'
       classNames: ['games-info-bar-label']
       isVisibleBinding: 'parentView.showInfoLabel'
       template: Em.Handlebars.compile "{{loc '_info'}}"

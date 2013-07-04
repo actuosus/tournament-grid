@@ -13,7 +13,6 @@ define ['cs!../core'],->
     title: DS.attr 'string'
     description: DS.attr 'string'
     date: DS.attr 'date'
-    url: DS.attr 'string'
     map_type: DS.attr 'string'
     status: DS.attr 'string', {defaultValue: 'opened'}
     type: DS.attr 'string'
@@ -37,7 +36,9 @@ define ['cs!../core'],->
       not Em.isEmpty(@get('entrant1_points')) and not Em.isEmpty(@get('entrant2_points'))
     ).property('entrant1_points', 'entrant2_points')
 
-    link: (-> "/matches/#{@get 'id'}" ).property('url')
+    link: DS.attr 'string'
+
+    url: Em.computed.alias 'link'
 
     currentStatus: (->
       status = @get 'status'

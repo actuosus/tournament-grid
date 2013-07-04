@@ -49,8 +49,8 @@ requirejs.config({
 //    'three': '/vendor/scripts/three',
     'screenfull': '/vendor/scripts/screenfull.min',
     'jquery-ui': [
-      'http://yandex.st/jquery-ui/1.10.3/jquery-ui.min',
-      '//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min',
+//      'http://yandex.st/jquery-ui/1.10.3/jquery-ui.min',
+//      '//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min',
       '/vendor/scripts/jquery-ui-1.10.3.custom'
     ],
     'jquery.ui.datepicker-ru': '/vendor/scripts/jquery.ui.datepicker-ru',

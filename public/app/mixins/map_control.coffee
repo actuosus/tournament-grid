@@ -27,6 +27,28 @@ define ['cs!../core'],->
 
     scaleTimer: null
 
+    zoomIn: (animated)->
+      scale = @get 'scale'
+      scale = scale*1.2
+      if animated
+        @doScaleAnimated scale
+      else
+        @doScale scale
+
+    zoomOut: (animated)->
+      scale = @get 'scale'
+      scale = scale/1.2
+      if animated
+        @doScaleAnimated scale
+      else
+        @doScale scale
+
+    resetPosition: (animated)->
+      if animated
+        @doMoveAnimated {x: 0, y: 0}
+      else
+        @doMove {x: 0, y: 0}
+
     mouseWheel: (event)->
       if event.shiftKey
         offset = @$().offset()
@@ -49,6 +71,13 @@ define ['cs!../core'],->
         css = scale: scale
         css['transformOrigin'] = transformOrigin if transformOrigin
         @get('contentView').$().css css
+        @set('scale', scale)
+
+    doScaleAnimated: (scale, transformOrigin)->
+      if @canScale(scale)
+        css = scale: scale
+        css['transformOrigin'] = transformOrigin if transformOrigin
+        @get('contentView').$().transition css
         @set('scale', scale)
 
     mouseDown: (event)->
@@ -75,6 +104,14 @@ define ['cs!../core'],->
     doMove: (newPosition)->
       scale = @get('scale')
       @get('contentView').$().css
+        x: newPosition.x / scale
+        y: newPosition.y / scale
+        scale: scale
+      @set 'lastPosition', newPosition
+
+    doMoveAnimated: (newPosition)->
+      scale = @get('scale')
+      @get('contentView').$().transition
         x: newPosition.x / scale
         y: newPosition.y / scale
         scale: scale

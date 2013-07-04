@@ -17,6 +17,7 @@ module.exports.Match = [
   round_id: '50fd4a58cbbf53a72a000002'
   map_type: 'Хумельсдорф'
   description: 'Дополнительно описание, которе вбивается'
+  link: '/check/this/out'
 ,
   _id: '50fd102c3612183b15000002',
   title: 'Stephano vs Bly',
@@ -28,6 +29,7 @@ module.exports.Match = [
   round_id: '50fd4a58cbbf53a72a000002'
   map_type: 'Хумельсдорф'
   description: 'Еще какое-то описание, дополняющее текст'
+  link: '/check/that/out'
   games: ['5111afa9c3a093c8a1000002', '5111afa9c3a093c8a1000003', '5111afa9c3a093c8a1000004']
 ,
   _id: '50fd102c3612183b15000003',
@@ -98,6 +100,7 @@ module.exports.Match = [
   round_id: '51142b464242d3110c000002'
   map_type: 'Хумельсдорф'
   description: 'Дополнительно описание, которе вбивается'
+  link: '/check/that/out'
 ,
   _id: '51142bdc323f4b360c000003',
   title: 'Stephano vs Bly',
@@ -110,6 +113,7 @@ module.exports.Match = [
   map_type: 'Хумельсдорф'
   description: 'Еще какое-то описание, дополняющее текст'
   games: ['5111afa9c3a093c8a1000002', '5111afa9c3a093c8a1000003', '5111afa9c3a093c8a1000004']
+  link: '/check/that/out'
 ,
   _id: '51142bdc323f4b360c000004',
   title: 'Umitara vs Bly',

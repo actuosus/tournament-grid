@@ -19,6 +19,7 @@ MatchSchema = new Schema
   date: type: Date # editable
   map_type: type: String # editable
   type: type: String
+  link: type: String
   status: type: String, default: 'opened'
 
   entrant1_id: type: ObjectId, ref: 'Team' # editable
