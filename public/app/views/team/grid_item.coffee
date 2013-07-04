@@ -121,8 +121,7 @@ define [
 
     mouseEnter: ->
       if @get('isEditable')
-        unless @get('match.isLocked')
-          @set 'resetButtonView.isVisible', yes if @get 'content'
+        @set 'resetButtonView.isVisible', yes if @get 'content'
       entrant = @get 'content'
       entrant.set('isHighlighted', yes) if entrant
 
