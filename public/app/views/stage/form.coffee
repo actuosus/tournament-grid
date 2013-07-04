@@ -72,6 +72,7 @@ define [
           stage = report.createStageByMatchesNumber parseInt(@$('.team-matches-number').val(), 10)
 ##      stage = App.Stage.createRecord
 #      stage.set 'name', @$('.name').val()
+      stage.set 'sortIndex', report.get('stages.length')
       stage.set 'report', report
       stage.set 'title', @get 'content.title'
       stage.set 'rating', @get 'content.rating'
