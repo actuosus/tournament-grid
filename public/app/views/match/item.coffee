@@ -42,10 +42,10 @@ define [
         node.set('isSelected', no)
         node = node.get('parentNode')
 
-    click: ->
-      url = @get 'content.url'
-      # Redirect to match URL
-      document.location.href = url if url
+#    click: ->
+#      url = @get 'content.url'
+#      # Redirect to match URL
+#      document.location.href = url if url
 
     dateView: App.DateWithPopupView.extend
       classNames: ['match-start-date']
