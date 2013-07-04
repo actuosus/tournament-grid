@@ -72,12 +72,15 @@ define [
             entrants = teamRefs.map (ref)-> ref.get('team')
             return if entrants.contains team
             teamRef = teamRefs.createRecord team: team
-            team.get('players').on 'didLoad', ->
-              team.get('players').forEach (player)->
-                teamRef.get('players').addObject player
-              teamRef.store.commit()
-            team.get('players').fetch()
-            teamRef.store.commit()
+            teamRef.on 'didCreate', ->
+              team.get('players').on 'didLoad', ->
+                team.get('players').forEach (player)->
+                  player.set 'teamRef', teamRef
+                  player.save()
+                  teamRef.get('players').addObject player
+#              teamRef.save()
+              team.get('players').fetch()
+            teamRef.save()
 
         insertNewline: ->
           @addTeam @get 'selection'

@@ -23,9 +23,9 @@ define [
       contentBinding: 'parentView.content'
       valueBinding: 'content.title'
       isEditableBinding: 'App.isEditingMode'
-      valueChanged: (->
-        @get('content').save()
-      ).observes('value')
+#      valueChanged: (->
+#        @get('content').save()
+#      ).observes('value')
 
     contentView: Em.CollectionView.extend
       classNames: ['tournament-round']
