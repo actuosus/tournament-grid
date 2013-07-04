@@ -162,7 +162,7 @@ define [
           return key
         key + '_id'
 
-      addAttribute: (hash, key, value)-> hash[key] = value if value
+      addAttribute: (hash, key, value)-> hash[key] = value unless Em.isEmpty value
 
       addBelongsTo: (hash, record, key, relationship)->
         type = record.constructor
@@ -182,7 +182,7 @@ define [
             @addBelongsToPolymorphic hash, key, id, child.constructor
           else
             serializedId = @serializeId id
-            hash[key] = serializedId if serializedId
+            hash[key] = serializedId unless Em.isEmpty serializedId
 
     didCreateRecord: (store, type, record, payload)->
       @_super(store, type, record, payload)

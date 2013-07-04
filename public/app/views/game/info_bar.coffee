@@ -82,7 +82,7 @@ define [
           )
           popup.appendTo App.get 'rootElement'
 
-        deleteRecord: -> @get('content').deleteRecord().commit()
+        deleteRecord: -> @get('content').deleteRecord().get('store').commit()
         click: (event)->
           return unless App.get('isEditingMode')
           event.preventDefault()
