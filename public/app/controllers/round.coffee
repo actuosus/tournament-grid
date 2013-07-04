@@ -9,7 +9,12 @@ define ->
   App.RoundController = Em.ObjectController.extend
     isSelected: no
 
-    save: -> @get('content.store').commit()
+    save: ->
+      content = @get('content')
+      unless content
+        content = @createRecord()
+        @set 'content', content
+      content.save()
 
     deleteRecord: -> @get('content').deleteRecord()
 
@@ -20,6 +25,10 @@ define ->
         bracketName: @bracketName
       record.set 'stage', @get 'stage'
       record
+
+    titleChanged: (->
+      @get('content')?.set 'title', @title
+    ).observes('title')
 
     setUnknownProperty: (key, value)->
       content = @get 'content'

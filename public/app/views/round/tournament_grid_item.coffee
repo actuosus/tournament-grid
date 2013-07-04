@@ -20,8 +20,12 @@ define [
     titleView: App.EditableLabel.extend
       # TODO Rename to round-title in CSS
       classNames: ['round-name', 'round-title']
-      valueBinding: 'parentView.content.title'
+      contentBinding: 'parentView.content'
+      valueBinding: 'content.title'
       isEditableBinding: 'App.isEditingMode'
+      valueChanged: (->
+        @get('content').save()
+      ).observes('value')
 
     contentView: Em.CollectionView.extend
       classNames: ['tournament-round']

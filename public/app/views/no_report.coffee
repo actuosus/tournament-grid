@@ -5,7 +5,7 @@
  * Time: 18:16
 ###
 
-define ->
+define ['cs!./named_container'], ->
   App.NoReportView = App.NamedContainerView.extend
     title: 'No report'
     contentView: Em.View.extend

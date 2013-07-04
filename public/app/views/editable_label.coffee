@@ -48,7 +48,6 @@ define ['cs!../core'],->
         @$().removeClass('active')
 
     focusIn: ->
-      console.log 'focusIn', @
       @set 'hasFocus', yes
 #      @$().select()
 
@@ -61,7 +60,7 @@ define ['cs!../core'],->
           when 'html'
             value = @$().html()
 
-        @setValue (value)
+        @setValue value
         @$().removeAttr 'contentEditable'
 
     setValue: (value)->
@@ -76,10 +75,3 @@ define ['cs!../core'],->
             when 'html'
               @$().html(@get 'value')
     ).observes('value')
-
-    keyDown: (event)->
-      console.log 'keyDown', event
-
-    keyUp: (event)->
-      console.log 'keyUp', event
-#      @set 'value', @$().text()
