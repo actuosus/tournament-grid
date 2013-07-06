@@ -67,6 +67,11 @@ define ['cs!../core'],->
           transformOriginX = "#{targetWidth/2}"
         else if origin is 'top'
           offset = target.$().offset()
+          rootElement = App.get('rootElement')
+          if rootElement
+            rootElementOffset = $(rootElement).offset()
+            offset.top -= rootElementOffset.top
+            offset.left -= rootElementOffset.left
           # Centered horizontaly
           offset.left += targetWidth/2 - dimensions.width/2
           offset.top -= dimensions.height

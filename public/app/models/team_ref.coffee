@@ -18,6 +18,8 @@ define ['cs!../core'],->
     match: DS.belongsTo('App.Match', {inverse: 'teamRefs'})
     captain: DS.belongsTo 'App.Player'
 
+    teamRef: (-> @).property()
+
     players: DS.hasMany('App.Player', {inverse: 'teamRef'})
 
     hasCaptain: (-> @get 'captain' ).property('players.@each.isCaptain')

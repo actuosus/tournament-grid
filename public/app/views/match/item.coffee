@@ -25,7 +25,7 @@ define [
     isEditable: (->
       isEditingMode = App.get('isEditingMode')
       status = @get 'content.status'
-      isEditingMode # and status is 'opened'
+      isEditingMode and status is 'opened'
     ).property('App.isEditingMode', 'content.status')
 
     _isEditingBinding: 'isEditable'

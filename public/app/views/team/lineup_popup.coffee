@@ -16,7 +16,14 @@ define ->
       childViews: ['nameView']
 
       nameView: Em.View.extend
-        contentBinding: 'parentView.content'
+        content: (->
+          content = @get 'parentView.content'
+          if App.TeamRef.detectInstance content
+            content.get 'team'
+          else
+            content
+        ).property('parentView.content')
+#        contentBinding: 'parentView.content'
         classNames: ['lineup-list-name']
         href: (->
           '/teams/%@'.fmt @get 'content.id'

@@ -30,6 +30,11 @@ define ['cs!../core'],->
         "/teams/#{@get 'id'}"
     ).property('link')
 
+    teamRef: (->
+      teamRefs = App.get 'report.teamRefs'
+      teamRefs?.find (_)=> Em.isEqual _.get('team'), @
+    ).property()
+
     # Just for creation marking
     report: DS.belongsTo 'App.Report'
 

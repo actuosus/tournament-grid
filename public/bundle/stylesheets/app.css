@@ -3761,6 +3761,7 @@ input.match-start-date {
     margin-top: 2px;
     margin-left: 4px;
     font-size: 11px;
+    white-space: nowrap;
 }
 .match-filter-form-container {
     position: relative;

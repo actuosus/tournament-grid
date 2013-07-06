@@ -76,15 +76,16 @@ define [
 #      attributeBindings: ['href', 'target']
 #      target: '_blank'
 #      href: (-> "/teams/#{@get 'content.id'}").property('content')
-      content: (->
-        content = @get 'parentView.content'
+      name: (->
+        content = @get 'content'
         if App.TeamRef.detectInstance content
-          content.get 'team'
+          content.get 'team.name'
         else
-          content
-      ).property('parentView.content')
-#      contentBinding: 'parentView.content'
-      template: Em.Handlebars.compile '{{view.content.name}}'
+          content.get 'name'
+      ).property('content')
+
+      contentBinding: 'parentView.content'
+      template: Em.Handlebars.compile '{{view.name}}'
 
       click: ->
         autocompleteView = @get 'parentView.autocompleteView'
@@ -96,9 +97,10 @@ define [
         @set 'shouldShowPopup', yes
         Em.run.later =>
           if @get 'shouldShowPopup'
+            console.log @get 'content'
             @lineupPopup = App.TeamLineupPopupView.create
               target: @
-              content: @get 'content'
+              content: @get 'content.teamRef'
               origin: 'top'
             @lineupPopup.appendTo App.get 'rootElement'
         , 300
