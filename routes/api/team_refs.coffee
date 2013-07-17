@@ -46,6 +46,8 @@ exports.create = (req, res) ->
 exports.update = (req, res)->
   if req.body?.team_ref
     teamRef = req.body.team_ref
+    teamRef.captain_id = null unless teamRef.captain_id
+
     await TeamRef.findByIdAndUpdate req.params._id, { $set: teamRef }, defer err, doc
     res.send team_ref: doc
   else

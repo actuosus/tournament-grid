@@ -42,7 +42,7 @@ exports.create = (req, res) ->
       await stage.save defer err, stage
       res.send round: doc
     else
-      res.send 400, errors: 'stage_id required'
+      res.send 422, errors: {stage_id: 'required'}
   else
     res.send 400, errors: "server error"
 

@@ -29,6 +29,7 @@
     "ect": "latest",
     "iced-coffee-script": "latest",
     "mongoose": "latest",
+    "paginate": "latest",
     "passport": "latest",
     "passport-http": "latest",
     "moment": "latest",

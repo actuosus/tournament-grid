@@ -14,20 +14,24 @@ TeamRef = require('../../models').TeamRef
 Player = require('../../models').Player
 Report = require('../../models').Report
 
+paginate = require('paginate')({ mongoose: mongoose })
+
 #socket = require('../../io').getSocket()
 
 exports.list = (req, res)->
-  setTimeout ->
-    query = Player.find({})
-    query.where('_id').in(req.query?.ids) if req.query?.ids
-    if req.query?.name
-      reg = new RegExp req.query.name, 'i'
-      query.regex 'name', reg
-    if req.query?.nickname
-      reg = new RegExp req.query.nickname, 'i'
-      query.regex 'nickname', reg
-    query.exec (err, docs)-> res.send players: docs
-  , Math.round(Math.random() * 1000)
+  query = Player.find({})
+  query.where('_id').in(req.query?.ids) if req.query?.ids
+  if req.query?.name
+    reg = new RegExp req.query.name, 'i'
+    query.regex 'name', reg
+  if req.query?.nickname
+    reg = new RegExp req.query.nickname, 'i'
+    query.regex 'nickname', reg
+
+  query.paginate {
+    page: req.query.page
+    perPage: 10
+  }, (err, docs)-> res.send players: docs
 
 
 exports.item = (req, res)->

@@ -7,10 +7,13 @@
 ###
 
 util = require 'util'
+mongoose = require 'mongoose'
 
 Team = require('../../models').Team
 TeamRef = require('../../models').TeamRef
 Report = require('../../models').Report
+
+paginate = require('paginate')({ mongoose: mongoose })
 
 #socket = require('../../io').getSocket()
 
@@ -24,8 +27,21 @@ exports.list = (req, res)->
   if req.query?.name
     reg = new RegExp req.query.name, 'i'
     query.regex 'name', reg
-  query.exec (err, docs)->
-    res.send teams: docs
+  if req.query?.select
+    if (req.query.select instanceof Array) and req.query.select.length
+      selection = {}
+      req.query.select.forEach (_)-> selection[_] = 1
+      query.select selection
+    else
+      query.select req.query.select
+  query.paginate {
+    page: req.query.page
+    perPage: 10
+  }, (err, docs)->
+    console.log docs.pagination
+    data = teams: docs
+    data.pageCount = docs.pagination.pages.length if docs.pagination
+    res.send data
 
 
 exports.item = (req, res)->
