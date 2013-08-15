@@ -16,7 +16,7 @@ define [
 ], ->
   App.TeamLineupGridItem = Em.ContainerView.extend App.Editing, App.Droppable,
     classNames: ['lineup-grid-item', 'team-lineup-grid-item']
-    classNameBindings: ['content.isDirty', 'content.isVisualySelected']
+    classNameBindings: ['content.isDirty', 'content.isSaving', 'content.isVisualySelected']
     childViews: ['teamNameView', 'playersView']
     editingChildViews: ['addPlayerView']
 
@@ -147,80 +147,3 @@ define [
           player.set 'teamRef', @get('teamRef')
           player.set 'report', App.get('report')
           player.store.commit()
-
-
-#      contentView: App.AutocompleteTextField.extend
-#        controllerBinding: 'App.playersController'
-#        teamRefBinding: 'parentView.parentView.content'
-#        entrantBinding: 'parentView.parentView.content'
-#        attributeBindings: 'title'
-#        title: '_enter_player_name'.loc()
-#        placeholder: '_player_nickname'.loc()
-#
-#        filteredContent: (->
-#          content = @get 'content'
-#          entrants = @get 'teamRef.players'
-#          content?.filter (item)-> not entrants.contains item
-#        ).property('content.length', 'teamRef.players.length', 'some')
-#
-#        addPlayer: (player)->
-#          report = App.get('report')
-#          reportPlayers = report.get 'players'
-#          team = @get('teamRef.team')
-#          teamRef = @get('teamRef')
-#          players = @get('teamRef.players')
-#
-#          # Moving existing player
-#          if reportPlayers.contains player
-#            modalView = App.ModalView.create
-#              classNames: ['team']
-#              target: @get 'parentView.parentView'
-#            askMoveForm = App.AskMoveForm.create
-#              description: '_move_player_to_from'.loc player.get('nickname'), player.get('_teamRef.team.name'), teamRef.get('team.name')
-#            askMoveForm.on 'no', -> modalView.hide()
-#            askMoveForm.on 'yes', =>
-#              oldTeamRef = player.get('_teamRef')
-#              oldTeamRef.get('players').removeObject player
-#
-#              player.set 'teamRef', teamRef
-#              player.set 'team', team
-#              players.addObject player
-#              teamRef.store.commit()
-#              @notifyPropertyChange 'filteredContent'
-#              @get 'filteredContent'
-#
-#              modalView.hide()
-##            howIsTheCaptainForm = App.HowIsTheCaptainForm.create
-##              content: [player]
-#            modalView.pushObject askMoveForm
-##            modalView.pushObject howIsTheCaptainForm
-#            modalView.appendTo App.get 'rootElement'
-#            return
-#
-#          player.set 'teamRef', teamRef
-#          player.set 'team', team
-#          players.addObject player
-#          # TODO Should resolve captain.
-##          teamRef.set('captain', player) if player.get 'isCaptain'
-#          teamRef.store.commit()
-#
-#          @notifyPropertyChange 'filteredContent'
-#
-#          @get('textFieldView')?.$().val('')
-#
-#        insertNewline: ->
-#          player = @get 'value'
-#          unless player
-#            popup = @showAddForm(@)
-#            popup.onShow = => popup.get('formView')?.focus()
-#            popup.onHide = (player)=>
-#              if player
-#                @addPlayer player
-#                @focus()
-#          else
-#            @addPlayer player
-#
-#        valueChanged: (->
-#          player = @get 'value'
-#          @addPlayer player if player
-#        ).observes('value')

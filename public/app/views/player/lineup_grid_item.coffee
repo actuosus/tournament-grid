@@ -17,7 +17,8 @@ define [
 
     _isEditingBinding: 'App.isEditingMode'
 
-    contextMenuActions: ['setAsTheCaptain']
+    shouldShowContextMenuBinding: '_isEditing'
+    contextMenuActions: ['toggleAsTheCaptain', 'delete']
 
     toggleAsTheCaptain: ->
       teamRef = @get 'teamRef'

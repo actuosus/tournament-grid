@@ -10,6 +10,10 @@ define [
   'cs!../group_grid'
   'cs!../tournament/single_grid'
   'cs!../tournament/double_grid'
+  'cs!../tournament/canvas_grid'
+  'cs!../tournament/flat_grid'
+  'cs!../tournament/other_flat_grid'
+  'cs!../tournament/svg_grid'
   'cs!../standing_table'
   'cs!../match/grid_container'
   'cs!../../controllers/matches'
@@ -26,10 +30,18 @@ define [
       switch stage.get 'visualType'
         when 'single', 'grid'
           stage.get('matches')
-          contentView = App.NewTournamentGridView.create
+#          contentView = App.NewTournamentGridView.create
+#            container: @get 'container'
+#            stage: stage
+#            entrantsNumber: stage.get('entrantsNumber')
+#          contentView = App.CanvasTournamentGridView.create
+#          contentView = App.FlatTournamentGridView.create
+          contentView = App.OtherFlatTournamentGridView.create
+#          contentView = App.SVGTournamentGridView.create
             container: @get 'container'
             stage: stage
             entrantsNumber: stage.get('entrantsNumber')
+
         when 'double'
           contentView = App.NewDoubleTournamentGridView.create
             container: @get 'container'
@@ -51,13 +63,16 @@ define [
             stage: stage
             content: matchesController
         when 'team'
-          teamsController = App.ReportEntrantsController.create
-            searchPath: 'name'
-            stage: stage
-            contentBinding: 'stage.entrants'
+#          teamsController = App.ReportEntrantsController.create
+#            searchPath: 'name'
+#            stage: stage
+#            contentBinding: 'stage.entrants'
           matchesController = App.MatchesController.create
             round: stage.get('rounds.firstObject')
             content: stage.get('rounds.firstObject.matches')
+          teamsController = App.ReportEntrantsController.create
+            matchesController: matchesController
+            contentBinding: 'matchesController.entrants'
           contentView = App.StandingTableView.create
             container: @get 'container'
             classNames: ['for-team']
@@ -208,7 +223,7 @@ define [
           report: App.report
           content: Em.Object.create()
           didCreate: (stage)->
-            App.store.commit()
+            stage.save()
             stage.on 'didLoad', => router.transitionTo 'stage', stage
             stage.on 'didReload', => router.transitionTo 'stage', stage
             stage.on 'didCreate', (stage)=> router.transitionTo 'stage', stage

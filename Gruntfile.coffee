@@ -51,6 +51,9 @@ module.exports = (grunt)->
       minify_css:
         cmd: ->
           'node ./node_modules/grunt-contrib-requirejs/node_modules/requirejs/bin/r.js -o cssIn=./public/app/stylesheets/main.css out=./public/bundle/stylesheets/app.css'
+      copy_to_bundle:
+        cmd: ->
+          'cp ./public/vendor/scripts/require.min.js ./public/bundle/.'
     coffeelint:
       options:
         argv:
@@ -68,7 +71,7 @@ module.exports = (grunt)->
           module: true
           document: true
 
-  grunt.registerTask 'bundle', 'Create project bundle', ['clean', 'requirejs', 'exec']
+  grunt.registerTask 'bundle', 'Create project bundle', ['clean', 'requirejs', 'exec:minify_css', 'exec:copy_to_bundle']
 
 
   grunt.loadNpmTasks 'grunt-contrib-clean'

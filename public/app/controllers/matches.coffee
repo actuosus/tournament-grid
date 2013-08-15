@@ -51,6 +51,7 @@ define [
       if periodType and periodType.get('id') isnt 'all'
         content = content.filter (item)->
           d = item.get('date')
+          return unless d
           switch periodType.get('id')
             when 'today'
               today = new Date()
@@ -107,23 +108,30 @@ define [
 
     automaticCountingChanged: (->
       resultSets = @get 'round.resultSets'
+      console.count('automaticCountingChanged');
+      return if not resultSets or not App.get('isEditingMode')
 
       # Reset
       resultSets.forEach (resultSet)->
-        ['wins', 'losses', 'draw'].forEach (property)-> resultSet.set property, 0
+        ['matchesPlayed', 'wins', 'losses', 'draws'].forEach (property)->
+          resultSet.set property, 0 unless resultSet.get('isSaving')
 
       incrementPropertyForEntrant = (entrant, property, increment)->
         resultSet = resultSets.find (resultSet)-> Em.isEqual(resultSet.get('entrant.team'), entrant)
-        resultSet.incrementProperty property, increment if resultSet
+        resultSet.incrementProperty property, increment if resultSet and not resultSet.get('isSaving')
 
       unless @get 'round.automaticCountingDisabled'
         @forEach (match)->
+          return unless match.get 'isClosed'
           entrant1 = match.get('entrant1')
           entrant2 = match.get('entrant2')
           entrant1_points = match.get('entrant1_points')
           entrant2_points = match.get('entrant2_points')
 
-          if entrant1_points and entrant2_points
+          incrementPropertyForEntrant entrant1, 'matchesPlayed' if entrant1
+          incrementPropertyForEntrant entrant2, 'matchesPlayed' if entrant2
+
+          unless Em.isEmpty(entrant1_points) and Em.isEmpty(entrant2_points)
             if entrant1_points > entrant2_points
               incrementPropertyForEntrant entrant1, 'wins' if entrant1
               incrementPropertyForEntrant entrant2, 'losses' if entrant2
@@ -133,10 +141,11 @@ define [
             else
               incrementPropertyForEntrant entrant1, 'losses' if entrant1
               incrementPropertyForEntrant entrant2, 'wins' if entrant2
-
+         # TODO Should resovle autosaving.
+#        resultSets.forEach (resultSet)-> resultSet?.save()
     ).observes(
-      'round.automaticCountingDisabled'
-#      '@each.entrant1_points',
+      'round.automaticCountingDisabled',
+      '@each.isClosed'
 #      '@each.entrant2_points',
 #      '@each.entrant1',
 #      '@each.entrant2'

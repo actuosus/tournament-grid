@@ -23,6 +23,10 @@ define [
       classNames: 'text-field'
 #      isVisibleBinding: 'parentView.isVisible'
       isAutocompleteBinding: 'parentView.isAutocomplete'
+      attributeBindings: ['autocomplete']
+      autocomplete: (->
+        'off' if @get('parentView.isAutocomplete')
+      ).property('parentView.isAutocomplete')
       nameBinding: 'parentView.name'
       requiredBinding: 'parentView.required'
       placeholderBinding: 'parentView.placeholder'

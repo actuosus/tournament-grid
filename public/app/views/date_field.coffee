@@ -10,5 +10,5 @@ define ['cs!../core'],->
     type: 'date'
 
     _valueChanged: (->
-      @set 'rawDate', date
+      @set 'rawDate', @get('element').valueAsDate
     ).observes('value')

@@ -18,7 +18,7 @@ define ['cs!../core'],->
 
     # Relations
     matches: DS.hasMany 'App.Match'
-    resultSets: DS.hasMany 'App.ResultSet'
+    resultSets: DS.hasMany('App.ResultSet', {inverse: 'round'})
 
     stage: DS.belongsTo('App.Stage', {inverse: 'rounds'})
     bracket: DS.belongsTo('App.Bracket', {inverse: 'rounds'})

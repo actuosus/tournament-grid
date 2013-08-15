@@ -89,7 +89,7 @@ define ['cs!../core'],->
 
     hide: (args)->
       target = @get('target')
-      target.set 'isFocused', no if target
+      target.set 'isFocused', no if target and not target.isDestroyed
       if @$()
         @$().transition({ scale: 0 }, 300, (=> @onHide(args); @destroy()))
 

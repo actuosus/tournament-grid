@@ -12,8 +12,8 @@ define [
   'cs!./views/index'
 ], ->
   App.Router.map ->
+    @route 'index', path: ''
     @route 'index', path: '*.'
-#    @route 'index', path: ''
     @resource 'stages', ->
       @route 'new'
       @resource 'stage', path: '/:stage_id'
@@ -25,6 +25,8 @@ define [
       # Preloading countries
       console.debug 'Preloading countries…' if window.DEBUG
       App.countries = App.Country.find()
+
+      App.set 'countriesController.content', App.countries
 
 #      App.set 'isEditingMode', yes
       App.set 'router', @router

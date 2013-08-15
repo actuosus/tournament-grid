@@ -43,6 +43,17 @@ define ['cs!../core'],->
       else
         @doScale scale
 
+    reset: (animated)->
+      # TODO Kind of hacky.
+      @set 'scale', 1
+      @resetPosition animated
+
+    resetZoom: (animated)->
+      if animated
+        @doScaleAnimated 1
+      else
+        @doScale 1
+
     resetPosition: (animated)->
       if animated
         @doMoveAnimated {x: 0, y: 0}
@@ -81,14 +92,14 @@ define ['cs!../core'],->
         @set('scale', scale)
 
     mouseDown: (event)->
-      $(document.body).bind('mousemove.grid', @onDocumentMouseMove.bind(@));
+      $(document.body).bind('mousemove.grid', @documentMouseMove.bind(@));
       $(document.body).bind('mouseup.grid', @mouseUp.bind(@));
       $(document.body).addClass('non-selectable')
       @startMousePosition =
         x: event.pageX
         y: event.pageY
 
-    onDocumentMouseMove: (event)->
+    documentMouseMove: (event)->
       $(document.body).addClass('non-selectable')
       newPosition =
         x: event.pageX - @startMousePosition.x + @oldPosition.x

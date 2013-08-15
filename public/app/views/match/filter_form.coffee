@@ -28,7 +28,10 @@ define [
     ).observes('matchType')
 
     teamChanged: (->
-      @set 'content.entrantFilter', @get 'team'
+      team = @get 'team'
+      if App.TeamRef.detectInstance team
+        team = team.get 'team'
+      @set 'content.entrantFilter', team
     ).observes('team')
 
     dateChanged: (->

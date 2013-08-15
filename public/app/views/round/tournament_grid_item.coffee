@@ -23,9 +23,10 @@ define [
       contentBinding: 'parentView.content'
       valueBinding: 'content.title'
       isEditableBinding: 'App.isEditingMode'
-#      valueChanged: (->
-#        @get('content').save()
-#      ).observes('value')
+      valueChanged: (->
+        @set 'content.title', @get 'value'
+        @get('content').save()
+      ).observes('value')
 
     contentView: Em.CollectionView.extend
       classNames: ['tournament-round']
@@ -49,6 +50,12 @@ define [
         roundIndexBinding: 'parentView.parentView.contentIndex'
         roundsBinding: 'parentView.parentView.parentView.content'
         entrantsNumberBinding: 'parentView.entrantsNumber'
+
+        isEditable: (->
+          App.get('isEditingMode') and (@get('content.status') is 'opened')
+        ).property('App.isEditingMode', 'content.status')
+
+        _isEditingBinding: 'isEditable'
 
         mouseEnter: ->
           node = @get 'content'
@@ -83,6 +90,8 @@ define [
             @set 'connectorView.isVisible', no
             @set 'dateView.isVisible', no
             @set 'infoBarView.isVisible', no
+          if match.get('isThirdPlace')
+            @set 'connectorView.isVisible', no
 
           styles = {height: height * 2}
           bracket = match.get('round.bracket')
@@ -166,9 +175,11 @@ define [
           classNames: ['match-grid-item-entrants']
           matchBinding: 'parentView.content'
           contentBinding: 'parentView.content.entrants'
+          _isEditingBinding: 'parentView._isEditing'
 
           itemViewClass: App.TeamGridItemView.extend( App.Droppable, {
             matchBinding: 'parentView.parentView.content'
+            _isEditingBinding: 'parentView._isEditing'
 
             pointsIsVisible: Em.computed.not 'match.isFinal'
 

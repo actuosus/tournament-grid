@@ -15,13 +15,13 @@ define ->
     mouseDown: (event)->
       @set 'isMoving', yes
       $(document.body).addClass('non-selectable')
-      $(document.body).bind('mousemove.movable', @onDocumentMouseMove.bind(@))
+      $(document.body).bind('mousemove.movable', @documentMouseMove.bind(@))
       $(document.body).bind('mouseup.movable', @mouseUp.bind(@))
       @startMousePosition =
         x: event.pageX
         y: event.pageY
 
-    onDocumentMouseMove: (event)->
+    documentMouseMove: (event)->
       newPosition =
         x: event.pageX - @startMousePosition.x
         y: event.pageY - @startMousePosition.y

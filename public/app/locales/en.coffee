@@ -46,6 +46,8 @@ define
   _open: 'Open'
   _open_all: 'Open all'
   _add: 'Add'
+  _add_round: 'Add round'
+  _add_group: 'Add group'
   _add_match: 'Add match'
   _the_teams: 'The teams'
   _filter: 'Filter'
@@ -99,3 +101,4 @@ define
   _past_matches: 'Past matches'
   _future_matches: 'Future matches'
   _waiting_to_be_filled: 'Waiting to be filled'
+  _toggle_as_the_captain: 'Toggle as a captain'

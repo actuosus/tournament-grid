@@ -36,6 +36,9 @@ teams = [
   country_id: '50fcdaf969f206c106000009'
 ,
   name: 'fnatic'
+  country_id: '50fcdaf969f206c106000009'
+,
+  name: 'fnatic'
   country_id: '50fcdaf969f206c106000001'
 ,
   name: 'BGDonLINE'

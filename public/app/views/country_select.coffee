@@ -15,25 +15,31 @@ define ['cs!./combobox'], ->
       @set 'autocompleteTextFieldView.selection', @get 'value'
     ).observes('value')
 
-    selectionChanged: (->
-      @set 'value', @get 'autocompleteTextFieldView.selection'
-    ).observes('autocompleteTextFieldView.selection')
-
     currentValueView: Em.View.extend
       classNames: ['current-value']
       contentBinding: 'parentView.value'
+      isVisibleBinding: 'parentView.hasValue'
       template: Em.Handlebars.compile(
-        '<i {{bindAttr class=":country-flag-icon view.content.flagClassName"}}></i>'
-#        '{{view.parentView.currentLabel}}'
+        '<i {{bindAttr class=":country-flag-icon view.content.flagClassName"}}></i>'+
+        '{{view.content.name}}'
       )
     hasValue: (->
       !!@get 'autocompleteTextFieldView.selection'
     ).property('autocompleteTextFieldView.selection')
 
-    autocompleteTextFieldView: App.AutocompleteTextField.extend
+    autocompleteTextFieldView: App.TextField.extend
+      isAutocomplete: yes
       placeholder: '_country'.loc()
       requiredBinding: 'parentView.required'
       titleBinding: 'parentView.title'
       childViews: 'textFieldView loaderView statusIconView'.w()
-      controllerBinding: 'parentView.controller'
-      click: -> @select()
+      autocompleteDelegate: (->
+        @get('parentView.controller')
+      ).property()
+
+      insertNewline: ->
+        @set 'parentView.selection', @get 'selection'
+        @set 'parentView.value', @get 'selection'
+        @_closeAutocompleteMenu()
+
+      showAll: -> @get('autocompleteDelegate')?.showAll(@)

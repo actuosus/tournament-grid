@@ -38,7 +38,7 @@ define [
 
       _isEditingBinding: 'App.isEditingMode'
 
-      editingChildViews: ['addButtonView']
+      editingChildViews: ['automaticCountingButtonView', 'addButtonView']
 
       titleView: Em.View.extend
         classNames: ['matches-table-title']
@@ -48,6 +48,29 @@ define [
         isVisibleBinding: 'parentView.showFilterForm'
         entrantsBinding: 'parentView.entrants'
         contentBinding: 'parentView.content'
+
+      automaticCountingButtonView: Em.View.extend
+        tagName: 'button'
+        classNames: ['btn', 'btn-primary', 'btn-mini', 'count-btn', 'count']
+        attributeBindings: ['title']
+        contentBinding: 'parentView.content.round'
+        isVisibleBinding: 'App.isEditingMode'
+        automaticCountingDisabledBinding: 'content.automaticCountingDisabled'
+        label: (->
+          if @get('automaticCountingDisabled')
+            '_count'.loc()
+          else
+            '_dont_count'.loc()
+        ).property('automaticCountingDisabled')
+        title: (->
+          if @get('automaticCountingDisabled')
+            '_automatic_counting_disabled'.loc()
+          else
+            '_automatic_counting_enabled'.loc()
+        ).property('automaticCountingDisabled')
+        template: Em.Handlebars.compile '{{view.label}}'
+
+        click: -> @toggleProperty 'automaticCountingDisabled'
 
       addButtonView: Em.View.extend
         tagName: 'button'

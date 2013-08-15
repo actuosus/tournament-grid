@@ -6,6 +6,10 @@
  * Time: 08:56
 ###
 
+exports.index = (req, res)->
+  res.send
+    version: '1.0.0'
+
 exports.logs = require './logs'
 
 exports.countries = require './countries'

@@ -171,3 +171,27 @@
 .team-loser .team-points:focus {
     background-color: #af3a40;
 }
+
+.flat-team-grid-item {
+    position: absolute;
+    width: 154px;
+    height: 19px;
+    border: 1px solid #828282;
+    background-color: #efefef;
+
+    overflow: hidden;
+
+    /*-webkit-transition-property: -webkit-transform;*/
+    /*-webkit-transition-duration: 1s;*/
+    /*-webkit-transform: translate(0, 0);*/
+}
+
+.svg-team-grid-item {
+    stroke: #828282;
+    stroke-width: 1;
+    fill: #efefef;
+}
+
+.svg-team-grid-item:hover {
+    -webkit-filter: drop-shadow( 0 0 10px #ff6c00 );
+}

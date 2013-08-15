@@ -59,6 +59,9 @@ players = [
   last_name: 'Антон'
   country_id: '50fcdaf969f206c106000001'
   team_id: '5107cac6c97716ba1800001d'
+,
+  nickname: 'fnatic'
+
 ]
 
 for i in [0..Faker.Helpers.randomNumber(200)]

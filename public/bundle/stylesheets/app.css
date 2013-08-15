@@ -115,7 +115,7 @@ textarea {
         opacity: 0.8;
     }
     50% {
-        opacity: 0.2;
+        opacity: 0.5;
         background-color: rgba(255,255,0,0.8) !important;
     }
     100% {
@@ -177,6 +177,7 @@ textarea {
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
+    z-index: 2;
 }
 .country-select {
     min-width: 12.3em;
@@ -658,6 +659,11 @@ input[type="date"].input-large {
 }
 .combobox .text-field {
     border: 0;
+}
+.combobox .remove-btn {
+    right: 26px;
+    margin-top: -5px;
+    z-index: 10;
 }
 .combobox input.text-field:invalid {
     border: 0;
@@ -2950,6 +2956,7 @@ body .ui-tooltip {
     margin: 0 7px;
     font-size: 11px;
     color: #979797;
+    vertical-align: top;
     -webkit-transition-duration: 0.3s;
     -webkit-transition-property: color;
 }
@@ -3043,7 +3050,8 @@ body .ui-tooltip {
     line-height: 11px;
     font-size: 8px;
     text-align: center;
-    vertical-align: 2px;
+    vertical-align: top;
+    margin-top: 4px;
     margin-left: -3px;
     cursor: default;
     -webkit-transition-duration: 0.3s;
@@ -3381,6 +3389,9 @@ body .ui-tooltip {
     font-size: 11px;
     display: block;
 }
+.match-filter-form .team-combobox {
+    min-width: 180px;
+}
 .period-selector, .date-selector {
     float: left;
 }
@@ -3512,9 +3523,15 @@ body .ui-tooltip {
 .matches-table-container-header {
     position: relative;
     border-top: 1px solid #bebebe;
+    overflow: hidden;
 }
 .matches-table-container-header .add-btn {
     right: 30px;
+}
+.matches-table-container-header .count-btn {
+    right: 50px;
+    top: 28px;
+    position: absolute;
 }
 .matches-table-container-header .toggle-btn {
     top: 7px;
@@ -3527,6 +3544,7 @@ body .ui-tooltip {
 }
 .for-team .matches-table-container-header.is-target-expanded {
     height: 75px;
+    overflow: hidden;
 }
 .matches-table-title {
     padding: 5px 8px;
@@ -3755,13 +3773,13 @@ input.match-start-date {
     font-weight: bold;
 }
 .team-lineup-popup-players-item {
-    padding: 4px 0;
+    padding: 2px 0;
 }
 .team-lineup-popup-players-item-name {
-    margin-top: 2px;
     margin-left: 4px;
     font-size: 11px;
     white-space: nowrap;
+    line-height: 20px;
 }
 .match-filter-form-container {
     position: relative;
@@ -3820,12 +3838,13 @@ input.match-start-date {
 .icon-lock {
     width: 10px;
     height: 12px;
-    background-image: url('/images/unlock.svg');
+    background-image: url('../../vendor/images/unlock.svg');
     background-repeat: no-repeat;
     background-position: center;
     background-size: 100%;
     opacity: 0.3;
+    display: inline-block;
 }
 .icon-lock.is-closed {
-    background-image: url('/images/lock.svg');
+    background-image: url('../../vendor/images/lock.svg');
 }

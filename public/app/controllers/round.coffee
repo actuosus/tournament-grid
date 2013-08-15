@@ -26,9 +26,10 @@ define ->
       record.set 'stage', @get 'stage'
       record
 
-    titleChanged: (->
-      @get('content')?.set 'title', @title
-    ).observes('title')
+#    titleChanged: (->
+#      console.log 'titleChanged'
+#      @get('content')?.set 'title', @title
+#    ).observes('title')
 
     setUnknownProperty: (key, value)->
       content = @get 'content'

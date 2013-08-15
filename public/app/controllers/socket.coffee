@@ -35,7 +35,7 @@ define [
             Model = Em.get "App.#{message.model}"
             if Model
               record = App.store.findById Model, message._id
-              record.deleteRecord() if record
+              record?.deleteRecord()
           when 'update'
             Model = Em.get "App.#{message.model}"
             if Model

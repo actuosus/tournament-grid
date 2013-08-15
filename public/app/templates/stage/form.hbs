@@ -38,37 +38,6 @@
     </div>
 {{/if}}
 
-{{#if view.isGroupType}}
-<div class="control-section control-section-group">
-    <div class="control-row">
-        <label for="group-number">{{loc '_group_number'}}:</label>
-        <input type="number" name="group-number" class="group-number" size="2" maxlength="4" min="1" required="required"/>
-    </div>
-</div>
-{{/if}}
-
-{{#if view.isMatrixType}}
-<div class="control-section control-section-group">
-    <div class="control-row">
-        <label for="matches-number">{{loc '_matches_number'}}:</label>
-        <input type="number" name="matches-number" class="matrix-matches-number" size="2" min="1" maxlength="4" required="required"/>
-    </div>
-</div>
-{{/if}}
-
-{{#if view.isTeamType}}
-<div class="control-section control-section-group">
-    <div class="control-row">
-        <label for="entrants-number">{{loc '_entrants_number'}}:</label>
-        <input type="number" name="entrants-number" class="team-entrants-number" size="2" min="1" maxlength="4" required="required"/>
-    </div>
-    <div class="control-row">
-        <label for="matches-number">{{loc '_matches_number'}}:</label>
-        <input type="number" name="matches-number" class="team-matches-number" size="2" min="1" maxlength="4" required="required"/>
-    </div>
-</div>
-{{/if}}
-
 <div class="control-row">
     <button type="submit" class="btn btn-primary save-btn">{{loc '_create'}}</button>
     <button type="button" class="btn cancel-btn">{{loc '_cancel'}}</button>

@@ -12,13 +12,15 @@ define ['cs!./autocomplete_text_field'], ->
     childViews: [
       'currentValueView',
       'disclosureButtonView',
-      'autocompleteTextFieldView'
+      'autocompleteTextFieldView',
+      'resetButtonView'
       ]
 
     selectionBinding: 'autocompleteTextFieldView.selection'
 
     selectionChanged: (->
       @set 'value', @get 'selection'
+      @get('autocompleteTextFieldView.textFieldView')?.$().val('')
     ).observes('selection')
 
     valueBinding: 'autocompleteTextFieldView.selection'
@@ -31,7 +33,7 @@ define ['cs!./autocomplete_text_field'], ->
     disclosureButtonView: Em.View.extend
       classNames: ['disclosure-button', 'non-selectable']
       attributeBindings: ['title']
-      menuViewBinding: 'parentView.autocompleteTextFieldView.menuView'
+      menuViewBinding: 'parentView.autocompleteTextFieldView._autocompleteMenu'
 
       title: (->
         if @get('menuView.isVisible')
@@ -47,25 +49,33 @@ define ['cs!./autocomplete_text_field'], ->
                                         <i class="disclosure-icon">▾</i>
                                       {{/if}}
                                        """)
-      click: ->
-#        if @get('menuView.isVisible')
-#          @set('menuView.isVisible', no)
-#        else
-        @get('parentView.autocompleteTextFieldView').showAll()
-#          @set('menuView.isVisible', yes)
+      click: -> @get('parentView.autocompleteTextFieldView').showAll()
 
-    autocompleteTextFieldView: App.AutocompleteTextField.extend
-      controllerBinding: 'parentView.controller'
-      requiredBinding: 'parentView.required'
-      titleBinding: 'parentView.title'
-      placeholderBinding: 'parentView.placeholder'
-      click: -> @select()
-#    selectView: Em.Select.extend
-#      contentBinding: 'parentView.content'
-#      optionLabelPathBinding: 'content.name'
-#      optionValuePathBinding: 'content.id'
-#    selectionBinding: 'selectView.selection'
-#    valueBinding: 'selectView.value'
+    autocompleteTextFieldView: App.TextField.extend
+      isAutocomplete: yes
+      autocompleteDelegate: (->
+        @get('parentView.controller')
+      ).property()
+
+      insertNewline: ->
+        @set 'parentView.selection', @get 'selection'
+        @set 'parentView.value', @get 'selection'
+        @_closeAutocompleteMenu()
+
+      showAll: -> @get('autocompleteDelegate')?.showAll(@)
+
+    resetButtonView: Em.View.extend
+      tagName: 'button'
+      classNames: ['btn-clean', 'remove-btn']
+      attributeBindings: ['title', 'type']
+      type: 'button'
+      title: '_reset'.loc()
+      template: Em.Handlebars.compile('&times;')
+      isVisible: Em.computed.notEmpty 'parentView.selection'
+
+      click: -> @get('parentView').reset()
+
+    reset: -> @set 'selection', null
 
     currentLabel: (->
       @get 'autocompleteTextFieldView.selection.name'

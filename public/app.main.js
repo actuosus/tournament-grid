@@ -26,10 +26,11 @@ requirejs.config({
     'jquery.scrollTo': '/vendor/scripts/jquery.scrollTo.min',
     'moment': '/vendor/scripts/moment',
 //    'Faker': '/vendor/scripts/Faker',
-//    'raphael': [
-//      'http://yandex.st/raphael/2.1.0/raphael.min',
-//      '/vendor/scripts/raphael'
-//    ],
+    'raphael': [
+      'http://yandex.st/raphael/2.1.0/raphael.min',
+      '/vendor/scripts/raphael'
+    ],
+    'fabric': '/vendor/scripts/fabric',
     'spin': '/vendor/scripts/spin',
     'cs': '/vendor/scripts/cs',
     'text': '/vendor/scripts/text',
@@ -73,9 +74,7 @@ requirejs.config({
     'jquery.ui.datepicker-de': ['jquery', 'jquery-ui'],
     'jquery.ui.timepicker': ['jquery', 'jquery-ui'],
     'jquery.ui.timepicker-ru': ['jquery.ui.timepicker'],
-
     'jquery.ui.timepicker-it': ['jquery.ui.timepicker'],
-
     'jquery.ui.timepicker-de': ['jquery.ui.timepicker'],
 
     'handlebars': {

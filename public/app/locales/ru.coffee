@@ -49,6 +49,8 @@ define
   _the_teams: 'Состав команд'
   _filter: 'Фильтровать'
   _captain: 'Капитан'
+  _add_round: 'Добавить раунд'
+  _add_group: 'Добавить группу'
   _add_game: 'Добавить игру'
   _add_match: 'Добавить матч'
   _rating: 'Рейтинг'
@@ -100,3 +102,4 @@ define
   _past_matches: 'Прошедшие матчи'
   _future_matches: 'Будущие матчи'
   _waiting_to_be_filled: 'Ожидает заполнения'
+  _toggle_as_the_captain: 'Сменить капитанство'

@@ -24,23 +24,34 @@ define [
     contextMenuActions: ['save', 'deleteRecord:delete']
     
     save: ->
-      @get('content.store')?.commit()
-      
-    delete: ->
-      @get('content').deleteRecord()
+      @get('content')?.save()
+      @get('content.round')?.save()
+
+    deleteRecord: ->
+      content = @get('content')
+      content?.deleteRecord()
+      content?.save()
+
+    shouldShowPopup: no
 
     mouseEnter: (event)->
+      @set 'shouldShowPopup', yes
       controller = @get('parentView.matches')
       entrant = @get('content.entrant')
-      if controller?.hasPastOrFutureMatchesForEntrant entrant
-        @matchesPopup = App.MatchTablePopupView.create
-          target: @
-          origin: 'top'
-          entrant: entrant
-          controller: controller
-        @matchesPopup.appendTo App.get 'rootElement'
+      Em.run.later =>
+        if @get('shouldShowPopup') and controller?.hasPastOrFutureMatchesForEntrant entrant
+          @matchesPopup = App.MatchTablePopupView.create
+            target: @
+            origin: 'top'
+            entrant: entrant
+            controller: controller
+          @matchesPopup.appendTo App.get 'rootElement'
+          @set 'shouldShowPopup', no
+      , 1000
 
-    mouseLeave: -> @matchesPopup?.hide()
+    mouseLeave: ->
+      @set 'shouldShowPopup', no
+      @matchesPopup?.hide()
 
     click: (event)->
       if App.get('isEditingMode')

@@ -18,14 +18,14 @@ define [
       'content.isDirty',
       'content.isSaving',
       'content.isPast',
-      'content.invalid']
+      'content.invalid',
+      'content.isValid:is-valid:is-invalid'
+    ]
     attributeBindings: ['title']
     titleBinding: 'content.description'
 
     isEditable: (->
-      isEditingMode = App.get('isEditingMode')
-      status = @get 'content.status'
-      isEditingMode and status is 'opened'
+      App.get('isEditingMode') and (@get('content.status') is 'opened')
     ).property('App.isEditingMode', 'content.status')
 
     _isEditingBinding: 'isEditable'
@@ -51,13 +51,13 @@ define [
       classNames: ['match-start-date']
       contentBinding: 'parentView.content.date'
       format: 'DD.MM.YY'
-      showPopupBinding: 'App.isEditingMode'
+      showPopupBinding: 'parentView._isEditing'
 
     lockView: Em.View.extend
       tagName: 'i'
       classNames: ['icon-lock']
       classNameBindings: ['parentView.content.isClosed']
-      isVisibleBinding: 'parentView._isEditing'
+      isVisibleBinding: 'App.isEditingMode'
 
       doubleClick: ->
         if @get 'parentView.content.isOpened'
@@ -68,14 +68,17 @@ define [
     infoBarView: App.GamesInfoBarView.extend
       contentBinding: 'parentView.content.games'
 #      showInfoLabel: yes
+      _isEditingBinding: 'parentView._isEditing'
       classNames: ['match-info-bar']
 
     contentView: Em.CollectionView.extend
       classNames: ['match-grid-item-entrants']
       contentBinding: 'parentView.content.entrants'
+      _isEditingBinding: 'parentView._isEditing'
 
       itemViewClass: App.TeamGridItemView.extend( App.Droppable, {
         matchBinding: 'parentView.parentView.content'
+        _isEditingBinding: 'parentView._isEditing'
 
         drop: (event)->
           viewId = event.originalEvent.dataTransfer.getData 'Text'

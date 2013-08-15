@@ -50,6 +50,7 @@ define ->
         countryFlagView: App.CountryFlagView.extend
           contentBinding: 'parentView.content.country'
         nameView: Em.View.extend
+          tagName: 'span'
           classNames: ['team-lineup-popup-players-item-name']
           contentBinding: 'parentView.content'
           template: Em.Handlebars.compile '{{view.content.nickname}}'

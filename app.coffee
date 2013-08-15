@@ -192,6 +192,8 @@ app.options '*', (req, res)->
   res.header 'Content-Length', 0
   res.send 204
 
+app.get '/api/?', routes.api.index
+
 app.post '/api/logs', routes.api.logs.create
 
 app.get '/api/countries', routes.api.countries.list

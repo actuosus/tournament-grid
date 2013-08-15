@@ -40,4 +40,4 @@ define [
         classNames: ['btn-clean']
         mapViewBinding: 'parentView.mapView'
         template: Em.Handlebars.compile '☒'
-        click: -> @get('mapView').resetPosition(animated = yes)
+        click: -> @get('mapView').reset(animated = yes)

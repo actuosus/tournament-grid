@@ -63,6 +63,7 @@
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
+    z-index: 2;
 }
 
 .country-select {

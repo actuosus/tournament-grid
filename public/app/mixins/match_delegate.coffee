@@ -12,9 +12,8 @@ define ->
 
     open: -> @get('content').open()
     close: -> @get('content').close()
-    save: ->
-      store = @get('content.store') or @get('content.content.store')
-      store.commit()
+    save: -> @get('content')?.save()
+
     edit: ->
       popup = App.PopupView.create target: @
       popup.pushObject(

@@ -62,22 +62,14 @@ define [
           stage = report.createStageByEntrants entrantsNumber
         when 'single'
           stage = report.get('stages').createRecord()
-        when 'double'
+        when 'single', 'double', 'group', 'matrix', 'team'
           stage = report.get('stages').createRecord()
-        when 'group'
-          stage = report.createStageByRoundsNumber parseInt(@$('.group-number').val(), 10)
-        when 'matrix'
-          stage = report.createStageByMatchesNumber parseInt(@$('.matrix-matches-number').val(), 10)
-        when 'team'
-          stage = report.createStageByMatchesNumber parseInt(@$('.team-matches-number').val(), 10)
-##      stage = App.Stage.createRecord
-#      stage.set 'name', @$('.name').val()
+
       stage.set 'sortIndex', report.get('stages.length')
       stage.set 'report', report
       stage.set 'title', @get 'content.title'
       stage.set 'rating', @get 'content.rating'
       stage.set 'entrantsNumber', entrantsNumber
-#      stage.set 'description', @$('.description').val()
       stage.set 'description', @get 'content.description'
       stage.set 'visualType', @get 'visualType.id'
 

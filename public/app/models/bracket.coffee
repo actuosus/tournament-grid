@@ -15,7 +15,6 @@ define ['cs!../core'],->
     stage: DS.belongsTo 'App.Stage'
     rounds: DS.hasMany 'App.Round'
 
-
     parent: (-> @get 'stage').property('stage')
     children: (-> @get 'rounds').property('rounds')
 

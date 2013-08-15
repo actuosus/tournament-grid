@@ -27,6 +27,21 @@ define [
       @set 'content', App.countries
       @set 'content.isLoaded', yes
       @notifyPropertyChange('content.isLoaded')
+
+    showAll: (target)->
+      @set 'autocompleteTarget', target
+      @get('autocompleteTarget').didFetchAutocompleteResults App.countries
+
+    filterWithQuery: (query)->
+      return unless App.countries
+      result = App.countries.filter (item, idx)->
+        regexp = new RegExp query, 'i'
+        return yes if item.get('name')?.match regexp
+        return yes if item.get('__name')?.match regexp
+        return yes if item.get('englishName')?.match regexp
+
+      @sort result, {name: query}
+
     search: (options)->
       return unless App.countries
       result = App.countries.filter (item, idx)->
@@ -40,18 +55,27 @@ define [
           return yes
       @set 'content', @sort(result, options)
       @set 'content.isLoaded', yes
+
+
+    cancelFetchingOfAutocompleteResults: ->
+
+    fetchAutocompleteResults: (value, target)->
+      @set 'autocompleteTarget', target
+      @get('autocompleteTarget').didFetchAutocompleteResults @filterWithQuery value
+
     menuItemViewClass: Em.View.extend
       classNames: ['menu-item', 'country-menu-item']
       classNameBindings: ['isSelected']
       template: Em.Handlebars.compile(
         '<i {{bindAttr class=":country-flag-icon view.content.flagClassName"}}></i>'+
-        '{{highlight view.content.__name partBinding=parentView.highlight}}')
-      mouseDown: (event)->
-        event.stopPropagation()
+        '{{view.content.name}}')
+
+      mouseDown: (event)-> event.stopPropagation()
 
       click: (event)->
         event.preventDefault()
         event.stopPropagation()
+        @get('parentView').selectMenuItem? @get 'content'
         @get('parentView').click(event)
         @set 'parentView.selection', @get 'content'
         @set 'parentView.value', @get 'content'

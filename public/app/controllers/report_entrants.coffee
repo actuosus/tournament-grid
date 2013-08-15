@@ -41,6 +41,10 @@ define ['cs!../views/country_flag'],->
       @set 'arrangedContent', @get 'stage.entrants'
       @set 'arrangedContent.isLoaded', yes
 
+    showAll: (target)->
+      @set 'autocompleteTarget', target
+      @get('autocompleteTarget').didFetchAutocompleteResults @get 'content'
+
     cancelFetchingOfAutocompleteResults: ->
 
     fetchAutocompleteResults: (value, target)->

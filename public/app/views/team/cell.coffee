@@ -78,10 +78,11 @@ define [
 #      href: (-> "/teams/#{@get 'content.id'}").property('content')
       name: (->
         content = @get 'content'
-        if App.TeamRef.detectInstance content
-          content.get 'team.name'
-        else
-          content.get 'name'
+        if content
+          if App.TeamRef.detectInstance content
+            return content.get 'team.name'
+          else
+            return content.get 'name'
       ).property('content')
 
       contentBinding: 'parentView.content'
@@ -96,18 +97,18 @@ define [
       mouseEnter: ->
         @set 'shouldShowPopup', yes
         Em.run.later =>
-          if @get 'shouldShowPopup'
-            console.log @get 'content'
+          if @get('shouldShowPopup') and @get('content.teamRef')
             @lineupPopup = App.TeamLineupPopupView.create
               target: @
               content: @get 'content.teamRef'
               origin: 'top'
             @lineupPopup.appendTo App.get 'rootElement'
-        , 300
+            @set 'shouldShowPopup', no
+        , 1000
 
       mouseLeave: ->
         @set 'shouldShowPopup', no
-        @lineupPopup.hide() if @lineupPopup
+        @lineupPopup?.hide()
 
     points: (->
       contentIndex = @get('contentIndex')

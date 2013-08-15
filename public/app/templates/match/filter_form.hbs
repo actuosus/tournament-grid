@@ -6,7 +6,7 @@
  * Time: 07:49
 -->
 
-<form class="selector row">
+<div class="selector row" autocomplete="off">
     <div class="cf">
         <div class="columnLeft">
 
@@ -16,7 +16,7 @@
             </label>
             <label>
                 <span>{{loc '_team'}}:</span>
-                {{view App.ComboBoxView controllerBinding=view.entrants promt="Все" form=view valueBinding=view.team}}
+                {{view App.ComboBoxView classNames="team-combobox" controllerBinding=view.entrants promt="Все" form=view valueBinding=view.team}}
             </label>
             <label>
                 <span>За время:</span>
@@ -38,4 +38,4 @@
             <!--<button type="button" class="btn btn-large search-btn submit" title="Отфильтровать" {{action filter}}><i class="icon-search icon-white"></i></button>-->
         </div>
     </div>
-</form>
+</div>

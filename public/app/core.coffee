@@ -48,6 +48,37 @@ define [
 
   appConfig.rootElement = config.rootElement if config.rootElement
 
+  Em.EventDispatcher.reopen(
+    events: {
+#      touchstart  : 'touchStart',
+#      touchmove   : 'touchMove',
+#      touchend    : 'touchEnd',
+#      touchcancel : 'touchCancel',
+      keydown     : 'keyDown',
+      keyup       : 'keyUp',
+#      keypress    : 'keyPress',
+      mousedown   : 'mouseDown',
+      mouseup     : 'mouseUp',
+      contextmenu : 'contextMenu',
+      click       : 'click',
+      dblclick    : 'doubleClick',
+      mousemove   : 'mouseMove',
+      focusin     : 'focusIn',
+      focusout    : 'focusOut',
+      mouseenter  : 'mouseEnter',
+      mouseleave  : 'mouseLeave',
+      submit      : 'submit',
+      input       : 'input',
+      change      : 'change',
+      dragstart   : 'dragStart',
+      drag        : 'drag',
+      dragenter   : 'dragEnter',
+      dragleave   : 'dragLeave',
+      dragover    : 'dragOver',
+      drop        : 'drop',
+      dragend     : 'dragEnd'
+    }
+  )
   App = Em.Application.create appConfig
 
   if window.DEBUG
@@ -162,7 +193,7 @@ define [
           return key
         key + '_id'
 
-      addAttribute: (hash, key, value)-> hash[key] = value unless Em.isEmpty value
+#      addAttribute: (hash, key, value)-> hash[key] = value unless Em.isEmpty value
 
       addBelongsTo: (hash, record, key, relationship)->
         type = record.constructor
@@ -209,6 +240,8 @@ define [
   App.store = App.Store.create
 #    revision: 12
     adapter: App.Adapter.create()
+
+  App.Adapter.configure {pageCount: 'pageCount'}
 
   App.store.adapter.url = config.api.host
   App.store.adapter.namespace = config.api.namespace

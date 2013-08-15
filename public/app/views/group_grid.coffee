@@ -22,7 +22,7 @@ define [
     classNames: ['lineup-grid', 'group-lineup-grid']
 
     shouldShowContextMenuBinding: 'App.isEditingMode'
-    contextMenuActions: ['add:addRound']
+    contextMenuActions: ['add:addGroup']
 
     add: -> @get('content').createRecord()
 
@@ -57,6 +57,9 @@ define [
           contentBinding: 'parentView.content'
           valueBinding: 'content.title'
           classNames: ['lineup-grid-item-name']
+          valueChanged: (->
+            @get('content').save()
+          ).observes('value')
 
         addButtonView: Em.View.extend
           tagName: 'button'

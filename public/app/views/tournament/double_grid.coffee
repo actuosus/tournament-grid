@@ -21,13 +21,13 @@ define [
 #    init: ->
 #      console.timeStamp 'Render NewDoubleTournamentGridView'
 #      console.time 'NewDoubleTournamentGridView'
-#      console.profile 'NewDoubleTournamentGridView'
+##      console.profile 'NewDoubleTournamentGridView'
 #      @_super()
-
-    didInsertElement: ->
-      @$().css width: @get('parentView').$().width()
+#
+#    didInsertElement: ->
+#      @$().css width: @get('parentView').$().width()-20
 #      console.timeEnd 'NewDoubleTournamentGridView'
-#      console.profileEnd 'NewDoubleTournamentGridView'
+##      console.profileEnd 'NewDoubleTournamentGridView'
 
     showTeamList: ->
       @teamListPopup = App.PopupView.createWithMixins(App.Movable, {showCloseButton: yes})
@@ -80,9 +80,7 @@ define [
             when 1
               roundName = '_semifinal'.loc()
           roundIndex = roundsCount - i
-#          actualRound = stage?.getByPath "#{roundIndex}"
           round = App.RoundController.create
-#            content: actualRound
             stage: stage
             index: roundIndex
             sortIndex: roundIndex
@@ -167,7 +165,9 @@ define [
         classNames: ['finals']
         content: (->
           rounds = []
+          stage = @get('parentView.stage')
           finalRound = App.RoundController.create
+            stage: stage
             title: '_final'.loc()
             itemIndex: -1
             parentReference: 'stage'
@@ -176,8 +176,15 @@ define [
             itemIndex: -1
             entrants: [null, null]
             round: finalRound
+          thirdPlaceMatch = App.MatchController.create
+            isThirdPlace: yes
+            itemIndex: -1
+            entrants: [null, null]
+            round: finalRound
+          finalRound.get('matches').push thirdPlaceMatch
           rounds.push finalRound
           winnerRound = App.RoundController.create
+            stage: stage
             title: '_winner'.loc()
             itemIndex: -1
             parentReference: 'stage'

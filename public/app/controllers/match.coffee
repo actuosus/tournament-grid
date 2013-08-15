@@ -8,6 +8,7 @@
 define ->
   App.MatchController = Em.ObjectController.extend
     isSelected: no
+    status: 'opened'
 
 #    entrantsChanged: ((self, property)->
 #      content = @get('content')
@@ -66,9 +67,12 @@ define ->
         match = @get('round.content.matches')?.find (_)=>_.get('sortIndex') is @get('sortIndex')
         @set('entrants', match.get('entrants')) if match
         @set 'content', match if match
+        @onLoaded() if match
       ,200
       null
     ).property('some', 'round.content.matches.@each.isLoaded')
+
+    onLoaded: Em.K
 
     some: null
 

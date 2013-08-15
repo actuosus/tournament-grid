@@ -1,8 +1,8 @@
 ###
- * single_grid
+ * svg_grid
  * @author: actuosus
- * Date: 08/05/2013
- * Time: 17:59
+ * Date: 11/08/2013
+ * Time: 05:36
 ###
 
 define [
@@ -11,13 +11,47 @@ define [
   'cs!../../mixins/map_control'
   'cs!./grid'
 ], ->
-  App.NewTournamentGridView = App.TournamentGridView.extend
+  App.SVGTournamentGridView = Em.View.extend
+    tagName: 'svg'
     entrantsNumber: 4
 
     isSingle: yes
 
     didInsertElement: ->
-      @$().css width: @get('parentView').$().width()-20
+      element = @get 'element'
+      rounds = @get 'content'
+      margin = 40
+      entrantsMargin = 5
+      itemWidth = 154
+      itemHeight = 25
+      matchesCount = Math.pow(2, rounds.length-1)
+      height = matchesCount * itemHeight
+      width = @get('parentView').$().width()-20
+
+      @$().css width: width, height: height
+
+#      element.appendChild document.createProcessingInstruction 'xml-stylesheet', 'href="/app/stylesheets/svg.css" type="text/css"'
+
+      rounds.forEach (round, roundIndex)=>
+        matches = round.get('matches')
+        matches.forEach (match, matchIndex)=>
+          entrants = match.get('entrants')
+          entrants.forEach (entrant, entrantIndex)=>
+
+#            offsetTop = roundIndex * itemHeight * 2
+            offsetTop = (Math.pow(2, 2 - roundIndex))*(-1 + Math.pow(2, roundIndex)) * itemHeight
+            offsetLeft = roundIndex * margin
+
+            left = itemWidth * roundIndex + offsetLeft
+            top = matchIndex * (itemHeight * 2) + (entrantIndex * itemHeight) + offsetTop
+
+            entrantElement = document.createElementNS 'http://www.w3.org/2000/svg', 'rect'
+            entrantElement.setAttribute 'class', 'svg-team-grid-item'
+            entrantElement.setAttribute 'x', left
+            entrantElement.setAttribute 'y', top
+            entrantElement.setAttribute 'width', itemWidth
+            entrantElement.setAttribute 'height', itemHeight
+            element.appendChild entrantElement
 
   # Rounds
     content: (->

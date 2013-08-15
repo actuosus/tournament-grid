@@ -71,9 +71,11 @@ define [
 
     App.set 'notificationsController', App.NotificationsController.create()
 
-    App.socketController = App.SocketController.create()
-    App.socketController.connect()
-    App.socketController.join()
+    App.countriesController = App.CountriesController.create()
+
+#    App.socketController = App.SocketController.create()
+#    App.socketController.connect()
+#    App.socketController.join()
 
     App.peroids = Em.ArrayController.create
       content: [

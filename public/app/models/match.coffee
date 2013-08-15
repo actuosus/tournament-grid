@@ -58,13 +58,21 @@ define ['cs!../core'],->
       currentStatus
     ).property('date', 'entrant1_points', 'entrant2_points')
 
+    canBeOpened: (->
+      date = @get 'date'
+      currentDate = new Date
+      reopenInterval = 1000 * 60 * 60 * 12
+      (date > (currentDate + reopenInterval)) or Em.isEmpty(date)
+    ).property('date', 'status')
+
     open: ->
-      @set 'status', 'opened'
-      @store.commit()
+      if @get 'canBeOpened'
+        @set 'status', 'opened'
+        @save()
 
     close: ->
       @set 'status', 'closed'
-      @store.commit()
+      @save()
 
     isOpened: (-> @get('status') is 'opened').property('status')
     isClosed: Em.computed.not 'isOpened'

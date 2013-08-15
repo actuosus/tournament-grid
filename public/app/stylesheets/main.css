@@ -61,6 +61,10 @@
     margin: 0 10px;
 }
 
+.flat-round-title {
+    position: absolute;
+}
+
 .matches-table-container {
     border: 1px solid #bebebe;
     background-color: #efefef;
@@ -85,10 +89,17 @@
 .matches-table-container-header {
     position: relative;
     border-top: 1px solid #bebebe;
+    overflow: hidden;
 }
 
 .matches-table-container-header .add-btn {
     right: 30px;
+}
+
+.matches-table-container-header .count-btn {
+    right: 50px;
+    top: 28px;
+    position: absolute;
 }
 
 .matches-table-container-header .toggle-btn {
@@ -105,6 +116,7 @@
 
 .for-team .matches-table-container-header.is-target-expanded {
     height: 75px;
+    overflow: hidden;
 }
 
 .matches-table-title {
@@ -244,6 +256,10 @@
     min-height: 1em;
     line-height: 11px;
     clear: right;
+}
+
+.flat-match-start-date {
+    position: absolute;
 }
 
 input.match-start-date {
@@ -386,14 +402,14 @@ input.match-start-date {
 }
 
 .team-lineup-popup-players-item {
-    padding: 4px 0;
+    padding: 2px 0;
 }
 
 .team-lineup-popup-players-item-name {
-    margin-top: 2px;
     margin-left: 4px;
     font-size: 11px;
     white-space: nowrap;
+    line-height: 20px;
 }
 
 .match-filter-form-container {
@@ -468,13 +484,14 @@ input.match-start-date {
 .icon-lock {
     width: 10px;
     height: 12px;
-    background-image: url('/images/unlock.svg');
+    background-image: url('../../vendor/images/unlock.svg');
     background-repeat: no-repeat;
     background-position: center;
     background-size: 100%;
     opacity: 0.3;
+    display: inline-block;
 }
 
 .icon-lock.is-closed {
-    background-image: url('/images/lock.svg');
+    background-image: url('../../vendor/images/lock.svg');
 }

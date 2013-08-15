@@ -13,7 +13,7 @@ define ->
       @_super event
       @visualyDeselect()
       $(document.body).addClass 'non-selectable'
-      $(document.body).bind('mousemove.selectable', @onDocumentMouseMove.bind(@))
+      $(document.body).bind('mousemove.selectable', @documentMouseMove.bind(@))
       $(document.body).bind('mouseup.selectable', @mouseUp.bind(@))
       maskView = Em.View.create classNames: ['selection-mask']
       @startMousePosition =
@@ -27,7 +27,7 @@ define ->
       maskView.appendTo App.get 'rootElement'
       @set 'maskView', maskView
 
-    onDocumentMouseMove: (event)->
+    documentMouseMove: (event)->
       width = event.pageX - @startMousePosition.x
       height = event.pageY - @startMousePosition.y
       $maskView = @get('maskView').$()

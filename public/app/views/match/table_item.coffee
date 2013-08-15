@@ -21,6 +21,12 @@ define [
 
     titleBinding: 'content.description'
 
+    isEditable: (->
+      App.get('isEditingMode') and (@get('content.status') is 'opened')
+    ).property('App.isEditingMode', 'content.status')
+
+    _isEditingBinding: 'isEditable'
+
     hasPointsOrEditable: (->
       @get('content.hasPoints') or App.get('isEditingMode')
     ).property('content.hasPoints', 'App.isEditingMode')
@@ -33,7 +39,7 @@ define [
       if $(event.target).hasClass('save-btn')
         match = @get 'content'
         match.get('store').commit()
-      if $(event.target).hasClass('remove-btn')
+      if $(event.target).hasClass('remove-match')
         match = @get 'content'
         match.deleteRecord() if match
   })

@@ -61,6 +61,7 @@ define ['cs!../core'],->
       Em.ArrayController.create content: rounds
     ).property('rounds')
 
+
     getDescendant: (child, idx)-> child.get('children').objectAt idx if child
 
     getByPath: (path, root = @)->

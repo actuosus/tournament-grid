@@ -51,6 +51,10 @@
     display: block;
 }
 
+.match-filter-form .team-combobox {
+    min-width: 180px;
+}
+
 .period-selector, .date-selector {
     float: left;
 
