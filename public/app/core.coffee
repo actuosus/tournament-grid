@@ -241,11 +241,10 @@ define [
 #    revision: 12
     adapter: App.Adapter.create()
 
-  App.Adapter.configure {pageCount: 'pageCount'}
-
   App.store.adapter.url = config.api.host
   App.store.adapter.namespace = config.api.namespace
   App.store.adapter.serializer.primaryKey = -> '_id'
+  App.store.adapter.serializer.configure {pageCount: 'pageCount'}
 
   App.store.adapter.dirtyRecordsForHasManyChange = (dirtySet, record, relationship)->
     embeddedType = @get('serializer').embeddedType(record.constructor, relationship.secondRecordName)

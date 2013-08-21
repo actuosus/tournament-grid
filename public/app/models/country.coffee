@@ -30,10 +30,8 @@ define ['cs!../core'],->
     germanName: DS.attr 'string'
     code: DS.attr 'string'
 
-    flagClassName: Em.computed ->
-      'country-flag-icon-%@'.fmt @get 'code'
-    flagURL: Em.computed ->
-      '/vendor/images/famfamfam_flag_icons/png/%@.png'.fmt @get 'code'
+    flagClassName: Em.computed -> 'country-flag-icon-%@'.fmt @get 'code'
+    flagURL: Em.computed -> '/vendor/images/famfamfam_flag_icons/png/%@.png'.fmt @get 'code'
 
 #    adapter: 'DS.FixtureAdapter'
 

@@ -11,23 +11,63 @@ define [
   'cs!../../mixins/map_control'
   'cs!./grid'
 ], ->
-  App.OtherFlatTournamentGridView = Em.View.extend
-    classNames: ['tournament-grid-container']
+  App.OtherFlatTournamentGridView = Em.ContainerView.extend App.MapControl, App.ContextMenuSupport,
+    classNames: ['tournament-grid-wrapper']
     entrantsNumber: 4
+
+    shouldShowContextMenuBinding: 'App.isEditingMode'
+    contextMenuActions: ['edit', 'save', 'clear']
 
     isSingle: yes
 
     initSharedEditor: ->
-      @sharedEditor = App.TeamGridItemView.create()
+      @sharedEditor = App.TeamGridItemView.create
+        classNames: ['flat-team-grid-item']
+        container: @get 'container'
+      @pushObject @sharedEditor
 
     click: (event)->
-      if $(event.target).hasClass 'team-name'
-        @applySharedEditor event.target
+      return unless App.get 'isEditingMode'
+      entrantElement = null
+      if $(event.target).hasClass('flat-team-grid-item')
+        entrantElement = event.target
+      if $(event.target).parent('.flat-team-grid-item').length
+        entrantElement = $(event.target).parent('.flat-team-grid-item').get 0
+
+      @applySharedEditor entrantElement if entrantElement
 
     applySharedEditor: (element)->
       @initSharedEditor() unless @sharedEditor
-      position = $(element).offset()
-      @sharedEditor.$().css({left: position.left, top: position.top})
+      if @sharedEditor.state is 'inDOM'
+        @sharedEditor.activateEditing()
+        stage = @get 'stage'
+        if stage
+          roundIndex = parseInt element.getAttribute('data-round-index')
+          matchIndex = parseInt element.getAttribute('data-match-index')
+          entrantIndex = parseInt element.getAttribute('data-entrant-index')
+          match = stage.getByPath "#{roundIndex}.#{matchIndex}"
+          if match
+            entrant = match.get "entrant#{entrantIndex+1}"
+            console.log match, entrant
+            @sharedEditor.set 'contentIndex', entrantIndex
+            @sharedEditor.set 'match', match
+            @sharedEditor.set 'content', entrant if entrant
+            @sharedEditor.addObserver 'content', @, (sharedEditor)->
+#              console.log(@, arguments))
+              sharedEditor.removeObserver('content', @)
+              sharedEditor.get('autocompleteView').clear()
+              entrant = sharedEditor.get('content')
+              $(element).empty()
+              @renderCountryIcon element, entrant
+              @renderEntrantName element, entrant
+              @renderPoints element, match, entrantIndex
+#        @sharedEditor.$().css({position: 'absolute', left: element.x, top: element.y, 'z-index': 2})
+        @sharedEditor.get('element').style.webkitTransform = "matrix(1, 0, 0, 1, #{element.x}, #{element.y}"
+        @sharedEditor.get('element').style.zIndex = 2
+      @sharedEditor.on 'didInsertElement', =>
+#        @sharedEditor.$().css({position: 'absolute', left: element.x, top: element.y, 'z-index': 2})
+        @sharedEditor.get('element').style.webkitTransform = "matrix(1, 0, 0, 1, #{element.x}, #{element.y}"
+        @sharedEditor.get('element').style.zIndex = 2
 
     renderConnectorForMatch: (match, container)->
       #          connectorContainerElement = document.createElement 'div'
@@ -72,16 +112,39 @@ define [
       pointsElement.style.webkitTransform = "matrix(1, 0, 0, 1, #{left}, #{top}"
       pointsElement.innerText = match.get "entrant_#{1}_points"
 
+    renderCountryIcon: (entrantElement, entrant)->
+      countryIconElement = document.createElement 'span'
+      countryIconElement.className = "country-flag-icon team-country-flag-icon #{entrant.get('country.flagClassName')} has-flag"
+      entrantElement.appendChild countryIconElement
+
+    renderEntrantName: (entrantElement, entrant)->
+      entrantNameElement = document.createElement 'span'
+      entrantNameElement.className = 'team-name'
+      entrantNameElement.innerText = entrant.get 'name'
+
+      entrantElement.appendChild entrantNameElement
+
+    renderPoints: (entrantElement, match, entrantIndex)->
+      pointsElement = document.createElement 'span'
+      pointsElement.className = 'team-points'
+      pointsElement.innerText = match.get "entrant#{entrantIndex + 1}_points"
+
+      entrantElement.appendChild pointsElement
+
+
     didInsertElement: ->
       element = @get 'element'
       rounds = @get 'content'
       margin = 40
+      padding = 20
       entrantsMargin = 5
       itemWidth = 154
       itemHeight = 25
       matchesCount = Math.pow(2, rounds.length-1)
-      height = matchesCount * itemHeight
-      width = @get('parentView').$().width()-20
+      height = matchesCount * itemHeight + padding * 2
+      width = @get('parentView').$().width() - 20
+
+      @set 'contentView', @
 
       @canvas = document.createElement 'canvas'
       @canvas.style.width = width + 'px'
@@ -100,7 +163,7 @@ define [
         offsetTop = (Math.pow(2, 2 - roundIndex))*(-1 + Math.pow(2, roundIndex)) * itemHeight
         offsetLeft = roundIndex * margin
         top = 0
-        left = itemWidth * roundIndex + offsetLeft
+        left = itemWidth * roundIndex + offsetLeft + padding
 
         roundTitleElement = document.createElement 'span'
         roundTitleElement.className = 'round-name round-title flat-round-title'
@@ -110,30 +173,36 @@ define [
 
         matches = round.get('matches')
         matches.forEach (match, matchIndex)=>
+          matchMargin = 36
           entrants = match.get('entrants')
 
           top = matchIndex * (itemHeight * 2) + offsetTop + itemHeight
 
           entrants.forEach (entrant, entrantIndex)=>
 
-            top = matchIndex * (itemHeight * 2) + (entrantIndex * itemHeight) + offsetTop
+            top = matchIndex * (itemHeight * 2) + (entrantIndex * itemHeight) + offsetTop + padding
 
             entrantElement = document.createElement 'div'
 #            entrantElement.id = "entrant-#{entrantIndex}"
-            entrantElement.className = 'flat-team-grid-item'
+            entrantElement.className = 'team-grid-item flat-team-grid-item'
 
 #            entrantElement.style.top = top + 'px'
 #            entrantElement.style.left = left + 'px'
 #            entrantElement.style.webkitTransform = 'translate('+ left + 'px,' + top + 'px)'
             entrantElement.style.webkitTransform = "matrix(1, 0, 0, 1, #{left}, #{top}"
+            entrantElement.x = left
+            entrantElement.y = top
             fragment.appendChild entrantElement
+
+            entrantElement.setAttribute('data-round-index', roundIndex)
+            entrantElement.setAttribute('data-match-index', matchIndex)
+            entrantElement.setAttribute('data-entrant-index', entrantIndex)
 
             match.onLoaded = =>
               entrants = match.get('entrants')
               #              entrant = entrants.objectAt entrantIndex
               #              country = entrant.get('country')
 
-              entrantElement.id = "match-#{match.get('id')}-entrant-#{entrantIndex}"
               entrantElement.setAttribute('data-match-id', match.get('id'))
               entrantElement.setAttribute('data-entrant-index', entrantIndex)
               @renderDateForMatch match, roundIndex, matchIndex

@@ -19,6 +19,9 @@ define [
 
     selection: null
 
+    clear: ->
+      @set 'textFieldView.value', ''
+
     textFieldView: Em.TextField.extend
       classNames: 'text-field'
 #      isVisibleBinding: 'parentView.isVisible'

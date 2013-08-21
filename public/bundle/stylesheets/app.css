@@ -1785,15 +1785,9 @@ body .ui-tooltip {
 .block-container {
     
     position: relative;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
     border: 1px solid #bcbcbc;
     background-color: white;
     margin-top: 20px;
-    -webkit-transition-property: box-shadow;
-    -webkit-transition-duration: 0.3s;
-}
-.block-container:hover {
-    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.25);
 }
 .block-container .b-profileBlock__title {
     margin: 16px;
@@ -2142,6 +2136,25 @@ body .ui-tooltip {
 .team-loser .team-points.active,
 .team-loser .team-points:focus {
     background-color: #af3a40;
+}
+.flat-team-grid-item {
+    position: absolute;
+    width: 154px;
+    height: 19px;
+    border: 1px solid #828282;
+    background-color: #efefef;
+    overflow: hidden;
+    
+    
+    
+}
+.svg-team-grid-item {
+    stroke: #828282;
+    stroke-width: 1;
+    fill: #efefef;
+}
+.svg-team-grid-item:hover {
+    -webkit-filter: drop-shadow( 0 0 10px #ff6c00 );
 }
 .country-flag-icon {
     display: inline-block;
@@ -2730,7 +2743,6 @@ body .ui-tooltip {
     width: 390px;
 }
 .tournament-grid-container {
-    overflow: hidden;
     position: relative;
 }
 .tournament-grid-container .fullscreen-btn {
@@ -3503,6 +3515,10 @@ body .ui-tooltip {
     font-size: 13px;
     margin: 0 10px;
 }
+.flat-round-title {
+    position: absolute;
+    width: 134px;
+}
 .matches-table-container {
     border: 1px solid #bebebe;
     background-color: #efefef;
@@ -3657,6 +3673,9 @@ body .ui-tooltip {
     min-height: 1em;
     line-height: 11px;
     clear: right;
+}
+.flat-match-start-date {
+    position: absolute;
 }
 input.match-start-date {
     font-size: 11px;

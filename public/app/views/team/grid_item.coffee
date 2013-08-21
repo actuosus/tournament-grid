@@ -22,18 +22,18 @@ define [
 
     editingChildViews: ['autocompleteView', 'resetButtonView']
 
-    matchBinding: 'parentView.match'
+#    matchBinding: 'parentView.match'
     pointsIsVisible: yes
 
     teamUndefined: Em.computed.empty 'content'
 
-    content: (->
-      content = @get 'content'
-      if App.TeamRef.detectInstance content
-        content.get 'team'
-      else
-        content
-    ).property('content')
+#    content: (->
+#      content = @get 'content'
+#      if App.TeamRef.detectInstance content
+#        content.get 'team'
+#      else
+#        content
+#    ).property('content')
 
     countryFlagView: App.CountryFlagView.extend
       contentBinding: 'parentView.content.country'
@@ -69,6 +69,11 @@ define [
 
       focusOut: -> @set 'isVisible', no
 
+    activateEditing: ->
+      if @get('_isEditing')
+        @set('autocompleteView.isVisible', yes)
+        @get('autocompleteView').trigger('focus')
+
     nameView: Em.View.extend
       classNames: ['team-name']
 #      href: (->
@@ -76,10 +81,7 @@ define [
 #      ).property('content')
       template: Em.Handlebars.compile '{{view.parentView.content.name}}'#<a {{bindAttr href="view.href"}} target="_blank">
 
-      click: ->
-        if @get('parentView._isEditing')
-          @set('parentView.autocompleteView.isVisible', yes)
-          @get('parentView.autocompleteView').trigger('focus')
+      click: -> @get('parentView')?.activateEditing()
 
     points: (->
       @get("match.entrant#{@get('contentIndex')+1}_points")

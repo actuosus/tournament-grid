@@ -39,7 +39,7 @@ require([
   'jquery.ui.timepicker',
   'transit',
 //  'raphael',
-  'fabric',
+//  'fabric',
   'moment',
   'spin',
   'ember-data',
