@@ -10,16 +10,22 @@ require 'iced-coffee-script'
 
 path = require 'path'
 http = require 'http'
-#redis = require 'redis'
+redis = require 'redis'
+#redis.debug_mode = yes
 #spdy = require 'spdy'
 express = require 'express'
-#RedisStore = require('connect-redis')(express)
+RedisStore = require('connect-redis')(express)
+
+vp = redis.createClient()
+vp.select 1
 
 i18n = require 'i18n'
 
 mongoose = require 'mongoose'
 passport = require 'passport'
 BasicStrategy = require('passport-http').BasicStrategy
+
+express.static.mime.define({'application/x-chrome-extension': ['crx']});
 
 #IO = require './io'
 
@@ -41,7 +47,7 @@ grid = module.exports = models: models
 app = module.exports.app = express()
 
 passport.use new BasicStrategy (username, password, done)->
-  models.User.findOne {username: username}, (err, user)->
+  models.User.findOne {username: username}, 'username password email role', (err, user)->
     return done err if err
     return done null, false if not user
     return done null, false if not user.validPassword password
@@ -110,16 +116,16 @@ app.configure ->
 
   # Session support
   console.log 'Redis', conf._redis
-#  app.use express.session(
-#    secret: 'Is it secure?'
-#    store: new RedisStore(
-#      host: conf._redis.host
-#      port: conf._redis.port
-#      pass: conf._redis.password
-#      db: conf._redis.db
-#    )
-#  )
-  app.use express.session secret: 'Is it secure?'
+  app.use express.session(
+    secret: 'Is it secure?'
+    store: new RedisStore(
+      host: conf._redis.host
+      port: conf._redis.port
+      pass: conf._redis.password
+      db: conf._redis.db
+    )
+  )
+#  app.use express.session secret: 'Is it secure?'
   app.use passport.initialize()
   app.use passport.session()
 
@@ -335,6 +341,103 @@ app.get '/games/:_id', ensureAuthenticated, routes.games.item
 app.get '/teams/:_id', ensureAuthenticated, routes.teams.item
 
 app.get '/players/:_id', ensureAuthenticated, routes.players.item
+
+app.get '/voting', ensureAuthenticated, routes.voting.index
+
+
+getAllVotesForStreamId = (streamId, cb)->
+  vp.get "vp:voting:#{streamId}", (err, votingJSON)->
+    voting = JSON.parse votingJSON
+    vp.hgetall "vp:voting:#{streamId}:results", (err, results)->
+      console.log err, results
+      unless err
+        for index, count of results
+          voting.variants[index].count = parseInt count
+        voting.voted = yes
+        cb voting
+      else
+        cb error: err
+
+app.get '/vote.php', (req, res)->
+  console.log 'req.query', req.query
+  if req.query
+    vp.get "vp:voting:#{req.query.streamId}", (err, votingJSON)->
+      console.log err, votingJSON
+      return res.send {error: err} if err
+      unless votingJSON
+        if req.user.role is 'admin' or req.user.role is 'moderator'
+          return res.send moderator: yes
+        else
+          res.send 404, error: 'no voting'
+      else
+        voting = JSON.parse votingJSON
+        # Getting current user votes
+        console.log 'req.user._id', req.user._id
+        vp.get "vp:voting:#{req.query.streamId}:#{req.user._id}", (userVoteError, userVoteResponse)->
+          console.log 'userVoteResponce', userVoteError, userVoteResponse
+          if userVoteResponse or req.query.type is 'results'
+            vp.hgetall "vp:voting:#{req.query.streamId}:results", (err, results)->
+              console.log err, results
+              unless err
+                for index, count of results
+                  voting.variants[index].count = parseInt count
+                voting.voted = yes
+                if req.user.role is 'admin' or req.user.role is 'moderator'
+                  voting.moderator = yes
+                res.send voting
+              else
+                res.send 401, error: err
+          else
+            res.send voting
+
+app.post '/vote.php', (req, res)->
+  console.log 'req.body', req.body
+  if req.body?.type is 'variants'
+    # Create variants
+    vp.setnx "vp:voting:#{req.body.streamId}", JSON.stringify(req.body), (err, createResponse)->
+      if createResponse is 0
+        return res.send 405, error: 'created'
+      unless err
+        data = req.body
+        if req.user.role is 'admin' or req.user.role is 'moderator'
+          data.moderator = yes
+        res.send req.body
+      else
+        res.send 401, error: err
+  else if req.body?.type is 'variant'
+    # Set voting for user
+    vp.setnx "vp:voting:#{req.body.streamId}:#{req.user._id}", JSON.stringify(req.body), (voteError, voteResponse)->
+      console.log 'voteResponse', voteError, voteResponse
+      if voteResponse is 0
+        return res.send 405, error: 'voted'
+      unless voteError
+        # Increment results
+        vp.hincrby "vp:voting:#{req.body.streamId}:results", req.body.id, 1, (incrementError)->
+          unless incrementError
+            getAllVotesForStreamId req.body.streamId, (data)->
+              if req.user.role is 'admin' or req.user.role is 'moderator'
+                data.moderator = yes
+              data.voted = yes
+              res.send data
+          else
+            res.send 400, error: incrementError
+      else
+        res.send 400, error: voteError
+  else
+    res.send 400, error: 'noo'
+
+app.delete '/vote.php', (req, res)->
+  console.log req.body
+  vp.keys "vp:voting:#{req.body.streamId}*", (err, keys)->
+    console.log keys.join(' ')
+    vp.del keys, (err)->
+      unless err
+        data = {result: 'ok'}
+        if req.user.role is 'admin' or req.user.role is 'moderator'
+          data.moderator = yes
+        res.send data
+      else
+        res.send 500, {error: error}
 
 app.get '*', (req, res)-> res.status 404; res.render '404.ect'
 

@@ -11,11 +11,12 @@ Schema = mongoose.Schema
 ObjectId = Schema.ObjectId
 
 UserSchema = new Schema
-  username: type: String
-  password: type: String
-  email: type: String
+  username: String
+  password: String
+  email: String
+  role: String
 
-  language: type: String
+  language: String
 
 UserSchema.methods.validPassword = (password)-> @password is password
 

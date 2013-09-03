@@ -6,6 +6,7 @@
   "private": true,
   "scripts": {
     "start": "node server",
+    "pack-extension": "chrome --pack-extension=../Tokenizer --pack-extension-key=../Tokenizer.pem",
     "test": "make test"
   },
   "keywords": [
@@ -41,6 +42,7 @@
     "chai": "latest",
     "superagent": "latest",
     "should": "latest",
+    "supervisor": "latest",
 
     "grunt": "latest",
     "grunt-contrib-requirejs": "latest",

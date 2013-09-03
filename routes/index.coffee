@@ -17,3 +17,5 @@ exports.reports = require './reports'
 exports.authors = require './authors'
 exports.matches = require './matches'
 exports.teams = require './teams'
+
+exports.voting = require './voting'

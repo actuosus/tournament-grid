@@ -56,7 +56,9 @@ task 'db:drop', 'Drops database', (options)->
 task 'db:seed', 'Seed database with fixtures', (options) ->
   path = require 'path'
   mongoose = require 'mongoose'
+  console.log 'Connecting to', conf.mongo
   mongoose.connect conf.mongo
+  console.log 'Loading schemas and modules…'
   models = require './models'
 
   fixtures = require './lib/fixtures'

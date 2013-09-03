@@ -2023,6 +2023,7 @@ body .ui-tooltip {
     position: relative;
     -webkit-transition-property: background-color, border-color, box-shadow;
     -webkit-transition-duration: 0.3s;
+    border-radius: 1px;
 }
 .team-grid-item:hover {
     background-color: #f7f7f7;
@@ -2147,6 +2148,14 @@ body .ui-tooltip {
     
     
     
+}
+.flat-team-grid-item-editor {
+    position: absolute;
+    width: 154px;
+    height: 19px;
+    border: 1px solid #828282;
+    background-color: #efefef;
+    overflow: hidden;
 }
 .svg-team-grid-item {
     stroke: #828282;
@@ -2750,6 +2759,7 @@ body .ui-tooltip {
     top: 20px;
     right: 20px;
 }
+.tournament-grid-wrapper .toolbox,
 .tournament-grid-container .toolbox {
     position: absolute;
     top: 20px;
@@ -2812,7 +2822,7 @@ body .ui-tooltip {
 .connector {
     position: absolute;
     z-index: 1;
-    width: 21px;
+    width: 35px;
     pointer-events: none;
     -webkit-user-select: none;
 }
@@ -3722,7 +3732,7 @@ input.match-start-date {
     color: black;
 }
 .b-profileBlock__title.close {
-    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAJCAMAAADaUYZlAAAAOVBMVEU4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODiX3pCcAAAAE3RSTlMAAwYNFDk+SFFrbG+srcTb8/n+43xG/AAAADxJREFUeNpFyEEOgCAQQ9GCgAgowv0Pq0mbma76H8IJ21GAvi/L502I9w/KVQGCp0BJGLsxHSbTgOmQdT6lXQIj8v3aswAAAABJRU5ErkJggg==') right 6px no-repeat;
+    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAJCAMAAADaUYZlAAAAOVBMVEU4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODiX3pCcAAAAE3RSTlMAAwYNFDk+SFFrbG+srcTb8/n+43xG/AAAADxJREFUeNpFyEEOgCAQQ9GCgAgowv0Pq0mbma76H8IJ21GAvi/L502I9w/KVQGCp0BJGLsxHSbTgOmQdT6lXQIj8v3aswAAAABJRU5ErkJggg==') right 7px no-repeat;
 }
 .stage-view {
     margin-top: 16px;

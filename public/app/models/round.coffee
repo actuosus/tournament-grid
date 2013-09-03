@@ -14,6 +14,10 @@ define ['cs!../core'],->
     # TODO History Ember.History,
 #    _trackProperties: ['name']
 
+    init: ->
+      @_super()
+      @on 'matchLoaded', (match)-> @get('stage')?.trigger 'matchLoaded', match
+
     title: DS.attr('string', {loc: {keyPath: '_title', defaultLanguage: 'ru'}})
 
     # Relations

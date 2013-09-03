@@ -8,12 +8,13 @@
 
 module.exports.Round = [
   _id: '50fd4a58cbbf53a72a000002'
+  sort_index: 0
   title: '1/4 финала'
   stage_id: '51121246b54802daae00000a'
   matches: ['50fd102c3612183b15000001', '50fd102c3612183b15000002', '50fd102c3612183b15000004', '50fd102c3612183b15000005']
 ,
   _id: '50fd4a58cbbf53a72a000003'
-  sort_index: 0
+  sort_index: 1
   title: 'Полуфинал'
   _title:
     ru: 'Полуфинал'
@@ -23,7 +24,7 @@ module.exports.Round = [
   matches: ['50fd102c3612183b15000003', '50fd102c3612183b15000006']
 ,
   _id: '50fd4a58cbbf53a72a000004'
-  sort_index: 1
+  sort_index: 2
   title: 'Финал'
   _title:
     ru: 'Финал'

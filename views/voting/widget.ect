@@ -1,0 +1,95 @@
+<style>
+    .b-stream__voting {
+        background: #000000;
+    }
+
+    .b-stream__voting-admin-panel {
+        margin: 10px;
+        background: #000000;
+    }
+    .b-stream__voting-control-buttons {
+        margin: 10px;
+    }
+
+    .form-row {
+        margin: 20px;
+    }
+
+    .b-stream__voting__variants {
+        margin: 0;
+        padding: 0;
+    }
+
+    .b-stream__voting__variant {
+        list-style-type: none;
+        color: white;
+        padding: 10px;
+    }
+</style>
+
+<script src="/vendor/scripts/jquery.js"></script>
+
+<script src="/scripts/voting.js"></script>
+
+<script type="text/template" id="voteAdminTemplate">
+    <div class="b-stream__voting-admin-panel">
+        <form class="b-stream__voting-admin-form" method="post">
+            <div class="form-row">
+                <!--<label>Title or question:</label>-->
+                <input type="text" name="voting-title" class="voting-title" size="100" maxlength="255" placeholder="Название или вопрос"/>
+            </div>
+            <div class="form-row variants">
+                <div class="b-stream__voting-variant variant-template">
+                    <span class="index"></span>
+                    <input type="text" size="30" maxlength="255" class="variant-title" placeholder="Текст варианта"/>
+                    <input type="color" class="variant-color"/>
+                </div>
+                <button type="button" class="add-variant">Добавить вариант ответа</button>
+            </div>
+
+            <div class="form-row">
+                <button type="submit" class="save-voting">Сохранить</button>
+            </div>
+        </form>
+    </div>
+</script>
+
+<script type="text/template" id="voteTemplate">
+    <div class="hold">
+        <div class="title"></div>
+        <ul class="b-stream__voting__variants">
+            <li class="item item_type1 b-stream__voting__variant b-stream__voting__variant-template">
+                <input type="radio" name="b-stream__voting__variant" class="variant-radio"/>
+                <label class="variant-title">--</label>
+            </li>
+        </ul>
+    </div>
+</script>
+
+<script type="text/template" id="voteResultsTemplate">
+    <div class="hold">
+        <div class="title">В какое время суток вам удобнее и эффективнее всего проводить <br> свои тренировки?</div>
+        <div class="subtitle">Всего <span class="b-stream__voting__users-count-string"></span>   |   Дата создания: <span class="b-stream__voting__created-at"></span></div>
+        <ul class="b-stream__voting__graph">
+            <li class="item b-stream__voting-results-variant-template">
+                <span class="variant-title"></span><br>
+                                        <span class="item__limiter">
+                                            <span class="item__filler"></span>
+                                        </span>
+                <span class="variant-percentage"></span><span class="item__quantity">(346 голосов)</span>
+            </li>
+        </ul>
+    </div>
+</script>
+
+<script type="text/template" id="noVotingTemplate">
+    <p class="notice">Голосование не проводится.</p>
+</script>
+
+<div class="b-stream__voting">
+    <div class="b-stream__voting-holder"></div>
+</div>
+
+<script type="text/javascript">
+    initStreamVoting('abcd');
+</script>

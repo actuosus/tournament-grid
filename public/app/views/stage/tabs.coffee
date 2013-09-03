@@ -30,17 +30,17 @@ define [
       switch stage.get 'visualType'
         when 'single', 'grid'
           stage.get('matches')
-#          contentView = App.NewTournamentGridView.create
-#            container: @get 'container'
-#            stage: stage
-#            entrantsNumber: stage.get('entrantsNumber')
-#          contentView = App.CanvasTournamentGridView.create
-#          contentView = App.FlatTournamentGridView.create
-          contentView = App.OtherFlatTournamentGridView.create
-#          contentView = App.SVGTournamentGridView.create
+          contentView = App.NewTournamentGridView.create
             container: @get 'container'
             stage: stage
             entrantsNumber: stage.get('entrantsNumber')
+#          contentView = App.CanvasTournamentGridView.create
+#          contentView = App.FlatTournamentGridView.create
+#          contentView = App.OtherFlatTournamentGridView.create
+##          contentView = App.SVGTournamentGridView.create
+#            container: @get 'container'
+#            stage: stage
+#            entrantsNumber: stage.get('entrantsNumber')
 
         when 'double'
           contentView = App.NewDoubleTournamentGridView.create

@@ -6,7 +6,7 @@
 ###
 
 define ->
-  App.MatchController = Em.ObjectController.extend
+  App.MatchController = Em.ObjectController.extend Ember.Evented,
     isSelected: no
     status: 'opened'
 
@@ -67,6 +67,7 @@ define ->
         match = @get('round.content.matches')?.find (_)=>_.get('sortIndex') is @get('sortIndex')
         @set('entrants', match.get('entrants')) if match
         @set 'content', match if match
+        @trigger 'didLoad' if match
         @onLoaded() if match
       ,200
       null

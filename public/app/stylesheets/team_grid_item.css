@@ -33,6 +33,7 @@
 
     -webkit-transition-property: background-color, border-color, box-shadow;
     -webkit-transition-duration: 0.3s;
+    border-radius: 1px;
 }
 
 .team-grid-item:hover {
@@ -184,6 +185,16 @@
     /*-webkit-transition-property: -webkit-transform;*/
     /*-webkit-transition-duration: 1s;*/
     /*-webkit-transform: translate(0, 0);*/
+}
+
+.flat-team-grid-item-editor {
+    position: absolute;
+    width: 154px;
+    height: 19px;
+    border: 1px solid #828282;
+    background-color: #efefef;
+
+    overflow: hidden;
 }
 
 .svg-team-grid-item {

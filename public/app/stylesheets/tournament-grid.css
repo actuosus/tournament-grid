@@ -23,6 +23,7 @@
     right: 20px;
 }
 
+.tournament-grid-wrapper .toolbox,
 .tournament-grid-container .toolbox {
     position: absolute;
     top: 20px;
@@ -100,7 +101,7 @@
 .connector {
     position: absolute;
     z-index: 1;
-    width: 21px;
+    width: 35px;
     pointer-events: none;
     -webkit-user-select: none;
 }

@@ -8,6 +8,7 @@
 
 module.exports.Match = [
   _id: '50fd102c3612183b15000001',
+  sort_index: 0
   title: 'Umitara vs Wikipediots',
   entrant1_id: '50fcdf189c68d90f07000001',
   entrant2_id: '50fcdf189c68d90f07000002',
@@ -20,6 +21,7 @@ module.exports.Match = [
   link: '/check/this/out'
 ,
   _id: '50fd102c3612183b15000002',
+  sort_index: 1
   title: 'Stephano vs Bly',
   entrant1_id: '50fcdf189c68d90f07000003',
   entrant2_id: '50fcdf189c68d90f07000004',
@@ -33,7 +35,7 @@ module.exports.Match = [
   games: ['5111afa9c3a093c8a1000002', '5111afa9c3a093c8a1000003', '5111afa9c3a093c8a1000004']
 ,
   _id: '50fd102c3612183b15000003',
-  sort_index: 0
+  sort_index: 2
   title: 'Umitara vs Bly',
   entrant1_id: '50fcdf189c68d90f07000001',
   entrant2_id: '50fcdf189c68d90f07000004',
@@ -45,6 +47,7 @@ module.exports.Match = [
   description: 'Короткое описание основного текста, для того'
 ,
   _id: '50fd102c3612183b15000004',
+  sort_index: 3
   title: 'Umitara vs Wikipediots',
   entrant1_id: '50fcdf189c68d90f07000001',
   entrant2_id: '50fcdf189c68d90f07000002',
@@ -85,7 +88,7 @@ module.exports.Match = [
   entrant2_id: '50fcdf189c68d90f07000002',
   entrant1_points: 1,
   entrant2_points: 4,
-  date: new Date '08.24.2012'
+  date: new Date '09.24.2012'
   round_id: '50fd4a58cbbf53a72a000004'
   map_type: 'Комарин'
   description: 'Короткое описание основного текста, для того'

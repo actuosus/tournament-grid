@@ -77,6 +77,11 @@ define ['cs!../core'],->
     isOpened: (-> @get('status') is 'opened').property('status')
     isClosed: Em.computed.not 'isOpened'
 
+    isLoadedChanged: (->
+      console.log 'match.isLoaded'
+      @get('round')?.trigger 'matchLoaded', @
+    ).observes('isLoaded')
+
     isPast: (->
       new Date > @get 'date'
     ).property('date')

@@ -15,6 +15,35 @@ define [
     classNames: ['tournament-grid-wrapper']
     entrantsNumber: 4
 
+    childViews: ['toolboxView']
+
+    toolboxView: Em.ContainerView.extend
+      classNames: ['toolbox']
+      childViews: ['resetButtonView', 'zoomInButtonView', 'zoomOutButtonView']
+
+      mapViewBinding: 'parentView'
+
+      zoomInButtonView: Em.View.extend
+        tagName: 'button'
+        classNames: ['btn-clean']
+        mapViewBinding: 'parentView.mapView'
+        template: Em.Handlebars.compile '+'
+        click: -> @get('mapView').zoomIn(animated = yes)
+
+      zoomOutButtonView: Em.View.extend
+        tagName: 'button'
+        classNames: ['btn-clean']
+        mapViewBinding: 'parentView.mapView'
+        template: Em.Handlebars.compile '-'
+        click: -> @get('mapView').zoomOut(animated = yes)
+
+      resetButtonView: Em.View.extend
+        tagName: 'button'
+        classNames: ['btn-clean']
+        mapViewBinding: 'parentView.mapView'
+        template: Em.Handlebars.compile '☒'
+        click: -> @get('mapView').reset(animated = yes)
+
     shouldShowContextMenuBinding: 'App.isEditingMode'
     contextMenuActions: ['edit', 'save', 'clear']
 
@@ -22,7 +51,7 @@ define [
 
     initSharedEditor: ->
       @sharedEditor = App.TeamGridItemView.create
-        classNames: ['flat-team-grid-item']
+        classNames: ['flat-team-grid-item-editor']
         container: @get 'container'
       @pushObject @sharedEditor
 
@@ -55,7 +84,7 @@ define [
             @sharedEditor.addObserver 'content', @, (sharedEditor)->
 #              console.log(@, arguments))
               sharedEditor.removeObserver('content', @)
-              sharedEditor.get('autocompleteView').clear()
+#              sharedEditor.get('autocompleteView').clear()
               entrant = sharedEditor.get('content')
               $(element).empty()
               @renderCountryIcon element, entrant
@@ -85,13 +114,23 @@ define [
 
     renderDateForMatch: (match, roundIndex, matchIndex)->
       element = @get 'element'
+      rounds = @get 'content'
+      margin = 40
+      padding = 20
+      matchMargin = 42
+      entrantsMargin = 6
       itemWidth = 154
       itemHeight = 25
-      margin = 40
-      offsetTop = (Math.pow(2, 2 - roundIndex))*(-1 + Math.pow(2, roundIndex)) * itemHeight
+      matchesCount = Math.pow(2, rounds.length-1)
+      height = matchesCount * itemHeight + (matchMargin * (matchesCount/2-1)) + padding * 2
       offsetLeft = roundIndex * margin
-      top = matchIndex * (itemHeight * 2) + offsetTop - 13
-      left = itemWidth * roundIndex + offsetLeft
+
+      currentMatchCount = Math.pow(2, rounds.length-2-roundIndex)
+      console.log 'roundIndex', roundIndex, 'currentMatchCount', currentMatchCount, 'matchIndex', matchIndex
+
+      left = itemWidth * roundIndex + offsetLeft + padding
+      top = (height / currentMatchCount) * matchIndex + 10
+
       dateElement = document.createElement 'span'
       dateElement.className = 'match-start-date flat-match-start-date'
       dateElement.style.webkitTransform = "matrix(1, 0, 0, 1, #{left}, #{top}"
@@ -103,10 +142,11 @@ define [
       itemWidth = 154
       itemHeight = 25
       margin = 40
+      padding = 20
       offsetTop = (Math.pow(2, 2 - roundIndex))*(-1 + Math.pow(2, roundIndex)) * itemHeight
       offsetLeft = roundIndex * margin
       top = matchIndex * (itemHeight * 2) + offsetTop - 13
-      left = itemWidth * roundIndex + offsetLeft
+      left = itemWidth * roundIndex + offsetLeft + padding
       pointsElement = document.createElement 'span'
       pointsElement.className = 'match-start-date flat-match-start-date'
       pointsElement.style.webkitTransform = "matrix(1, 0, 0, 1, #{left}, #{top}"
@@ -131,17 +171,28 @@ define [
 
       entrantElement.appendChild pointsElement
 
+    matchLoaded: (match)->
+      [roundIndex, matchIndex] = [match.get('round.sortIndex'), match.get('sortIndex')]
+      @renderDateForMatch match, roundIndex, matchIndex
+      match.get('entrants').forEach (entrant, entrantIndex)=>
+        entrantElement = document.getElementById "entrant-#{roundIndex}-#{matchIndex}-#{entrantIndex}"
+        if entrantElement
+          @renderCountryIcon entrantElement, entrant
+          @renderEntrantName entrantElement, entrant
+          @renderPoints entrantElement, match, entrantIndex
+      console.log @, arguments
 
     didInsertElement: ->
       element = @get 'element'
       rounds = @get 'content'
       margin = 40
       padding = 20
-      entrantsMargin = 5
+      matchMargin = 42
+      entrantsMargin = 6
       itemWidth = 154
       itemHeight = 25
       matchesCount = Math.pow(2, rounds.length-1)
-      height = matchesCount * itemHeight + padding * 2
+      height = matchesCount * itemHeight + (matchMargin * (matchesCount/2-1)) + padding * 2
       width = @get('parentView').$().width() - 20
 
       @set 'contentView', @
@@ -172,18 +223,46 @@ define [
         fragment.appendChild roundTitleElement
 
         matches = round.get('matches')
+        currentMatchCount = matches.length
         matches.forEach (match, matchIndex)=>
-          matchMargin = 36
           entrants = match.get('entrants')
 
-          top = matchIndex * (itemHeight * 2) + offsetTop + itemHeight
+          # Rendering connector
+          unless round.get 'isFinal'
+            connectorContainerElement = document.createElement 'div'
+
+            connectorHeight = 0
+            if (matchIndex % 2)
+              top = (height / currentMatchCount) * matchIndex + ((height / currentMatchCount) / 2) + (itemHeight + entrantsMargin) / 2 - entrantsMargin / 2 - ((height / currentMatchCount)/2)  + (itemHeight)/2
+              connectorContainerElement.className = 'connector diff'
+            else
+              top = (height / currentMatchCount) * matchIndex + ((height / currentMatchCount) / 2) + (itemHeight + entrantsMargin) / 2 - entrantsMargin / 2
+              connectorContainerElement.className = 'connector'
+
+            connectorHeight = ((height / currentMatchCount)/2) - itemHeight/2
+
+            if currentMatchCount is 1
+              connectorHeight = 0
+
+            connectorContainerElement.style.height = connectorHeight + 'px'
+            connectorContainerElement.style.webkitTransform = "matrix(1, 0, 0, 1, #{left + itemWidth + 5}, #{top}"
+            connectorOneElement = document.createElement 'div'
+            connectorOneElement.className = 'one'
+            connectorAnotherElement = document.createElement 'div'
+            connectorAnotherElement.className = 'another'
+            connectorContainerElement.appendChild connectorOneElement
+            connectorContainerElement.appendChild connectorAnotherElement
+            fragment.appendChild connectorContainerElement
 
           entrants.forEach (entrant, entrantIndex)=>
 
-            top = matchIndex * (itemHeight * 2) + (entrantIndex * itemHeight) + offsetTop + padding
+            top = (height / currentMatchCount) * matchIndex + ((height / currentMatchCount) / 2) + entrantIndex * itemHeight + entrantIndex * entrantsMargin -
+              (itemHeight + entrantsMargin) / 2
+
+            if round.get 'isFinal'
+              top += (itemHeight + entrantsMargin) / 2
 
             entrantElement = document.createElement 'div'
-#            entrantElement.id = "entrant-#{entrantIndex}"
             entrantElement.className = 'team-grid-item flat-team-grid-item'
 
 #            entrantElement.style.top = top + 'px'
@@ -197,29 +276,8 @@ define [
             entrantElement.setAttribute('data-round-index', roundIndex)
             entrantElement.setAttribute('data-match-index', matchIndex)
             entrantElement.setAttribute('data-entrant-index', entrantIndex)
+            entrantElement.id = "entrant-#{roundIndex}-#{matchIndex}-#{entrantIndex}"
 
-            match.onLoaded = =>
-              entrants = match.get('entrants')
-              #              entrant = entrants.objectAt entrantIndex
-              #              country = entrant.get('country')
-
-              entrantElement.setAttribute('data-match-id', match.get('id'))
-              entrantElement.setAttribute('data-entrant-index', entrantIndex)
-              @renderDateForMatch match, roundIndex, matchIndex
-
-              pointsElement = document.createElement 'span'
-              pointsElement.className = 'team-points'
-
-              countryIconElement = document.createElement 'span'
-              countryIconElement.className = "country-flag-icon team-country-flag-icon country-flag-icon-ru has-flag"
-
-              entrantNameElement = document.createElement 'span'
-              entrantNameElement.className = 'team-name'
-              entrantNameElement.innerText = 'team-name'
-
-              entrantElement.appendChild countryIconElement
-              entrantElement.appendChild entrantNameElement
-              entrantElement.appendChild pointsElement
       element.appendChild fragment
       console.timeEnd 'Flat grid'
 
@@ -229,6 +287,7 @@ define [
   # Rounds
     content: (->
       stage = @get 'stage'
+      stage.on 'matchLoaded', @matchLoaded.bind @
       entrantsNumber = @get('entrantsNumber') or stage?.get('entrantsNumber')
       roundsLength = stage?.get('round.length')
       if entrantsNumber
