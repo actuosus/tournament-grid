@@ -108,7 +108,7 @@ define [
 
     automaticCountingChanged: (->
       resultSets = @get 'round.resultSets'
-      console.count('automaticCountingChanged');
+      console.count 'automaticCountingChanged'
       return if not resultSets or not App.get('isEditingMode')
 
       # Reset

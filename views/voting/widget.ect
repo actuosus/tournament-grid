@@ -33,6 +33,7 @@
 
 <script type="text/template" id="voteAdminTemplate">
     <div class="b-stream__voting-admin-panel">
+        <h2>Создание голосования</h2>
         <form class="b-stream__voting-admin-form" method="post">
             <div class="form-row">
                 <!--<label>Title or question:</label>-->
@@ -60,9 +61,10 @@
         <ul class="b-stream__voting__variants">
             <li class="item item_type1 b-stream__voting__variant b-stream__voting__variant-template">
                 <input type="radio" name="b-stream__voting__variant" class="variant-radio"/>
-                <label class="variant-title">--</label>
+                <label class="variant-title"></label>
             </li>
         </ul>
+        <button type="button" class="action-vote">Голосовать</button>
     </div>
 </script>
 
@@ -87,6 +89,7 @@
 </script>
 
 <div class="b-stream__voting">
+    <div class="b-stream__voting-status-message"></div>
     <div class="b-stream__voting-holder"></div>
 </div>
 

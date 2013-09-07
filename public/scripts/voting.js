@@ -17,9 +17,9 @@
   var container;
   var streamId;
 
-  String.prototype.__format = function() {
+  String.prototype.__format = function () {
     var args = arguments;
-    return this.replace(/{(\d+)}/g, function(match, number) {
+    return this.replace(/{(\d+)}/g, function (match, number) {
       return typeof args[number] != 'undefined'
         ? args[number]
         : match
@@ -56,19 +56,22 @@
       $('.variant-radio', variantElement).attr({id: id}).data('index', i);
       $('.variant-title', variantElement).text(variant.title).attr({for: id});
       variantsHolder.append(variantElement);
-      console.log('Binding click to', variantElement.get(0));
-      variantElement.on('change', function (event) {
-        console.log('Kind of voting', event);
-        vote($('.variant-radio', this).data('index'), {
-          success: function(data) {
+    }
+    $('.action-vote', votingViewTemplate).click(function(event){
+      event.preventDefault();
+      var selected = $('.variant-radio:checked', votingViewTemplate);
+      if (selected.length) {
+        var index = selected.data('index');
+        vote(index, {
+          success: function (data) {
             showAppropriateView(data);
           },
-          error: function(jXHR) {
+          error: function (jXHR) {
             console.log('Some error', jXHR);
           }
         });
-      });
-    }
+      }
+    });
     $('.title', votingViewTemplate).text(data.title);
     return votingViewTemplate;
   }
@@ -120,6 +123,10 @@
     var variants = data.variants;
     var variantsHolder = $('.b-stream__voting__graph', votingResultsViewTemplate);
     var fullCount = 0;
+    if (!variants) {
+      console.log('Bad');
+      return votingResultsViewTemplate;
+    }
     for (var i = 0; i < variants.length; i++) {
       var variant = variants[i];
       fullCount += (variant.count || 0);
@@ -127,7 +134,7 @@
     for (var i = 0; i < variants.length; i++) {
       var variant = variants[i];
       var id = 'variant-id-' + i;
-      var percentage = Math.round((fullCount ? variant.count / fullCount : 0) * 100) || 0;
+      var percentage = Math.round((fullCount ? parseInt(variant.count, 10) / fullCount : 0) * 100) || 0;
       var variantElement = votingVariantTemplate.clone();
       $(variantElement).addClass('item_type' + (i + 1));
       $('.item__limiter', variantElement).css({width: percentage + '%'});
@@ -143,7 +150,7 @@
     $('.b-stream__voting__created-at', votingResultsViewTemplate).text(formatDate(parseInt(data.createdAt, 10)));
     $('.title', votingResultsViewTemplate).text(data.title);
     if (data.moderator) {
-      $('<button class="delete-button">Delete</button>').appendTo(votingResultsViewTemplate).click(function(){
+      $('<button class="delete-button">Delete</button>').appendTo(votingResultsViewTemplate).click(function () {
         deleteVoting();
       });
     }
@@ -170,6 +177,10 @@
     container.html(noVotingTemplate);
   }
 
+  function showStatusMessage(message) {
+    $('.b-stream__voting-status-message', container).html(message);
+  }
+
   function getVotingResults() {
     var data = {
       streamId: streamId
@@ -178,10 +189,10 @@
       url: votingUrl,
       type: 'GET',
       data: data,
-      success: function(data){
+      success: function (data) {
         showAppropriateView(data);
       },
-      error: function(jXHR) {
+      error: function (jXHR) {
         showErrorView(jXHR);
       }
     });
@@ -207,10 +218,10 @@
       url: votingUrl,
       type: 'DELETE',
       data: data,
-      success: function(data){
+      success: function (data) {
         showAppropriateView(data);
       },
-      error: function(jXHR) {
+      error: function (jXHR) {
         showErrorView(jXHR);
       }
     });
@@ -232,10 +243,11 @@
       event.preventDefault();
       var data = prepareDataForVoting($('.b-stream__voting-admin-form'));
       saveVoting(data, {
-        success: function(data) {
+        success: function (data) {
           showAppropriateView(data);
         },
-        error: function() { /* TODO Handle callback. */}
+        error: function () { /* TODO Handle callback. */
+        }
       });
     });
     return votingAdminViewTemplate;
@@ -256,7 +268,8 @@
     });
   }
 
-  function init(streamId) {
+  function init(id) {
+    streamId = id;
     container = $('.b-stream__voting-holder');
     voteResultsTemplate = $('#voteResultsTemplate').html();
     voteTemplate = $('#voteTemplate').html();

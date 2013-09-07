@@ -365,6 +365,7 @@ app.get '/vote.php', (req, res)->
       console.log err, votingJSON
       return res.send {error: err} if err
       unless votingJSON
+        console.log req.user
         if req.user.role is 'admin' or req.user.role is 'moderator'
           return res.send moderator: yes
         else
@@ -393,6 +394,10 @@ app.get '/vote.php', (req, res)->
 app.post '/vote.php', (req, res)->
   console.log 'req.body', req.body
   if req.body?.type is 'variants'
+    unless req.body.variants
+      return res.send 400, error: 'variants required'
+    unless req.body.streamId
+      return res.send 400, error: 'streamId required'
     # Create variants
     vp.setnx "vp:voting:#{req.body.streamId}", JSON.stringify(req.body), (err, createResponse)->
       if createResponse is 0

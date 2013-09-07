@@ -312,6 +312,7 @@ void function () {
         if (err)
           return res.send({ error: err });
         if (!votingJSON) {
+          console.log(req.user);
           if (req.user.role === 'admin' || req.user.role === 'moderator') {
             return res.send({ moderator: true });
           } else {
@@ -349,6 +350,10 @@ void function () {
   app.post('/vote.php', function (req, res) {
     console.log('req.body', req.body);
     if ((null != req.body ? req.body.type : void 0) === 'variants') {
+      if (!req.body.variants)
+        return res.send(400, { error: 'variants required' });
+      if (!req.body.streamId)
+        return res.send(400, { error: 'streamId required' });
       return vp.setnx('vp:voting:' + req.body.streamId, JSON.stringify(req.body), function (err, createResponse) {
         var data;
         if (createResponse === 0)

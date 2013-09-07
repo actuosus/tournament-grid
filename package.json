@@ -34,6 +34,7 @@
     "passport": "latest",
     "passport-http": "latest",
     "moment": "latest",
+    "redis": "latest",
     "i18n": "latest"
   },
   "devDependencies": {
