@@ -9,6 +9,8 @@ define ['jquery'], ->
   defaults =
     api:
 #      host: '//virtus-pro.herokuapp.com'
+#      host: 'http://virtuspro.local:8001'
+#      host: 'http://v3.virtuspro.org'
       namespace: 'api'
     languages: ['ru', 'en', 'de']
     currentLanguage: null

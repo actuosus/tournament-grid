@@ -6,37 +6,21 @@
  * Time: 07:29
 ###
 
-define ['cs!../core'],->
-  App.Team = DS.Model.extend #Ember.History,
+define ['cs!../core', 'cs!./entrant'],->
+  App.Team = App.Entrant.extend #Ember.History,
     primaryKey: '_id'
-    _trackProperties: [
-      'name'
-      'players'
-    ]
+#    _trackProperties: [
+#      'name'
+#      'players'
+#    ]
     name: DS.attr 'string'
-    country: DS.belongsTo 'App.Country'
-
-    is_pro: DS.attr 'boolean'
 
     isSelected: no
-
-    link: DS.attr 'string'
-
-    url: (->
-      link = @get 'link'
-      if link
-        link
-      else
-        "/teams/#{@get 'id'}"
-    ).property('link')
 
     teamRef: (->
       teamRefs = App.get 'report.teamRefs'
       teamRefs?.find (_)=> Em.isEqual _.get('team'), @
     ).property()
-
-    # Just for creation marking
-    report: DS.belongsTo 'App.Report'
 
     players: DS.hasMany('App.Player', {inverse: 'team'})
 

@@ -18,7 +18,7 @@ define [
   'cs!./editable_label'
   'cs!./multilingual_text_field'
   'cs!./multilingual_text_area'
-  'cs!./multilingual_editable_label'
+#  'cs!./multilingual_editable_label'
   'cs!./autocomplete_text_field'
   'cs!./date_with_popup'
   'cs!./date_field'

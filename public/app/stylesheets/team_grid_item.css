@@ -80,6 +80,7 @@
     text-overflow: ellipsis;
     display: inline-block;
     float: left;
+    color: black;
 }
 
 .team-name a {
@@ -110,7 +111,6 @@
     margin: 4px 2px;
     background-color: #9b9b9b;
     box-shadow: 0 0 2px rgba(0, 0, 0, .3);
-    /*background-size: 0;*/
 
     /* TODO Tell the Chrome team about the problem with rendering columns. */
     /*-webkit-transform: scale(1);*/
@@ -121,7 +121,6 @@
 }
 
 .team-country-flag-icon.has-flag {
-    background-size: 100%;
 }
 
 .team-reset-btn {

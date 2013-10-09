@@ -7,5 +7,5 @@
 
 define ->
   App.StagesController = Em.ArrayController.extend
-    sortProperties: ['sortIndex']
+    sortProperties: ['id', 'sortIndex']
     content: null

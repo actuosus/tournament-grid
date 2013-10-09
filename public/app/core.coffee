@@ -159,6 +159,8 @@ define [
   App.Adapter = DS.RESTAdapter.extend
     bulkCommit: no
 
+    shouldSave: -> yes
+
     waitForParents: (record, callback, context, args)->
       observers = new Ember.Set()
 
@@ -193,27 +195,25 @@ define [
           return key
         key + '_id'
 
-#      addAttribute: (hash, key, value)-> hash[key] = value unless Em.isEmpty value
+      extractBelongsToPolymorphic: (type, hash, key)->
+        keyForId = @keyForPolymorphicId key
+        id = hash[keyForId]
 
-      addBelongsTo: (hash, record, key, relationship)->
-        type = record.constructor
-        name = relationship.key
-        value = null
-        includeType = relationship.options and relationship.options.polymorphic
-
-        if @embeddedType type, name
-          if embeddedChild = Em.get record, name
-            value = @serialize embeddedChild, { includeId: true, includeType: includeType }
-          hash[key] = value if value
-        else
-          child = Em.get(record, relationship.key)
-          id = Em.get(child, 'id')
-
-          if relationship.options and relationship.options.polymorphic and not Ember.isNone(id)
-            @addBelongsToPolymorphic hash, key, id, child.constructor
-          else
-            serializedId = @serializeId id
-            hash[key] = serializedId unless Em.isEmpty serializedId
+        if id
+          keyForType = @keyForPolymorphicType key
+          hashType = hash[keyForType]
+          # Hacky thing to resolve match
+          if key is 'entrant1_id' or key is 'entrant2_id' or key is 'entrant_id'
+            matchType = App.get('report.match_type')
+            if matchType is 'player'
+              hashType = 'players'
+            else
+              if key is 'entrant_id' and App.ResultSet.detect type
+                hashType = 'team_refs'
+              else
+                hashType = 'teams'
+          return {id: id, type: hashType}
+        return null
 
     didCreateRecord: (store, type, record, payload)->
       @_super(store, type, record, payload)
@@ -253,10 +253,24 @@ define [
       relationship.childReference.parent = relationship.parentReference
       @_dirtyTree dirtySet, record
 
-#    if relationship.secondRecordName is "matches"
-#      relationship.childReference.parent = relationship.parentReference;
-##      @_dirtyTree(dirtySet, record);
-#      dirtySet.add record
+#  App.store = App.__container__.lookup('store:main')
+
+  App.store.adapter.url = config.api.host
+  App.store.adapter.namespace = config.api.namespace
+  App.store.adapter.serializer.primaryKey = -> '_id'
+  App.store.adapter.serializer.configure {pageCount: 'pageCount'}
+
+  App.store.adapter.dirtyRecordsForHasManyChange = (dirtySet, record, relationship)->
+    embeddedType = @get('serializer').embeddedType(record.constructor, relationship.secondRecordName)
+
+    if embeddedType is 'always'
+      relationship.childReference.parent = relationship.parentReference
+      @_dirtyTree dirtySet, record
+
+    if relationship.secondRecordName is "matches"
+      relationship.childReference.parent = relationship.parentReference;
+#      @_dirtyTree(dirtySet, record);
+      dirtySet.add record
 
 #
   App.overrideAdapterAjax = (report)->
@@ -273,15 +287,15 @@ define [
         if hash.data
           if type isnt 'GET'
             hash.url += "?report_id=#{report.get 'id'}"
-            if App.debug?.wait?
-              hash.url += '&' + jQuery.param({start: App.get('debug.wait.start'), end: App.get('debug.wait.end')})
+#            if App.debug?.wait?
+#              hash.url += '&' + jQuery.param({start: App.get('debug.wait.start'), end: App.get('debug.wait.end')})
             hash.data = JSON.stringify hash.data
           else
             hash.data.report_id = report.get 'id'
         else
           hash.url += "?report_id=#{report.get 'id'}"
-          if App.debug?.wait?
-            hash.url += '&' + jQuery.param({start: App.get('debug.wait.start'), end: App.get('debug.wait.end')})
+#          if App.debug?.wait?
+#            hash.url += '&' + jQuery.param({start: App.get('debug.wait.start'), end: App.get('debug.wait.end')})
 
         hash.success = (json)->
           Ember.run(null, resolve, json)
@@ -322,6 +336,14 @@ define [
   # Localization configuration
   App.languages = Em.ArrayController.create content: config.languages
   App.set 'currentLanguage', lang
+
+  App.isAuthorized = (options)->
+    $.ajax
+      url: "/API/reportage/auth.php"
+      type: 'GET'
+      success: (data)->
+        options.success() if data?.authorized
+      error: options.failure
 
   App.LanguageObserver = Em.Object.extend
     currentLanguageChanged: (->

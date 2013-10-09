@@ -5,7 +5,7 @@
  * Time: 17:55
 ###
 
-define
+define {
   _reset: 'Reset'
   _loading: 'Loading'
   _expand: 'Expand'
@@ -102,3 +102,6 @@ define
   _future_matches: 'Future matches'
   _waiting_to_be_filled: 'Waiting to be filled'
   _toggle_as_the_captain: 'Toggle as a captain'
+  _third_place_playoff: 'Third place playoff'
+  _save_all_results: 'Save all results'
+}

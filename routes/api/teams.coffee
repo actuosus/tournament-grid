@@ -38,9 +38,13 @@ exports.list = (req, res)->
     page: req.query.page
     perPage: 10
   }, (err, docs)->
-    console.log docs.pagination
     data = teams: docs
-    data.pageCount = docs.pagination.pages.length if docs.pagination
+    if docs.pagination
+      firstPage = (docs.pagination.pages.filter (_)-> _.isFirst)?[0]
+      lastPage = (docs.pagination.pages.filter (_)-> _.isLast)?[0]
+      if req.query.page > lastPage.page or firstPage.page > req.query.page
+        res.send 404
+      data.pageCount = lastPage?.page
     res.send data
 
 

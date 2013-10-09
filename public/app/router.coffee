@@ -19,24 +19,22 @@ define [
       @resource 'stage', path: '/:stage_id'
 
   App.ApplicationRoute = Em.Route.extend
-#    afterModel: -> @transitionTo 'stages'
     setupController: (controller, model)->
-#      @_super controller, model
       # Preloading countries
       console.debug 'Preloading countries…' if window.DEBUG
       App.countries = App.Country.find()
 
       App.set 'countriesController.content', App.countries
 
-#      App.set 'isEditingMode', yes
       App.set 'router', @router
       App.set 'report', model
       App.overrideAdapterAjax model
 
       @controllerFor('stages').set 'model', App.get 'report.stages'
-#      @transitionTo 'stages'
 
     renderTemplate: (controller, model)->
+      $(App.get('rootElement')).empty()
+
       @render()
 
       @render 'StagesContainer',
@@ -65,8 +63,5 @@ define [
   App.StageRoute = Ember.Route.extend
     setupController: (controller, model)->
       console.debug 'Setting up stage route'
-#      window.stageView.set('controller', controller)
-#      window.stageView.set('currentStage', model)
-#      window.stageView.get('currentStage').addObserver 'data', window.stageView, window.stageView.currentStageDidLoad
 
     model: (params)-> App.Stage.find params.stage_id

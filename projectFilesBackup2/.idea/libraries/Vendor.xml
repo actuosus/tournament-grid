@@ -1,0 +1,64 @@
+<component name="libraryTable">
+  <library name="Vendor" type="javaScript">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/public/vendor/scripts/modernizr/columns.js" />
+      <root url="file://$PROJECT_DIR$/public/vendor/scripts/ember-table.js" />
+      <root url="file://$PROJECT_DIR$/public/vendor/scripts/coffee-script.js" />
+      <root url="file://$PROJECT_DIR$/public/vendor/scripts/screenfull.min.js" />
+      <root url="file://$PROJECT_DIR$/public/vendor/scripts/jquery.scrollTo.min.js" />
+      <root url="file://$PROJECT_DIR$/public/vendor/scripts/handlebars-1.0.0.min.js" />
+      <root url="file://$PROJECT_DIR$/public/vendor/scripts/jquery-ui-1.10.1.custom.min.js" />
+      <root url="file://$PROJECT_DIR$/public/vendor/scripts/require.min.js" />
+      <root url="file://$PROJECT_DIR$/public/vendor/scripts/jquery.transit.min.js" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/public/vendor/scripts/cs.js" />
+      <root url="file://$PROJECT_DIR$/public/vendor/scripts/css.js" />
+      <root url="file://$PROJECT_DIR$/public/vendor/scripts/chai.js" />
+      <root url="file://$PROJECT_DIR$/public/vendor/scripts/spin.js" />
+      <root url="file://$PROJECT_DIR$/public/vendor/scripts/text.js" />
+      <root url="file://$PROJECT_DIR$/public/vendor/scripts/ember.js" />
+      <root url="file://$PROJECT_DIR$/public/vendor/scripts/Faker.js" />
+      <root url="file://$PROJECT_DIR$/public/vendor/scripts/mocha.js" />
+      <root url="file://$PROJECT_DIR$/public/vendor/scripts/three.js" />
+      <root url="file://$PROJECT_DIR$/public/vendor/scripts/almond.js" />
+      <root url="file://$PROJECT_DIR$/public/vendor/scripts/bootstrap/bootstrap-tooltip.js" />
+      <root url="file://$PROJECT_DIR$/public/vendor/scripts/bootstrap/bootstrap-collapse.js" />
+      <root url="file://$PROJECT_DIR$/public/vendor/scripts/bootstrap/bootstrap-transition.js" />
+      <root url="file://$PROJECT_DIR$/public/vendor/scripts/fabric.js" />
+      <root url="file://$PROJECT_DIR$/public/vendor/scripts/jquery.js" />
+      <root url="file://$PROJECT_DIR$/public/vendor/scripts/moment.js" />
+      <root url="file://$PROJECT_DIR$/public/vendor/scripts/raphael.js" />
+      <root url="file://$PROJECT_DIR$/public/vendor/scripts/require.js" />
+      <root url="file://$PROJECT_DIR$/public/vendor/scripts/normalize.js" />
+      <root url="file://$PROJECT_DIR$/public/vendor/scripts/ember-data.js" />
+      <root url="file://$PROJECT_DIR$/public/vendor/scripts/ember.prod.js" />
+      <root url="file://$PROJECT_DIR$/public/vendor/scripts/handlebars.js" />
+      <root url="file://$PROJECT_DIR$/public/vendor/scripts/superagent.js" />
+      <root url="file://$PROJECT_DIR$/public/vendor/scripts/css-builder.js" />
+      <root url="file://$PROJECT_DIR$/public/vendor/scripts/ember-history.js" />
+      <root url="file://$PROJECT_DIR$/public/vendor/scripts/jquery.cookie.js" />
+      <root url="file://$PROJECT_DIR$/public/vendor/scripts/ember-data.r13.js" />
+      <root url="file://$PROJECT_DIR$/public/vendor/scripts/jquery.bracket.js" />
+      <root url="file://$PROJECT_DIR$/public/vendor/scripts/jquery.isotope.js" />
+      <root url="file://$PROJECT_DIR$/public/vendor/scripts/ember-1.0.0-rc.3.js" />
+      <root url="file://$PROJECT_DIR$/public/vendor/scripts/ember-1.0.0-rc.5.js" />
+      <root url="file://$PROJECT_DIR$/public/vendor/scripts/ember-1.0.0-rc.6.js" />
+      <root url="file://$PROJECT_DIR$/public/vendor/scripts/handlebars-1.0.0.js" />
+      <root url="file://$PROJECT_DIR$/public/vendor/scripts/jquery-ui.custom.js" />
+      <root url="file://$PROJECT_DIR$/public/vendor/scripts/jquery.mousewheel.js" />
+      <root url="file://$PROJECT_DIR$/public/vendor/scripts/ember.prod-1.0.0-rc.6.js" />
+      <root url="file://$PROJECT_DIR$/public/vendor/scripts/handlebars-1.0.0-rc.3.js" />
+      <root url="file://$PROJECT_DIR$/public/vendor/scripts/jquery-ui-1.10.3.custom.js" />
+      <root url="file://$PROJECT_DIR$/public/vendor/scripts/jquery-ui-timepicker-de.js" />
+      <root url="file://$PROJECT_DIR$/public/vendor/scripts/jquery-ui-timepicker-it.js" />
+      <root url="file://$PROJECT_DIR$/public/vendor/scripts/jquery-ui-timepicker-ru.js" />
+      <root url="file://$PROJECT_DIR$/public/vendor/scripts/jquery.ui.datepicker-de.js" />
+      <root url="file://$PROJECT_DIR$/public/vendor/scripts/jquery.ui.datepicker-it.js" />
+      <root url="file://$PROJECT_DIR$/public/vendor/scripts/jquery.ui.datepicker-ru.js" />
+      <root url="file://$PROJECT_DIR$/public/vendor/scripts/ember-localstorage-adapter.js" />
+      <root url="file://$PROJECT_DIR$/public/vendor/scripts/jquery-ui-timepicker-addon.js" />
+    </SOURCES>
+  </library>
+</component>

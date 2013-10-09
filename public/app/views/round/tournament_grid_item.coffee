@@ -15,17 +15,24 @@ define [
     classNameBindings: ['content.isDirty']
     attributeBindings: ['title']
     childViews: ['titleView', 'contentView']
-    titleBinding: 'content.sortIndex'
+    titleBinding: 'content.id'
 
     titleView: App.EditableLabel.extend
       # TODO Rename to round-title in CSS
       classNames: ['round-name', 'round-title']
       contentBinding: 'parentView.content'
-      valueBinding: 'content.title'
+      valueBinding: 'parentView.content.title'
       isEditableBinding: 'App.isEditingMode'
       valueChanged: (->
-        @set 'content.title', @get 'value'
-        @get('content').save()
+        content = @get 'content'
+        if content
+          model = content.get 'content'
+          if model
+            model.set 'title', @get 'value'
+            model.save()
+          else
+            @set 'content.title', @get 'value'
+            @get('content').save()
       ).observes('value')
 
     contentView: Em.CollectionView.extend
@@ -46,10 +53,18 @@ define [
       itemViewClass: App.MatchItemView.extend
         classNames: ['tournament-match']
         classNameBindings: ['content.isFinal']
-        childViews: ['dateView', 'infoBarView', 'contentView', 'connectorView', 'lockView']
+        childViews: ['dateView', 'infoBarView', 'contentView', 'connectorView', 'lockView', 'labelView']
         roundIndexBinding: 'parentView.parentView.contentIndex'
         roundsBinding: 'parentView.parentView.parentView.content'
         entrantsNumberBinding: 'parentView.entrantsNumber'
+        titleBinding: 'content.id'
+        attributeBindings: ['title']
+        isVisibleBinding: 'content.isVisible'
+
+        labelView: Em.View.extend
+          classNames: ['tournament-match-label']
+          contentBinding: 'parentView.content.label'
+          template: Em.Handlebars.compile '{{view.content}}'
 
         isEditable: (->
           App.get('isEditingMode') and (@get('content.status') is 'opened')
@@ -57,27 +72,27 @@ define [
 
         _isEditingBinding: 'isEditable'
 
-        mouseEnter: ->
-          node = @get 'content'
-          lastNode = null
-          while node
-            unless Em.isEqual(node, lastNode)
-              node.set('isSelected', yes)
-              lastNode = node
-              node = node.get('parentNode')
-            else
-              break
-
-        mouseLeave: ->
-          node = @get 'content'
-          lastNode = null
-          while node
-            unless Em.isEqual(node, lastNode)
-              node.set('isSelected', no)
-              lastNode = node
-              node = node.get('parentNode')
-            else
-              break
+#        mouseEnter: ->
+#          node = @get 'content'
+#          lastNode = null
+#          while node
+#            unless Em.isEqual(node, lastNode)
+#              node.set('isSelected', yes)
+#              lastNode = node
+#              node = node.get('parentNode')
+#            else
+#              break
+#
+#        mouseLeave: ->
+#          node = @get 'content'
+#          lastNode = null
+#          while node
+#            unless Em.isEqual(node, lastNode)
+#              node.set('isSelected', no)
+#              lastNode = node
+#              node = node.get('parentNode')
+#            else
+#              break
 
         didInsertElement: ->
           @_super()
@@ -115,6 +130,9 @@ define [
               styles.marginTop = currentIndex * height
             else
               styles.marginTop = currentIndex * (height * 2)
+
+          if match.get('isThirdPlace')
+            styles.marginTop = 40
 
           @$().css styles
 
@@ -160,6 +178,11 @@ define [
                   styles.width = 181 * (Math.log(entrantsNumber) / Math.log(2) - 2) + 24
                   @$().css styles
                   return
+            if match.get 'isPreFinal'
+              styles.top = 42
+              styles.height = 0
+              @$().css styles
+              return
             styles.height = currentIndex * height - (19/2)
             if contentIndex%2
               styles.top = -(currentIndex * height) + height
@@ -177,16 +200,16 @@ define [
           contentBinding: 'parentView.content.entrants'
           _isEditingBinding: 'parentView._isEditing'
 
-          itemViewClass: App.TeamGridItemView.extend( App.Droppable, {
+          itemViewClass: App.TeamGridItemView.extend#( App.Droppable, {
             matchBinding: 'parentView.parentView.content'
             _isEditingBinding: 'parentView._isEditing'
 
             pointsIsVisible: Em.computed.not 'match.isFinal'
 
-            drop: (event)->
-              viewId = event.originalEvent.dataTransfer.getData 'Text'
-              view = Em.View.views[viewId]
-              teamRef = view.get 'content'
-              Em.run.next @, => @set 'content', teamRef.get('team')
-              @_super event
-          })
+#            drop: (event)->
+#              viewId = event.originalEvent.dataTransfer.getData 'Text'
+#              view = Em.View.views[viewId]
+#              teamRef = view.get 'content'
+#              Em.run.next @, => @set 'content', teamRef.get('team')
+#              @_super event
+#          })

@@ -12,7 +12,7 @@ define [
   'cs!../tournament/double_grid'
 #  'cs!../tournament/canvas_grid'
 #  'cs!../tournament/flat_grid'
-  'cs!../tournament/other_flat_grid'
+#  'cs!../tournament/other_flat_grid'
 #  'cs!../tournament/svg_grid'
   'cs!../standing_table'
   'cs!../match/grid_container'
@@ -31,16 +31,13 @@ define [
         when 'single', 'grid'
           stage.get('matches')
           contentView = App.NewTournamentGridView.create
-            container: @get 'container'
-            stage: stage
-            entrantsNumber: stage.get('entrantsNumber')
 #          contentView = App.CanvasTournamentGridView.create
 #          contentView = App.FlatTournamentGridView.create
 #          contentView = App.OtherFlatTournamentGridView.create
-##          contentView = App.SVGTournamentGridView.create
-#            container: @get 'container'
-#            stage: stage
-#            entrantsNumber: stage.get('entrantsNumber')
+#          contentView = App.SVGTournamentGridView.create
+            container: @get 'container'
+            stage: stage
+            entrantsNumber: stage.get('entrantsNumber')
 
         when 'double'
           contentView = App.NewDoubleTournamentGridView.create
@@ -63,20 +60,20 @@ define [
             stage: stage
             content: matchesController
         when 'team'
-#          teamsController = App.ReportEntrantsController.create
-#            searchPath: 'name'
-#            stage: stage
-#            contentBinding: 'stage.entrants'
+          matchType = App.get 'report.match_type'
           matchesController = App.MatchesController.create
-            round: stage.get('rounds.firstObject')
-            content: stage.get('rounds.firstObject.matches')
-          teamsController = App.ReportEntrantsController.create
+            stage: stage
+            roundBinding: 'stage.rounds.firstObject'
+            contentBinding: 'stage.rounds.firstObject.matches'
+          entrantsController = App.ReportEntrantsController.create
             matchesController: matchesController
             contentBinding: 'matchesController.entrants'
+          if matchType is 'player'
+            entrantsController.set 'searchPath', 'name'
           contentView = App.StandingTableView.create
             container: @get 'container'
             classNames: ['for-team']
-            entrants: teamsController
+            entrants: entrantsController
             matches: matchesController
             showFilterForm: yes
             tableItemViewClass: 'App.MatchTableItemView'
@@ -203,7 +200,7 @@ define [
 
       add: -> @addItem()
 
-      doubleClick: -> @addItem()
+      doubleClick: -> @addItem() if App.get 'isEditingMode'
 
       addActive: (->
         router = @get 'router'
@@ -224,6 +221,7 @@ define [
           content: Em.Object.create()
           didCreate: (stage)->
             stage.save()
+#            App.store.commit()
             stage.on 'didLoad', => router.transitionTo 'stage', stage
             stage.on 'didReload', => router.transitionTo 'stage', stage
             stage.on 'didCreate', (stage)=> router.transitionTo 'stage', stage

@@ -5,7 +5,7 @@
  * Time: 17:55
 ###
 
-define
+define {
   _reset: 'Rücksetzen'
   _loading: 'Laden'
   _expand: 'Erweitern'
@@ -86,3 +86,4 @@ define
   _player_nickname: 'Spieler Spitznamen'
   _nothing_to_display: 'Frei'
   _map_type: 'Map type'
+}

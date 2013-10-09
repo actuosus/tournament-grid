@@ -31,16 +31,19 @@ define [
           when 65 # a
             App.toggleConfig()
           when 69 # e
-            notificationObject =
-              icon: null
-              title: 'Editing mode'
-            if App.get('isEditingMode')
-              notificationObject.content = 'Editing mode disabled.'
-            else
-              notificationObject.content = 'Editing mode enabled.'
-            notification = App.notificationsController.createNotification notificationObject
-            notification?.show()
-            App.set 'isEditingMode', not App.get('isEditingMode')
+#            notificationObject =
+#              icon: null
+#              title: 'Editing mode'
+#            if App.get('isEditingMode')
+#              notificationObject.content = 'Editing mode disabled.'
+#            else
+#              notificationObject.content = 'Editing mode enabled.'
+#            notification = App.notificationsController.createNotification notificationObject
+#            notification?.show()
+#            App.set 'isEditingMode', not App.get('isEditingMode')
+            App.isAuthorized
+              success: -> App.set 'isEditingMode', not App.get('isEditingMode')
+              failure: -> console.log 'Not authorized.'
           when 90 # z
             History.undo()
           when 192 # Paragraph
@@ -62,6 +65,7 @@ define [
   #        template = payload.template
   #        if template
   #          console.log('rendered', template, 'took', duration, 'ms')
+    App.set('isEditingMode', no)
 
     App.addObserver 'isEditingMode', ->
       if App.get 'isEditingMode'

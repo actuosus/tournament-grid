@@ -18,10 +18,25 @@ define [
     classNames: ['team-standings-table', 'table']
 
     shouldShowContextMenuBinding: 'App.isEditingMode'
-    contextMenuActions: ['addEntrant']
+    contextMenuActions: ['addEntrant', 'saveAllResults']
 
     addEntrant: ->
+      round = @get 'content.round'
+      unless round
+        stage = @get 'content.stage'
+        rounds = @get 'content.stage.rounds'
+        round = rounds.createRecord({'stage': stage})
+        round.save()
+        @set 'content.round', round
+        @set 'content.content', round.get('resultSets')
       @get('content.content').createRecord()
+
+    saveAllResults: ->
+      round = @get 'content.round'
+      if round
+        resultSets = round.get('resultSets')
+        if resultSets
+          resultSets.forEach (result)-> result.save()
 
     showSorterOnColumn: (element)->
       @sorter = App.TableSorterView.create()

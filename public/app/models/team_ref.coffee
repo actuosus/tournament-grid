@@ -5,11 +5,11 @@
  * Time: 11:01
 ###
 
-define ['cs!../core'],->
-  App.TeamRef = DS.Model.extend
+define ['cs!../core', 'cs!./entrant'],->
+  App.TeamRef = App.Entrant.extend
     primaryKey: '_id'
 
-    link: Em.computed.alias 'team.link'
+#    link: Em.computed.alias 'team.link'
 
     # Relations
     team: DS.belongsTo 'App.Team'
@@ -23,5 +23,10 @@ define ['cs!../core'],->
     players: DS.hasMany('App.Player', {inverse: 'teamRef'})
 
     hasCaptain: (-> @get 'captain' ).property('players.@each.isCaptain')
+
+    _becameDirty: (->
+      if @get 'isDirty'
+        debugger
+    ).observes('isDirty')
 
   App.TeamRef.toString = -> 'TeamRef'

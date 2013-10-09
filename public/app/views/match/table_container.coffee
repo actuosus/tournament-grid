@@ -29,7 +29,8 @@ define [
         if content.createRecord
           content.createRecord() if content
         if content.get('content')?.createRecord
-          content.get('content')?.createRecord()
+          content.get('content')?.createRecord(status: 'opened')
+
 
         tableContainerView = @get 'parentView.tableContainerView'
         tableContainerView.set 'isCollapsed', yes
@@ -84,15 +85,17 @@ define [
           @get('parentView').add()
     })
 
-
     tableContainerView: Em.ContainerView.extend(App.Collapsable,
       classNames: ['matches-table-container-inner']
       childViews: ['tableView']
-      content: Em.computed.alias 'parentView.content'
-      collapsed: yes
+      contentBinding: 'parentView.content'
+      collapsed: no
       toggleButtonTarget: Em.computed.alias 'parentView.headerView'
       tableItemViewClassBinding: 'parentView.tableItemViewClass'
       tableView: App.MatchesTableView.extend
+        willInsertElement: ->
+          console.log @get 'content'
+        _contentChanged: (-> console.log('Content changed.') ).observes('content')
         entrantsBinding: 'parentView.content.entrants'
         contentBinding: 'parentView.content.filteredContent'
         itemViewClassBinding: 'parentView.tableItemViewClass'

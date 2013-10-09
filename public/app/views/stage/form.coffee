@@ -57,13 +57,25 @@ define [
       entrantsNumber = parseInt(@$('.entrants-number input').val(), 10)
       report = @get 'report'
 
+      # TODO Resolve creation.
       switch @get 'visualType.id'
         when 'grid'
           stage = report.createStageByEntrants entrantsNumber
-        when 'single'
+        when 'single', 'double', 'group'
           stage = report.get('stages').createRecord()
-        when 'single', 'double', 'group', 'matrix', 'team'
+        when 'team'
           stage = report.get('stages').createRecord()
+          # Creating just one round.
+#          rounds = stage.get('rounds')
+#          round = rounds.createRecord({sort_index: 0, stage: stage})
+#          rounds.pushObject round
+#          round.save()
+        when 'matrix'
+          stage = report.get('stages').createRecord()
+#          rounds = stage.get('rounds')
+#          round = rounds.createRecord({sort_index: 0, stage: stage})
+#          rounds.pushObject round
+#          round.set 'stage', stage
 
       stage.set 'sortIndex', report.get('stages.length')
       stage.set 'report', report
