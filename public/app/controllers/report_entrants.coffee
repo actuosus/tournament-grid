@@ -23,14 +23,15 @@ define ['cs!../views/country_flag'],->
       if query
         reg = new RegExp query, 'gi'
         result = content.filter (item)->
-          name = item.get searchPath
+          name = item?.get searchPath
           matches = no
           matches = yes if name?.match reg
           matches
       else
         result = content
-      result.set 'isLoaded', yes
-      result
+      if result
+        result.set 'isLoaded', yes
+        return result
 
     arrangedContent: (->
       searchQuery = @get 'searchQuery'
@@ -58,22 +59,22 @@ define ['cs!../views/country_flag'],->
       isTeamRef: (->
         App.TeamRef.detectInstance @get 'content'
       ).property('content')
-      team: (->
+      entrant: (->
         content = @get 'content'
         if App.TeamRef.detectInstance content
           content.get 'team'
         else
           content
       ).property('content')
-      titleBinding: 'team._id'
+      titleBinding: 'entrant._id'
       childViews: ['countryFlagView', 'nameView']
 
       countryFlagView: App.CountryFlagView.extend
-        contentBinding: 'parentView.team.country'
+        contentBinding: 'parentView.entrant.country'
 
       nameView: Em.View.extend
         classNames: ['lineup-grid-item-name']
-        template: Em.Handlebars.compile '{{view.parentView.team.name}}'
+        template: Em.Handlebars.compile '{{view.parentView.entrant.name}}'
 
       showAddingNotify: ->
         modalView = App.ModalView.create
@@ -98,6 +99,6 @@ define ['cs!../views/country_flag'],->
         event.stopPropagation()
         @get('parentView').selectMenuItem? @get 'content'
         @get('parentView').click(event)
-        @set 'parentView.selection', @get 'team'
-        @set 'parentView.value', @get 'team'
+        @set 'parentView.selection', @get 'entrant'
+        @set 'parentView.value', @get 'entrant'
         @set 'parentView.isVisible', no

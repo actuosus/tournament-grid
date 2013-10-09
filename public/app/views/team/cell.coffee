@@ -37,27 +37,34 @@ define [
             content.get 'team.country'
           else
             content.get 'country'
-      ).property('parentView.content')
+      ).property('parentView.content.isLoaded')
 
     autocompleteView: App.TextField.extend
       isVisible: no
       isAutocomplete: yes
 
       autocompleteDelegate: (->
-        App.ReportEntrantsController.create
-          table: @get 'parentView.parentView.parentView'
-          contentBinding: 'table.entrants'
+        matchType = App.get('report.match_type')
+        if matchType is 'player'
+          App.ReportEntrantsController.create
+            searchPath: 'nickname'
+            table: @get 'parentView.parentView.parentView'
+            contentBinding: 'table.entrants'
+        else
+          App.ReportEntrantsController.create
+            table: @get 'parentView.parentView.parentView'
+            contentBinding: 'table.entrants'
       ).property()
 
-      assignTeam: (team)->
-        @set 'parentView.content', team
+      assignTeam: (entrant)->
+        @set 'parentView.content', entrant
         match = @get 'parentView.match'
-        match.set "entrant#{@get('parentView.contentIndex')+1}", team if match
+        match.set "entrant#{@get('parentView.contentIndex')+1}", entrant if match
 
       insertNewline: ->
-        team = @get 'selection'
-        team = team.get 'team' if App.TeamRef.detectInstance team
-        @assignTeam team
+        entrant = @get 'selection'
+        entrant = entrant.get 'team' if App.TeamRef.detectInstance entrant
+        @assignTeam entrant
         @_closeAutocompleteMenu()
         @set 'isVisible', no
 
@@ -73,17 +80,19 @@ define [
     nameView: Em.View.extend
       tagName: 'a'
       classNames: ['team-name']
-#      attributeBindings: ['href', 'target']
-#      target: '_blank'
-#      href: (-> "/teams/#{@get 'content.id'}").property('content')
+      attributeBindings: ['href', 'target']
+      target: '_blank'
+      href: (-> @get 'content.url').property('content.isLoaded')
       name: (->
         content = @get 'content'
         if content
           if App.TeamRef.detectInstance content
             return content.get 'team.name'
+          if App.Player.detectInstance content
+            return content.get 'nickname'
           else
             return content.get 'name'
-      ).property('content')
+      ).property('content.isLoaded')
 
       contentBinding: 'parentView.content'
       template: Em.Handlebars.compile '{{view.name}}'
@@ -96,18 +105,23 @@ define [
 
       mouseEnter: ->
         @set 'shouldShowPopup', yes
+        if @get 'content'
+          @set 'content.hasPlayersPopupShown', yes
         Em.run.later =>
           if @get('shouldShowPopup') and @get('content.teamRef')
             @lineupPopup = App.TeamLineupPopupView.create
               target: @
               content: @get 'content.teamRef'
               origin: 'top'
+#            console.log 'setting hasPlayersPopupShown to', @get 'content'
             @lineupPopup.appendTo App.get 'rootElement'
             @set 'shouldShowPopup', no
         , 1000
 
       mouseLeave: ->
         @set 'shouldShowPopup', no
+        if @get 'content'
+          @set 'content.hasPlayersPopupShown', no
         @lineupPopup?.hide()
 
     points: (->

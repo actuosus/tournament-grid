@@ -12,7 +12,7 @@ define ->
     isSelected: DS.attr 'boolean'
 
     # Relations
-    entrant: DS.belongsTo 'App.TeamRef'
+    entrant: DS.belongsTo('App.Entrant',{polymorphic: yes})
     round: DS.belongsTo('App.Round', {inverse: 'resultSets'})
 
     results: DS.hasMany('App.Result', {inverse: 'resultSet'})

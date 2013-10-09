@@ -5,7 +5,7 @@
  * Time: 17:55
 ###
 
-define
+define {
   _reset: 'Сброс'
   _loading: 'Загрузка'
   _expand: 'Развернуть'
@@ -103,3 +103,6 @@ define
   _future_matches: 'Будущие матчи'
   _waiting_to_be_filled: 'Ожидает заполнения'
   _toggle_as_the_captain: 'Сменить капитанство'
+  _third_place_playoff: 'Матч за третье место'
+  _save_all_results: 'Сохранить все результаты'
+}

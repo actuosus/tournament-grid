@@ -49,6 +49,7 @@ define [
     keyDown: (event)->
       @_super(event)
       if @get 'isEditable'
+        console.log 'keycode', event.keyCode
         switch event.keyCode
           when 38 # up
             event.preventDefault()

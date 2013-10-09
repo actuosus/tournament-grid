@@ -26,6 +26,6 @@
         <i {{bindAttr class=":icon-lock view.content.isClosed"}}></i>
     </td>
     <td>
-        <button class="btn-clean remove-btn remove-match">&times;</button>
+        {{view App.RemoveButtonView classNames="remove-match" useConfirmation=true}}
     </td>
 {{/if}}

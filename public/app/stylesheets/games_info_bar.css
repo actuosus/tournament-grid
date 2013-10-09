@@ -12,6 +12,10 @@
     max-width: 105px;
 }
 
+.flat-games-info-bar {
+    position: absolute;
+}
+
 .games-list {
     float: left;
     padding: 0;

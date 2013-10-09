@@ -18,16 +18,16 @@ define [
     shouldShowContextMenuBinding: 'App.isEditingMode'
     contextMenuActions: ['showTeamList']
 
-#    init: ->
-#      console.timeStamp 'Render NewDoubleTournamentGridView'
+    init: ->
+      console.timeStamp 'Render NewDoubleTournamentGridView'
 #      console.time 'NewDoubleTournamentGridView'
-##      console.profile 'NewDoubleTournamentGridView'
-#      @_super()
-#
-#    didInsertElement: ->
-#      @$().css width: @get('parentView').$().width()-20
+#      console.profile 'NewDoubleTournamentGridView'
+      @_super()
+
+    didInsertElement: ->
+      @$().css width: @get('parentView').$().width()-20
 #      console.timeEnd 'NewDoubleTournamentGridView'
-##      console.profileEnd 'NewDoubleTournamentGridView'
+#      console.profileEnd 'NewDoubleTournamentGridView'
 
     showTeamList: ->
       @teamListPopup = App.PopupView.createWithMixins(App.Movable, {showCloseButton: yes})
@@ -54,7 +54,7 @@ define [
         entrantsNumber = @get('entrantsNumber')
         roundsCount = Math.log(entrantsNumber) / Math.log(2)
         rCount = roundsCount * 2
-        @$().width rCount * 181
+        @$().width (rCount * 181 + 20)
 
       entrantsNumberChanged: (-> @setupWidth()).observes('entrantsNumber')
 
@@ -85,7 +85,7 @@ define [
             index: roundIndex
             sortIndex: roundIndex
             itemIndex: i
-            title: roundName
+#            title: roundName
             parentReference: 'bracket'
             bracket: bracket
             bracketName: 'winner'
@@ -105,6 +105,8 @@ define [
               parentNodePath: "#{roundsCount-i+1}.#{Math.floor(j/2)}"
               entrants: [null, null]
               round: round
+              status: 'opened'
+              isVisible: yes
             matches.push match
           rounds.push round
         bracket.set 'rounds', rounds
@@ -145,6 +147,8 @@ define [
                 parentNodePath: parentNodePath
                 entrants: [null, null]
                 round: round
+                status: 'opened'
+                isVisible: yes
               round.get('matches').push match
             rounds.push round
             counter++
@@ -163,44 +167,58 @@ define [
 
       finalsView: Em.CollectionView.extend
         classNames: ['finals']
+        entrantsNumberBinding: 'parentView.entrantsNumber'
         content: (->
           rounds = []
           stage = @get('parentView.stage')
+          entrantsNumber = @get('entrantsNumber')
+          Em.assert "You should provide entrantsNumber", entrantsNumber
+          roundsCount = Math.log(entrantsNumber) / Math.log(2)-1
           finalRound = App.RoundController.create
             stage: stage
-            title: '_final'.loc()
+#            title: '_final'.loc()
             itemIndex: -1
+            sortIndex: roundsCount+2
             parentReference: 'stage'
             matches: []
-          finalRound.get('matches').push App.MatchController.create
+            bracketName: ''
+          finalMatch = App.MatchController.create
+            isPreFinal: yes
             itemIndex: -1
+            sortIndex: 0
             entrants: [null, null]
             round: finalRound
-          thirdPlaceMatch = App.MatchController.create
-            isThirdPlace: yes
-            itemIndex: -1
-            entrants: [null, null]
-            round: finalRound
-          finalRound.get('matches').push thirdPlaceMatch
+            status: 'opened'
+            isVisible: yes
+          finalRound.get('matches').pushObject finalMatch
+
           rounds.push finalRound
+
+          # Winner
           winnerRound = App.RoundController.create
             stage: stage
-            title: '_winner'.loc()
+#            title: '_winner'.loc()
             itemIndex: -1
+            sortIndex: roundsCount+3
             parentReference: 'stage'
             matches: []
-          winnerRound.get('matches').push App.MatchController.create
+            bracketName: ''
+          winnerMatch = App.MatchController.create
             isWinner: yes
             isFinal: yes
             itemIndex: -1
+            sortIndex: 0
             entrants: [null]
             round: winnerRound
-          rounds.push winnerRound
+            status: 'opened'
+            isVisible: yes
+          winnerRound.get('matches').pushObject winnerMatch
+          rounds.pushObject winnerRound
           rounds
         ).property('parentView.entrantsNumber')
 
         setupWidth: ->
-          @$().width @get('content.length') * 181
+          @$().width @get('content.length') * 181 - 2
 
         didInsertElement: ->
           @_super()
@@ -218,7 +236,7 @@ define [
         entrantsNumberBinding: 'parentView.entrantsNumber'
 
         setupWidth: ->
-          @$().width Math.max.apply(null, @get('content').mapProperty 'rounds.length') * 181
+          @$().width Math.max.apply(null, @get('content').mapProperty 'rounds.length') * 181 - 2
 
         didInsertElement: ->
           @_super()

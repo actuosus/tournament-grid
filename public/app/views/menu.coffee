@@ -24,8 +24,6 @@ define ['cs!../core'],->
       attributeBindings: ['aria-role']
       'aria-role': 'menu-item'
 
-      willInsertElement: -> console.log 'Menu item view class'
-
       target: (->
         target = @get 'content.target'
         if target

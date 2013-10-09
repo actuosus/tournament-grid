@@ -14,9 +14,12 @@ define [
       isAutocomplete: yes
 
       autocompleteDelegate: (->
-        console.debug @get 'container'
-#        App.TeamsController.create()
-        @get('container').lookup('controller:reportEntrants')
+#        console.debug @get 'container'
+        matchType = App.get('report.match_type')
+        if matchType is 'player'
+          @get('container').lookup('controller:players')
+        else
+          @get('container').lookup('controller:reportEntrants')
       ).property()
 
       assignTeam: (team)->

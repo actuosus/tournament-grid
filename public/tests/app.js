@@ -6,57 +6,62 @@
  * Time: 21:29
  */
 
-define(['superagent', 'conf'], function(request, conf){
-  conf = new conf
-  var hiddenAPI = 'http://'+ conf.hostname + ':' + conf.port + '/hidden/';
+/*globals define */
+
+define(['superagent', 'conf'], function(request, conf) {
+  'use strict';
+
+  conf = new conf();
+  var hiddenAPI = 'http://' + conf.hostname + ':' + conf.port + '/hidden/';
 
   function Collection() {
 
   }
 
-  Collection.prototype.remove = function(cb){
-//    console.log('Removing a collection', this);
+  Collection.prototype.remove = function(cb) {
+    //    console.log('Removing a collection', this);
     cb();
-  }
+  };
 
-  function Model(conf){
+  function Model(conf) {
     this.name = conf.name;
     this.plural = conf.plural;
     this.collection = new Collection();
   }
 
-  Model.prototype.create = function(data, cb){
-//    console.log('Creating a Model', this, data);
+  Model.prototype.create = function(data, cb) {
+    //    console.log('Creating a Model', this, data);
     // TODO Hacky
     cb(null, data);
     var err = null;
     var dataToSend = {};
-    dataToSend[this.name] = data
+    dataToSend[this.name] = data;
     var self = this;
 
-//    request
-//      .post(hiddenAPI + this.plural)
-//      .send(dataToSend)
-//      .end(function(res){
-//      cb(err, res.body[self.name]);
-//    });
-  }
+    //    request
+    //      .post(hiddenAPI + this.plural)
+    //      .send(dataToSend)
+    //      .end(function(res){
+    //      cb(err, res.body[self.name]);
+    //    });
+  };
 
-  Model.prototype.remove = function(data, cb){
-//    console.log('Removing a Model', this, data);
+  Model.prototype.remove = function(data, cb) {
+    //    console.log('Removing a Model', this, data);
 
     // TODO Hacky
     cb(null, data);
 
-//    var err = null;
-//    request.del(hiddenAPI + this.plural).send(data).end(function(){
-//      cb(err, data);
-//    });
-  }
+    //    var err = null;
+    //    request.del(hiddenAPI + this.plural).send(data).end(function(){
+    //      cb(err, data);
+    //    });
+  };
+
   return {
     app: {
-      set: function(){},
-      get: function(){}
+      set: function() {},
+      get: function() {}
     },
 
     init: function(cb) {

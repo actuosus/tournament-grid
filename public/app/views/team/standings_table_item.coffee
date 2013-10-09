@@ -34,10 +34,18 @@ define [
 
     shouldShowPopup: no
 
+    playersPopupShown: (->
+      if @get 'content.entrant.hasPlayersPopupShown'
+        @set 'shouldShowPopup', no
+        @matchesPopup?.hide()
+    ).observes('content.entrant.hasPlayersPopupShown')
+
     mouseEnter: (event)->
       @set 'shouldShowPopup', yes
       controller = @get('parentView.matches')
       entrant = @get('content.entrant')
+      if entrant?.get 'hasPlayersPopupShown'
+        @set 'shouldShowPopup', no
       Em.run.later =>
         if @get('shouldShowPopup') and controller?.hasPastOrFutureMatchesForEntrant entrant
           @matchesPopup = App.MatchTablePopupView.create

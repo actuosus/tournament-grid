@@ -1,7 +1,7 @@
 /**
  * app.build
- * @author: actuosus
- * @fileOverview
+ * @author actuosus@gmail.com (Arthur Chafonov)
+ * @overview
  * Date: 01/07/2013
  * Time: 02:14
  */

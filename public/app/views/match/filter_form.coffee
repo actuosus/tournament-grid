@@ -15,7 +15,7 @@ define [
     templateName: 'matchFilterForm'
     classNames: ['match-filter-form']
 
-    team: null
+    entrant: null
     matchType: null
     periodType: null
 
@@ -27,12 +27,12 @@ define [
       @set 'content.matchTypeFilter', @get 'matchType'
     ).observes('matchType')
 
-    teamChanged: (->
-      team = @get 'team'
-      if App.TeamRef.detectInstance team
-        team = team.get 'team'
-      @set 'content.entrantFilter', team
-    ).observes('team')
+    entrantChanged: (->
+      entrant = @get 'entrant'
+      if App.TeamRef.detectInstance entrant
+        entrant = entrant.get 'team'
+      @set 'content.entrantFilter', entrant
+    ).observes('entrant')
 
     dateChanged: (->
       @set 'content.dateFilter', @get 'date'

@@ -12,7 +12,9 @@ define ->
 
     open: -> @get('content').open()
     close: -> @get('content').close()
-    save: -> @get('content')?.save()
+    save: ->
+      @get('content')?.save()
+#      @get('content.store')?.commit()
 
     edit: ->
       popup = App.PopupView.create target: @

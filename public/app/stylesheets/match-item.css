@@ -32,6 +32,6 @@
 
 .match-item .icon-lock {
     position: absolute;
-    left: 4em;
+    right: -12px;
     top: 0px;
 }

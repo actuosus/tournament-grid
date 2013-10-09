@@ -5,8 +5,7 @@ util = require 'util'
 Config = require './conf'
 conf = new Config()
 
-task 'work', 'Start application server and open a browser', ->
-  invoke 'run'
+task 'work', 'Start application server and open a browser', -> invoke 'run'
 
 task 'run', 'Start application server', ->
   console.log 'Starting application server…'

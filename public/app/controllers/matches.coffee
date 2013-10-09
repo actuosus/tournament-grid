@@ -31,6 +31,7 @@ define [
     endDateFilter: null
 
     filteredContent: (->
+      console.log 'filteredContent requested'
       content = @get 'content'
       matchTypeFilter = @get 'matchTypeFilter'
       entrantFilter = @get 'entrantFilter'
@@ -80,7 +81,14 @@ define [
               return inDateRange startDate, endDate, d
 
       content
-    ).property('matchTypeFilter', 'entrantFilter', 'periodFilter', 'dateFilter', 'startDateFilter', 'endDateFilter')
+    ).property(
+      'matchTypeFilter',
+      'entrantFilter',
+      'periodFilter',
+      'dateFilter',
+      'startDateFilter',
+      'endDateFilter',
+      'content.length')
 
     pastMatchesForEntrant: (entrant)->
       if App.TeamRef.detectInstance entrant
@@ -102,13 +110,15 @@ define [
 
     results: (->
       Ember.ArrayController.create
-        content: @get 'round.resultSets'
+        stage: @get 'stage'
+        round: @get 'round'
+        contentBinding: 'round.resultSets'
         sortProperties: ['position']
     ).property('round.resultSets.length')
 
     automaticCountingChanged: (->
       resultSets = @get 'round.resultSets'
-      console.count 'automaticCountingChanged'
+#      console.count 'automaticCountingChanged'
       return if not resultSets or not App.get('isEditingMode')
 
       # Reset
@@ -117,7 +127,8 @@ define [
           resultSet.set property, 0 unless resultSet.get('isSaving')
 
       incrementPropertyForEntrant = (entrant, property, increment)->
-        resultSet = resultSets.find (resultSet)-> Em.isEqual(resultSet.get('entrant.team'), entrant)
+        resultSet = resultSets.find (resultSet)->
+          Em.isEqual(resultSet.get('entrant'), entrant) or Em.isEqual(resultSet.get('entrant.team'), entrant)
         resultSet.incrementProperty property, increment if resultSet and not resultSet.get('isSaving')
 
       unless @get 'round.automaticCountingDisabled'
@@ -152,7 +163,7 @@ define [
     )
 
     entrants: (->
-      @get('round.resultSets').map (item)-> item.get 'entrant'
+      @get('round.resultSets')?.map (item)-> item.get 'entrant'
     ).property('round.resultSets.@each.entrant.isLoaded')
 
     _results: (->

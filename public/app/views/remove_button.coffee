@@ -19,13 +19,21 @@ define [
     shouldShowConfirmation: no
     template: Em.Handlebars.compile '{{#if view.shouldShowConfirmation}}{{view.confirmLabel}} {{/if}}×'
 
+    useConfirmation: no
+
     deleteRecord: Em.K
 
     mouseLeave: ->
       @set 'shouldShowConfirmation', no
 
     click: ->
+      if @get('useConfirmation') and not @get('shouldShowConfirmation')
+        @set 'shouldShowConfirmation', yes
+        return
       if @get 'shouldShowConfirmation'
-        @deleteRecord()
+        if @get('parentView.deleteRecord')
+          @get('parentView').deleteRecord()
+        else
+          @deleteRecord()
       else
         @set 'shouldShowConfirmation', yes

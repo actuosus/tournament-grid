@@ -23,6 +23,19 @@
     text-overflow: ellipsis;
 }
 
+.named-container .error-text {
+    position: absolute;
+    right: 3px;
+    top: 37px;
+    left: 3px;
+    height: 12px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 10px;
+    color: darkred;
+    text-align: right;
+}
+
 .named-container .search-bar {
     position: absolute;
     right: 440px;

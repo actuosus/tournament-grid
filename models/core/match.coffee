@@ -42,4 +42,9 @@ MatchSchema = new Schema
 
 MatchSchema.plugin socketNotifyPlugin
 
+MatchSchema.pre 'save', (next)->
+  @link = "/matches/#{@id}"
+  next()
+
+
 module.exports = MatchSchema

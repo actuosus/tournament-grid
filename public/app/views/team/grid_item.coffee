@@ -45,25 +45,29 @@ define [
       autocompleteDelegate: (->
         console.log @get 'container'
 #        App.TeamsController.create()
-        @get('container').lookup('controller:reportEntrants')
+        matchType = App.get('report.match_type')
+        if matchType is 'player'
+          @get('container').lookup('controller:players')
+        else
+          @get('container').lookup('controller:reportEntrants')
       ).property()
 
-      assignTeam: (team)->
-        @set 'parentView.content', team
+      assignEntrant: (entrant)->
+        @set 'parentView.content', entrant
         match = @get 'parentView.match'
-        match.set "entrant#{@get('parentView.contentIndex')+1}", team if match
+        match.set "entrant#{@get('parentView.contentIndex')+1}", entrant if match
 
       insertNewline: ->
         team = @get 'selection'
         team = team.get 'team' if App.TeamRef.detectInstance team
-        @assignTeam team
+        @assignEntrant team
         @_closeAutocompleteMenu()
         @set 'isVisible', no
 
       selectMenuItem: (entrant)->
         team = entrant
         team = entrant.get 'team' if App.TeamRef.detectInstance entrant
-        @assignTeam team
+        @assignEntrant team
         @_closeAutocompleteMenu()
         @set 'isVisible', no
 
@@ -79,7 +83,14 @@ define [
 #      href: (->
 #        "/teams/#{@get 'content.id'}"
 #      ).property('content')
-      template: Em.Handlebars.compile '{{view.parentView.content.name}}'#<a {{bindAttr href="view.href"}} target="_blank">
+      name: (->
+        content = @get 'parentView.content'
+        if App.Team.detectInstance(content)
+          return content.get 'name'
+        if App.Player.detectInstance(content)
+          return content.get 'nickname'
+      ).property('parentView.content.isLoaded')
+      template: Em.Handlebars.compile '{{view.name}}'#<a {{bindAttr href="view.href"}} target="_blank">
 
       click: -> @get('parentView')?.activateEditing()
 

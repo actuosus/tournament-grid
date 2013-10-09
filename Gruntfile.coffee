@@ -54,6 +54,9 @@ module.exports = (grunt)->
       copy_to_bundle:
         cmd: ->
           'cp ./public/vendor/scripts/require.min.js ./public/bundle/.'
+      copy_to_bundle_extras:
+        cmd: ->
+          'mkdir -p ./public/bundle/vendor/styles/images && cp -R ./public/vendor/styles/images ./public/bundle/vendor/styles/images/.'
     coffeelint:
       options:
         argv:
@@ -71,7 +74,22 @@ module.exports = (grunt)->
           module: true
           document: true
 
+    'sftp-deploy': {
+      build: {
+        auth: {
+          host: 'v3.virtuspro.org',
+          port: 2200,
+          authKey: 'v3'
+        },
+        src: '/Users/actuosus/Projects/Virtus.pro/Site/public/bundle',
+        dest: '/home/v3virtuspro/v3.virtuspro.org/html/bitrix/components/VIRTUS.PRO/reports.app/templates/.default/bundle',
+#        exclusions: ['/path/to/source/folder/**/.DS_Store', '/path/to/source/folder/**/Thumbs.db', 'dist/tmp'],
+        server_sep: '/'
+      }
+    }
+
   grunt.registerTask 'bundle', 'Create project bundle', ['clean', 'requirejs', 'exec:minify_css', 'exec:copy_to_bundle']
+  grunt.registerTask 'deploy', 'Deploys bundled app', ['bundle', 'sftp-deploy']
 
 
   grunt.loadNpmTasks 'grunt-contrib-clean'
@@ -84,3 +102,4 @@ module.exports = (grunt)->
   grunt.loadNpmTasks 'grunt-coffeelint'
 #  grunt.loadNpmTasks 'grunt-contrib-handlebars'
   grunt.loadNpmTasks 'grunt-ember-handlebars'
+  grunt.loadNpmTasks 'grunt-sftp-deploy'

@@ -26,14 +26,8 @@ define ->
       record.set 'stage', @get 'stage'
       record
 
-#    titleChanged: (->
-#      console.log 'titleChanged'
-#      @get('content')?.set 'title', @title
-#    ).observes('title')
-
     setUnknownProperty: (key, value)->
       content = @get 'content'
-      console.debug 'Setting property for round proxy', key, content
       unless content
         content = @createRecord()
         @set 'content', content
@@ -41,11 +35,10 @@ define ->
 
     content: (->
       Em.run.later =>
-#        console.log 'sortIndex', @get('sortIndex'), @get('stage.rounds')
         round = @get('stage.rounds')?.find (_)=>
           _.get('sortIndex') is @get('sortIndex') and
             _.get('bracketName') is @get('bracketName')
-        @set 'content', round if round
+        @set('content', round) if round
       ,200
       null
     ).property('some', 'stage.rounds.@each.isLoaded')

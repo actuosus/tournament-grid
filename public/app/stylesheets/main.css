@@ -18,6 +18,7 @@
 /*@import "../../vendor/styles/bootstrap-tooltip.css";*/
 @import "../../vendor/styles/jquery-ui.css";
 @import "../../vendor/styles/jquery-ui-timepicker-addon.css";
+/*@import "../../VIRTUS.PRO.TPL.MAIN/source/css/flags.css";*/
 /*@import "ember-table.css";*/
 @import "block_container.css";
 @import "named_container.css";
@@ -470,7 +471,7 @@ input.match-start-date {
     text-align: right;
 }
 
-.date-with-popup:hover {
+.is-editing .date-with-popup:hover {
     outline: #da4600 auto 4px;
 }
 

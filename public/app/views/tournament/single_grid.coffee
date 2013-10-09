@@ -39,16 +39,19 @@ define [
           when 0 then roundName = '_final'.loc()
           when 1 then roundName = '_semifinal'.loc()
         roundIndex = roundsCount - i
-        actualRound = stage?.getByPath "#{roundIndex}"
+#        actualRound = stage?.getByPath "#{roundIndex}"
+
         round = App.RoundController.create
           stage: stage
-          content: actualRound
+#          content: actualRound
           index: roundIndex
           itemIndex: i
           sortIndex: roundIndex
-          title: roundName
+#          title: roundName
           parentReference: 'stage'
           matches: []
+          bracketName: ''
+
         for j in [0..matchesCount]
           leftPath = rightPath = undefined
           if roundsCount-i-1 >= 0
@@ -58,30 +61,59 @@ define [
             index: j
             itemIndex: j
             sortIndex: j
-            date: new Date()
             leftPath: leftPath
             rightPath: rightPath
             parentNodePath: "#{roundsCount-i+1}.#{Math.floor(j/2)}"
             entrants: [null, null]
             round: round
+            status: 'opened'
+            isPreFinal: i is 0
           round.get('matches').push match
+
+        if i is 0 and entrantsNumber > 2
+          # Third place
+          console.log 'Third place'
+          thirdPlaceMatch = App.MatchController.create
+            label: '_third_place_playoff'.loc()
+            isThirdPlace: yes
+            itemIndex: -1
+            sortIndex: 1
+            entrants: [null, null]
+            round: round
+            isVisible: App.get('isEditingMode')
+          round.get('matches').pushObject thirdPlaceMatch
+
         rounds.push round
       finalRound = App.RoundController.create
         stage: stage
-        title: '_winner'.loc()
+#        title: '_winner'.loc()
         itemIndex: -1
+        sortIndex: roundsCount+1
         parentReference: 'stage'
         isFinal: yes
         matches: []
+        bracketName: ''
       finalRound.get('matches').push App.MatchController.create
         isWinner: yes
         isFinal: yes
         itemIndex: -1
+        sortIndex: 0
         entrants: [null]
         round: finalRound
       rounds.push finalRound
       rounds
     ).property('entrantsNumber')
+
+    editingChanged: (->
+      preLastRound = @get('content').objectAt(@get('content.length')-2)
+      thirdPlaceMatch = preLastRound.get('matches').find (_)-> _.get('sortIndex') is 1
+      if App.get 'isEditingMode'
+        thirdPlaceMatch.set 'isVisible', yes
+      else
+        console.log thirdPlaceMatch
+        unless thirdPlaceMatch.get 'content'
+          thirdPlaceMatch.set 'isVisible', no
+    ).observes('App.isEditingMode')
 
     contentView: Em.CollectionView.extend
       contentBinding: 'parentView.content'

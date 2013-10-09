@@ -9,6 +9,7 @@ define ->
   App.MatchController = Em.ObjectController.extend Ember.Evented,
     isSelected: no
     status: 'opened'
+    isVisible: yes
 
 #    entrantsChanged: ((self, property)->
 #      content = @get('content')
@@ -45,7 +46,9 @@ define ->
     deleteRecord: -> @get('content').deleteRecord()
 
     createRecord: ->
-      record = App.Match.createRecord sortIndex: @sortIndex
+      record = App.Match.createRecord
+        sortIndex: @sortIndex
+        status: 'opened'
       round = @get 'round.content'
       unless round
         round = @get('round').createRecord()
@@ -63,12 +66,19 @@ define ->
 
     content: (->
       Em.run.later =>
-#        console.log 'sortIndex', @get 'sortIndex'
         match = @get('round.content.matches')?.find (_)=>_.get('sortIndex') is @get('sortIndex')
-        @set('entrants', match.get('entrants')) if match
-        @set 'content', match if match
-        @trigger 'didLoad' if match
-        @onLoaded() if match
+        if match
+          if @get 'isFinal'
+            @set('entrants', [match.get('entrants').objectAt 0])
+          else
+            @set('entrants', match.get('entrants'))
+          if @get('round.itemIndex') is 0
+            # Third place playoff
+            if match.get('sortIndex') is 1
+              @set 'isVisible', yes
+          @set 'content', match
+          @trigger 'didLoad'
+          @onLoaded()
       ,200
       null
     ).property('some', 'round.content.matches.@each.isLoaded')

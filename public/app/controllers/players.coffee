@@ -9,6 +9,7 @@ define [
   'cs!../core'
   'cs!../models/player'
   'cs!../views/player/form'
+  'cs!../views/country_flag'
 ], ->
   App.PlayersController = Em.ArrayController.extend
     formView: App.PlayerForm
@@ -55,17 +56,8 @@ define [
       titleBinding: 'content._id'
       childViews: ['countryFlagView', 'nameView', 'realNameView']
 
-      countryFlagView: Em.View.extend
-        tagName: 'i'
-        classNames: ['country-flag-icon', 'team-country-flag-icon']
-        classNameBindings: ['countryFlagClassName', 'hasFlag']
-        attributeBindings: ['title']
-        contentBinding: 'parentView.content'
-        title: (-> @get 'content.country.name').property('content.country')
-        hasFlag: (-> !!@get 'content.country.code').property('content.country')
-        countryFlagClassName: (->
-          'country-flag-icon-%@'.fmt @get 'content.country.code'
-        ).property('content.country.code')
+      countryFlagView: App.CountryFlagView.extend
+        contentBinding: 'parentView.content.country'
 
       nameView: Em.View.extend
         contentBinding: 'parentView.content'

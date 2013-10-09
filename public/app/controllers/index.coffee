@@ -12,6 +12,7 @@ define [
   'cs!./teams'
   'cs!./merged_entrants'
   'cs!./report_entrants'
+  'cs!./report_players'
 
   'cs!./round'
   'cs!./match'

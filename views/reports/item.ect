@@ -141,11 +141,20 @@
     <!-- end profileReport__aside -->
 </div>
 
-<div id="content"></div>
+<div id="content">
+    <div class="block-container named-container collapsed">
+        <p class="b-profileBlock__title close">Tournament results table</p>
+        <img src="/images/loader.gif" class="loader"/>
+        <div class="status-text" id="loader-status">Loading…</div>
+        <div class="error-text" id="loader-error"></div>
+    </div>
+</div>
 <script type="text/javascript">
     window.DEBUG = true;
     window.grid = {
         reportId: '<%- @doc.id %>',
+//        reportId: '33664',
+//        reportId: '38272',
         config: {
             rootElement: '#content',
             languages: <%- JSON.stringify(@languages) %>,

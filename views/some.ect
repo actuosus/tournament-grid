@@ -1,0 +1,49 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<html>
+<head>
+
+    <script type="text/javascript">
+        function newAjaxObject() {
+            var xmlHttp;
+            try {           // Firefox, Opera 8.0+, Safari
+                xmlHttp=new XMLHttpRequest();
+            } catch (e) {   // Internet Explorer
+                try {
+                    xmlHttp=new ActiveXObject("Msxml2.XMLHTTP");
+                } catch (e) {
+                    try {
+                        xmlHttp=new ActiveXObject("Microsoft.XMLHTTP");
+                    } catch (e) {
+                        alert("Your browser does not support Javascript/AJAX!  Please upgrade your browser.");
+                        return null;
+                    }
+                }
+            }
+            return xmlHttp;
+        }
+
+        function getStatus() {
+            var ajaxStatus = newAjaxObject();
+
+            ajaxStatus.onreadystatechange=function() {
+                if(ajaxStatus.readyState==4) {
+                    eval('var tester =' + ajaxStatus.responseText);
+                    queueStatusUpdate();
+                }
+            }
+            ajaxStatus.open("GET","status.shtml",true);
+            ajaxStatus.send(null);
+        }
+
+        // Wait 'timeDelay' milliseconds before requesting an update
+        var timeDelay = 100;
+        function queueStatusUpdate() {
+            setTimeout('getStatus()',timeDelay);
+        }
+    </script>
+</head>
+
+<body onload="queueStatusUpdate();">
+
+</body>
+</html>

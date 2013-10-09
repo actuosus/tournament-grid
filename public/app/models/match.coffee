@@ -17,8 +17,8 @@ define ['cs!../core'],->
     status: DS.attr 'string', {defaultValue: 'opened'}
     type: DS.attr 'string'
     sortIndex: DS.attr 'number'
-    entrant1: DS.belongsTo 'App.Team'
-    entrant2: DS.belongsTo 'App.Team'
+    entrant1: DS.belongsTo('App.Entrant',{polymorphic: yes})
+    entrant2: DS.belongsTo('App.Entrant',{polymorphic: yes})
     entrant1_points: DS.attr 'number'
     entrant2_points: DS.attr 'number'
 
@@ -59,13 +59,15 @@ define ['cs!../core'],->
     ).property('date', 'entrant1_points', 'entrant2_points')
 
     canBeOpened: (->
-      date = @get 'date'
-      currentDate = new Date
+      date = +(@get('date'))
+      return yes unless date
+      currentDate = +(new Date)
       reopenInterval = 1000 * 60 * 60 * 12
       (date > (currentDate + reopenInterval)) or Em.isEmpty(date)
-    ).property('date', 'status')
+    ).property('date')
 
     open: ->
+      console.log 'canBeOpened', @get('canBeOpened')
       if @get 'canBeOpened'
         @set 'status', 'opened'
         @save()
@@ -78,7 +80,7 @@ define ['cs!../core'],->
     isClosed: Em.computed.not 'isOpened'
 
     isLoadedChanged: (->
-      console.log 'match.isLoaded'
+#      console.log 'match.isLoaded'
       @get('round')?.trigger 'matchLoaded', @
     ).observes('isLoaded')
 
@@ -89,7 +91,7 @@ define ['cs!../core'],->
     # Match is only valid if it has entrants.
     valid: (->
       valid = no
-      if @get('entrant1') and @get('entrant2')
+      if @get('entrant1')
         valid = yes
       valid
     ).property('entrant1', 'entrant2')

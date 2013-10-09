@@ -14,7 +14,7 @@ redis = require 'redis'
 #redis.debug_mode = yes
 #spdy = require 'spdy'
 express = require 'express'
-RedisStore = require('connect-redis')(express)
+#RedisStore = require('connect-redis')(express)
 
 vp = redis.createClient()
 vp.select 1
@@ -25,7 +25,7 @@ mongoose = require 'mongoose'
 passport = require 'passport'
 BasicStrategy = require('passport-http').BasicStrategy
 
-express.static.mime.define({'application/x-chrome-extension': ['crx']});
+express.static.mime.define 'application/x-chrome-extension': ['crx']
 
 #IO = require './io'
 
@@ -44,6 +44,10 @@ ECT = require 'ect'
 ectRenderer = ECT watch: true, root: __dirname + '/views'
 
 grid = module.exports = models: models
+
+###
+  @type express
+###
 app = module.exports.app = express()
 
 passport.use new BasicStrategy (username, password, done)->
@@ -116,16 +120,16 @@ app.configure ->
 
   # Session support
   console.log 'Redis', conf._redis
-  app.use express.session(
-    secret: 'Is it secure?'
-    store: new RedisStore(
-      host: conf._redis.host
-      port: conf._redis.port
-      pass: conf._redis.password
-      db: conf._redis.db
-    )
-  )
-#  app.use express.session secret: 'Is it secure?'
+#  app.use express.session(
+#    secret: 'Is it secure?'
+#    store: new RedisStore(
+#      host: conf._redis.host
+#      port: conf._redis.port
+#      pass: conf._redis.password
+#      db: conf._redis.db
+#    )
+#  )
+  app.use express.session secret: 'Is it secure?'
   app.use passport.initialize()
   app.use passport.session()
 
@@ -153,11 +157,11 @@ app.configure 'development', ->
   # Error handling
   app.use express.errorHandler dumpExceptions: yes, showStack: yes
 
-#  app.use (req, res, next)->
-#    if req.url.match /api/
-#      waiter req, res, next
-#    else
-#      next()
+  app.use (req, res, next)->
+    if req.url.match /api/
+      waiter req, res, next
+    else
+      next()
 
 app.configure 'production', ->
   # Compression
@@ -343,6 +347,8 @@ app.get '/teams/:_id', ensureAuthenticated, routes.teams.item
 app.get '/players/:_id', ensureAuthenticated, routes.players.item
 
 app.get '/voting', ensureAuthenticated, routes.voting.index
+
+app.get '/some', (req, res)-> res.render 'some.ect'
 
 
 getAllVotesForStreamId = (streamId, cb)->

@@ -53,3 +53,7 @@
 
 .matches-table-item .team-name {
 }
+
+.matches-table-item .remove-btn {
+    right: 0;
+}
