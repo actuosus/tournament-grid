@@ -157,11 +157,11 @@ app.configure 'development', ->
   # Error handling
   app.use express.errorHandler dumpExceptions: yes, showStack: yes
 
-  app.use (req, res, next)->
-    if req.url.match /api/
-      waiter req, res, next
-    else
-      next()
+#  app.use (req, res, next)->
+#    if req.url.match /api/
+#      waiter req, res, next
+#    else
+#      next()
 
 app.configure 'production', ->
   # Compression

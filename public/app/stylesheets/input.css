@@ -5,10 +5,10 @@
  * Time: 12:30
  */
 
-input[type="text"],
-input[type="url"],
-input[type="date"],
-input[type="number"] {
+.ember-application input[type="text"],
+.ember-application input[type="url"],
+.ember-application input[type="date"],
+.ember-application input[type="number"] {
     min-height: 21px;
     -webkit-appearance: none;
     border: 1px solid #c3c3c3;
@@ -24,16 +24,16 @@ input[type="number"] {
     -webkit-transition-duration: .3s;
 }
 
-input[type="text"]:invalid,
-input[type="url"]:invalid,
-input[type="date"]:invalid,
-input[type="number"]:invalid {
+.ember-application input[type="text"]:invalid,
+.ember-application input[type="url"]:invalid,
+.ember-application input[type="date"]:invalid,
+.ember-application input[type="number"]:invalid {
     border: 1px solid #C58898;
 }
 
-input[type="text"].input-large,
-input[type="url"].input-large,
-input[type="date"].input-large {
+.ember-application input[type="text"].input-large,
+.ember-application input[type="url"].input-large,
+.ember-application input[type="date"].input-large {
     min-height: 32px;
     border-radius: 1px;
 }

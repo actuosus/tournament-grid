@@ -131,7 +131,7 @@ define [
     ).property()
 
     isWinner: (->
-      @get('match.winner.clientId') is @get('content.clientId')
+      Em.isEqual @get('match.winner'), @get('content')
     ).property 'points', 'match.winner'
 
     winnerClassName: (->

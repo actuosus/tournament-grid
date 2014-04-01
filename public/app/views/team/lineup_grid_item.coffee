@@ -14,7 +14,7 @@ define [
   'cs!../remove_button'
   'cs!./ask_move_form'
 ], ->
-  App.TeamLineupGridItem = Em.ContainerView.extend App.Editing, App.Droppable,
+  App.TeamLineupGridItem = Em.ContainerView.extend App.Editing,
     classNames: ['lineup-grid-item', 'team-lineup-grid-item']
     classNameBindings: ['content.isDirty', 'content.isSaving', 'content.isVisualySelected']
     childViews: ['teamNameView', 'playersView']
@@ -22,17 +22,17 @@ define [
 
     _isEditingBinding: 'App.isEditingMode'
 
-    drop: (event)->
-      viewId = event.originalEvent.dataTransfer.getData 'Text'
-      view = Em.View.views[viewId]
-
-      teamRef = @get 'content'
-
-      Em.run.next @, ->
-        player = view.get('content')
-        player.set 'teamRef', teamRef
-
-      @_super event
+#    drop: (event)->
+#      viewId = event.originalEvent.dataTransfer.getData 'Text'
+#      view = Em.View.views[viewId]
+#
+#      teamRef = @get 'content'
+#
+#      Em.run.next @, ->
+#        player = view.get('content')
+#        player.set 'teamRef', teamRef
+#
+#      @_super event
 
     willInsertElement: ->
       $(@get 'element').css scale: 0
@@ -40,13 +40,14 @@ define [
     didInsertElement: ->
       @$().transition scale: 1
 
-    teamNameView: Em.ContainerView.extend(App.MovingHightlight, App.Editing, App.Draggable,
+    teamNameView: Em.ContainerView.extend(App.MovingHightlight, App.Editing,
+      teamRefsBinding: 'parentView.parentView.content'
       contentBinding: 'parentView.content.team'
       classNames: ['lineup-grid-item-name-container']
       childViews: ['countryFlagView', 'nameView']
 
       _isEditingBinding: 'parentView._isEditing'
-      isDraggableBinding: '_isEditing'
+#      isDraggableBinding: '_isEditing'
 
       editingChildViews: ['removeButtonView']
 
@@ -105,8 +106,9 @@ define [
         teamRef = App.get('report').get('teamRefs').find (tr)->
           Em.isEqual tr.get('team'), team
 
+        @get('teamRefs')?.removeObject(teamRef) if teamRef
         teamRef?.deleteRecord()
-        teamRef?.store.commit()
+        teamRef?.save()
 
       removeButtonView: App.RemoveButtonView.extend
         title: '_remove_team'.loc()
@@ -118,7 +120,7 @@ define [
       teamRefBinding: 'parentView.content'
       contentBinding: 'parentView.content.players'
 
-      itemViewClass: App.PlayerLineupGridItemView.extend(App.Draggable)
+      itemViewClass: App.PlayerLineupGridItemView
 
     addPlayerView: Em.ContainerView.extend
       classNames: ['lineup-grid-item-player-row']

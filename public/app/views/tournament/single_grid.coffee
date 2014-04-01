@@ -107,12 +107,13 @@ define [
     editingChanged: (->
       preLastRound = @get('content').objectAt(@get('content.length')-2)
       thirdPlaceMatch = preLastRound.get('matches').find (_)-> _.get('sortIndex') is 1
-      if App.get 'isEditingMode'
-        thirdPlaceMatch.set 'isVisible', yes
-      else
-        console.log thirdPlaceMatch
-        unless thirdPlaceMatch.get 'content'
-          thirdPlaceMatch.set 'isVisible', no
+      if thirdPlaceMatch
+        if App.get 'isEditingMode'
+          thirdPlaceMatch.set 'isVisible', yes
+        else
+          console.log thirdPlaceMatch
+          unless thirdPlaceMatch.get 'content'
+            thirdPlaceMatch.set 'isVisible', no
     ).observes('App.isEditingMode')
 
     contentView: Em.CollectionView.extend

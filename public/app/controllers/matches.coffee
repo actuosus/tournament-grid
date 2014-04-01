@@ -31,7 +31,6 @@ define [
     endDateFilter: null
 
     filteredContent: (->
-      console.log 'filteredContent requested'
       content = @get 'content'
       matchTypeFilter = @get 'matchTypeFilter'
       entrantFilter = @get 'entrantFilter'
@@ -80,7 +79,21 @@ define [
             when 'period'
               return inDateRange startDate, endDate, d
 
-      content
+      Em.ArrayController.create({
+        content: content,
+        sortProperties: ['date']
+        sortFunction: (date1, date2)->
+          unless date1
+            return 1
+          unless date2
+            return -1
+          if date1 < date2
+            return -1
+          else if date1 is date2
+            return 0
+          else if date1 > date2
+            return 1
+      })
     ).property(
       'matchTypeFilter',
       'entrantFilter',

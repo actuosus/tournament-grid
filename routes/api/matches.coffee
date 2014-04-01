@@ -64,7 +64,7 @@ exports.update = (req, res)->
   else
     res.send 400, errors: "server error"
 
-exports.delete = (req, res)->
+exports['delete'] = (req, res)->
   await Match.findById req.params._id, defer err, match
   if match
     await Round.findByIdAndUpdate match.round_id, {$pull: {matches: req.params._id}}, defer err, round

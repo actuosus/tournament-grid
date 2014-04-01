@@ -12,3 +12,6 @@ define [
     content: null
     tagName: 'form'
     classNames: ['form']
+
+    didCreate: Em.K
+    didUpdate: Em.K

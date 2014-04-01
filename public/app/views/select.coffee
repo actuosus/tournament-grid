@@ -24,4 +24,4 @@ define ['cs!../core'],->
     classNames: ['select']
     click: (event)->
       if $(event.target).hasClass('disclosure-button')
-        @get('childViews.firstObject').select()
+        @get('childViews.firstObject').select().focus()

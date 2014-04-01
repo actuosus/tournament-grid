@@ -25,6 +25,6 @@ define ->
     draws: DS.attr 'number'
     losses: DS.attr 'number'
     points: DS.attr 'number'
-    difference: DS.attr 'number'
+    difference: DS.attr 'string'
 
   App.ResultSet.toString = -> 'ResultSet'

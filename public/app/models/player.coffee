@@ -19,20 +19,18 @@ define ['cs!../core', 'cs!./entrant'],->
     team: DS.belongsTo 'App.Team'
     teamRef: DS.belongsTo('App.TeamRef', {inverse: 'players'})
 
-    matches: DS.hasMany 'App.Match'
+#    matches: DS.hasMany 'App.Match'
 
-    # TODO Should be moved to team reference
-    isCaptain: DS.attr 'boolean'
-
-    race: DS.belongsTo 'App.Race'
+    # TODO Should add race functionality
+#    race: DS.belongsTo 'App.Race'
 
     shortName: (->
       [@get('firstName'), @get('lastName')].compact().join(' ')
     ).property('firstName', 'lastName')
 
     # TODO Do we actualy need full name. Observers!
-    fullName: (->
-      [@get('firstName'), @get('middleName'), @get('lastName')].compact().join(' ')
-    ).property('firstName', 'middleName', 'lastName')
+#    fullName: (->
+#      [@get('firstName'), @get('middleName'), @get('lastName')].compact().join(' ')
+#    ).property('firstName', 'middleName', 'lastName')
 
   App.Player.toString = -> 'Player'

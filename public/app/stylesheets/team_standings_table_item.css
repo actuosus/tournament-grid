@@ -8,6 +8,7 @@
 .team-standings-table-item {
     position: relative;
     background-color: white;
+    height: 26px;
 }
 
 .team-standings-table-item .name {
@@ -17,7 +18,6 @@
 .team-standings-table-item .team-name {
     width: auto;;;
     /* max-width: 150px; */
-    max-width: 100px;
 }
 
 .team-standings-table-item .name a {

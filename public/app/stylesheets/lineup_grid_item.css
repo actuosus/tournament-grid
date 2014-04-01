@@ -38,9 +38,18 @@
     width: auto;
     height: auto;
     margin: 0 0 29px 0;
-    -webkit-column-break-inside: avoid;
-    -moz-column-break-inside: avoid;
-    column-break-inside: avoid;
+    -webkit-column-break-inside:avoid;
+    -moz-column-break-inside:avoid;
+    -o-column-break-inside:avoid;
+    -ms-column-break-inside:avoid;
+    column-break-inside:avoid;
+
+    page-break-inside: avoid;
+    /*overflow: hidden;*/
+}
+
+.bx-firefox.csscolumns .lineup-grid-item {
+    overflow: hidden;
 }
 
 .lineup-grid-item.is-dirty {
@@ -105,6 +114,7 @@
 
     -webkit-transition-duration: 0.3s;
     -webkit-transition-property: color;
+    text-overflow: ellipsis;
 }
 
 .lineup-grid-item-real-name:hover {
@@ -163,6 +173,8 @@
 
     -webkit-transition-duration: 0.3s;
     -webkit-transition-property: background-color, box-shadow;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .lineup-grid-item-player-row:hover {
@@ -235,6 +247,17 @@
     -webkit-column-width: 428px;
     -moz-column-width: 428px;
     column-width: 428px;
+    -webkit-column-break-inside:avoid;
+    -moz-column-break-inside:avoid;
+    -o-column-break-inside:avoid;
+    -ms-column-break-inside:avoid;
+    column-break-inside:avoid;
+
+    page-break-inside: avoid;
+}
+
+.bx-firefox.csscolumns .group-lineup-grid {
+    overflow: hidden;
 }
 
 .csscolumns .group-lineup-grid .lineup-grid-item {

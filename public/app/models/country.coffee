@@ -26,8 +26,9 @@ define ['cs!../core'],->
 #
 #    _name: DS.attr('object')
 
-    englishName: DS.attr 'string'
-    germanName: DS.attr 'string'
+#    englishName: DS.attr 'string'
+#    germanName: DS.attr 'string'
+
     code: DS.attr 'string'
 
     flagClassName: Em.computed -> 'country-flag-icon-%@'.fmt @get 'code'

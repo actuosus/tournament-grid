@@ -17,6 +17,7 @@
     display: inline-block;
 
     min-width: 6em;
+    padding-right: 18px;
 }
 
 .select .disclosure-button {
@@ -46,11 +47,16 @@
 .select select {
     opacity: 0;
     z-index: 2;
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
+    height: 100%;
+    position: relative;
+    min-height: 24px;
+    box-sizing: content-box;
+    padding-right: 36px;
+    display: block;
+    -webkit-appearance: none;
+    margin-right: -18px;
+    -moz-appearance: none;
+    appearance: none;
 }
 
 .select .current-value {

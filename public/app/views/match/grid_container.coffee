@@ -9,9 +9,34 @@ define [
   'cs!../../core'
   'cs!./item'
 ], ->
-  App.MatchGridContainer = Em.ContainerView.extend App.ContextMenuSupport, # App.VisualySelectable,
+  App.MatchGridContainer = Em.ContainerView.extend App.ContextMenuSupport,# App.Editing, App.VisualySelectable,
     classNames: ['grid-container', 'match-grid-container']
     childViews: ['contentView']
+
+#    _isEditingBinding: 'App.isEditingMode'
+#    editingChildViews: ['actionBar']
+
+#    actionBar: App.ActionBarView.extend
+#      content: [
+#        Em.Object.create({id: 'add', title: 'Add match'}),
+#        Em.Object.create({id: 'open', title: 'Open match'}),
+#        Em.Object.create({id: 'close', title: 'Close match'}),
+#        Em.Object.create({id: 'edit', title: 'Edit match'}),
+#        Em.Object.create({id: 'delete', title: 'Delete match'})
+#      ]
+#      targetBinding: 'parentView.visualSelection'
+#      targetChanged: (->
+#        console.log('target changed', @get('target'))
+#        targets = @get('target')
+#        actions = @get 'content'
+#        canBeOpened = no
+#        canBeClosed = no
+#        targets.forEach (target)-> canBeOpened = yes if target.get 'canBeOpened'
+#        targets.forEach (target)-> canBeClosed = yes if target.get 'isOpened'
+#        actions.findProperty('id', 'open').set('isHidden', not canBeOpened)
+#        actions.findProperty('id', 'close').set('isHidden', not canBeClosed)
+#
+#      ).observes('target')
 
     selectableElementsView: Em.computed.alias 'contentView'
 

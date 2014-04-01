@@ -121,7 +121,7 @@ define [
     deserialize: (serialized)->
       type = typeof serialized
       if type is 'string'
-        if type is ''
+        if serialized is ''
           return null
         else
           return new Date Ember.Date.parse serialized

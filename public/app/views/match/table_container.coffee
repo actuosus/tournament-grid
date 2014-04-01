@@ -93,9 +93,6 @@ define [
       toggleButtonTarget: Em.computed.alias 'parentView.headerView'
       tableItemViewClassBinding: 'parentView.tableItemViewClass'
       tableView: App.MatchesTableView.extend
-        willInsertElement: ->
-          console.log @get 'content'
-        _contentChanged: (-> console.log('Content changed.') ).observes('content')
         entrantsBinding: 'parentView.content.entrants'
         contentBinding: 'parentView.content.filteredContent'
         itemViewClassBinding: 'parentView.tableItemViewClass'

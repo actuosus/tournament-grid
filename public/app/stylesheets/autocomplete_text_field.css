@@ -67,6 +67,7 @@
     bottom: 0px;
     right: 0;
     min-height: 19px;
+    border: 0;
 }
 
 .autocomplete-text-field .loader {

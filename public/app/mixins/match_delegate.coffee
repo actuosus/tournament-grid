@@ -12,9 +12,7 @@ define ->
 
     open: -> @get('content').open()
     close: -> @get('content').close()
-    save: ->
-      @get('content')?.save()
-#      @get('content.store')?.commit()
+    save: -> @get('content')?.save()
 
     edit: ->
       popup = App.PopupView.create target: @
@@ -29,4 +27,6 @@ define ->
       )
       popup.appendTo App.get 'rootElement'
 
-    deleteRecord: -> @get('content').deleteRecord()
+    deleteRecord: ->
+      @get('content')?.deleteRecord()
+      @get('content')?.save()

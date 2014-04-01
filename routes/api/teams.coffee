@@ -103,7 +103,7 @@ exports.update = (req, res)->
     res.send 400, errors: "server error"
 
 
-exports.delete = (req, res) ->
+exports['delete'] = (req, res) ->
   if req.body?.teams
     teams = []
     for id, i in req.body.teams

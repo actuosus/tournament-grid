@@ -25,7 +25,12 @@ define [
     title: null
     description: null
 
-    didCreate: Em.K
+    submitButtonLabel: (->
+      if @get 'hasValidContent'
+        '_save'.loc()
+      else
+        '_create'.loc()
+    ).property('content')
 
     isGroupType: (->
       visualType = @get 'visualType.id'
@@ -90,13 +95,26 @@ define [
       # TODO Kind of hacky.
       @didCreate stage
 
+    updateRecord: ->
+      @$('.save-btn').attr('disabled', 'disabled')
+      content = @get 'content'
+      content.on 'didUpdate', => @didUpdate content
+      content.save()
+
     cancel: ->
-      @get('content')?.rollback()
+#      @get('content')?.rollback()
       @popupView?.hide()
+
+    hasValidContent: (->
+      App.Stage.detectInstance @get('content')
+    ).property('content')
 
     submit: (event)->
       event.preventDefault()
-      @createRecord()
+      if @get 'hasValidContent'
+        @updateRecord()
+      else
+        @createRecord()
 
     click: (event)->
       if $(event.target).hasClass('cancel-btn')

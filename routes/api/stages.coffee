@@ -44,7 +44,7 @@ exports.update = (req, res)->
   else
     res.send 400, errors: "server error"
 
-exports.delete = (req, res) ->
+exports['delete'] = (req, res) ->
   id = req.params._id
   if id
     await Stage.findById id, defer err, stage

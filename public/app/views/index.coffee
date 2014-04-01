@@ -23,6 +23,8 @@ define [
   'cs!./date_with_popup'
   'cs!./date_field'
 
+#  'cs!./action_bar'
+
   'cs!./grid'
 
   'cs!./named_container'

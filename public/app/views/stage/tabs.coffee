@@ -121,7 +121,17 @@ define [
         contentBinding: 'parentView.content'
         selectionBinding: 'parentView.selection'
 
-        itemViewClass: Em.ContainerView.extend( App.ContextMenuSupport, App.Editing, {
+        isSortableBinding: 'App.isEditingMode'
+
+        fixSorting: (->
+          if @get 'isSortable'
+            console.debug('Will fix sorting')
+            @get('content').forEach (item, index)->
+              item.set 'sortIndex', index
+            App.store.commit()
+        ).observes('isSortable')
+
+        itemViewClass: Em.ContainerView.extend( App.ContextMenuSupport, App.Editing, App.Sortable, {
           tagName: 'li'
           classNames: ['item', 'stage-tab-item']
           classNameBindings: ['active', 'isFocused', 'content.isDirty', 'content.isSaving', 'content.isUpdating', 'content.isError']
@@ -135,13 +145,28 @@ define [
           shouldShowContextMenuBinding: 'App.isEditingMode'
           contextMenuActions: ['edit', 'save', 'deleteRecord:delete']
 
+          isSortableBinding: 'App.isEditingMode'
           axis: 'x'
+
+          prev: (->
+            sortIndex = @get 'content.sortIndex'
+            @get('parentView.childViews').objectAt --sortIndex
+          ).property('contentIndex')
+
+          next: (->
+            sortIndex = @get 'content.sortIndex'
+            @get('parentView.childViews').objectAt ++sortIndex
+          ).property('contentIndex')
 
           titleBinding: 'content.description'
 
           edit: ->
             @popup = App.PopupView.create target: @
-            @popup.pushObject App.StageForm.create content: @get 'content'
+            form = App.StageForm.create
+              content: @get 'content'
+              didUpdate: -> @popupView.hide()
+            form.set 'popupView', @popup
+            @popup.pushObject form
             @popup.appendTo App.get 'rootElement'
 
           save: ->
