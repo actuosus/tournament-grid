@@ -116,7 +116,7 @@ exports.update = (req, res)->
     res.send 400, errors: "server error"
 
 # Should not be presented in API.
-exports.delete = (req, res) ->
+exports['delete'] = (req, res) ->
   if req.body?.players
     players = []
     for id, i in req.body.players

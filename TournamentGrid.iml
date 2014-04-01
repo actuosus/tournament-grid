@@ -2,9 +2,7 @@
 <module type="WEB_MODULE" version="4">
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
-    <content url="file://$MODULE_DIR$">
-      <excludeFolder url="file://$MODULE_DIR$/public/bundle" />
-    </content>
+    <content url="file://$MODULE_DIR$" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Python 2.7.1 (/System/Library/Frameworks/Python.framework/Versions/2.7/bin/python2.7) interpreter library" level="application" />
     <orderEntry type="library" name="Node.js v0.8.16 Core Library" level="application" />

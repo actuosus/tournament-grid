@@ -12,6 +12,8 @@ define [
     classNames: ['input', 'input-number']
     childViews: ['fieldView', 'addOnView']
 
+    stepping: 'binary'
+
     addOnView: Em.ContainerView.extend
       classNames: ['add-on']
       childViews: ['stepUpButtonView', 'stepDownButtonView']
@@ -63,7 +65,6 @@ define [
       stepBinding: 'parentView.step'
       minBinding: 'parentView.min'
       maxBinding: 'parentView.max'
-      stepping: 'binary'
       valueBinding: 'parentView.value'
       requiredBinding: 'parentView.required'
 
@@ -82,8 +83,14 @@ define [
     internalMax: 100
 
     willInsertElement: ->
-      @set 'internalMin', Math.log(@get('min'))/Math.log(2)
-      @set 'internalMax', Math.log(@get('max'))/Math.log(2)
+      if @get('stepping') is 'binary'
+        @set 'internalMin', Math.log(@get('min'))/Math.log(2)
+        @set 'internalMax', Math.log(@get('max'))/Math.log(2)
+        @set 'internalStep', parseInt(@get('step'), 10) or 1
+      if @get('stepping') is 'float'
+        @set 'internalMin', parseFloat @get('min')
+        @set 'internalMax', parseFloat @get('max')
+        @set 'internalStep', parseFloat(@get('step')) or 1
 
     mouseWheel: (event)->
       event.preventDefault()
@@ -110,5 +117,8 @@ define [
 
     internalValueChanged: (->
       internalValue = @get 'internalValue'
-      @set 'value', Math.pow(2, internalValue)
+      if @get('stepping') is 'binary'
+        @set 'value', Math.pow(2, internalValue)
+      else
+        @set 'value', internalValue
     ).observes('internalValue')

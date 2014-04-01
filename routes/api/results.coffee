@@ -38,7 +38,7 @@ exports.update = (req, res)->
   else
     res.send 400, errors: 'server error'
 
-exports.delete = (req, res)->
+exports['delete'] = (req, res)->
   Result.findByIdAndRemove req.param._id, (err)->
     unless err
       res.send 204

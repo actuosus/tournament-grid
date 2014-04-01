@@ -11,6 +11,7 @@
 
 .matches-table-item {
     position: relative;
+    height: 29px;
 }
 
 .matches-table-item .autocomplete-text-field {

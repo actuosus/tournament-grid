@@ -15,7 +15,7 @@
 }
 
 .combobox .text-field {
-    border: 0;
+    border: 0 !important;
 }
 
 .combobox .remove-btn {

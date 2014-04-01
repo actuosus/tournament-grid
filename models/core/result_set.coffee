@@ -23,7 +23,7 @@ ResultSetSchema = new Schema
   draws: type: Number
   losses: type: Number
   points: type: Number
-  difference: type: Number
+  difference: type: String
 
   results: [type: ObjectId, ref: 'Result']
 #  report_id: type: ObjectId, ref: 'Report'

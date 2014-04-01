@@ -53,7 +53,7 @@ exports.update = (req, res)->
   else
     res.send 400, errors: "server error"
 
-exports.delete = (req, res) ->
+exports['delete'] = (req, res) ->
   await TeamRef.findById req.params._id, defer err, teamRef
   if teamRef
     TeamRef.findByIdAndRemove req.params._id, (err)->

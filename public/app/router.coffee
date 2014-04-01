@@ -31,6 +31,7 @@ define [
       App.overrideAdapterAjax model
 
       @controllerFor('stages').set 'model', App.get 'report.stages'
+#      @transitionTo 'stage', App.get 'report.stages.firstObject'
 
     renderTemplate: (controller, model)->
       $(App.get('rootElement')).empty()
@@ -54,6 +55,9 @@ define [
       App.store.findById App.Report, window.grid.reportId
 
     events: error: (error, transition)-> @transitionTo 'error'
+
+  App.IndexRoute = Em.Route.extend
+    enter: -> @transitionTo 'stage', App.get 'report.stages.firstObject'
 
   App.ErrorRoute = Em.Route.extend
     renderTemplate: (controller, model)->

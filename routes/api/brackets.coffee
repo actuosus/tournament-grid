@@ -65,7 +65,7 @@ exports.update = (req, res)->
   else
     res.send 400, errors: "server error"
 
-exports.delete = (req, res) ->
+exports['delete'] = (req, res) ->
   await Bracket.findById req.params._id, defer err, bracket
   if bracket
     await Bracket.findByIdAndRemove req.params._id, defer err

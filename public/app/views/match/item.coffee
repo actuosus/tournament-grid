@@ -14,7 +14,7 @@ define [
     childViews: ['dateView', 'infoBarView', 'lockView', 'contentView']
     classNameBindings: [
       'content.isSelected',
-#      'content.isVisualySelected',
+      'content.isVisualySelected',
       'content.isDirty',
       'content.isSaving',
       'content.isPast',

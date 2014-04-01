@@ -1,0 +1,15 @@
+/**
+ * action-bar
+ * @author: actuosus
+ * Date: 14/10/2013
+ * Time: 03:04
+ */
+
+.action-bar {
+    background-color: #E1E2E2;
+    padding: 10px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+}

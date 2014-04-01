@@ -45,7 +45,7 @@ define ->
           $el = @$()
           @$().datetimepicker
             dateFormat: 'dd.mm.yy'
-            timeFormat: 'HH:mm:ss'
+            timeFormat: 'HH:mm'
             showAnim: 'show'
             showButtonPanel: no
             onClose: -> dateView.popup.hide()

@@ -20,22 +20,14 @@ define [
     entrantsBinding: 'parentView.entrant'
 
     titleBinding: 'content.description'
-
-    isEditable: (->
-      console.log 'App.MatchTableItemView', @get('content')
-      App.get('isEditingMode')
-    ).property('App.isEditingMode', 'content.status')
+    
+    isEditable: (-> App.get('isEditingMode')).property('App.isEditingMode')
 
     _isEditingBinding: 'isEditable'
 
     hasPointsOrEditable: (->
-      console.log 'hasPointsOrEditable', @get('content.hasPoints'), App.get('isEditingMode')
       @get('content.hasPoints') or App.get('isEditingMode')
-    ).property('content.hasPoints', 'App.isEditingMode')
-
-    hasPointsChanged: (->
-      @set 'hasPointsOrEditable', @get('content.hasPoints') or App.get('isEditingMode')
-    ).observes('content.hasPoints')
+    ).property('App.isEditingMode', 'content.hasPoints', 'content.isLoaded')
 
 #    click: (event)->
 #      if $(event.target).hasClass('save-btn')

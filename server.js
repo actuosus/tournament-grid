@@ -5,5 +5,5 @@
  * Time: 07:13
  */
 
-require('iced-coffee-script');
+require('iced-coffee-script/register');
 require('./app').init();

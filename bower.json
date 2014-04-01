@@ -12,7 +12,7 @@
     "report"
   ],
   "license": "Boo",
-  "homepage": "http://virtuspro.org/",
+  "homepage": "http://virtus.pro/",
   "private": true,
   "ignore": [
     "**/.*",

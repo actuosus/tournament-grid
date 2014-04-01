@@ -39,6 +39,8 @@
     min-width: 90px;
 
     float: left;
+    padding-right: 18px;
+    min-height: 26px;
 }
 
 .match-filter-form label {

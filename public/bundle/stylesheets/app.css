@@ -77,13 +77,17 @@
 :focus {
     outline: #da4600 auto 4px;
 }
+.is-hidden {
+    display: none !important;
+    visibility: hidden;
+}
 .non-selectable {
     -webkit-user-select: none;
     -moz-user-select: none;
     -o-user-select: none;
     user-select: none;
 }
-textarea {
+.ember-application textarea {
     min-height: 20px;
     -webkit-appearance: none;
     border: 1px solid #c3c3c3;
@@ -135,6 +139,7 @@ textarea {
     overflow: hidden;
     display: inline-block;
     min-width: 6em;
+    padding-right: 18px;
 }
 .select .disclosure-button {
     width: 18px;
@@ -161,11 +166,16 @@ textarea {
 .select select {
     opacity: 0;
     z-index: 2;
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
+    height: 100%;
+    position: relative;
+    min-height: 24px;
+    box-sizing: content-box;
+    padding-right: 36px;
+    display: block;
+    -webkit-appearance: none;
+    margin-right: -18px;
+    -moz-appearance: none;
+    appearance: none;
 }
 .select .current-value {
     position: absolute;
@@ -192,10 +202,10 @@ textarea {
 .country-select.has-value .text-field {
     padding-left: 30px;
 }
-input[type="text"],
-input[type="url"],
-input[type="date"],
-input[type="number"] {
+.ember-application input[type="text"],
+.ember-application input[type="url"],
+.ember-application input[type="date"],
+.ember-application input[type="number"] {
     min-height: 21px;
     -webkit-appearance: none;
     border: 1px solid #c3c3c3;
@@ -208,15 +218,15 @@ input[type="number"] {
     -webkit-transition-property: outline;
     -webkit-transition-duration: .3s;
 }
-input[type="text"]:invalid,
-input[type="url"]:invalid,
-input[type="date"]:invalid,
-input[type="number"]:invalid {
+.ember-application input[type="text"]:invalid,
+.ember-application input[type="url"]:invalid,
+.ember-application input[type="date"]:invalid,
+.ember-application input[type="number"]:invalid {
     border: 1px solid #C58898;
 }
-input[type="text"].input-large,
-input[type="url"].input-large,
-input[type="date"].input-large {
+.ember-application input[type="text"].input-large,
+.ember-application input[type="url"].input-large,
+.ember-application input[type="date"].input-large {
     min-height: 32px;
     border-radius: 1px;
 }
@@ -455,6 +465,10 @@ input[type="date"].input-large {
     height: 24px;
     padding: 0 13px;
     background-image: -webkit-linear-gradient(top, #f1f1f1 0%, #dbdbdb 100%);
+    background-image: -moz-linear-gradient(top, #f1f1f1 0%, #dbdbdb 100%);
+    background-image: -o-linear-gradient(top, #f1f1f1 0%, #dbdbdb 100%);
+    background-image: -ms-linear-gradient(top, #f1f1f1 0%, #dbdbdb 100%);
+    background-image: linear-gradient(top, #f1f1f1 0%, #dbdbdb 100%);
     cursor: pointer;
     font-size: 10px;
     text-align: center;
@@ -467,9 +481,17 @@ input[type="date"].input-large {
 }
 .btn:hover {
     background-image: -webkit-linear-gradient(top, #fbfbfb 0%, #e5e5e5 100%);
+    background-image: -moz-linear-gradient(top, #fbfbfb 0%, #e5e5e5 100%);
+    background-image: -o-linear-gradient(top, #fbfbfb 0%, #e5e5e5 100%);
+    background-image: -ms-linear-gradient(top, #fbfbfb 0%, #e5e5e5 100%);
+    background-image: linear-gradient(top, #fbfbfb 0%, #e5e5e5 100%);
 }
 .btn:active {
     background-image: -webkit-linear-gradient(top, #d7d7d7 0%, #c1c1c1 100%);
+    background-image: -moz-linear-gradient(top, #d7d7d7 0%, #c1c1c1 100%);
+    background-image: -o-linear-gradient(top, #d7d7d7 0%, #c1c1c1 100%);
+    background-image: -ms-linear-gradient(top, #d7d7d7 0%, #c1c1c1 100%);
+    background-image: linear-gradient(top, #d7d7d7 0%, #c1c1c1 100%);
 }
 .btn:disabled {
     border: 1px solid #cecece;
@@ -482,18 +504,34 @@ input[type="date"].input-large {
     box-shadow: inset 0 1px rgba(255, 255, 255, 0.25), 0 1px 2px rgba(0, 0, 0, 0.25);
     font-weight: bold;
     background-image: -webkit-linear-gradient(top, #2993dd 0%, #217fd4 100%);
+    background-image: -moz-linear-gradient(top, #2993dd 0%, #217fd4 100%);
+    background-image: -o-linear-gradient(top, #2993dd 0%, #217fd4 100%);
+    background-image: -ms-linear-gradient(top, #2993dd 0%, #217fd4 100%);
+    background-image: linear-gradient(top, #2993dd 0%, #217fd4 100%);
     border-color: #1a5a95;
 }
 .btn-primary:hover {
     background-image: -webkit-linear-gradient(top, #46bafd 0%, #34aafe 100%);
+    background-image: -moz-linear-gradient(top, #46bafd 0%, #34aafe 100%);
+    background-image: -o-linear-gradient(top, #46bafd 0%, #34aafe 100%);
+    background-image: -ms-linear-gradient(top, #46bafd 0%, #34aafe 100%);
+    background-image: linear-gradient(top, #46bafd 0%, #34aafe 100%);
     border-color: #227cd1;
 }
 .btn-primary:active {
     background-image: -webkit-linear-gradient(top, #15528f 0%, #1e68a2 100%);
+    background-image: -moz-linear-gradient(top, #15528f 0%, #1e68a2 100%);
+    background-image: -o-linear-gradient(top, #15528f 0%, #1e68a2 100%);
+    background-image: -ms-linear-gradient(top, #15528f 0%, #1e68a2 100%);
+    background-image: linear-gradient(top, #15528f 0%, #1e68a2 100%);
     border-color: #144167;
 }
 .btn-primary:disabled {
     background-image: -webkit-linear-gradient(top, #d4d4d4 0%, #cacaca 100%);
+    background-image: -moz-linear-gradient(top, #d4d4d4 0%, #cacaca 100%);
+    background-image: -o-linear-gradient(top, #d4d4d4 0%, #cacaca 100%);
+    background-image: -ms-linear-gradient(top, #d4d4d4 0%, #cacaca 100%);
+    background-image: linear-gradient(top, #d4d4d4 0%, #cacaca 100%);
     border-color: #a7a7a7;
 }
 .btn-mini {
@@ -649,6 +687,14 @@ input[type="date"].input-large {
 .menu-item.is-team-ref .lineup-grid-item-name {
     font-weight: normal;
 }
+.action-bar {
+    background-color: #E1E2E2;
+    padding: 10px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+}
 .combobox .autocomplete-text-field {
     position: absolute;
     width: auto;
@@ -658,7 +704,7 @@ input[type="date"].input-large {
     bottom: 0;
 }
 .combobox .text-field {
-    border: 0;
+    border: 0 !important;
 }
 .combobox .remove-btn {
     right: 26px;
@@ -1793,9 +1839,9 @@ body .ui-tooltip {
 }
 .block-container .grid,
 .block-container .match-grid {
-    margin-left: 16px;
-    margin-right: 16px;
-    margin-bottom: 16px;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-bottom: 16px;
 }
 .named-container .loader {
     position: absolute;
@@ -2008,6 +2054,7 @@ body .ui-tooltip {
     bottom: 0px;
     right: 0;
     min-height: 19px;
+    border: 0;
 }
 .autocomplete-text-field .loader {
     right: -9px;
@@ -2079,20 +2126,28 @@ body .ui-tooltip {
     float: left;
     color: black;
 }
+.group-lineup-grid .team-name {
+    max-width: 100px;
+}
 .team-name a {
     color: black;
     text-decoration: none;
 }
 .team-undefined .team-name {
     width: 96px;
-    border: 1px dashed #858586;
     border-radius: 2px;
     min-height: 17px;
+}
+.is-editing .team-undefined .team-name {
+    border: 1px dashed #858586;
 }
 .is-final .team-undefined .team-name {
     width: 132px;
 }
-.team-undefined .team-name:hover {
+.is-editing .team-undefined .team-name:hover {
+    border: 1px dashed #5f5f60;
+}
+.is-editing .team-undefined .team-name:hover {
     border: 1px dashed #5f5f60;
 }
 .team-winner .team-name {
@@ -2434,7 +2489,7 @@ body .ui-tooltip {
     background-color: rgba(125,125,0,0.15);
 }
 .finals .tournament-round-container {
-    margin-top: 35px;
+    margin-top: 25px;
 }
 .tournament-round {
     padding: 30px 10px 0 10px;
@@ -2569,9 +2624,16 @@ body .ui-tooltip {
     width: auto;
     height: auto;
     margin: 0 0 29px 0;
-    -webkit-column-break-inside: avoid;
-    -moz-column-break-inside: avoid;
-    column-break-inside: avoid;
+    -webkit-column-break-inside:avoid;
+    -moz-column-break-inside:avoid;
+    -o-column-break-inside:avoid;
+    -ms-column-break-inside:avoid;
+    column-break-inside:avoid;
+    page-break-inside: avoid;
+    
+}
+.bx-firefox.csscolumns .lineup-grid-item {
+    overflow: hidden;
 }
 .lineup-grid-item.is-dirty {
     background-color: rgba(255,255,0,0.2);
@@ -2628,6 +2690,7 @@ body .ui-tooltip {
     vertical-align: top;
     -webkit-transition-duration: 0.3s;
     -webkit-transition-property: color;
+    text-overflow: ellipsis;
 }
 .lineup-grid-item-real-name:hover {
     color: #474747;
@@ -2674,6 +2737,8 @@ body .ui-tooltip {
     position: relative;
     -webkit-transition-duration: 0.3s;
     -webkit-transition-property: background-color, box-shadow;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 .lineup-grid-item-player-row:hover {
     background-color: #eeeeee;;
@@ -2734,6 +2799,15 @@ body .ui-tooltip {
     -webkit-column-width: 428px;
     -moz-column-width: 428px;
     column-width: 428px;
+    -webkit-column-break-inside:avoid;
+    -moz-column-break-inside:avoid;
+    -o-column-break-inside:avoid;
+    -ms-column-break-inside:avoid;
+    column-break-inside:avoid;
+    page-break-inside: avoid;
+}
+.bx-firefox.csscolumns .group-lineup-grid {
+    overflow: hidden;
 }
 .csscolumns .group-lineup-grid .lineup-grid-item {
 }
@@ -2834,6 +2908,7 @@ body .ui-tooltip {
 }
 .matches-table-item {
     position: relative;
+    height: 29px;
 }
 .matches-table-item .autocomplete-text-field {
     min-height: 19px;
@@ -2896,6 +2971,7 @@ body .ui-tooltip {
 .team-standings-table-item {
     position: relative;
     background-color: white;
+    height: 26px;
 }
 .team-standings-table-item .name {
     border-right: 1px solid #dddddd;
@@ -2903,7 +2979,6 @@ body .ui-tooltip {
 .team-standings-table-item .team-name {
     width: auto;;;
     
-    max-width: 100px;
 }
 .team-standings-table-item .name a {
     color: #2a2a2a;
@@ -3056,6 +3131,8 @@ body .ui-tooltip {
 .match-filter-form .select {
     min-width: 90px;
     float: left;
+    padding-right: 18px;
+    min-height: 26px;
 }
 .match-filter-form label {
     float: left;
@@ -3215,6 +3292,8 @@ body .ui-tooltip {
 }
 .matches-table-container-header .toggle-btn {
     top: 7px;
+    width: 16px;
+    height: 12px;
 }
 .for-team .matches-table-container-header.is-target-expanded .toggle-btn {
     top: 31px;
@@ -3232,9 +3311,22 @@ body .ui-tooltip {
 .for-team .matches-table-container-header.is-target-expanded .matches-table-title {
     padding: 29px 8px;
 }
+.for-team .matches-table-container .matches-table-team2 .team-name {
+    max-width: 140px;
+    width: auto;
+}
+.for-team .matches-table-container .matches-table-team1 {
+    width: auto;
+}
+.for-team .matches-table-container .matches-table-team1 .team-name {
+    max-width: 140px;
+    float: right;
+    width: auto;
+}
 .matches-table-date {
     font-size: 10px;
     color: #838383;
+    width: 50px;
 }
 .matches-table-points {
     color: #7a7a7a;
@@ -3255,6 +3347,7 @@ body .ui-tooltip {
 .matches-table-map-type {
     color: #838383;
     font-size: 10px;
+    max-width: 100px;
 }
 .matches-table-map-type-marker {
     font-size: 13px;
@@ -3280,6 +3373,7 @@ body .ui-tooltip {
 }
 .matches-table-description {
     font-size: 11px;
+    max-width: 100px;
 }
 .matches-table-description a {
     color: #2a2a2a;
@@ -3289,7 +3383,6 @@ body .ui-tooltip {
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 230px;
-    display: inline-block;
     white-space: nowrap;
 }
 .matches-table-description a:hover {
@@ -3311,7 +3404,7 @@ body .ui-tooltip {
     max-width: 70px;
 }
 .matches-table-team2 .team-name {
-    max-width: 70px;
+    max-width: 90px;
 }
 .matches-table-team1 .remove-btn {
     left: 6px;
@@ -3396,7 +3489,7 @@ input.match-start-date {
     position: relative;
 }
 .stage-view .grid, .stage-view .match-grid {
-    margin-top: 14px;
+    padding-top: 14px;
 }
 .stage-view .i-listsTabs .add-btn {
     right: 10px;
@@ -3432,6 +3525,7 @@ input.match-start-date {
 }
 .team-standings-table .editable-label {
     display: inline-block;
+    text-align: center;
 }
 .grid-container {
     position: relative;
@@ -3442,9 +3536,11 @@ input.match-start-date {
 .team-cell {
     overflow: hidden;
     white-space: nowrap;
-    max-width: 120px;
     text-overflow: ellipsis;
     position: relative;
+}
+.group-lineup-grid .team-cell {
+    max-width: 120px;
 }
 .lineup-list-name-container {
     border-bottom: 3px solid #f35900;
@@ -3478,7 +3574,7 @@ input.match-start-date {
     z-index: 100;
 }
 .is-visualy-selected {
-    background-color: -webkit-focus-ring-color !important;
+    background-color: blue !important;
 }
 .status {
     padding-left: 21px;
@@ -3525,7 +3621,6 @@ input.match-start-date {
     background-repeat: no-repeat;
     background-position: center;
     background-size: 100%;
-    opacity: 0.3;
     display: inline-block;
 }
 .icon-lock.is-closed {

@@ -28,8 +28,8 @@ define ['cs!../core'],->
 #    editingStatus: DS.attr 'string'
 
     # Relations
+#    stage: DS.belongsTo 'App.Stage'
     round: DS.belongsTo 'App.Round'
-    stage: DS.belongsTo 'App.Stage'
     games: DS.hasMany('App.Game', {inverse: 'match'})
 
     hasPoints: (->
@@ -38,22 +38,22 @@ define ['cs!../core'],->
 
     link: DS.attr 'string'
 
-    url: Em.computed.alias 'link'
+#    url: Em.computed.alias 'link'
 
     currentStatus: (->
       status = @get 'status'
       date = @get 'date'
       entrant1_points = @get 'entrant1_points'
       entrant2_points = @get 'entrant2_points'
-      reopenInterval = 1000 * 60 * 60 * 12
+#      reopenInterval = 1000 * 60 * 60 * 12
       currentDate = new Date
       if date < currentDate
         currentStatus = 'past'
       if date < currentDate and (entrant1_points and entrant2_points) and status isnt 'closed'
         currentStatus = 'active'
-      if date > (currentDate + reopenInterval) and (entrant1_points and entrant2_points)
-        currentStatus = 'delayed'
-      if (not date or date > currentDate) or not (entrant1_points and entrant2_points)
+#      if date > (currentDate + reopenInterval) and (entrant1_points and entrant2_points)
+#        currentStatus = 'delayed'
+      if (not date or date > currentDate) and Em.isNone(entrant1_points) and Em.isNone(entrant2_points)
         currentStatus = 'future'
       currentStatus
     ).property('date', 'entrant1_points', 'entrant2_points')
@@ -80,7 +80,6 @@ define ['cs!../core'],->
     isClosed: Em.computed.not 'isOpened'
 
     isLoadedChanged: (->
-#      console.log 'match.isLoaded'
       @get('round')?.trigger 'matchLoaded', @
     ).observes('isLoaded')
 
@@ -91,7 +90,7 @@ define ['cs!../core'],->
     # Match is only valid if it has entrants.
     valid: (->
       valid = no
-      if @get('entrant1')
+      if @get('entrant1') or @get('entrant2')
         valid = yes
       valid
     ).property('entrant1', 'entrant2')

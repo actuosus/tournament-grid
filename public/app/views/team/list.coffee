@@ -40,6 +40,6 @@ define ->
         ).observes('value')
     contentView: Em.CollectionView.extend
       contentBinding: 'parentView.content'
-      itemViewClass: Em.View.extend(App.Draggable, {
+      itemViewClass: Em.View.extend({
         template: Em.Handlebars.compile '{{view.content.team.name}}'
       })

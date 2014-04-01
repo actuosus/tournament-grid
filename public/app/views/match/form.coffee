@@ -18,11 +18,8 @@ define [
     classNames: ['stage-form', 'form-vertical']
     templateName: 'matchForm'
 
-    didCreate: Em.K
-    didUpdate: Em.K
-
     createRecord: ->
-      console.debug 'Should implement match creation.'
+      console.warn 'Should implement match creation.'
 
     updateRecord: ->
       @$('.save-btn').attr('disabled', 'disabled')

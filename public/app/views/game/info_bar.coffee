@@ -28,7 +28,7 @@ define [
       tagName: 'a'
       attributeBindings: ['href', 'target']
       target: '_blank'
-      hrefBinding: 'match.link'
+      href: Em.computed.alias 'match.link'
       classNames: ['games-info-bar-label']
       isVisibleBinding: 'parentView.showInfoLabel'
       template: Em.Handlebars.compile "{{loc '_info'}}"

@@ -52,7 +52,7 @@ define [
 
       itemViewClass: App.MatchItemView.extend
         classNames: ['tournament-match']
-        classNameBindings: ['content.isFinal']
+        classNameBindings: ['content.isFinal', 'content.isPreFinal']
         childViews: ['dateView', 'infoBarView', 'contentView', 'connectorView', 'lockView', 'labelView']
         roundIndexBinding: 'parentView.parentView.contentIndex'
         roundsBinding: 'parentView.parentView.parentView.content'
@@ -72,28 +72,6 @@ define [
 
         _isEditingBinding: 'isEditable'
 
-#        mouseEnter: ->
-#          node = @get 'content'
-#          lastNode = null
-#          while node
-#            unless Em.isEqual(node, lastNode)
-#              node.set('isSelected', yes)
-#              lastNode = node
-#              node = node.get('parentNode')
-#            else
-#              break
-#
-#        mouseLeave: ->
-#          node = @get 'content'
-#          lastNode = null
-#          while node
-#            unless Em.isEqual(node, lastNode)
-#              node.set('isSelected', no)
-#              lastNode = node
-#              node = node.get('parentNode')
-#            else
-#              break
-
         didInsertElement: ->
           @_super()
           height = 45
@@ -108,14 +86,19 @@ define [
           if match.get('isThirdPlace')
             @set 'connectorView.isVisible', no
 
-          styles = {height: height * 2}
+          styles = {height: height * 2, marginTop: 0}
           bracket = match.get('round.bracket')
+
+          if match.get('isFinal') or match.get('isPrefinal')
+            styles.marginTop += 10
 
           if (match.get('itemIndex') is -1) and (match.get('round.itemIndex') is -1)
             entrantsNumber = @get('parentView.parentView.parentView.parentView.entrantsNumber')
             roundsCount = Math.log(entrantsNumber) / Math.log(2)-1
             matchesCount = Math.pow(2, roundsCount)-1
             styles.marginTop = matchesCount/2 * (height*2)
+            if match.get('isFinal') or match.get('isPreFinal')
+              styles.marginTop += 10
             @$().css styles
             return
           if roundIndex is 0

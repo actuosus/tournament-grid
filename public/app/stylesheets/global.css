@@ -9,6 +9,11 @@
     outline: #da4600 auto 4px;
 }
 
+.is-hidden {
+    display: none !important;
+    visibility: hidden;
+}
+
 .non-selectable {
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -16,7 +21,7 @@
     user-select: none;
 }
 
-textarea {
+.ember-application textarea {
     min-height: 20px;
     -webkit-appearance: none;
     border: 1px solid #c3c3c3;

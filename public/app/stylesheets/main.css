@@ -13,6 +13,7 @@
 @import "control.css";
 @import "button.css";
 @import "menu.css";
+@import "action-bar.css";
 @import "combobox.css";
 /*@import "tree.css";*/
 /*@import "../../vendor/styles/bootstrap-tooltip.css";*/
@@ -106,6 +107,8 @@
 
 .matches-table-container-header .toggle-btn {
     top: 7px;
+    width: 16px;
+    height: 12px;
 }
 
 .for-team .matches-table-container-header.is-target-expanded .toggle-btn {
@@ -129,9 +132,25 @@
     padding: 29px 8px;
 }
 
+.for-team .matches-table-container .matches-table-team2 .team-name {
+    max-width: 140px;
+    width: auto;
+}
+
+.for-team .matches-table-container .matches-table-team1 {
+    width: auto;
+}
+
+.for-team .matches-table-container .matches-table-team1 .team-name {
+    max-width: 140px;
+    float: right;
+    width: auto;
+}
+
 .matches-table-date {
     font-size: 10px;
     color: #838383;
+    width: 50px;
 }
 
 .matches-table-points {
@@ -158,6 +177,7 @@
 .matches-table-map-type {
     color: #838383;
     font-size: 10px;
+    max-width: 100px;
 }
 
 .matches-table-map-type-marker {
@@ -190,6 +210,7 @@
 
 .matches-table-description {
     font-size: 11px;
+    max-width: 100px;
 }
 
 .matches-table-description a {
@@ -200,7 +221,6 @@
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 230px;
-    display: inline-block;
     white-space: nowrap;
 }
 
@@ -228,7 +248,7 @@
 }
 
 .matches-table-team2 .team-name {
-    max-width: 70px;
+    max-width: 90px;
 }
 
 .matches-table-team1 .remove-btn {
@@ -330,7 +350,7 @@ input.match-start-date {
 }
 
 .stage-view .grid, .stage-view .match-grid {
-    margin-top: 14px;
+    padding-top: 14px;
 }
 
 .stage-view .i-listsTabs .add-btn {
@@ -374,6 +394,7 @@ input.match-start-date {
 
 .team-standings-table .editable-label {
     display: inline-block;
+    text-align: center;
 }
 
 .grid-container {
@@ -387,9 +408,12 @@ input.match-start-date {
 .team-cell {
     overflow: hidden;
     white-space: nowrap;
-    max-width: 120px;
     text-overflow: ellipsis;
     position: relative;
+}
+
+.group-lineup-grid .team-cell {
+    max-width: 120px;
 }
 
 .lineup-list-name-container {
@@ -431,7 +455,7 @@ input.match-start-date {
 }
 
 .is-visualy-selected {
-    background-color: -webkit-focus-ring-color !important;
+    background-color: blue !important;
 }
 
 .status {
@@ -490,7 +514,6 @@ input.match-start-date {
     background-repeat: no-repeat;
     background-position: center;
     background-size: 100%;
-    opacity: 0.3;
     display: inline-block;
 }
 

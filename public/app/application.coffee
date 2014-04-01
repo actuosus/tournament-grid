@@ -25,11 +25,18 @@ define [
 ], ()->
 
   $(document.body).keydown (event)->
+    if event.metaKey
+      if event.shiftKey
+        switch event.keyCode
+          when 69 # e
+            App.isAuthorized
+              success: -> App.set 'isEditingMode', not App.get('isEditingMode')
+              failure: -> console.log 'Not authorized.'
     if event.ctrlKey
       if event.shiftKey
         switch event.keyCode
-          when 65 # a
-            App.toggleConfig()
+#          when 65 # a
+#            App.toggleConfig()
           when 69 # e
 #            notificationObject =
 #              icon: null
@@ -40,7 +47,7 @@ define [
 #              notificationObject.content = 'Editing mode enabled.'
 #            notification = App.notificationsController.createNotification notificationObject
 #            notification?.show()
-#            App.set 'isEditingMode', not App.get('isEditingMode')
+#             App.set 'isEditingMode', not App.get('isEditingMode')
             App.isAuthorized
               success: -> App.set 'isEditingMode', not App.get('isEditingMode')
               failure: -> console.log 'Not authorized.'
@@ -101,7 +108,7 @@ define [
 
         Em.Object.create name:'_future_match_type'.loc(), id: 'future'
         Em.Object.create name:'_active_match_type'.loc(), id: 'active'
-        Em.Object.create name:'_delayed_match_type'.loc(), id: 'delayed'
+#        Em.Object.create name:'_delayed_match_type'.loc(), id: 'delayed'
         Em.Object.create name:'_past_match_type'.loc(), id: 'past'
       ]
 

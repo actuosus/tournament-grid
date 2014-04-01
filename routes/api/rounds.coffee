@@ -67,7 +67,7 @@ exports.update = (req, res)->
   else
     res.send 400, errors: "server error"
 
-exports.delete = (req, res)->
+exports['delete'] = (req, res)->
   if req.params?._id?
     await Round.findById req.params._id, defer err, round
     if round

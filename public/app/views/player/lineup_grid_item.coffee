@@ -98,4 +98,5 @@ define [
       title: '_remove_player'.loc()
       deleteRecord: -> @get('parentView').deleteRecord()
 
-    doubleClick: -> @toggleAsTheCaptain()
+    doubleClick: ->
+      @toggleAsTheCaptain() if App.get 'isEditingMode'

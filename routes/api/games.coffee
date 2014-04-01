@@ -53,7 +53,7 @@ exports.update = (req, res)->
   else
     res.send 400, errors: "server error"
 
-exports.delete = (req, res)->
+exports['delete'] = (req, res)->
   Game.findByIdAndRemove req.params._id, (err)->
     res.status 204 unless err
     res.send()

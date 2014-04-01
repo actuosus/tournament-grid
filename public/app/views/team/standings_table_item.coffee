@@ -63,5 +63,8 @@ define [
 
     click: (event)->
       if App.get('isEditingMode')
+        if $(event.target).hasClass 'remove-btn'
+          @deleteRecord()
+          return
         unless $(event.target).hasClass 'editable-label'
           @toggleProperty 'content.isSelected'

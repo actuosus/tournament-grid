@@ -11,6 +11,7 @@ define [
   'cs!./draggable'
   'cs!./droppable'
   'cs!./movable'
+  'cs!./sortable'
   'cs!./visualy_selectable'
 
   'cs!./match_delegate'
