@@ -5,7 +5,7 @@
  * Time: 16:47
 ###
 
-define [
+define 'cs!app/controllers/index', [
   'cs!./countries'
   'cs!./entrants'
   'cs!./players'

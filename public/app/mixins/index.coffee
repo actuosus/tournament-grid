@@ -5,7 +5,7 @@
  * Time: 17:11
 ###
 
-define [
+define 'cs!app/mixins/index', [
   'cs!./editing'
   'cs!./context_menu_support'
   'cs!./draggable'

@@ -6,6 +6,8 @@
  * Time: 02:14
  */
 
+/*globals require, requirejs */
+
 requirejs.config({
   baseUrl: '.',
   name: 'app/main',

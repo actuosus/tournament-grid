@@ -6,7 +6,7 @@
 ###
 
 
-define [
+define 'cs!app/views/index', [
   'cs!./text_field'
   'cs!./select'
   'cs!./empty'
