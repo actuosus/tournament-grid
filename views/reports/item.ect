@@ -171,7 +171,47 @@
 <!--<link rel="stylesheet" href="<%- @staticDomain %>/bundle/stylesheets/app.css" />-->
 <% end %>
 <% if @node_env is 'production': %>
-<script data-main="/bundle/app.js" src="/vendor/scripts/require.min.js"></script>
+<script src="/vendor/scripts/require.min.js"></script>
+<script type="text/javascript">
+    var CDN_SOURCE_JS = 'http://www.virtus.pro';
+    //var CDN_BITRIX_JS = 'http://www.virtus.pro';
+    var CDN_API_JS = 'http://www.virtus.pro';
+    var MAIN_SITE = 'http://www.virtus.pro';
+    requirejs.config({
+        paths: {
+            'jquery': [
+                'https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min',
+                'http://yandex.st/jquery/2.0.2/jquery.min',
+                '//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min'
+            ],
+            'jquery.cookie': [
+                'http://yandex.st/jquery/cookie/1.0/jquery.cookie.min'
+            ],
+            'jquery-ui': [
+                'http://yandex.st/jquery-ui/1.10.3/jquery-ui.min',
+                '//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min'
+            ],
+            'jquery.scrollTo': [
+                '/API/chat.io/jquery.scrollTo.min'
+            ],
+            'jquery.mousewheel': [
+                'http://yandex.st/jquery/mousewheel/3.0.6/jquery.mousewheel.min'
+            ],
+            'moment': [
+                '/vendor/scripts/moment'
+            ],
+            'socket.io': 'http://v3.virtuspro.org:33891/socket.io/socket.io'
+        },
+        shim: {
+            'jquery-ui': ['jquery'],
+            'jquery.cookie': ['jquery'],
+            'jquery.mousewheel': ['jquery'],
+            'jquery.scrollTo': ['jquery'],
+            'ember': ['jquery', 'handlebars']
+        }
+    });
+</script>
+<script src="/bundle/app.js"></script>
 <% else: %>
 <script data-main="/app.main.js" src="/vendor/scripts/require.js"></script>
 <!--<script data-main="/bundle/app.js" src="/vendor/scripts/require.js"></script>-->

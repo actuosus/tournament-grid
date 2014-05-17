@@ -5,7 +5,7 @@
  * Time: 17:09
 ###
 
-define [
+define 'cs!app/models/index', [
   'cs!./bracket'
   'cs!./country'
   'cs!./game'

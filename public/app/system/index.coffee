@@ -5,6 +5,6 @@
  * Time: 17:15
 ###
 
-define [
+define 'cs!app/system/index', [
   'cs!./menu_item'
 ]

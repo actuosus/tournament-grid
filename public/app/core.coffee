@@ -339,7 +339,7 @@ define [
 
   App.isAuthorized = (options)->
     $.ajax
-      url: "/API/reportage/auth.php"
+      url: App.config.authUrl
       type: 'GET'
       success: (data)->
         options.success() if data?.authorized

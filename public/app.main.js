@@ -64,7 +64,7 @@ requirejs.config({
     'jquery.ui.timepicker-it': '/vendor/scripts/jquery-ui-timepicker-it',
     'jquery.ui.timepicker-de': '/vendor/scripts/jquery-ui-timepicker-de',
     // 'socket.io': 'http://' + document.location.host + '/socket.io/socket.io.js'
-    'socket.io': 'http://v3.virtuspro.org:33891/socket.io/socket.io'
+    'socket.io': '/socket.io/socket.io'
   },
   shim: {
     'jquery.cookie': ['jquery'],

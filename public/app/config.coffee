@@ -7,6 +7,7 @@
 
 define ['jquery'], ->
   defaults =
+    authUrl: '/API/reportage/auth.php'
     api:
 #      host: '//virtus-pro.herokuapp.com'
 #      host: 'http://virtuspro.local:8001'

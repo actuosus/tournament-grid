@@ -5,7 +5,7 @@
  * Time: 16:45
 ###
 
-define [
+define 'cs!app/helpers/index', [
   'cs!./_loc'
   'cs!./loc'
   'cs!./highlight'
