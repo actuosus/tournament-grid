@@ -47,6 +47,9 @@ define [
     shouldShowContextMenuBinding: 'App.isEditingMode'
     contextMenuActions: ['edit', 'save', 'clear']
 
+    edit: ->
+
+
     isSingle: yes
 
     initSharedEditor: ->

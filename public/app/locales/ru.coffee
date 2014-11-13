@@ -53,6 +53,7 @@ define {
   _add_group: 'Добавить группу'
   _add_game: 'Добавить игру'
   _add_match: 'Добавить матч'
+  _clear: 'Очистить'
   _rating: 'Рейтинг'
   _exit_fullscreen: 'Выйти из полноэкранного режима'
   _enter_fullscreen: 'На весь экран'
