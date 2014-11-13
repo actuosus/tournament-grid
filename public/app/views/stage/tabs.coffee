@@ -12,7 +12,7 @@ define [
   'cs!../tournament/double_grid'
 #  'cs!../tournament/canvas_grid'
 #  'cs!../tournament/flat_grid'
-#  'cs!../tournament/other_flat_grid'
+  'cs!../tournament/other_flat_grid'
 #  'cs!../tournament/svg_grid'
   'cs!../standing_table'
   'cs!../match/grid_container'
@@ -30,10 +30,10 @@ define [
       switch stage.get 'visualType'
         when 'single', 'grid'
           stage.get('matches')
-          contentView = App.NewTournamentGridView.create
+#          contentView = App.NewTournamentGridView.create
 #          contentView = App.CanvasTournamentGridView.create
 #          contentView = App.FlatTournamentGridView.create
-#          contentView = App.OtherFlatTournamentGridView.create
+          contentView = App.OtherFlatTournamentGridView.create
 #          contentView = App.SVGTournamentGridView.create
             container: @get 'container'
             stage: stage

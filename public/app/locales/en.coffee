@@ -49,6 +49,7 @@ define {
   _add_round: 'Add round'
   _add_group: 'Add group'
   _add_match: 'Add match'
+  _clear: 'Clear'
   _the_teams: 'The teams'
   _filter: 'Filter'
   _captain: 'Captain'

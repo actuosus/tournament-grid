@@ -312,11 +312,6 @@ define [
         namespace: 'api'
     remote: config
 
-#  if window.grid.
-#  $.ajaxSetup
-#    username: 'virtus'
-#    password: 'snegi'
-
   App.currentConfig = 'local'
 
   App.toggleConfig = ->
@@ -332,14 +327,13 @@ define [
         App.store.adapter.url = App.config.remote.api.host
         App.store.adapter.namespace = App.config.remote.api.namespace
 
-
   # Localization configuration
   App.languages = Em.ArrayController.create content: config.languages
   App.set 'currentLanguage', lang
 
   App.isAuthorized = (options)->
     $.ajax
-      url: App.config.authUrl
+      url: App.config.remote.authUrl
       type: 'GET'
       success: (data)->
         options.success() if data?.authorized
