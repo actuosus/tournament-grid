@@ -179,3 +179,7 @@
     font-size: 16px;
     margin-bottom: 10px;
 }
+
+.flat-tournament-bracket-name {
+    position: absolute;
+}
