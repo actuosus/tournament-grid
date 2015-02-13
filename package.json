@@ -26,7 +26,7 @@
   ],
   "dependencies": {
     "lodash": "latest",
-    "express": "latest",
+    "express": "3.x",
     "ect": "latest",
     "iced-coffee-script": "latest",
     "mongoose": "latest",
