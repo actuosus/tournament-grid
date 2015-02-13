@@ -42,7 +42,7 @@ define ->
       @popup = App.PopupView.create target: @
       @picker = Em.View.create
         willInsertElement: ->
-          $el = @$()
+#          $el = @$()
           @$().datetimepicker
             dateFormat: 'dd.mm.yy'
             timeFormat: 'HH:mm'
