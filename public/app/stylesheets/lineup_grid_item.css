@@ -17,9 +17,9 @@
     border-radius: 4px;
 }
 
-.lineup-grid-item:hover {
-    background-color: rgba(0,0,0,0.05);
-}
+/*.lineup-grid-item:hover {*/
+    /*background-color: rgba(0,0,0,0.05);*/
+/*}*/
 
 .csscolumns .lineup-grid {
     -webkit-column-gap: 29px;
@@ -260,7 +260,22 @@
     overflow: hidden;
 }
 
-.csscolumns .group-lineup-grid .lineup-grid-item {
+.flexbox .lineup-grid-item,
+.bx-flexwrap .lineup-grid-item {
+    flex-basis: 258px;
+    margin: 0;
+}
+
+.flexbox .lineup-grid,
+.bx-flexwrap .lineup-grid {
+    display: flex;
+    max-width: 925px;
+    flex-flow: row wrap;
+}
+
+.flexbox .group-lineup-grid .lineup-grid-item,
+.bx-flexwrap .group-lineup-grid .lineup-grid-item {
+    flex-basis: 426px;
 }
 
 .lineup-grid-item-name-container .autocomplete-text-field {
