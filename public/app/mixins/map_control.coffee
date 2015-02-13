@@ -92,6 +92,8 @@ define ['cs!../core'],->
         @set('scale', scale)
 
     mouseDown: (event)->
+      if event.button isnt 0
+        return
       $(document.body).bind('mousemove.grid', @documentMouseMove.bind(@));
       $(document.body).bind('mouseup.grid', @mouseUp.bind(@));
       $(document.body).addClass('non-selectable')
