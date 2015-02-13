@@ -106,4 +106,6 @@ define {
   _toggle_as_the_captain: 'Сменить капитанство'
   _third_place_playoff: 'Матч за третье место'
   _save_all_results: 'Сохранить все результаты'
+  _winner_bracket: 'Winner bracket'
+  _loser_bracket: 'Loser bracket'
 }
