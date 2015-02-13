@@ -5,12 +5,11 @@
       <paths name="virtus.pro">
         <serverdata>
           <mappings>
-            <mapping deploy="/home/v3virtuspro/v3.virtuspro.org/html" local="$PROJECT_DIR$" web="/" />
-            <mapping deploy="/home/v3virtuspro/v3.virtuspro.org/html/bitrix/components/VIRTUS.PRO/reports.app/templates/.default/bundle" local="$PROJECT_DIR$/public/bundle" web="/" />
+            <mapping deploy="/v3.virtuspro.org/html" local="$PROJECT_DIR$" web="/" />
+            <mapping deploy="/v3.virtuspro.org/html/bitrix/components/VIRTUS.PRO/reports.app/templates/.default/bundle" local="$PROJECT_DIR$/public/bundle" web="/" />
           </mappings>
         </serverdata>
       </paths>
     </serverData>
   </component>
 </project>
-

@@ -10,7 +10,7 @@
     <file url="file://$PROJECT_DIR$/lib" libraries="{Node.js Globals}" />
     <file url="file://$PROJECT_DIR$/locales" libraries="{Node.js Globals}" />
     <file url="file://$PROJECT_DIR$/models" libraries="{Node.js Globals}" />
-    <file url="file://$PROJECT_DIR$/public" libraries="{Ember, HTML, HTML5 / EcmaScript 5, jQuery-1.9.1}" />
+    <file url="file://$PROJECT_DIR$/public" libraries="{Ember, HTML, HTML5 / EcmaScript 5}" />
     <file url="file://$PROJECT_DIR$/routes" libraries="{Node.js Globals}" />
     <file url="file://$PROJECT_DIR$/server.js" libraries="{Node.js Globals}" />
     <file url="file://$PROJECT_DIR$/test" libraries="{Node.js Globals}" />
@@ -18,4 +18,3 @@
     <file url="PROJECT" libraries="{Ember}" />
   </component>
 </project>
-
