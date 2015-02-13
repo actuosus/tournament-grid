@@ -105,4 +105,6 @@ define {
   _toggle_as_the_captain: 'Toggle as a captain'
   _third_place_playoff: 'Third place playoff'
   _save_all_results: 'Save all results'
+  _winner_bracket: 'Winner bracket'
+  _loser_bracket: 'Loser bracket'
 }
