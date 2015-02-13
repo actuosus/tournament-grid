@@ -49,8 +49,18 @@ define ->
             showAnim: 'show'
             showButtonPanel: no
             onClose: -> dateView.popup.hide()
-            onSelect: -> dateView.set 'content', $el.datetimepicker 'getDate'
+#            onSelect: -> dateView.set 'content', $el.datetimepicker 'getDate'
           @$().datetimepicker 'setDate', date if date
         willDestroyElement: -> @$().datetimepicker 'destroy'
+      @okButton = Em.View.create
+        tagName: 'button'
+        classNames: ['btn', 'btn-primary']
+        attributeBindings: ['title']
+        title: '_ok'.loc()
+        template: Em.Handlebars.compile '{{ loc "_ok" }}'
+        click: ->
+          dateView.set 'content', dateView.picker.$().datetimepicker 'getDate'
+          dateView.popup.hide()
       @popup.pushObject @picker
+      @popup.pushObject @okButton
       @popup.appendTo App.get 'rootElement'
