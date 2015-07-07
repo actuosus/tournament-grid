@@ -18,4 +18,4 @@ define ->
       str = Em.get window, property
     else
       str = this.get property
-    new Handlebars.SafeString (str || '').loc('')
+    new Em.Handlebars.SafeString (str || '').loc('')

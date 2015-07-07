@@ -90,13 +90,19 @@ define [
         @set 'parentView.value', null
       ).observes 'value'
 
+      focus: ->
+        console.log 'Just focus'
+
       focusIn: ->
+        console.log 'Just focusIn'
         @set 'parentView.hasFocus', yes
 
       focusOut: (event)->
+        console.log 'Just focusOut'
         setTimeout (=> @set 'parentView.hasFocus', no), 150
 
       keyDown: (event)->
+        console.log 'keydown'
         switch event.keyCode
           when 40 # down
             event.preventDefault()
@@ -108,6 +114,7 @@ define [
             @get('parentView').selectPrevious()
 
       keyUp: (event)->
+        console.log 'keyup'
         parentView = @get 'parentView'
 
         switch event.keyCode
@@ -174,11 +181,11 @@ define [
       classNames: ['add-btn', 'non-selectable']
       attributeBindings: ['title']
       title: '_add_entrant'.loc()
-      template: Em.Handlebars.compile '+'
+      render: (_)-> _.push '+'
       click: -> @get('parentView').showAddForm(@)
 
     showAddForm: (target)->
-      popup = App.PopupView.create target: target
+      popup = App.PopupView.create target: target, parentView: @, container: @container
       formView = @get 'controller.formView'
       form = formView.create
         value: @get('textFieldView').$().val()
@@ -197,7 +204,7 @@ define [
       tagName: 'button'
       classNames: ['cancel-btn', 'non-selectable']
       isVisible: no
-      template: Em.Handlebars.compile '✖'
+      render: (_)-> _.push '✖'
 
     statusIconView: Em.View.extend
       tagName: 'i'

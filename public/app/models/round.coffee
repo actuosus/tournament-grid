@@ -6,32 +6,33 @@
  * Time: 14:25
 ###
 
-define ['cs!../core'],->
+define ['cs!../core'], ->
   App.Round = DS.Model.extend
-    primaryKey: '_id'
     sortIndex: DS.attr 'number'
 
-    # TODO History Ember.History,
+  # TODO History Ember.History,
 #    _trackProperties: ['name']
 
     init: ->
       @_super()
-      @on 'matchLoaded', (match)-> @get('stage')?.trigger 'matchLoaded', match
+      @on 'matchLoaded', (match)->
+        @get('stage')?.trigger 'matchLoaded', match
 
     title: DS.attr('string', {loc: {keyPath: '_title', defaultLanguage: 'ru'}})
 
-    # Relations
-    matches: DS.hasMany 'App.Match'
-    resultSets: DS.hasMany('App.ResultSet', {inverse: 'round'})
+  # Relations
+    matches: DS.hasMany 'match'
+    resultSets: DS.hasMany('resultSet', {inverse: 'round', async: yes})
 
-    stage: DS.belongsTo('App.Stage', {inverse: 'rounds'})
-    bracket: DS.belongsTo('App.Bracket', {inverse: 'rounds'})
+    stage: DS.belongsTo('stage', {inverse: 'rounds'})
+#    bracket: DS.belongsTo('bracket', {inverse: 'rounds'})
+#     bracket: DS.attr 'object'
 
     bracketName: DS.attr 'string'
 
-    teamRefs: DS.hasMany 'App.TeamRef'
+    teamRefs: DS.hasMany 'teamRef'
 
-    # TODO Make localization
+  # TODO Make localization
 #    _title: DS.attr('object')
 #    __title: (->
 #      nameHash = @get '_name'
@@ -46,9 +47,13 @@ define ['cs!../core'],->
 
     parentReference: 'stage'
     parent: (-> @get @get 'parentReference').property('stage')
-    children: (-> @get 'matches').property('matches')
+    children: (->
+      @get 'matches'
+    ).property('matches')
 
-    treeItemChildren: (-> @get 'matches').property('matches')
+    treeItemChildren: (->
+      @get 'matches'
+    ).property('matches')
 
     getDescendant: (child, idx)-> child.get('children').objectAt idx if child
 
@@ -78,4 +83,4 @@ define ['cs!../core'],->
       entrants.uniq()
     ).property('matches.@each.isLoaded')
 
-  App.Round.toString = -> 'Round'
+#  App.Round.toString = -> 'Round'

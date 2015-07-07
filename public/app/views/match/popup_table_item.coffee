@@ -6,11 +6,11 @@
 ###
 
 define [
-  'text!../../templates/match/popup_table_item.hbs'
+  'ehbs!match/popup_table_item'
 ], (template)->
-  Em.TEMPLATES.matchesPopupTableItem = Em.Handlebars.compile template
+#  Em.TEMPLATES.matchesPopupTableItem = Em.Handlebars.compile template
 
   App.MatchPopupTableItemView = Em.View.extend
     tagName: 'tr'
     classNames: ['matches-table-item', 'popup-table-item']
-    templateName: 'matchesPopupTableItem'
+    templateName: 'match/popup_table_item'

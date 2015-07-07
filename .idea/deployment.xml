@@ -2,6 +2,14 @@
 <project version="4">
   <component name="PublishConfigData">
     <serverData>
+      <paths name="develop.virtus.pro">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/" local="$PROJECT_DIR$" web="/" />
+            <mapping deploy="/bitrix/components/VIRTUS.PRO/reports.app/templates/.default/bundle" local="$PROJECT_DIR$/public/bundle" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
       <paths name="virtus.pro">
         <serverdata>
           <mappings>

@@ -20,7 +20,7 @@ define [
 
       stepUpButtonView: Em.View.extend
         classNames: ['step-up', 'non-selectable']
-        template: Em.Handlebars.compile '▴'
+        render: (_)-> _.push '▴'
 
         interval: null
 
@@ -40,7 +40,7 @@ define [
 
       stepDownButtonView: Em.View.extend
         classNames: ['step-down', 'non-selectable']
-        template: Em.Handlebars.compile '▾'
+        render: (_)-> _.push '▾'
 
         mouseDown: ->
           @get('parentView.parentView').stepDown()

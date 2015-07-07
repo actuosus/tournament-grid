@@ -6,13 +6,13 @@
  * Time: 07:28
 ###
 
-define ['cs!../core'],->
+define ['cs!../core'], ->
   App.Country = DS.Model.extend
-    primaryKey: '_id'
+#    primaryKey: '_id'
 
     name: DS.attr('string', {loc: {keyPath: '_name', defaultLanguage: 'ru'}})
 
-    # TODO Resolve localization.
+  # TODO Resolve localization.
 #    __name: (->
 #      nameHash = @get '_name'
 #      currentLanguage = App.get('currentLanguage')
@@ -31,9 +31,9 @@ define ['cs!../core'],->
 
     code: DS.attr 'string'
 
-    flagClassName: Em.computed -> 'country-flag-icon-%@'.fmt @get 'code'
+    flagClassName: Em.computed -> 'country-flag-icon-%@ b-flag_%@'.fmt(@get('code'), @get('code'))
     flagURL: Em.computed -> '/vendor/images/famfamfam_flag_icons/png/%@.png'.fmt @get 'code'
 
-#    adapter: 'DS.FixtureAdapter'
+  #    adapter: 'DS.FixtureAdapter'
 
   App.Country.toString = -> 'Country'

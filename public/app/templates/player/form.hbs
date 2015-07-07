@@ -3,7 +3,7 @@
 </div>
 
 <div class="control-row">
-    <input type="text" name="nickname" class="nickname" placeholder="Nickname" title="The nickname is required." {{bindAttr value="view.nickname"}} required="required"/>
+    <input type="text" name="nickname" class="nickname" placeholder="{{loc '_nickname'}}" title="The nickname is required." {{bind-attr value="view.nickname"}} required="required"/>
 </div>
 
 {{#if view.shouldShowRaceSelector}}
@@ -13,14 +13,14 @@
 {{/if}}
 
 <div class="control-row">
-    <input type="text" name="first-name" class="first-name" size="10" placeholder="First name" {{bindAttr value="view.firstName"}} required="required" title="The first name is required."/>
-    <!--<input type="text" name="middle-name" class="middle-name" size="10" placeholder="Middle name" {{bindAttr value="view.middleName"}} />-->
-    <input type="text" name="last-name" class="last-name" size="10" placeholder="Last name" {{bindAttr value="view.lastName"}} required="required" title="The last name is required."/>
+    <input type="text" name="first-name" class="first-name" size="10" placeholder="{{loc '_first_name'}}" {{bind-attr value="view.firstName"}} required="required" title="The first name is required."/>
+    <!--<input type="text" name="middle-name" class="middle-name" size="10" placeholder="{{loc '_middle_name'}}" {{bind-attr value="view.middleName"}} />-->
+    <input type="text" name="last-name" class="last-name" size="10" placeholder="{{loc '_last_name'}}" {{bind-attr value="view.lastName"}} required="required" title="The last name is required."/>
 </div>
 
 {{#if view.canBeCaptain}}
 <div class="control-row">
-    <label>
+    <label class="non-selectable">
         {{view App.CheckboxView checkedBinding="view.isCaptain"}}
         {{loc '_captain'}}
     </label>

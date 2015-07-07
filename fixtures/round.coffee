@@ -36,6 +36,7 @@ module.exports.Round = [
   _id: '51142b464242d3110c000002'
   title: 'Очень много всех',
   matches: ['51142bdc323f4b360c000002', '51142bdc323f4b360c000003', '51142bdc323f4b360c000004', '51142bdc323f4b360c000005', '51142bdc323f4b360c000006', '51142bdc323f4b360c000007', '51142bdc323f4b360c000008']
+  result_sets: ['51c064df415720ea14000022', '51c064df415720ea14000023', '51c064df415720ea14000024']
 ,
   _id: '5114472b6da8bd2910000002'
   title: 'Группа A'
@@ -45,7 +46,7 @@ module.exports.Round = [
     de: 'Gruppe A'
   stage_id: '51121246b54802daae000009'
   matches: ['51142bdc323f4b360c000007', '51142bdc323f4b360c000008', '51142bdc323f4b360c00000f']
-  result_sets: ['51c064df415720ea14000020']
+  result_sets: ['51c064df415720ea14000020', '51c064df415720ea14000021']
 ,
   _id: '5114472b6da8bd2910000003'
   title: 'Группа B'
@@ -101,4 +102,8 @@ module.exports.Round = [
     de: 'Spieler'
   stage_id: '51121246b54802daae00000f'
   matches: ['51142bdc323f4b360c000009']
+,
+  _id: '51142b464242d3110c000025'
+  title: 'Очень много всех',
+  matches: ['51142bdc323f4b360c000013', '51142bdc323f4b360c000014']
 ]

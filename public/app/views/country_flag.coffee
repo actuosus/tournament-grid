@@ -10,8 +10,8 @@ define ->
     tagName: 'img'
     classNames: ['country-flag-icon', 'team-country-flag-icon', 'b-flag']
     classNameBindings: ['countryFlagClassName', 'hasFlag']
-    attributeBindings: ['title']
-    title: Em.computed.alias 'content.name'
+    # attributeBindings: ['title']
+    # title: Em.computed.alias 'content.name'
     hasFlag: Em.computed.notEmpty 'content.code'
     countryFlagClassName: (->
 #      "country-flag-icon-#{@get 'content.code'}"

@@ -28,4 +28,9 @@ ResultSetSchema = new Schema
   results: [type: ObjectId, ref: 'Result']
 #  report_id: type: ObjectId, ref: 'Report'
 
+ResultSetSchema.virtual('id').get -> @_id.toHexString()
+ResultSetSchema.virtual('type').get -> 'team'
+ResultSetSchema.virtual('entrantType').get -> 'teamRef'
+ResultSetSchema.set 'toJSON', virtuals: yes
+
 module.exports = ResultSetSchema

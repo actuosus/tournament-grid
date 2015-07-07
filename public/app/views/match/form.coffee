@@ -6,17 +6,17 @@
 ###
 
 define [
-  'text!../../templates/match/form.hbs'
+  'ehbs!match/form'
   'cs!../../core'
   'cs!../form'
 
   'cs!../multilingual_text_field'
   'cs!../multilingual_text_area'
 ], (template)->
-  Em.TEMPLATES.matchForm = Em.Handlebars.compile template
+#  Em.TEMPLATES.matchForm = Em.Handlebars.compile template
   App.MatchForm = App.FormView.extend
     classNames: ['stage-form', 'form-vertical']
-    templateName: 'matchForm'
+    templateName: 'match/form'
 
     createRecord: ->
       console.warn 'Should implement match creation.'
@@ -31,7 +31,8 @@ define [
 #      content.set 'map_type', @get 'map_type'
 #      content.set 'description', @get 'description'
 #      transaction.commit()
-      content.get('store').commit()
+      content.save()
+      content.get('store').flushPendingSave()
 
     cancel: ->
       @get('content')?.rollback()

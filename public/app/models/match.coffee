@@ -6,9 +6,9 @@
  * Time: 07:29
 ###
 
-define ['cs!../core'],->
+define ['cs!../core'], ->
   App.Match = DS.Model.extend
-    primaryKey: '_id'
+#    primaryKey: '_id'
 
     title: DS.attr 'string'
     description: DS.attr 'string'
@@ -17,8 +17,8 @@ define ['cs!../core'],->
     status: DS.attr 'string', {defaultValue: 'opened'}
     type: DS.attr 'string'
     sortIndex: DS.attr 'number'
-    entrant1: DS.belongsTo('App.Entrant',{polymorphic: yes})
-    entrant2: DS.belongsTo('App.Entrant',{polymorphic: yes})
+    entrant1: DS.belongsTo('entrant', {polymorphic: yes, async: yes})
+    entrant2: DS.belongsTo('entrant', {polymorphic: yes, async: yes})
     entrant1_points: DS.attr 'number'
     entrant2_points: DS.attr 'number'
 
@@ -27,10 +27,10 @@ define ['cs!../core'],->
 
 #    editingStatus: DS.attr 'string'
 
-    # Relations
+  # Relations
 #    stage: DS.belongsTo 'App.Stage'
-    round: DS.belongsTo 'App.Round'
-    games: DS.hasMany('App.Game', {inverse: 'match'})
+    round: DS.belongsTo 'round'
+    games: DS.hasMany('game', {inverse: 'match', async: yes})
 
     hasPoints: (->
       not Em.isEmpty(@get('entrant1_points')) and not Em.isEmpty(@get('entrant2_points'))
@@ -45,14 +45,14 @@ define ['cs!../core'],->
       date = @get 'date'
       entrant1_points = @get 'entrant1_points'
       entrant2_points = @get 'entrant2_points'
-#      reopenInterval = 1000 * 60 * 60 * 12
+      #      reopenInterval = 1000 * 60 * 60 * 12
       currentDate = new Date
       if date < currentDate
         currentStatus = 'past'
       if date < currentDate and (entrant1_points and entrant2_points) and status isnt 'closed'
         currentStatus = 'active'
-#      if date > (currentDate + reopenInterval) and (entrant1_points and entrant2_points)
-#        currentStatus = 'delayed'
+      #      if date > (currentDate + reopenInterval) and (entrant1_points and entrant2_points)
+      #        currentStatus = 'delayed'
       if (not date or date > currentDate) and Em.isNone(entrant1_points) and Em.isNone(entrant2_points)
         currentStatus = 'future'
       currentStatus
@@ -87,7 +87,7 @@ define ['cs!../core'],->
       new Date > @get 'date'
     ).property('date')
 
-    # Match is only valid if it has entrants.
+  # Match is only valid if it has entrants.
     valid: (->
       valid = no
       if @get('entrant1') or @get('entrant2')
@@ -129,7 +129,7 @@ define ['cs!../core'],->
       return winner
     ).property 'entrants', 'entrant1_points', 'entrant2_points'
 
-    # TODO Kind of hacky, should refine.
+  # TODO Kind of hacky, should refine.
     firstIsAWinner: (-> Em.isEqual(@get('entrant1'), @get('winner'))).property('winner')
     firstIsALoser: (-> Em.isEqual(@get('entrant1'), @get('loser'))).property('loser')
 
@@ -146,7 +146,7 @@ define ['cs!../core'],->
           round = @get 'round'
           roundIndex = parent.get('rounds').indexOf(round)
           matchIndex = round.get('matches').indexOf(@)
-          parentNodePath = "#{roundIndex+1}.#{Math.floor(matchIndex/2)}"
+          parentNodePath = "#{roundIndex + 1}.#{Math.floor(matchIndex / 2)}"
           @set 'parentNodePath', parentNodePath
           return parent.getByPath(parentNodePath)
     ).property('parentNodePath').volatile()
@@ -163,7 +163,7 @@ define ['cs!../core'],->
           roundIndex = parent.get('rounds').indexOf(round)
           roundsCount = parent.get('rounds.length')
           matchIndex = round.get('matches').indexOf(@)
-          leftPath = "#{roundsCount-roundIndex-1}.#{matchIndex*2}"
+          leftPath = "#{roundsCount - roundIndex - 1}.#{matchIndex * 2}"
           @set 'leftPath', leftPath
           return parent.getByPath(leftPath)
     ).property('leftPath')
@@ -179,7 +179,7 @@ define ['cs!../core'],->
           roundIndex = parent.get('rounds').indexOf(round)
           roundsCount = parent.get('rounds.length')
           matchIndex = round.get('matches').indexOf(@)
-          rigthPath = "#{roundsCount-roundIndex-1}.#{matchIndex+1}"
+          rigthPath = "#{roundsCount - roundIndex - 1}.#{matchIndex + 1}"
           @set 'rigthPath', rigthPath
           return parent.getByPath(rigthPath)
     ).property('rightPath')

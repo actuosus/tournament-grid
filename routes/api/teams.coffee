@@ -34,6 +34,7 @@ exports.list = (req, res)->
       query.select selection
     else
       query.select req.query.select
+  query.populate('players')
   query.paginate {
     page: req.query.page
     perPage: 10
@@ -42,14 +43,16 @@ exports.list = (req, res)->
     if docs.pagination
       firstPage = (docs.pagination.pages.filter (_)-> _.isFirst)?[0]
       lastPage = (docs.pagination.pages.filter (_)-> _.isLast)?[0]
-      if req.query.page > lastPage.page or firstPage.page > req.query.page
+      if lastPage && req.query.page > lastPage.page
+        res.send 404
+      if firstPage && firstPage.page > req.query.page
         res.send 404
       data.pageCount = lastPage?.page
     res.send data
 
 
 exports.item = (req, res)->
-  Team.findById req.params._id, (err, doc)->
+  Team.where(_id: req.params._id).populate('players').findOne().exec (err, doc)->
     if doc
       res.send team: doc
     else

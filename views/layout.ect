@@ -18,8 +18,8 @@
     <meta property="og:description" content="Virtus.Pro Report Visualization Test Project"/>
 
     <link rel="stylesheet" href="<%- @staticDomain %>/agamapro-virtus.pro-ebb4d51390f8/css/style.css" media="screen,projection"/>
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700,300italic|Open+Sans:400,700,400italic,700italic&subset=latin,cyrillic'
-          rel='stylesheet' type='text/css'>
+    <!--<link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700,300italic|Open+Sans:400,700,400italic,700italic&subset=latin,cyrillic'-->
+          <!--rel='stylesheet' type='text/css'>-->
 
     <link rel="shortcut icon" href="<%- @staticDomain %>/favicon.ico">
     <link rel="apple-touch-icon" href="<%- @staticDomain %>/images/apple-touch-icon.png">
@@ -35,6 +35,8 @@
     <!--[if lte IE 7]>
     <link rel="stylesheet" href="css/ie7.css" media="screen,projection"/><![endif]-->
     <!-- <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" /> -->
+
+    <script src="//localhost:35729/livereload.js"></script>
 </head>
 <body>
 
@@ -71,7 +73,7 @@
             <% if @user.gravatar : %>
                 <img class="userAvatar" src="<%- @user.gravatar %>" width="23" height="23" alt="<%- @user.username %>"/>
             <% end %>
-            <a class="personal" href="" title=""><%- @__ 'My account' %></a> |
+            <a class="personal" href="/users/<%- @user.id %>" title=""><%- @__ 'My account' %></a> |
             <a class="quit" href="/logout" title=""><%- @__ 'Logout' %></a>
             <% end %>
 
@@ -99,7 +101,7 @@
 <nav>
     <ul class="b-nav">
         <li class="b-nav__item"><a href="" title="" class="link active"><%- @__ 'Team' %></a></li>
-        <li class="b-nav__item"><a href="" title="" class="link"><%- @__ 'Matches' %></a></li>
+        <li class="b-nav__item"><a href="/matches" title="" class="link"><%- @__ 'Matches' %></a></li>
         <li class="b-nav__item"><a href="" title="" class="link"><%- @__ 'About' %></a></li>
         <li class="b-nav__item"><a href="" title="" class="link"><%- @__ 'Partners' %></a></li>
         <li class="b-nav__item benq"><a href="" title="" class="link"></a></li>
@@ -222,7 +224,7 @@
 
     <nav class="b-footer__nav">
         <a href="" title=""><%- @__ 'team' %></a>
-        <a href="" title=""><%- @__ 'matches' %></a>
+        <a href="/matches" title=""><%- @__ 'matches' %></a>
         <a href="" title=""><%- @__ 'about' %></a>
         <a href="" title=""><%- @__ 'partners' %></a>
     </nav>

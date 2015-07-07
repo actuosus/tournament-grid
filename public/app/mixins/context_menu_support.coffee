@@ -12,13 +12,15 @@ define ->
       @createMenuItems()
     ).observes('contextMenuActions')
 
-    createMenuItems: ->
+    createMenuItems: (target)->
       contextMenuActions = @get 'contextMenuActions'
       if contextMenuActions
         contextMenuItems = []
         contextMenuActions.forEach (actionItem)->
           [action, title] = actionItem.split ':'
           title = action unless title
+          target._actions ?= {}
+          target._actions[action] = target[action]
           contextMenuItems.pushObject App.MenuItem.create
             action: action
             title: "_#{title.decamelize()}".loc()
@@ -36,10 +38,11 @@ define ->
       event.preventDefault()
       event.stopPropagation()
       contextMenuActions = @get 'contextMenuActions'
+      contextMenuTarget = @get('contextMenuTarget') or @
       if contextMenuActions
-        @createMenuItems()
+        @createMenuItems(contextMenuTarget)
       @contextMenuView = App.MenuView.create
         sender: event
         content: @get 'contextMenuItems'
-        target: @get('contextMenuTarget') or @
+        target: contextMenuTarget
       @contextMenuView.appendTo App.get 'rootElement'

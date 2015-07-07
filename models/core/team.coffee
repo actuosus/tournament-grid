@@ -10,6 +10,7 @@ mongoose = require 'mongoose'
 socketNotifyPlugin = require '../../lib/mongoose'
 Schema = mongoose.Schema
 ObjectId = Schema.ObjectId
+deepPopulate = require('mongoose-deep-populate')
 
 TeamSchema = new Schema
   name: type: String, required: yes
@@ -27,5 +28,12 @@ TeamSchema = new Schema
   site: type: String
 
 TeamSchema.plugin socketNotifyPlugin
+TeamSchema.plugin deepPopulate
+
+TeamSchema.virtual('id').get -> @_id.toHexString()
+TeamSchema.virtual('type').get -> 'team'
+TeamSchema.set 'toJSON', virtuals: yes
+
+
 
 module.exports = TeamSchema

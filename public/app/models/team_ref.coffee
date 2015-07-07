@@ -5,28 +5,20 @@
  * Time: 11:01
 ###
 
-define ['cs!../core', 'cs!./entrant'],->
+define ['cs!../core', 'cs!./entrant'], ->
   App.TeamRef = App.Entrant.extend
-    primaryKey: '_id'
+    link: Em.computed.alias 'team.link'
 
-#    link: Em.computed.alias 'team.link'
+  # Relations
+    team: DS.belongsTo('team', {serialize: 'records', embedded: 'always'})
+    report: DS.belongsTo('report', {inverse: 'teamRefs'})
+    round: DS.belongsTo('round', {inverse: 'teamRefs'})
+#    match: DS.belongsTo('match', {inverse: 'teamRefs'})
+    captain: DS.belongsTo 'player'
 
-    # Relations
-    team: DS.belongsTo 'App.Team'
-    report: DS.belongsTo('App.Report', {inverse: 'teamRefs'})
-    round: DS.belongsTo('App.Round', {inverse: 'teamRefs'})
-    match: DS.belongsTo('App.Match', {inverse: 'teamRefs'})
-    captain: DS.belongsTo 'App.Player'
+    players: DS.hasMany('player', {inverse: 'teamRef', embedded: 'always'})
 
     teamRef: (-> @).property()
-
-    players: DS.hasMany('App.Player', {inverse: 'teamRef'})
-
     hasCaptain: (-> @get 'captain' ).property('players.@each.isCaptain')
-#
-#    _becameDirty: (->
-#      if @get 'isDirty'
-#        debugger
-#    ).observes('isDirty')
 
   App.TeamRef.toString = -> 'TeamRef'

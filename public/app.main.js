@@ -16,7 +16,8 @@ requirejs.config({
     'jquery': [
       //      'http://yandex.st/jquery/2.0.0/jquery.min',
       //      '//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min',
-      '/vendor/scripts/jquery'
+      //'/vendor/scripts/jquery'
+      '/vendor/scripts/jquery/dist/jquery'
     ],
     'jquery.mousewheel': [
       //      'http://yandex.st/jquery/mousewheel/3.0.6/jquery.mousewheel.min',
@@ -43,9 +44,16 @@ requirejs.config({
     'transit': '/vendor/scripts/jquery.transit.min',
     'handlebars': '/vendor/scripts/handlebars-1.0.0',
     'ember': [
-      '/vendor/scripts/ember-1.0.0-rc.6'
+      window.DEBUG ? '/vendor/scripts/ember/ember.debug' : '/vendor/scripts/ember/ember.prod'
+      //'/vendor/scripts/ember-1.0.0-rc.6'
     ],
-    'ember-data': '/vendor/scripts/ember-data.r13',
+    'ember-template-compiler': [
+      '/vendor/scripts/ember/ember-template-compiler'
+    ],
+    'ember-data': [
+      //'/vendor/scripts/ember-data.r13'
+      '/vendor/scripts/ember-data/ember-data'
+    ],
     'ember-history': '/vendor/scripts/ember-history',
     //    'ember-table': '/vendor/scripts/ember-table',
     'modernizr.columns': '/vendor/scripts/modernizr/columns',
@@ -64,7 +72,9 @@ requirejs.config({
     'jquery.ui.timepicker-it': '/vendor/scripts/jquery-ui-timepicker-it',
     'jquery.ui.timepicker-de': '/vendor/scripts/jquery-ui-timepicker-de',
     // 'socket.io': 'http://' + document.location.host + '/socket.io/socket.io.js'
-    'socket.io': '/socket.io/socket.io'
+    'socket.io': '/socket.io/socket.io',
+
+    "ehbs" : "/vendor/scripts/requirejs-ember-handlebars/ehbs"
   },
   shim: {
     'jquery.cookie': ['jquery'],
@@ -84,25 +94,17 @@ requirejs.config({
     },
 
     'ember': {
-      deps: ['jquery', 'handlebars'],
-      exports: 'Ember'//,
-//      init: function(jQuery, Handlebars) {
-//        'use strict';
-//        if ('undefined' === typeof Ember) {
-//          if ('undefined' !== typeof this.Ember) {
-//            return this.Ember;
-//          }
-//          if ('undefined' !== typeof window) {
-//            return window.Ember;
-//          }
-//        } else {
-//          return Ember;
-//        }
-//      }
+      deps: ['jquery'],
+      exports: 'Ember'
     },
     'ember-data': ['ember'],
     'ember-history': ['ember'],
     'transit': ['jquery']
+  },
+  ehbs : {
+    extension : "hbs",                 // default : "hbs"
+    templatePath : "app/templates/",    // default : ""
+    ember : "ember"                     // default : "Ember"
   }
 });
 
@@ -141,4 +143,4 @@ requirejs.config({
 //  };
 //}
 
-require(['app/main']);
+require(['ember-template-compiler', 'app/main']);

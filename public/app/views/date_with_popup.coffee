@@ -9,7 +9,6 @@ define ->
   App.DateWithPopupView = Em.View.extend
     tagName: 'span'
     classNames: ['date-with-popup']
-    template: Em.Handlebars.compile '{{view.value}}'
     attributeBindings: ['title']
 
     dateFormat: ''
@@ -29,17 +28,30 @@ define ->
 
     value: (->
       date = @get 'content'
+      format = @get 'format'
       if date and moment(date).isValid()
-        moment(date).format @get 'format'
+        if format.indexOf(' ') isnt -1
+          splits = format.split(' ')
+          value = '<span class="date">'
+          value += moment(date).format splits[0]
+          value += '</span> '
+          value += '<span class="time">'
+          value += moment(date).format splits[1]
+          value += '</span>'
+        else
+          return moment(date).format @get 'format'
       else
-        ''
+        return ''
     ).property('content')
+
+    valueChanged: (-> @rerender() ).observes('value')
+    render: (_)-> _.push @get 'value'
 
     click: ->
       return unless @get 'showPopup'
       dateView = @
       date = @get 'content'
-      @popup = App.PopupView.create target: @
+      @popup = App.PopupView.create target: @, parentView: @, container: @container
       @picker = Em.View.create
         willInsertElement: ->
 #          $el = @$()
@@ -57,7 +69,7 @@ define ->
         classNames: ['btn', 'btn-primary']
         attributeBindings: ['title']
         title: '_ok'.loc()
-        template: Em.Handlebars.compile '{{ loc "_ok" }}'
+        render: (_)-> _.push '_ok'.loc()
         click: ->
           dateView.set 'content', dateView.picker.$().datetimepicker 'getDate'
           dateView.popup.hide()

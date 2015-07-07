@@ -18,12 +18,12 @@ define ['cs!../core'], ->
       classNames: ['language-selector-item', 'btn-clean']
       classNameBindings: ['isSelected']
       attributeBindings: ['title']
-      template: Em.Handlebars.compile '{{view.content}}'
+      contentChanged: (-> @rerender() ).observes('content')
+      render: (_)-> _.push @get 'content'
       title: (-> @get 'content').property('content')
       countryFlagClassName: (->
         'country-flag-icon-%@'.fmt(@get('content'))
       ).property('content')
-#      template: Em.Handlebars.compile '<i {{bindAttr class=":country-flag-icon view.countryFlagClassName"}}></i>'
       selectionBinding: 'parentView.selection'
       click: (event)->
         event.preventDefault()

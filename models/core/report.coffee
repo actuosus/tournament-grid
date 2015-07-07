@@ -12,6 +12,8 @@ ObjectId = Schema.ObjectId
 RaceSchema = require './race'
 TeamRefSchema = require './team_ref'
 
+deepPopulate = require('mongoose-deep-populate')
+
 ReportSchema = new Schema
   title: type: String
   _title:
@@ -47,8 +49,8 @@ ReportSchema = new Schema
 
   noRating: type: Boolean
 
-ReportSchema.virtual('teams').get ->
-  @team_refs.map (ref)-> ref.team_id
+#ReportSchema.virtual('teams').get ->
+#  @team_refs.map (ref)-> ref.team_id
 
 
 ReportSchema.methods.loc = (key, lang)->
@@ -57,5 +59,7 @@ ReportSchema.methods.loc = (key, lang)->
     @["_#{key}"][lang]
   else
     @[key]
+
+ReportSchema.plugin deepPopulate
 
 module.exports = ReportSchema

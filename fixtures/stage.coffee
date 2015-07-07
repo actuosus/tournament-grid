@@ -16,7 +16,7 @@ module.exports.Stage = [
   description: 'Большая серия матчей с обилием команд'
   report_id: '511211b49709aab1ae000002'
   visual_type: 'matrix'
-  rounds: ['51142b464242d3110c000002']
+  rounds: ['51142b464242d3110c000025']
 ,
   _id: '51121246b54802daae000009'
   title: 'Групповой'
@@ -48,7 +48,7 @@ module.exports.Stage = [
   report_id: '511211b49709aab1ae000002'
   visual_type: 'double'
   entrants_number: '64'
-  rounds: ['50fd4a58cbbf53a72a000002', '50fd4a58cbbf53a72a000003', '50fd4a58cbbf53a72a000004']
+#  rounds: ['50fd4a58cbbf53a72a000002', '50fd4a58cbbf53a72a000003', '50fd4a58cbbf53a72a000004']
 ,
   _id: '51121246b54802daae00000b'
   title: 'Командный'

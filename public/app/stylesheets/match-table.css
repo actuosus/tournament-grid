@@ -53,6 +53,7 @@
 }
 
 .matches-table-item .team-name {
+    float: none;
 }
 
 .matches-table-item .remove-btn {

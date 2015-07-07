@@ -16,7 +16,9 @@ exports.list = (req, res)->
 exports.item = (req, res)->
   ResultSet.where('_id', req.params._id).findOne().exec (err, doc)->
     if doc
-      res.send result_set: doc
+      data = doc.toJSON()
+      data.entrantType = 'team'
+      res.send result_set: data
     else
       res.send 404, errors: 'nothing found'
 
@@ -36,7 +38,9 @@ exports.update = (req, res)->
     console.log resultSet
     await ResultSet.findByIdAndUpdate req.params._id, resultSet, defer err, rs
 #    await Round.findByIdAndUpdate resultSet.round_id, {$push: {result_sets: rs._id}}, defer err, r if resultSet.round_id
-    res.send result_set: rs
+    data = rs.toJSON()
+    data.entrantType = 'team'
+    res.send result_set: data
   else
     res.send 400, errors: 'server error'
 

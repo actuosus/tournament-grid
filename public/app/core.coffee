@@ -28,6 +28,8 @@ define [
       type: 'POST'
     })
 
+  # Ember.onerror = (error)-> throw error
+
   lang = config.currentLanguage or $.cookie 'lang'
 
   localize = (language)->
@@ -42,13 +44,13 @@ define [
   appConfig =
     VERSION: '0.1'
     autoinit: false
-    Store: DS.Store
+    ApplicationStore: DS.Store
     customEvents:
       mousewheel: 'mouseWheel'
 
   appConfig.rootElement = config.rootElement if config.rootElement
 
-  Em.EventDispatcher.reopen(
+  Em.EventDispatcher.reopen
     events: {
 #      touchstart  : 'touchStart',
 #      touchmove   : 'touchMove',
@@ -78,7 +80,7 @@ define [
       drop        : 'drop',
       dragend     : 'dragEnd'
     }
-  )
+
   App = Em.Application.create appConfig
 
   if window.DEBUG
@@ -90,14 +92,7 @@ define [
   window.TournamentGrid = TournamentGrid
   window.App = App
 
-  DS.RESTAdapter.configure 'plurals',
-    country: 'countries'
-    match: 'matches'
-
-  DS.RESTAdapter.map 'App.Report',
-    races: embedded: 'always'
-
-  DS.JSONTransforms.object =
+  App.ObjectTransform = DS.Transform.extend
     serialize: (deserialized)->
       unless Em.isNone(deserialized)
         if deserialized.keys and deserialized.values
@@ -110,110 +105,158 @@ define [
     deserialize: (serialized)->
       if Em.isNone(serialized) then {} else serialized
 
-  DS.JSONTransforms.string =
-    deserialize: (serialized)->
-      if Em.isNone(serialized) then null else String(serialized)
+#  DS.JSONTransforms.string =
+#    deserialize: (serialized)->
+#      if Em.isNone(serialized) then null else String(serialized)
+#
+#    serialize: (deserialized)->
+#      if Em.isNone(deserialized) then null else String(deserialized)
 
-    serialize: (deserialized)->
-      if Em.isNone(deserialized) then null else String(deserialized)
+#  DS.JSONTransforms.date =
+#    deserialize: (serialized)->
+#      type = typeof serialized
+#      if type is 'string'
+#        if serialized is ''
+#          return null
+#        else
+#          return new Date Ember.Date.parse serialized
+#      else if type is 'number'
+#        return new Date serialized
+#      else if serialized is null or serialized is undefined
+#        return serialized
+#      else
+#        return null
+#
+#    serialize: (date)->
+#      if date instanceof Date
+#        days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+#        months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+#
+#        pad = (num)-> if num < 10 then "0"+num else ""+num
+#
+#        utcYear = date.getUTCFullYear()
+#        utcMonth = date.getUTCMonth()
+#        utcDayOfMonth = date.getUTCDate()
+#        utcDay = date.getUTCDay()
+#        utcHours = date.getUTCHours()
+#        utcMinutes = date.getUTCMinutes()
+#        utcSeconds = date.getUTCSeconds()
+#
+#        dayOfWeek = days[utcDay]
+#        dayOfMonth = pad(utcDayOfMonth)
+#        month = months[utcMonth]
+#
+#        dayOfWeek + ", " + dayOfMonth + " " + month + " " + utcYear + " " +
+#          pad(utcHours) + ":" + pad(utcMinutes) + ":" + pad(utcSeconds) + " GMT"
+#      else
+#        return null
 
-  DS.JSONTransforms.date =
-    deserialize: (serialized)->
-      type = typeof serialized
-      if type is 'string'
-        if serialized is ''
-          return null
-        else
-          return new Date Ember.Date.parse serialized
-      else if type is 'number'
-        return new Date serialized
-      else if serialized is null or serialized is undefined
-        return serialized
+  App.ApplicationSerializer = DS.JSONSerializer.extend DS.EmbeddedRecordsMixin,
+    primaryKey: '_id'
+    attrs:
+      matches: { embedded: 'always' }
+    keyForAttribute: (key)-> Em.String.decamelize key
+    keyForAttributeName: (type, name)-> debugger; Ember.String.decamelize name
+    keyForBelongsTo: (type, name)->
+      key = @keyForAttributeName type, name
+      if @embeddedType(type, name)
+        return key
+      key + '_id'
+    keyForRelationship: (key, type)->
+      if type is 'belongsTo'
+        key = Em.String.decamelize key + '_id'
       else
-        return null
+        key = Em.String.decamelize key
 
-    serialize: (date)->
-      if date instanceof Date
-        days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
-        months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+      return key
 
-        pad = (num)-> if num < 10 then "0"+num else ""+num
+    serializeIntoHash: (hash, type, snapshot, options)->
+      root = Ember.String.decamelize(type.typeKey)
+      hash[root] = this.serialize(snapshot, options)
 
-        utcYear = date.getUTCFullYear()
-        utcMonth = date.getUTCMonth()
-        utcDayOfMonth = date.getUTCDate()
-        utcDay = date.getUTCDay()
-        utcHours = date.getUTCHours()
-        utcMinutes = date.getUTCMinutes()
-        utcSeconds = date.getUTCSeconds()
+    extractBelongsToPolymorphic: (type, hash, key)->
+      keyForId = @keyForPolymorphicId key
+      id = hash[keyForId]
 
-        dayOfWeek = days[utcDay]
-        dayOfMonth = pad(utcDayOfMonth)
-        month = months[utcMonth]
+      if id
+        keyForType = @keyForPolymorphicType key
+        hashType = hash[keyForType]
+        # Hacky thing to resolve match
+        if key is 'entrant1_id' or key is 'entrant2_id' or key is 'entrant_id'
+          matchType = App.get('report.match_type')
+          if matchType is 'player'
+            hashType = 'players'
+          else
+            if key is 'entrant_id' and App.ResultSet.detect type
+              hashType = 'team_refs'
+            else
+              hashType = 'teams'
+        return {id: id, type: hashType}
+      return null
 
-        dayOfWeek + ", " + dayOfMonth + " " + month + " " + utcYear + " " +
-          pad(utcHours) + ":" + pad(utcMinutes) + ":" + pad(utcSeconds) + " GMT"
-      else
-        return null
+    extractArray: (store, type, arrayPayload, id, requestType)->
+      arrayPayload = arrayPayload[Em.String.decamelize(Em.String.pluralize(type.typeKey))]
+      return @_super(store, type, arrayPayload, id, requestType)
 
-  App.Adapter = DS.RESTAdapter.extend
+    extractSingle: (store, type, payload, id, requestType)->
+      payload = @normalizePayload(payload)
+      payload = payload[Em.String.decamelize(type.typeKey)]
+      return @normalize(type, payload)
+
+  App.ReportSerializer = App.ApplicationSerializer.extend
+    attrs: teamRefs: embedded: 'always'
+
+  App.TeamSerializer = App.ApplicationSerializer.extend
+    attrs:
+      players: embedded: 'always', serialize: 'ids'
+
+  App.TeamRefSerializer = App.ApplicationSerializer.extend
+    attrs:
+      team: embedded: 'always', serialize: 'ids'
+      players: embedded: 'always'
+
+  App.RoundSerializer = App.ApplicationSerializer.extend
+    attrs:
+      matches: embedded: 'always', serialize: 'ids'
+      resultSets: embedded: 'always', serialize: 'ids'
+
+  App.MatchSerializer = App.ApplicationSerializer.extend
+    attrs:
+      games: embedded: 'always', serialize: 'ids'
+
+  App.ApplicationAdapter = DS.RESTAdapter.extend
+    namespace: config.api.namespace
+
     bulkCommit: no
+    coalesceFindRequests: yes
 
     shouldSave: -> yes
 
-    waitForParents: (record, callback, context, args)->
-      observers = new Ember.Set()
+#    buildURL: (record, suffix)->
+#      url = [this.url]
+#
+#      Ember.assert("Namespace URL (" + this.namespace + ") must not start with slash", !this.namespace || this.namespace.toString().charAt(0) isnt "/");
+#      Ember.assert("Record URL (" + record + ") must not start with slash", !record || record.toString().charAt(0) isnt "/");
+#      Ember.assert("URL suffix (" + suffix + ") must not start with slash", !suffix || suffix.toString().charAt(0) isnt "/");
+#
+#      if !Ember.isNone(this.namespace)
+#        url.push(this.namespace)
+#
+#      url.push(Em.String.decamelize(Em.String.pluralize(record)))
+#      if suffix isnt undefined
+#        url.push(suffix)
+#
+##      if record is 'report'
+##        console.log url
+##        url = [this.url, 'API/reportage/reportage_new.php?ID=' + suffix]
+##
+##      if record is 'round'
+##        console.log url
+##        url = [this.url, 'API/reportage/rounds_new.php']
+#
+#      return url.join("/")
 
-      record.eachRelationship (name, meta)->
-        relationship = record.cacheFor name
-
-        if meta.kind is 'belongsTo' and relationship and Em.get(relationship, 'isNew')
-          observer = ->
-            relationship.removeObserver('id', context, observer)
-            observers.remove(name)
-            finish()
-
-          relationship.addObserver('id', context, observer)
-          observers.add name
-
-      finish = -> callback.apply(context, args) if observers.length is 0
-      finish()
-
-    createRecord: (store, type, record)->
-      sup = @_super
-      @waitForParents record, sup, @, arguments
-
-    updateRecord: (store, type, record)->
-      sup = @_super
-      @waitForParents record, sup, @, arguments
-
-    serializer: DS.JSONSerializer.extend
-      keyForAttributeName: (type, name)-> Ember.String.decamelize name
-      keyForBelongsTo: (type, name)->
-        key = @keyForAttributeName type, name
-        if @embeddedType(type, name)
-          return key
-        key + '_id'
-
-      extractBelongsToPolymorphic: (type, hash, key)->
-        keyForId = @keyForPolymorphicId key
-        id = hash[keyForId]
-
-        if id
-          keyForType = @keyForPolymorphicType key
-          hashType = hash[keyForType]
-          # Hacky thing to resolve match
-          if key is 'entrant1_id' or key is 'entrant2_id' or key is 'entrant_id'
-            matchType = App.get('report.match_type')
-            if matchType is 'player'
-              hashType = 'players'
-            else
-              if key is 'entrant_id' and App.ResultSet.detect type
-                hashType = 'team_refs'
-              else
-                hashType = 'teams'
-          return {id: id, type: hashType}
-        return null
+    pathForType: (type)-> Em.String.decamelize(Em.String.pluralize(type))
 
     didCreateRecord: (store, type, record, payload)->
       @_super(store, type, record, payload)
@@ -236,74 +279,37 @@ define [
         model: type.toString()
         _id: @serializer.extractId(type, payload[@serializer.rootForType(type)])
 
-
-  App.store = App.Store.create
-#    revision: 12
-    adapter: App.Adapter.create()
-
-  App.store.adapter.url = config.api.host
-  App.store.adapter.namespace = config.api.namespace
-  App.store.adapter.serializer.primaryKey = -> '_id'
-  App.store.adapter.serializer.configure {pageCount: 'pageCount'}
-
-  App.store.adapter.dirtyRecordsForHasManyChange = (dirtySet, record, relationship)->
-    embeddedType = @get('serializer').embeddedType(record.constructor, relationship.secondRecordName)
-
-    if embeddedType is 'always'
-      relationship.childReference.parent = relationship.parentReference
-      @_dirtyTree dirtySet, record
-
-#  App.store = App.__container__.lookup('store:main')
-
-  App.store.adapter.url = config.api.host
-  App.store.adapter.namespace = config.api.namespace
-  App.store.adapter.serializer.primaryKey = -> '_id'
-  App.store.adapter.serializer.configure {pageCount: 'pageCount'}
-
-  App.store.adapter.dirtyRecordsForHasManyChange = (dirtySet, record, relationship)->
-    embeddedType = @get('serializer').embeddedType(record.constructor, relationship.secondRecordName)
-
-    if embeddedType is 'always'
-      relationship.childReference.parent = relationship.parentReference
-      @_dirtyTree dirtySet, record
-
-    if relationship.secondRecordName is "matches"
-      relationship.childReference.parent = relationship.parentReference;
-#      @_dirtyTree(dirtySet, record);
-      dirtySet.add record
-
-#
   App.overrideAdapterAjax = (report)->
-    App.store.adapter.ajax = (url, type, hash)->
-      adapter = @
-      new Ember.RSVP.Promise (resolve, reject)->
-        hash = hash or {}
-        hash.url = url
-        hash.type = type
-        hash.dataType = 'json'
-        hash.contentType = 'application/json; charset=utf-8'
-        hash.context = adapter
-
-        if hash.data
-          if type isnt 'GET'
-            hash.url += "?report_id=#{report.get 'id'}"
-#            if App.debug?.wait?
-#              hash.url += '&' + jQuery.param({start: App.get('debug.wait.start'), end: App.get('debug.wait.end')})
-            hash.data = JSON.stringify hash.data
-          else
-            hash.data.report_id = report.get 'id'
-        else
-          hash.url += "?report_id=#{report.get 'id'}"
-#          if App.debug?.wait?
-#            hash.url += '&' + jQuery.param({start: App.get('debug.wait.start'), end: App.get('debug.wait.end')})
-
-        hash.success = (json)->
-          Ember.run(null, resolve, json)
-
-        hash.error = (jqXHR, textStatus, errorThrown)->
-          Ember.run(null, reject, jqXHR)
-
-        Ember.$.ajax(hash);
+#    App.store.adapter.ajax = (url, type, hash)->
+#      adapter = @
+#      new Ember.RSVP.Promise (resolve, reject)->
+#        hash = hash or {}
+#        hash.url = url
+#        hash.type = type
+#        hash.dataType = 'json'
+#        hash.contentType = 'application/json; charset=utf-8'
+#        hash.context = adapter
+#
+#        if hash.data
+#          if type isnt 'GET'
+#            hash.url += "?report_id=#{report.get 'id'}"
+##            if App.debug?.wait?
+##              hash.url += '&' + jQuery.param({start: App.get('debug.wait.start'), end: App.get('debug.wait.end')})
+#            hash.data = JSON.stringify hash.data
+#          else
+#            hash.data.report_id = report.get 'id'
+#        else
+#          hash.url += "?report_id=#{report.get 'id'}"
+##          if App.debug?.wait?
+##            hash.url += '&' + jQuery.param({start: App.get('debug.wait.start'), end: App.get('debug.wait.end')})
+#
+#        hash.success = (json)->
+#          Ember.run(null, resolve, json)
+#
+#        hash.error = (jqXHR, textStatus, errorThrown)->
+#          Ember.run(null, reject, jqXHR)
+#
+#        Ember.$.ajax(hash);
 
   App.config =
     local:

@@ -9,7 +9,6 @@ define ['cs!../core'],->
   App.EditableLabel = Em.View.extend
     classNames: ['editable-label']
     classNameBindings: ['isEmpty', 'isEditable']
-#    template: Em.Handlebars.compile '{{view.value}}'
     isEditable: yes
 
     valueType: 'text'
@@ -28,8 +27,8 @@ define ['cs!../core'],->
 
     isEditableChanged: (->
       unless @get 'isEditable'
-        @$().removeAttr 'contentEditable'
-        @$().removeAttr 'tabIndex'
+        @$()?.removeAttr 'contentEditable'
+        @$()?.removeAttr 'tabIndex'
     ).observes('isEditable')
 
     click: ->

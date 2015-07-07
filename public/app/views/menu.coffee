@@ -20,7 +20,8 @@ define ['cs!../core'],->
     itemViewClass: Em.View.extend(Ember.TargetActionSupport, {
       classNames: ['menu-item']
       classNameBindings: ['content.isDisabled']
-      template: Em.Handlebars.compile '{{view.content.title}}'
+      titleChanged: (-> @rerender() ).observes('content.title')
+      render: (_)-> _.push @get 'content.title'
       attributeBindings: ['aria-role']
       'aria-role': 'menu-item'
 

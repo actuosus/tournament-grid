@@ -66,6 +66,7 @@ define [
         stage = @get('stage')
         entrantsNumber = @get('entrantsNumber')
         Em.assert "You should provide entrantsNumber", entrantsNumber
+        roundsLength = stage?.get('rounds.length')
         roundsCount = Math.log(entrantsNumber) / Math.log(2)-1
         rounds = []
         bracket = Em.Object.create
@@ -80,8 +81,12 @@ define [
             when 1
               roundName = '_semifinal'.loc()
           roundIndex = roundsCount - i
+
+#           actualRound = stage?.getByPath "#{roundIndex}"
+
           round = App.RoundController.create
             stage: stage
+#             model: actualRound
             index: roundIndex
             sortIndex: roundIndex
             itemIndex: i
@@ -90,6 +95,7 @@ define [
             bracket: bracket
             bracketName: 'winner'
             matches: []
+          @_findRoundFor stage, roundIndex, 'winner', round
           matches = round.get 'matches'
           for j in [0..matchesCount]
             leftPath = rightPath = undefined
@@ -112,6 +118,11 @@ define [
         bracket.set 'rounds', rounds
         bracket
 
+      _findRoundFor: (stage, index, type, roundController)->
+         round = @get('stage.rounds')?.find (_)=> _.get('sortIndex') is index and _.get('bracketName') is type
+         if round
+            roundController.set 'content', round
+
       createLoserBracket: ->
         stage = @get('stage')
         entrantsNumber = @get('entrantsNumber')
@@ -126,15 +137,19 @@ define [
         counter = 0
         for r in [roundsCount-1..0]
           for n in [1..0]
+            roundIndex = roundsCount - rCount
+#            actualRound = stage?.getByPath "#{roundIndex}"
             round = App.RoundController.create
               stage: stage
-              index: roundsCount - rCount
+#               model: actualRound
+              index: roundIndex
               sortIndex: counter
               itemIndex: rCount--
               parentReference: 'bracket'
               bracket: bracket
               bracketName: 'loser'
               matches: []
+            @_findRoundFor stage, counter, 'loser', round
             for m in [0...matchesCount]
               if rCount > 0
                 parentNodePath = "#{rCount}.#{m}"
@@ -253,7 +268,8 @@ define [
 
           titleView: Em.View.extend
             classNames: ['tournament-bracket-name']
-            template: Em.Handlebars.compile '{{view.parentView.content.name}}'
+            nameChanged: (-> @rerender() ).observes('parentView.content.name')
+            render: (_)-> _.push @get 'parentView.content.name'
 
           contentView: Em.CollectionView.extend
             classNames: ['tournament-bracket']

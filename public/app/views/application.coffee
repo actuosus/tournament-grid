@@ -6,9 +6,9 @@
 ###
 
 define [
-  'text!../templates/application.hbs'
+  'ehbs!application'
 ], (template)->
-  Em.TEMPLATES.application = Em.Handlebars.compile template
+#  Em.TEMPLATES.application = Em.Handlebars.compile template
 
   App.ApplicationView = Em.View.extend
     templateName: 'application'

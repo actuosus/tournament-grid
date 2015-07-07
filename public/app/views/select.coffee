@@ -5,17 +5,13 @@
  * Time: 23:12
 ###
 
-define ['cs!../core'],->
+define [
+  'ehbs!select',
+  'cs!../core'
+],->
   App.SelectView = Em.Select.extend
     tagName: 'div'
-    template: Em.Handlebars.compile '''
-      <div class="current-value">{{view.currentLabel}}</div>
-      <div class="disclosure-button"><i class="disclosure-icon">▾</i></div>
-      {{view Em.Select
-        optionLabelPath=content.name
-        optionValuePath=content.id
-        contentBinding=view.content
-        promptBinding=view.prompt}}'''
+    templateName: 'select'
     selectionBinding: 'childViews.firstObject.selection'
     valueBinding: 'childViews.firstObject.value'
     currentLabel: (->
@@ -24,4 +20,4 @@ define ['cs!../core'],->
     classNames: ['select']
     click: (event)->
       if $(event.target).hasClass('disclosure-button')
-        @get('childViews.firstObject').select().focus()
+        @get('childViews.firstObject').$().select().focus()

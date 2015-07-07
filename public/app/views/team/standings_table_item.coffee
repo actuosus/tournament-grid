@@ -8,15 +8,15 @@
 
 
 define [
-  'text!../../templates/team/standings_table_item.hbs'
+  'ehbs!team/standings_table_item'
   'cs!../../core'
   'cs!./cell'
   'cs!./standing_cell'
 ], (template)->
-  Em.TEMPLATES.teamStandingsTableItem = Em.Handlebars.compile template
+#  Em.TEMPLATES.teamStandingsTableItem = Em.Handlebars.compile template
   App.TeamStandingsTableItemView = Em.View.extend App.ContextMenuSupport,
     tagName: 'tr'
-    templateName: 'teamStandingsTableItem'
+    templateName: 'team/standings_table_item'
     classNames: ['team-standings-table-item']
     classNameBindings: ['content.isSelected', 'content.isDirty', 'content.isSaving']
     
@@ -24,8 +24,9 @@ define [
     contextMenuActions: ['save', 'deleteRecord:delete']
     
     save: ->
-      @get('content')?.save()
-      @get('content.round')?.save()
+      console.log @get('content')
+      @get('content')?.save().then =>
+        @get('content.round')?.save()
 
     deleteRecord: ->
       content = @get('content')

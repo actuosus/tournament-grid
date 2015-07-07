@@ -23,7 +23,7 @@ define [
     content: (->
       stage = @get 'stage'
       entrantsNumber = @get('entrantsNumber') or stage?.get('entrantsNumber')
-      roundsLength = stage?.get('round.length')
+      roundsLength = stage?.get('rounds.length')
       if entrantsNumber
         roundsCount = Math.log(entrantsNumber) / Math.log(2)-1
       else if roundsLength
@@ -39,11 +39,11 @@ define [
           when 0 then roundName = '_final'.loc()
           when 1 then roundName = '_semifinal'.loc()
         roundIndex = roundsCount - i
-#        actualRound = stage?.getByPath "#{roundIndex}"
+        actualRound = stage?.getByPath "#{roundIndex}"
 
         round = App.RoundController.create
           stage: stage
-#          content: actualRound
+          model: actualRound
           index: roundIndex
           itemIndex: i
           sortIndex: roundIndex

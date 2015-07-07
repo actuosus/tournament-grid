@@ -6,12 +6,12 @@
 ###
 
 define [
-  'text!../../templates/match/group_table_item.hbs'
+  'ehbs!match/group_table_item'
   'cs!./table_item'
 ], (template)->
-  Em.TEMPLATES.matchesGroupTableItem = Em.Handlebars.compile template
+#  Em.TEMPLATES.matchesGroupTableItem = Em.Handlebars.compile template
   App.MatchGroupTableItemView = App.MatchTableItemView.extend App.MatchDelegate,
     tagName: 'tr'
     classNames: ['matches-table-item']
     classNameBindings: ['content.isDirty']
-    templateName: 'matchesGroupTableItem'
+    templateName: 'match/group_table_item'

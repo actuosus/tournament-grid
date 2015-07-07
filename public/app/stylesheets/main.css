@@ -153,6 +153,10 @@
     width: 50px;
 }
 
+.matches-table-date .time {
+    color: black;
+}
+
 .matches-table-points {
     color: #7a7a7a;
     padding: 4px 2px !important;

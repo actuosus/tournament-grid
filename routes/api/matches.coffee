@@ -43,7 +43,7 @@ exports.create = (req, res)->
       await round.save defer err, round
     res.send match: doc
   else
-    res.send 400, errors: "server error"
+    res.send 400, errors: 'server error'
 
 exports.update = (req, res)->
   if req.body?.matches
@@ -62,7 +62,7 @@ exports.update = (req, res)->
 #    await round.save defer err, round
     res.send match: doc
   else
-    res.send 400, errors: "server error"
+    res.send 400, errors: 'server error'
 
 exports['delete'] = (req, res)->
   await Match.findById req.params._id, defer err, match

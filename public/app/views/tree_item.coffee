@@ -63,5 +63,6 @@ define ['cs!../core'], ->
         classNames: ['tree-item-view-content'],
         contentBinding: 'parentView.content'
         contentIndexBinding: 'parentView.contentIndex',
-        template: Em.Handlebars.compile('{{view.content.name}}')
+        nameChanged: (-> @rerender() ).observes('content.name')
+        render: (_)-> _.push @get 'content.name'
     ).property()

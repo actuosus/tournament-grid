@@ -17,7 +17,12 @@ define [
     title: '_remove'.loc()
     confirmLabel: '_remove_confirmation'.loc()
     shouldShowConfirmation: no
-    template: Em.Handlebars.compile '{{#if view.shouldShowConfirmation}}{{view.confirmLabel}} {{/if}}×'
+
+    shouldShowConfirmationChanged: (-> @rerender() ).observes('shouldShowConfirmation')
+    render: (_)->
+      strings = ''
+      strings += @get('confirmLabel') if @get 'shouldShowConfirmation'
+      _.push strings + ' ×'
 
     useConfirmation: no
 

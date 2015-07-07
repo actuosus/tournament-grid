@@ -24,7 +24,9 @@ define [
     shouldShowContextMenuBinding: 'App.isEditingMode'
     contextMenuActions: ['add:addGroup']
 
-    add: -> @get('content').createRecord()
+    add: ->
+      console.log('Will create group grid item')
+      @get('content').createRecord()
 
     itemViewClass: Em.ContainerView.extend(App.ContextMenuSupport, {
       classNames: ['lineup-grid-item']
@@ -38,11 +40,12 @@ define [
       contextMenuActions: ['save', 'deleteRecord:removeGroup']
 
       save: ->
-        @get('content.store')?.commit()
+        console.log('Will save')
+        @get('content')?.save()
 
       deleteRecord: ->
         @get('content').deleteRecord()
-        @get('content.store')?.commit()
+        @get('content.store')?.flushPendingSave()
 
       contentView: Em.ContainerView.extend( App.Editing, App.MovingHightlight, {
         contentBinding: 'parentView.content'
@@ -57,9 +60,10 @@ define [
           contentBinding: 'parentView.content'
           valueBinding: 'content.title'
           classNames: ['lineup-grid-item-name']
-          valueChanged: (->
-            @get('content').save()
-          ).observes('value')
+          # TODO Fix error.
+#           valueChanged: (->
+#             @get('content').save()
+#           ).observes('value')
 
         addButtonView: Em.View.extend
           tagName: 'button'
@@ -68,7 +72,7 @@ define [
           classNames: ['btn-clean', 'add-btn', 'add']
           attributeBindings: ['title']
           title: '_add_entrant'.loc()
-          template: Em.Handlebars.compile '+'
+          render: (_)-> _.push '+'
 
           click: ->
             round = @get 'content'
@@ -95,13 +99,14 @@ define [
             else
               '_automatic_counting_enabled'.loc()
           ).property('automaticCountingDisabled')
-          template: Em.Handlebars.compile '{{view.label}}'
+          labelChanged: (-> @rerender() ).observes('label')
+          render: (_)-> _.push @get 'label'
 
           click: -> @toggleProperty 'automaticCountingDisabled'
 
         deleteRecord: ->
           @get('content').deleteRecord()
-          @get('content.store')?.commit()
+          @get('content.store')?.flushPendingSave()
 
         removeButtonView: App.RemoveButtonView.extend
           title: '_remove_group'.loc()

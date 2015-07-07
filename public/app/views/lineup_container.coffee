@@ -31,7 +31,7 @@ define [
           classNames: ['btn-clean', 'remove-btn', 'remove']
           attributeBindings: ['title']
           title: '_remove'.loc()
-          template: Em.Handlebars.compile '×'
+          render: (_)-> _.push '×'
 
           click: -> @set('parentView.textFieldView.value', '')
 
@@ -72,22 +72,17 @@ define [
             entrants = teamRefs.map (ref)-> ref.get('team')
             return if entrants.contains team
             teamRef = teamRefs.createRecord team: team
+            players = team.get('players')
+            console.log(players)
             teamRef.on 'didCreate', ->
               players = teamRef.get('players')
-              team.get('players').on 'didLoad', ->
-                team.get('players').forEach (player)->
-                  player.set 'teamRef', teamRef
-                  player.save()
-                  players.addObject player
-#              teamRef.save()
-              if team.get('players.isLoaded')
-                team.get('players').forEach (player)->
-                  Em.run.later ->
-                    player.set 'teamRef', teamRef
-                    player.save()
-                    players.addObject player
-                  , 1000
-              players.fetch()
+              count = 0
+              team.get('players').forEach (player)->
+                players.addObject player
+                count++
+              if players.length is count
+                teamRef.save()
+
             teamRef.save()
 
         insertNewline: ->
@@ -97,7 +92,7 @@ define [
           @addTeam team
 
         showAddForm: (target)->
-          popup = App.PopupView.create target: target
+          popup = App.PopupView.create target: target, parentView: @, container: @container
           formView = @get 'autocompleteDelegate.formView'
           form = formView.create
             value: @get('textFieldView').$().val()
@@ -108,7 +103,7 @@ define [
                 team: entrant
                 report: report
               Em.run.later ->
-                teamRef.store.commit()
+                teamRef.save()
               , 2000
               popup.hide()
           popup.set 'formView', form

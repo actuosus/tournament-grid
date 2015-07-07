@@ -44,3 +44,7 @@
 .menu-item.is-team-ref .lineup-grid-item-name {
     font-weight: normal;
 }
+
+.menu-item .b-flag {
+    padding-left: 0;
+}

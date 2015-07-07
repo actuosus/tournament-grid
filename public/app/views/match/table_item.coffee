@@ -6,16 +6,16 @@
 ###
 
 define [
-  'text!../../templates/match/table_item.hbs'
+  'ehbs!match/table_item'
 ], (template)->
-  Em.TEMPLATES.matchesTableItem = Em.Handlebars.compile template
+#  Em.TEMPLATES.matchesTableItem = Em.Handlebars.compile template
 
   App.MatchTableItemView = Em.View.extend(App.MatchDelegate, {
     tagName: 'tr'
     classNames: ['table-row','matches-table-item']
     classNameBindings: ['content.isDirty', 'content.isSaving', 'content.invalid']
     attributeBindings: ['title']
-    templateName: 'matchesTableItem'
+    templateName: 'match/table_item'
 
     entrantsBinding: 'parentView.entrant'
 

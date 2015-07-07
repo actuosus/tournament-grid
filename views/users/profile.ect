@@ -1,0 +1,488 @@
+<% extend 'layout.ect' %>
+
+<p class="b-title"><span class="ico ico_players"></span>Профиль пользователя
+</p>
+<div class="user_actions">
+    <div class="user_action add">
+        <p>Редактировать</p>
+        <a href="/users/edit/<%- @user.id %>/"></a>
+    </div>
+    <div class="user_action write">
+        <p>Инструменты</p>
+        <a href="/users/tools/"></a>
+    </div>
+
+    <div class="emptyClear"></div>
+</div>
+
+<!-- profileUser -->
+<div class="b-profileUser cf vcard h-card" itemscope="itemscope" itemtype="http://schema.org/Person">
+    <div class="user_profile">
+        <!--		<div class="user_hide"></div>-->
+        <div class="user_left">
+            <% if  @user.gravatar : %>
+            <div class="user_image">
+                <img src="/upload/main/bed/OldySitter.jpg" class="photo" itemprop="image" alt="" width="80" height="80">
+            </div>
+            <% end %>
+            <div class="user_group">
+                <!-- <p>[ General ]</p>-->
+                <p>Its Over 9000!!!</p>
+            </div>
+            <div class="user_rep">
+                <p>9002</p>
+            </div>
+
+            <!--//<a href="#" class="user_ques">
+                <p>Анкета</p>
+            </a>//-->
+
+        </div>
+        <div class="user_right">
+            <div class="user_play">
+                <!--					<p class="subtitle">Я играю в:</p>-->
+                <img src="http://vpcdn2.virtus.pro/bitrix/cache/s1/virtus/image.show/37w_37h_clipBOTH/upload/iblock/9a1/sc2.png"
+                     width="37" height="37" alt="" class="" border="0" title="StarCraft 2">
+
+            </div>
+
+            <div class="user_name">
+                <p class="name nickname" itemsprop="alternateName" style="float:left;padding-right: 20px;">actuosus</p>
+
+                <div style="padding-top: 7px;float:left">
+                    <div class="user_stat online" style="float:left"></div>
+                </div>
+                <div class="emptyClear"></div>
+                <div class="gender n" style="float:left"><span class="family-name" itemprop="familyName">Чафонов</span>
+                    <span class="given-name" itemprop="givenName">Артур</span>, <span
+                            itemprop="gender"><!--M--></span><span>29 лет</span></div>
+                &nbsp;
+                <div class="user_time" style="float:left;padding-left: 10px;">
+                    <p class="city b-flag b-flag_ru">Москва&nbsp;</p>
+
+                    <p class="time">
+                        [GMT
+                        +3 ]
+                    </p>
+                </div>
+                <div class="emptyClear"></div>
+                <div>
+                    <p class="subtitle">О себе:</p>
+
+                    <p class="text note" itemprop="description">Программист, музыкант, дайвер,</p>
+                </div>
+            </div>
+            <div class="emptyClear"></div>
+        </div>
+        <div class="emptyClear"></div>
+        <div class="user_lead" style="float: left;">
+            <p class="subtitle">Ведет стримы:
+                <a href="/virtus_tv/all_streams/edit.php?action=add">Добавить</a>
+            </p>
+        </div>
+        <div class="user_orders" style=" float:left; padding-left: 20px;">
+            <p class="subtitle">Награды:</p>
+
+            <div class="the_orders">
+                <img src="http://vpcdn2.virtus.pro/bitrix/cache/s1/virtus/image.show/30w_38h_clip/upload/iblock/4c5/5.jpg"
+                     width="30" height="38" alt="Почётный флудер" title="Почётный флудер">
+
+                <div class="emptyClear"></div>
+            </div>
+        </div>
+        <div class="user_social" style="float: left; padding-left: 20px;">
+            <p class="subtitle">Соц. сети и игровые аккаунты:</p>
+
+            <div class="fb"><a target="_blank" href="actuosus">
+                <div style="width: 36px; height: 36px">&nbsp;</div>
+            </a></div>
+            <div class="tw"><a target="_blank" href="actuosus">
+                <div style="width: 36px; height: 36px">&nbsp;</div>
+            </a></div>
+            <div class="vk"><a target="_blank" href="actuosus">
+                <div style="width: 36px; height: 36px">&nbsp;</div>
+            </a></div>
+            <div class="skype"><a target="_blank" href="actuosus">
+                <div style="width: 36px; height: 36px">&nbsp;</div>
+            </a></div>
+            <div class="yahoo"><a target="_blank" href="actuosus">
+                <div style="width: 36px; height: 36px">&nbsp;</div>
+            </a></div>
+            <div class="aim"><a target="_blank" href="actuosus">
+                <div style="width: 36px; height: 36px">&nbsp;</div>
+            </a></div>
+            <div class="myspace"><a target="_blank" href="actuosus">
+                <div style="width: 36px; height: 36px">&nbsp;</div>
+            </a></div>
+            <div class="tumblr"><a target="_blank" href="actuosus">
+                <div style="width: 36px; height: 36px">&nbsp;</div>
+            </a></div>
+            <div class="linkedin"><a target="_blank" href="actuosus">
+                <div style="width: 36px; height: 36px">&nbsp;</div>
+            </a></div>
+            <div class="youtube"><a target="_blank" href="actuosus">
+                <div style="width: 36px; height: 36px">&nbsp;</div>
+            </a></div>
+            <div class="blogger"><a target="_blank" href="actuosus">
+                <div style="width: 36px; height: 36px">&nbsp;</div>
+            </a></div>
+            <div class="picasa"><a target="_blank" href="actuosus">
+                <div style="width: 36px; height: 36px">&nbsp;</div>
+            </a></div>
+            <div class="lastfm"><a target="_blank" href="actuosus">
+                <div style="width: 36px; height: 36px">&nbsp;</div>
+            </a></div>
+            <div class="flickr"><a target="_blank" href="actuosus">
+                <div style="width: 36px; height: 36px">&nbsp;</div>
+            </a></div>
+            <div class="steam"><a target="_blank" href="actuosus">
+                <div style="width: 36px; height: 36px">&nbsp;</div>
+            </a></div>
+            <div class="battlenet"><a target="_blank" href="actuosus">
+                <div style="width: 36px; height: 36px">&nbsp;</div>
+            </a></div>
+            <div class="emptyClear"></div>
+        </div>
+
+        <div class="emptyClear"></div>
+    </div>
+</div>
+<!-- end profileUser -->
+
+<div class="container two-cols">
+    <!--<div class="packery-holder">-->
+    <!--<div class="b-closingBox">-->
+
+    <div class="col">
+        <!-- profileMatches -->
+        <div id="comp_b1a3affef93758a522b194b7faed99ca">
+            <div class="b-profileBlock b-profileMatches" id="more_frm_topics">
+                <p class="b-profileBlock__title collapsible_title open">Топики
+                    <small>Топики в форумах и блоги созданные пользователем</small>
+                </p>
+                <div class="collapsible_wrapper">
+
+                    <div class="user_topics">
+                    </div>
+
+                    <a href="/users/10/?NEWS_CNT=5"
+                       onclick="BX.ajax.insertToNode('/users/10/?NEWS_CNT=5&amp;bxajaxid=b1a3affef93758a522b194b7faed99ca', 'comp_b1a3affef93758a522b194b7faed99ca'); return false;"
+                       class="start_load_btn_topic"></a>
+                </div>
+            </div>
+        </div>
+        <!-- end profileMatches -->
+
+        <!-- profileAwards -->
+        <div id="comp_2e050e249488ad0d753159eca00588a3">
+            <div class="b-profileBlock b-profileMatches" id="more_frm_mess">
+                <p class="b-profileBlock__title collapsible_title open">Сообщения
+                    <small>Последние сообщения в форумах, блогах, новостях, базе.</small>
+                </p>
+                <div class="collapsible_wrapper">
+
+                    <div class="user_topics">
+                        <div class="user_topic ">
+                            <div class="user_topic_left">
+                                <div class="name">
+                                    <a href="/participate/forum/forum41/topic335/"><span>Бесплатный пентест для Virtus.pro</span></a>
+
+                                    <div class="shadow"></div>
+                                </div>
+                                <div class="message">[QUOTE]vegasq пишет:
+
+                                    Подмена имени и прав в чате
+                                    Судя по всему ...
+                                </div>
+                                <div class="info">
+                                    <div class="color forummm"></div>
+                                    <p class="rubric forum">Предложения, отзывы</p>
+
+                                    <div class="notes_comments">
+                                        <p class="the_notes_comments">18</p>
+
+                                        <div class="emptyClear"></div>
+                                    </div>
+
+                                    <div class="emptyClear"></div>
+                                </div>
+                            </div>
+                            <div class="user_topic_right">
+                                <p class="raiting_ajax r_ajax_4102_5" data-rid="4102_5">0</p>
+                            </div>
+                            <div class="emptyClear"></div>
+                        </div>
+                        <div class="user_topic odd">
+                            <div class="user_topic_left">
+                                <div class="name">
+                                    <a href="4"><span>4</span></a>
+
+                                    <div class="shadow"></div>
+                                </div>
+                                <div class="message">Мой замечательный комментарий.</div>
+                                <div class="info">
+                                    <div class="color blog"></div>
+                                    <p class="rubric forum">4</p>
+
+                                    <div class="notes_comments">
+                                        <p class="the_notes_comments">4</p>
+
+                                        <div class="emptyClear"></div>
+                                    </div>
+
+                                    <div class="emptyClear"></div>
+                                </div>
+                            </div>
+                            <div class="user_topic_right">
+                                <p class="raiting_ajax r_ajax_269_4" data-rid="269_4">0</p>
+                            </div>
+                            <div class="emptyClear"></div>
+                        </div>
+                        <div class="user_topic ">
+                            <div class="user_topic_left">
+                                <div class="name">
+                                    <a href="3"><span>3</span></a>
+
+                                    <div class="shadow"></div>
+                                </div>
+                                <div class="message">Smell this thing!</div>
+                                <div class="info">
+                                    <div class="color blog"></div>
+                                    <p class="rubric forum">3</p>
+
+                                    <div class="notes_comments">
+                                        <p class="the_notes_comments">3</p>
+
+                                        <div class="emptyClear"></div>
+                                    </div>
+
+                                    <div class="emptyClear"></div>
+                                </div>
+                            </div>
+                            <div class="user_topic_right">
+                                <p class="raiting_ajax r_ajax_177_4" data-rid="177_4">0</p>
+                            </div>
+                            <div class="emptyClear"></div>
+                        </div>
+                        <div class="user_topic odd">
+                            <div class="user_topic_left">
+                                <div class="name">
+                                    <a href="3"><span>3</span></a>
+
+                                    <div class="shadow"></div>
+                                </div>
+                                <div class="message">What's up?</div>
+                                <div class="info">
+                                    <div class="color blog"></div>
+                                    <p class="rubric forum">3</p>
+
+                                    <div class="notes_comments">
+                                        <p class="the_notes_comments">3</p>
+
+                                        <div class="emptyClear"></div>
+                                    </div>
+
+                                    <div class="emptyClear"></div>
+                                </div>
+                            </div>
+                            <div class="user_topic_right">
+                                <p class="raiting_ajax r_ajax_163_4" data-rid="163_4">0</p>
+                            </div>
+                            <div class="emptyClear"></div>
+                        </div>
+                        <div class="user_topic ">
+                            <div class="user_topic_left">
+                                <div class="name">
+                                    <a href="3"><span>3</span></a>
+
+                                    <div class="shadow"></div>
+                                </div>
+                                <div class="message">One more test.</div>
+                                <div class="info">
+                                    <div class="color blog"></div>
+                                    <p class="rubric forum">3</p>
+
+                                    <div class="notes_comments">
+                                        <p class="the_notes_comments">3</p>
+
+                                        <div class="emptyClear"></div>
+                                    </div>
+
+                                    <div class="emptyClear"></div>
+                                </div>
+                            </div>
+                            <div class="user_topic_right">
+                                <p class="raiting_ajax r_ajax_158_4" data-rid="158_4">0</p>
+                            </div>
+                            <div class="emptyClear"></div>
+                        </div>
+                    </div>
+                    <div class="emptyClear"></div>
+                    <div class="more">
+                        <a href="/users/10/?NEWS_CNT=10"
+                           onclick="BX.ajax.insertToNode('/users/10/?NEWS_CNT=10&amp;bxajaxid=2e050e249488ad0d753159eca00588a3', 'comp_2e050e249488ad0d753159eca00588a3'); return false;"
+                           class="more__link">Еще</a></div>
+                    <a href="/users/10/?NEWS_CNT=5"
+                       onclick="BX.ajax.insertToNode('/users/10/?NEWS_CNT=5&amp;bxajaxid=2e050e249488ad0d753159eca00588a3', 'comp_2e050e249488ad0d753159eca00588a3'); return false;"
+                       class="start_load_btn_mess"></a>
+                </div>
+            </div>
+
+
+        </div>
+        <!-- end profileAwards -->
+        <!--</div>-->
+        <!-- profileSocial -->
+        <div id="comp_233f43aa78fae800927370e85a8ae31a">
+            <div class="b-profileBlock b-profileMatches" id="more_frm_honors">
+                <p class="b-profileBlock__title collapsible_title open">Достижения
+                    <small></small>
+                </p>
+
+                <div class="collapsible_wrapper">
+                    <div class="user_achivs">
+                    </div>
+
+                    <a href="/users/10/?NEWS_CNT=5"
+                       onclick="BX.ajax.insertToNode('/users/10/?NEWS_CNT=5&amp;bxajaxid=233f43aa78fae800927370e85a8ae31a', 'comp_233f43aa78fae800927370e85a8ae31a'); return false;"
+                       class="start_load_btn_honors"></a>
+                </div>
+            </div>
+        </div>
+        <!-- end profileSocial -->
+        <!--</div>-->
+
+    </div>
+    <div class="col col-2">
+        <!--<div class="b-closingBox">-->
+        <!-- profileHistory -->
+        <div id="comp_3eb6a281943816330e2a7aa651066061">
+            <div class="b-profileBlock b-profileMatches" id="more_frm_friends">
+                <p class="b-profileBlock__title collapsible_title open">Друзья
+                    <small></small>
+                </p>
+                <div class="collapsible_wrapper">
+                    <div class="user_friends online">
+                    </div>
+                    <div class="user_friends">
+                    </div>
+
+                    <a href="/users/10/?NEWS_CNT=5"
+                       onclick="BX.ajax.insertToNode('/users/10/?NEWS_CNT=5&amp;bxajaxid=3eb6a281943816330e2a7aa651066061', 'comp_3eb6a281943816330e2a7aa651066061'); return false;"
+                       class="start_load_btn_friends"></a>
+                </div>
+            </div>
+        </div>
+        <!-- end profileHistory -->
+
+        <!--<div class="b-closingBox">-->
+        <!-- profileNews -->
+        <div class="b-profileBlock b-profileNews uOpinion">
+            <p class="b-profileBlock__title">Характеристика actuosus
+                <small>Характеристики, оставленные другими пользователями.</small>
+            </p>
+            <div class="user_opinions">
+                <div class="user_opinion">
+                    <img src="/upload/iblock/a64/go.png" border="0" alt="" width="32" height="32">
+
+                    <p>Хороший человек <span>[ 3 ]</span></p>
+
+                    <div class="emptyClear"></div>
+                </div>
+                <div class="user_opinion">
+                    <img src="/upload/iblock/03f/kr.png" border="0" alt="" width="32" height="32">
+
+                    <p>Красава <span>[ 1 ]</span></p>
+
+                    <div class="emptyClear"></div>
+                </div>
+                <div class="user_opinion">
+                    <img src="/upload/iblock/49f/zanitibi.png" border="0" alt="" width="32" height="32">
+
+                    <p>Забанить бы <span>[ 0 ]</span></p>
+
+                    <div class="emptyClear"></div>
+                </div>
+                <div class="user_opinion">
+                    <img src="/upload/iblock/e29/flo.png" border="0" alt="" width="32" height="32">
+
+                    <p>Флудер <span>[ 1 ]</span></p>
+
+                    <div class="emptyClear"></div>
+                </div>
+                <div class="user_opinion">
+                    <img src="/upload/iblock/e4a/tr.png" border="0" alt="" width="32" height="32">
+
+                    <p>Тролль <span>[ 1 ]</span></p>
+
+                    <div class="emptyClear"></div>
+                </div>
+                <div class="user_opinion">
+                    <img src="/upload/iblock/95f/ny.png" border="0" alt="" width="32" height="32">
+
+                    <p>Няша <span>[ 2 ]</span></p>
+
+                    <div class="emptyClear"></div>
+                </div>
+                <div class="user_opinion">
+                    <img src="/upload/iblock/f04/fid.png" border="0" alt="" width="32" height="32">
+
+                    <p>Фидер <span>[ 0 ]</span></p>
+
+                    <div class="emptyClear"></div>
+                </div>
+                <div class="user_opinion">
+                    <img src="/upload/iblock/38c/cool.png" border="0" alt="" width="32" height="32">
+
+                    <p>Сильный игрок <span>[ 1 ]</span></p>
+
+                    <div class="emptyClear"></div>
+                </div>
+                <div class="user_opinion">
+                    <img src="/upload/iblock/a17/un.png" border="0" alt="" width="32" height="32">
+
+                    <p>Анманер <span>[ 0 ]</span></p>
+
+                    <div class="emptyClear"></div>
+                </div>
+                <div class="user_opinion">
+                    <img src="/upload/iblock/c91/uv.png" border="0" alt="" width="32" height="32">
+
+                    <p>Уважаемый <span>[ 0 ]</span></p>
+
+                    <div class="emptyClear"></div>
+                </div>
+            </div>
+
+        </div>
+        <!-- end profileNews -->
+
+        <!-- profileNews -->
+        <script type="text/javascript">if (window.location.hash != '' && window.location.hash != '#') top.BX.ajax.history.checkRedirectStart('bxajaxid', 'ea14629443cd3412833ce4e9e8b67004')</script>
+        <div id="comp_ea14629443cd3412833ce4e9e8b67004">
+
+            <div class="b-profileBlock b-profileGallery">
+                <p class="b-profileBlock__title collapsible_title open"><a href="/users-galleries/38487/">Галерея
+                    actuosus</a><!--//<span class="figure">[18]</span>//-->
+                    <!--			<small>Фотографии команды</small> </p>-->
+                </p>
+
+                <div class="collapsible_wrapper">
+
+                    <form id="more_frm_photo" action="/users/10/" method="post"><input type="hidden" name="bxajaxid"
+                                                                                       id="bxajaxid_ea14629443cd3412833ce4e9e8b67004_8BACKi"
+                                                                                       value="ea14629443cd3412833ce4e9e8b67004"><input
+                            type="hidden" name="AJAX_CALL" value="Y">
+                        <ul class="b-profileGallery__list">
+
+                            <a style="margin-left: 40%;margin-top: 25%;position: absolute;"
+                               href="/users-galleries/38487/?add_p=1">Загрузить фото</a>
+                        </ul>
+
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

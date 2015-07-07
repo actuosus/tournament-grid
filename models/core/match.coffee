@@ -10,6 +10,7 @@ mongoose = require 'mongoose'
 Schema = mongoose.Schema
 ObjectId = Schema.ObjectId
 socketNotifyPlugin = require '../../lib/mongoose'
+deepPopulate = require('mongoose-deep-populate')
 
 MatchSchema = new Schema
   sort_index: type: Number
@@ -46,5 +47,19 @@ MatchSchema.pre 'save', (next)->
   @link = "/matches/#{@id}"
   next()
 
+MatchSchema.methods.loc = (key, lang)->
+#  console.log key, lang, @[key], @["_#{key}"]
+  if @["_#{key}"]?[lang]
+    @["_#{key}"][lang]
+  else
+    @[key]
+
+MatchSchema.virtual('entrant1Type').get -> @get('_entrant1Type') or 'team'
+MatchSchema.virtual('entrant2Type').get -> @get('_entrant2Type') or 'team'
+
+MatchSchema.virtual('id').get -> @_id.toHexString()
+MatchSchema.set 'toJSON', virtuals: yes
+
+MatchSchema.plugin deepPopulate
 
 module.exports = MatchSchema

@@ -6,13 +6,13 @@
  * Time: 05:21
 ###
 
-define ['cs!../core'],->
+define ['cs!../core'], ->
   App.Game = DS.Model.extend
-    primaryKey: '_id'
+#    primaryKey: '_id'
     title: DS.attr 'string'
     link: DS.attr 'string'
 
-    # Relationships
-    match: DS.belongsTo('App.Match', {inverse: 'games'})
+  # Relationships
+    match: DS.belongsTo('match', {inverse: 'games'})
 
   App.Game.toString = -> 'Game'

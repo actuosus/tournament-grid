@@ -12,10 +12,13 @@ Stage = require('../../models').Stage
 exports.list = (req, res)->
   query = Stage.find({})
   query.where('_id').in(req.query?.ids) if req.query?.ids
+#  query.deepPopulate('rounds.matches')
   query.exec (err, docs)-> res.send stages: docs
 
 exports.item = (req, res)->
-  Stage.where('_id', req.params._id).findOne().exec (err, doc)->
+  Stage.where('_id', req.params._id)
+  .findOne()
+  .exec (err, doc)->
     if doc
       res.send stage: doc
     else

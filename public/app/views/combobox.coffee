@@ -6,7 +6,7 @@
  * Time: 05:21
 ###
 
-define ['cs!./autocomplete_text_field'], ->
+define ['ehbs!disclosure', 'cs!./autocomplete_text_field'], ->
   App.ComboBoxView = Em.ContainerView.extend
     classNames: ['select', 'combobox']
     childViews: [
@@ -27,8 +27,9 @@ define ['cs!./autocomplete_text_field'], ->
 
     currentValueView: Em.View.extend
       classNames: ['current-value']
-      template: Em.Handlebars.compile '{{view.parentView.currentLabel}}'
       contentBinding: 'parentView.autocompleteTextFieldView.selection'
+      currentLabelChanged: (-> @rerender() ).observes('parentView.currentLabel')
+      render: (_)-> _.push @get 'parentView.currentLabel'
 
     disclosureButtonView: Em.View.extend
       classNames: ['disclosure-button', 'non-selectable']
@@ -42,13 +43,7 @@ define ['cs!./autocomplete_text_field'], ->
           '_show_list'.loc()
       ).property('menuView.isVisible')
 
-      template: Em.Handlebars.compile("""
-                                      {{#if view.menuView.isVisible}}
-                                        <i class="disclosure-icon">▴</i>
-                                      {{else}}
-                                        <i class="disclosure-icon">▾</i>
-                                      {{/if}}
-                                       """)
+      templateName: 'disclosure'
       click: -> @get('parentView.autocompleteTextFieldView').showAll()
 
     autocompleteTextFieldView: App.TextField.extend
@@ -70,7 +65,7 @@ define ['cs!./autocomplete_text_field'], ->
       attributeBindings: ['title', 'type']
       type: 'button'
       title: '_reset'.loc()
-      template: Em.Handlebars.compile('&times;')
+      render: (_)-> _.push '&times;'
       isVisible: Em.computed.notEmpty 'parentView.selection'
 
       click: -> @get('parentView').reset()

@@ -25,19 +25,19 @@ define [
         tagName: 'button'
         classNames: ['btn-clean']
         mapViewBinding: 'parentView.mapView'
-        template: Em.Handlebars.compile '+'
+        render: (_)-> _.push '+'
         click: -> @get('mapView').zoomIn(animated = yes)
 
       zoomOutButtonView: Em.View.extend
         tagName: 'button'
         classNames: ['btn-clean']
         mapViewBinding: 'parentView.mapView'
-        template: Em.Handlebars.compile '-'
+        render: (_)-> _.push '-'
         click: -> @get('mapView').zoomOut(animated = yes)
 
       resetButtonView: Em.View.extend
         tagName: 'button'
         classNames: ['btn-clean']
         mapViewBinding: 'parentView.mapView'
-        template: Em.Handlebars.compile '☒'
+        render: (_)-> _.push '☒'
         click: -> @get('mapView').reset(animated = yes)

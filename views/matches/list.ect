@@ -1,0 +1,73 @@
+<% extend 'layout.ect' %>
+
+<div class="i-news cf">
+    <p class="b-titleIndex"><%- @__ 'Matches' %></p>
+
+    <ul class="b-news">
+        <% for doc in @docs : %>
+        <li id="bx_2369909590_24049" class="item">
+
+            <p class="item__title">
+
+                <a href="/matches/<%- doc.id %>" class="item__ico">
+                    <img title=""
+                         src="/bitrix/components/VIRTUS.PRO/news.main.list/templates/.default/images/img.game.hover.jpg"
+                         width="19" height="19">
+                </a>
+
+                <a class="item__hot" href="JavaScript:void(0)" title="HOT"></a>
+
+                <a class="vp-news-header" href="/matches/<%- doc.id %>"><%-
+                    doc.loc('title', @language) %></a>
+
+            </p>
+
+            <img class="item__img" src="/upload/iblock/6cd/1 (1).jpg"
+                 title="Тестовая новость 1">
+
+            <% if doc.start_date : %>
+            <span class="item__date"><%- @moment(doc.start_date).format('DD.MM.YYYY HH:mm') %></span>
+            <% end %>
+
+            <% if doc.author : %>
+            <a target="_blank" href="/users/di7spider/" class="item__author">Гуров Дмитрий</a>
+            <% end %>
+
+            <p><%- doc.description %></p>
+
+            <div class="item__hide"></div>
+
+            <div class="item__links">
+                <div class="item__links__column"><a target="_blank" href="/#1"
+                                                    title="тест1">
+                    тест1
+                </a><a target="_blank" href="/#2" title="тест2">
+                    тест2
+                </a><a target="_blank" href="/#3" title="тест3">
+                    тест3
+                </a></div>
+                <div class="item__links__column"><a target="_blank" href="/#4"
+                                                    title="тест4">
+                    тест4
+                </a><a target="_blank" href="/#5" title="">
+
+                </a></div>
+            </div>
+
+            <div class="item__bottom">
+
+                <%- @__ 'Comments' %>
+                                <span class="comments">
+                                    7 <i class="comments__rightEdge"></i>
+                                </span>
+                <span class="likes"><span class="raiting_ajax r_ajax_24049_1"
+                                          data-rid="24049_1">+4</span><i
+                        class="likes__rightEdge"></i></span>
+
+                <a newsid="24049" class="more vp-show-this-news" href="" title=""><%- @__ 'Expand' %></a>
+
+            </div>
+        </li>
+        <% end %>
+    </ul>
+</div>

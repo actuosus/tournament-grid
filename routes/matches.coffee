@@ -8,7 +8,10 @@
 Match = require('../models').Match
 
 exports.list = (req, res)->
-  Match.find({}).sort('name').exec (err, docs)->
+  Match.find({})
+  .deepPopulate('games')
+  .sort('name')
+  .exec (err, docs)->
     res.render 'matches/list.ect', title: 'Matches', docs: docs
 
 exports.item = (req, res)->
@@ -16,12 +19,14 @@ exports.item = (req, res)->
     .populate('author')
     .populate('entrant1_id')
     .populate('entrant2_id')
+    .deepPopulate('games')
     .exec (err, doc)->
       console.log doc
       res.render 'matches/item.ect', title: 'Match', doc: doc
 
 exports.createForm = (req, res)->
   res.render 'matches/form.ect', title: 'Match', doc: {}
+
 
 exports.create = (req, res)->
   console.log req.body

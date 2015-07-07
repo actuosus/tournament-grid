@@ -1,16 +1,16 @@
 <thead>
 <tr>
     <th colspan="2">
-        <span class="lineup-grid-item-name"><i {{bindAttr class=":country-flag-icon :team-country-flag-icon view.content.country.flagClassName"}}></i>{{view.content.name}}</span>
+        <span class="lineup-grid-item-name"><i {{bind-attr class=":country-flag-icon :team-country-flag-icon view.content.country.flagClassName"}}></i>{{view.content.name}}</span>
         <button class="btn-clean remove-btn remove"><i class="icon-remove remove">&times;</i></button>
     </th>
 </tr>
 </thead>
 <tbody>
     {{#each view.content.players}}
-    <tr {{bindAttr class=":lineup-grid-item-player-row stateManager.currentState.isError"}}>
+    <tr {{bind-attr class=":lineup-grid-item-player-row stateManager.currentState.isError"}}>
         <td>
-            <i {{bindAttr class=":country-flag-icon :player-country-flag-icon this.country.flagClassName"}}></i>{{nickname}}
+            <i {{bind-attr class=":country-flag-icon :player-country-flag-icon this.country.flagClassName"}}></i>{{nickname}}
         </td>
         <td>
             {{#if shortName}}
@@ -21,6 +21,6 @@
     </tr>
     {{/each}}
     <tr>
-        <td>{{view App.AutocompleteTextField controllerBinding="App.playersController" entrantBinding=view.content}}<td>
+        <td>{{view App.AutocompleteTextField controllerBinding="App.playersController" entrantBinding=view.content}}</td>
     </tr>
 </tbody>

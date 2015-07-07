@@ -7,10 +7,10 @@
 ###
 
 define [
-  'text!../../templates/grid.handlebars'
+  'ehbs!grid.handlebars'
   'cs!../../core'
 ], (template)->
-  Em.TEMPLATES.grid = Em.Handlebars.compile template
+#  Em.TEMPLATES.grid = Em.Handlebars.compile template
   App.MatchGridView = Em.View.extend
     templateName: 'grid'
     classNames: ['match-grid']

@@ -12,13 +12,17 @@ exports.list = (req, res)->
   query = Report.find({})
   query.where('_id').in(req.query?.ids) if req.query?.ids
   query.exec (err, docs)->
-    reports = docs.map (doc)-> doc.toObject virtuals: yes
-    res.send reports: reports
+    unless err
+      reports = docs.map (doc)-> doc.toObject virtuals: yes
+      res.send reports: reports
+    else
+      res.send 404, errors: err
 
 exports.item = (req, res)->
   Report
   .where('_id', req.params._id)
   .findOne()
+  .deepPopulate('team_refs.players team_refs.team_id.players')
   .exec (err, doc)->
     if doc
       res.send report: doc.toObject(virtuals: yes)

@@ -6,14 +6,14 @@
  * Time: 17:58
 -->
 
-<td>{{view App.NumberView classNames="position-label" valueBinding=position isEditableBinding=App.isEditingMode}}</td>
-<td class="name">{{view App.TeamStandingCellView contentBinding=entrant}}</td>
-<td>{{view App.NumberView classNames="matches-played-label" valueBinding=matchesPlayed isEditableBinding=App.isEditingMode}}</td>
-<td>{{view App.NumberView classNames="wins-label" valueBinding=view.content.wins isEditableBinding=App.isEditingMode}}</td>
-<td>{{view App.NumberView classNames="draws-label" valueBinding=draws isEditableBinding=App.isEditingMode}}</td>
-<td class="team-losses">{{view App.NumberView classNames="losses-label" valueBinding=losses isEditableBinding=App.isEditingMode}}</td>
-<td>{{view App.NumberView classNames="points-label" valueBinding=points isEditableBinding=App.isEditingMode}}</td>
-<td>{{view App.EditableLabel classNames="difference-label" valueBinding=difference isEditableBinding=App.isEditingMode}}</td>
+<td>{{view App.NumberView classNames="position-label" valueBinding="position" isEditableBinding="App.isEditingMode"}}</td>
+<td class="name">{{view App.TeamStandingCellView contentBinding="entrant"}}</td>
+<td>{{view App.NumberView classNames="matches-played-label" valueBinding="matchesPlayed" isEditableBinding="App.isEditingMode"}}</td>
+<td>{{view App.NumberView classNames="wins-label" valueBinding="view.content.wins" isEditableBinding="App.isEditingMode"}}</td>
+<td>{{view App.NumberView classNames="draws-label" valueBinding="draws" isEditableBinding="App.isEditingMode"}}</td>
+<td class="team-losses">{{view App.NumberView classNames="losses-label" valueBinding="losses" isEditableBinding="App.isEditingMode"}}</td>
+<td>{{view App.NumberView classNames="points-label" valueBinding="points" isEditableBinding="App.isEditingMode"}}</td>
+<td>{{view App.EditableLabel classNames="difference-label" valueBinding="difference" isEditableBinding="App.isEditingMode"}}</td>
 {{#if App.isEditingMode}}
     <td>
         <button class="btn-clean remove-btn">&times;</button>

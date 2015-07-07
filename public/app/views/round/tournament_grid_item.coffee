@@ -23,17 +23,18 @@ define [
       contentBinding: 'parentView.content'
       valueBinding: 'parentView.content.title'
       isEditableBinding: 'App.isEditingMode'
-      valueChanged: (->
-        content = @get 'content'
-        if content
-          model = content.get 'content'
-          if model
-            model.set 'title', @get 'value'
-            model.save()
-          else
-            @set 'content.title', @get 'value'
-            @get('content').save()
-      ).observes('value')
+      # TODO Return
+#       valueChanged: (->
+#         content = @get 'content'
+#         if content
+#           model = content.get 'content'
+#           if model
+#             model.set 'title', @get 'value'
+#             model.save()
+#           else
+#             @set 'content.title', @get 'value'
+#             @get('content').save()
+#       ).observes('value')
 
     contentView: Em.CollectionView.extend
       classNames: ['tournament-round']
@@ -60,11 +61,13 @@ define [
         titleBinding: 'content.id'
         attributeBindings: ['title']
         isVisibleBinding: 'content.isVisible'
+        dateFormat: 'DD.MM.YY HH:mm'
 
         labelView: Em.View.extend
           classNames: ['tournament-match-label']
           contentBinding: 'parentView.content.label'
-          template: Em.Handlebars.compile '{{view.content}}'
+          contentChanged: (-> @rerender() ).observes('content')
+          render: (_)-> _.push @get('content') if @get('content')
 
         isEditable: (->
           App.get('isEditingMode') and (@get('content.status') is 'opened')
@@ -121,7 +124,7 @@ define [
 
         connectorView: Em.View.extend
           classNames: ['connector']
-          template: Em.Handlebars.compile('<div class="one"></div><div class="another"></div>')
+          render: (_)-> _.push '<div class="one"></div><div class="another"></div>'
           contentBinding: 'parentView.content'
           contentIndexBinding: 'parentView.contentIndex'
           roundIndexBinding: 'parentView.roundIndex'

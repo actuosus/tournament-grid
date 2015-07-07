@@ -30,9 +30,9 @@ define [
       titleBinding: 'parentView.description'
       textBinding: 'parentView.title'
       collapsedBinding: 'parentView.collapsed'
-
-      template: Em.Handlebars.compile('{{view.text}}')
-#      click: -> @get('parentView').toggle()
+      textChanged: (-> @rerender() ).observes('text')
+      render: (_)-> _.push @get 'text'
+      doubleClick: -> @get('parentView').toggle()
 
     toolbarView: Em.ContainerView.extend()
 #      childViews: ['loaderView', 'statusTextView']
@@ -76,7 +76,7 @@ define [
       classNames: ['btn', 'btn-round', 'help-btn']
       attributeBindings: ['title']
       title: '_help'.loc()
-      template: Em.Handlebars.compile '?'
+      render: (_)-> _.push '?'
 
     toggleButtonView: Em.View.extend
       tagName: 'button'

@@ -20,7 +20,7 @@ define [
   'cs!./router'
 
   'cs!./mixins/translatable'
-  'cs!./mixins/collapsable'
+  'cs!./mixins/collapsible'
   'cs!./translators/yandex'
 ], ()->
 
@@ -67,8 +67,8 @@ define [
         after: (name, end, payload, start)->
           duration = Math.round(end - start)
   #        console.log(name, payload, duration, 'ms')
-          if payload?.object?.match /MatchGridContainer|GridView/
-            console.log('rendered', payload, 'took', duration, 'ms')
+#           if payload?.object?.match /MatchGridContainer|GridView/
+#             console.log('rendered', payload, 'took', duration, 'ms')
   #        template = payload.template
   #        if template
   #          console.log('rendered', template, 'took', duration, 'ms')
@@ -89,7 +89,7 @@ define [
 #    App.socketController.join()
 
     App.peroids = Em.ArrayController.create
-      content: [
+      model: [
         Em.Object.create name:'Все', id: 'all'
 
         Em.Object.create name:'Период', id: 'period'
@@ -103,7 +103,7 @@ define [
       ]
 
     App.matchTypes = Em.ArrayController.create
-      content: [
+      model: [
         Em.Object.create name:'Все', id: 'all'
 
         Em.Object.create name:'_future_match_type'.loc(), id: 'future'
@@ -113,7 +113,7 @@ define [
       ]
 
     App.visualTypes = Em.ArrayController.create
-      content: [
+      model: [
         Em.Object.create name:'_single'.loc(), id: 'single'
         Em.Object.create name:'_double'.loc(), id: 'double'
         Em.Object.create name:'_group'.loc(), id: 'group'
@@ -123,7 +123,7 @@ define [
 
 #
 ##    App.racesController = Em.ArrayController.create
-##      content: [
+##      model: [
 ##        Em.Object.create name: '_zerg'.loc(), id: 'zerg'
 ##        Em.Object.create name: '_protoss'.loc(), id: 'protos'
 ##        Em.Object.create name: '_terrain'.loc(), id: 'terrain'

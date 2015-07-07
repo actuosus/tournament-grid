@@ -12,10 +12,13 @@ Stage = require('../../models').Stage
 exports.list = (req, res)->
   query = Round.find({})
   query.where('_id').in(req.query?.ids) if req.query?.ids
+  query.deepPopulate('matches.games result_sets')
   query.exec (err, docs)-> res.send rounds: docs
 
 exports.item = (req, res)->
-  Round.where('_id', req.params._id).findOne().exec (err, doc)->
+  Round.where('_id', req.params._id)
+  .deepPopulate('matches.games result_sets')
+  .findOne().exec (err, doc)->
     if doc
       res.send round: doc
     else
@@ -40,7 +43,11 @@ exports.create = (req, res) ->
       await r.save defer err, doc
       stage.rounds.push r
       await stage.save defer err, stage
-      res.send round: doc
+      Round.where('_id', doc._id)
+      .deepPopulate('matches.games result_sets')
+      .findOne().exec (err, doc)->
+        if doc
+          res.send round: doc
     else
       res.send 422, errors: {stage_id: 'required'}
   else
@@ -61,7 +68,12 @@ exports.update = (req, res)->
 #      await r.update(round, defer err, r)
       await Round.findByIdAndUpdate req.params._id, { $set: round }, defer err, r
       await Stage.findByIdAndUpdate round.stage_id, {$push: {rounds: r._id}}, defer updateErr, stage
-      res.send round: r
+
+      Round.where('_id', req.params._id)
+      .deepPopulate('matches.games result_sets')
+      .findOne().exec (err, doc)->
+        if doc
+          res.send round: doc
     else
       res.send 404, errors: 'not found'
   else

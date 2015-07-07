@@ -1,10 +1,17 @@
-<html>
+<html lang="<%- @language %>">
 <head>
     <link rel="stylesheet" href="<%- @staticDomain %>/agamapro-virtus.pro-ebb4d51390f8/css/style.css" media="screen,projection"/>
-    
+
+    <title><%- @__('Report') %> <%- @doc.title %></title>
     <style type="text/css">
         body {
-            background: black;
+            background: #171717;
+        }
+        .i-wrapper {
+            padding-top: 0;
+        }
+        .i-container {
+            background: none;
         }
     </style>
 </head>
@@ -12,14 +19,29 @@
         <div class="i-wrapper cf">
             <div class="i-container cf">
                 <div class="b-content">
-                    <div id="content"></div>
+                    <div id="content">
+                        <div class="block-container named-container collapsed">
+                            <p class="b-profileBlock__title close"><%- @__('Tournament results table') %></p>
+                            <img src="/images/loader.gif" class="loader"/>
+                            <div class="status-text" id="loader-status"><%- @__('Loading') %>…</div>
+                            <div class="error-text" id="loader-error"></div>
+                        </div>
+                    </div>
                     <script type="text/javascript">
-                        window.debug = true;
+                        window.DEBUG = true;
                         window.grid = {
                             reportId: '<%- @doc.id %>',
+                            //        reportId: '33664',
+                            //        reportId: '38272',
+                            //        reportId: '107852',
+                            //        reportId: '113576',
                             config: {
                                 rootElement: '#content',
-                                languages: <%- JSON.stringify(@languages) %>
+                                authUrl: '/auth',
+                                languages: <%- JSON.stringify(@languages) %>,
+                                socket: {
+                                    url: 'http://v3.virtuspro.org:33891/'
+                                }
                             }
                         };
                     </script>
@@ -28,10 +50,11 @@
                     <% else: %>
                     <link rel="stylesheet" href="/app/stylesheets/main.css" />
                     <% end %>
+                    <link rel="stylesheet" href="/vendor/styles/flags.css" />
                     <% if @node_env is 'production': %>
                     <script data-main="/bundle/app.js" src="/vendor/scripts/require.min.js"></script>
                     <% else: %>
-                    <script data-main="/app/main.js" src="/vendor/scripts/require.js"></script>
+                    <script data-main="/app.main.js" src="/vendor/scripts/require.min.js"></script>
                     <% end %>
                 </div>
             </div>

@@ -7,6 +7,7 @@
 ###
 
 define [
+  'ehbs!game/matchItemView',
   'cs!./form'
   'cs!../match/form'
   'cs!../remove_button'
@@ -31,13 +32,13 @@ define [
       href: Em.computed.alias 'match.link'
       classNames: ['games-info-bar-label']
       isVisibleBinding: 'parentView.showInfoLabel'
-      template: Em.Handlebars.compile "{{loc '_info'}}"
+      render: (_)-> _.push '_info'.loc()
 
       matchBinding: 'parentView.match'
 
       click: (event)->
         return unless App.get('isEditingMode')
-        popup = App.PopupView.create target: @
+        popup = App.PopupView.create target: @, parentView: @, container: @container
         popup.pushObject(
           App.MatchForm.create
             popupView: popup
@@ -61,7 +62,7 @@ define [
         classNameBindings: ['isUpdating']
         attributeBindings: ['title']
         titleBinding: 'content.title'
-        template: Em.Handlebars.compile '<a target="_blank" {{bindAttr href="view.content.link" title="view.content.title"}}>{{view.index}}</a>'
+        templateName: 'game/matchItemView'
         
         index: (-> @get('contentIndex') + 1).property('contentIndex')
 
@@ -69,7 +70,7 @@ define [
         contextMenuActions: ['edit', 'deleteRecord:delete']
 
         edit: ->
-          popup = App.PopupView.create target: @
+          popup = App.PopupView.create target: @, parentView: @, container: @container
           popup.pushObject(
             App.GameForm.create
               popupView: popup
@@ -95,12 +96,13 @@ define [
       classNames: 'games-create-button'
       attributeBindings: ['title']
       title: '_add_game'.loc()
-      template: Em.Handlebars.compile '<button class="btn-clean create-btn">+</button>'
+      tagName: 'button'
+      render: (_)-> _.push '+'
 
       matchBinding: 'parentView.match'
 
       click: ->
-        popup = App.PopupView.create target: @
+        popup = App.PopupView.create target: @, parentView: @, container: @container
         popup.pushObject(
           App.GameForm.create
             popupView: popup

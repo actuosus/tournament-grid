@@ -8,14 +8,14 @@
 
 <div class="match-extra-label"></div>
 
-<div class="match-start-date" {{bindAttr title="view.content.longDateString"}}>{{moment view.content.date format=DD.MM.YY}}</div>
+<div class="match-start-date" {{bind-attr title="view.content.longDateString"}}>{{moment view.content.date format=DD.MM.YY}}</div>
 {{#if view.content.games.length}}
 <div class="match-info-bar">
-    {{view App.GamesInfoBarView contentBinding=view.content.games showInfoLabel=true}}
+    {{view App.GamesInfoBarView contentBinding="view.content.games" showInfoLabel=true}}
 </div>
 {{/if}}
 <div class="teams-container">
     {{#each view.content.entrants }}
-        {{view App.TeamGridItemView contentBinding=this matchBinding=view.content}}
+        {{view App.TeamGridItemView contentBinding=this matchBinding="view.content"}}
     {{/each}}
 </div>

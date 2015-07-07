@@ -19,6 +19,8 @@ module.exports.Match = [
   map_type: 'Хумельсдорф'
   description: 'Дополнительно описание, которе вбивается'
   link: '/check/this/out'
+  _entrant1Type: 'team'
+  _entrant2Type: 'team'
 ,
   _id: '50fd102c3612183b15000002',
   sort_index: 1
@@ -155,8 +157,8 @@ module.exports.Match = [
 ,
   _id: '51142bdc323f4b360c000007',
   title: 'Stephano vs Wikipediots',
-  entrant1_id: '50fcdf189c68d90f07000003',
-  entrant2_id: '50fcdf189c68d90f07000002',
+  entrant1_id: '5177479d0d00f84b17000529',
+  entrant2_id: '5177479d0d00f84b1700052a',
   entrant1_points: 2,
   entrant2_points: 7,
   date: new Date(Date.now() + Math.floor(Math.random() * 10000000000))
@@ -177,8 +179,8 @@ module.exports.Match = [
 ,
   _id: '51142bdc323f4b360c00000f',
   title: 'Bly vs Wikipediots',
-  entrant1_id: '50fcdf189c68d90f07000004',
-  entrant2_id: '50fcdf189c68d90f07000002',
+  entrant1_id: '5177479d0d00f84b17000529',
+  entrant2_id: '5177479d0d00f84b1700052a',
   entrant1_points: 2,
   entrant2_points: 2,
   date: new Date(Date.now() + Math.floor(Math.random() * 10000000000))
@@ -227,6 +229,28 @@ module.exports.Match = [
   entrant2_points: 7,
   date: ''
   round_id: '5114472b6da8bd2910000008'
+  map_type: 'Комарин'
+  description: 'Короткое описание основного текста, для того'
+,
+  _id: '51142bdc323f4b360c000013',
+  title: 'LeX vs evil',
+  entrant1_id: '50fcdf189c68d90f07000002',
+  entrant2_id: '5116163383cf2f2534000002',
+  entrant1_points: 1,
+  entrant2_points: 2,
+  date: new Date(Date.now() + Math.floor(Math.random() * 10000000000))
+  round_id: '51142b464242d3110c000025'
+  map_type: 'Комарин'
+  description: 'Короткое описание основного текста, для того'
+,
+  _id: '51142bdc323f4b360c000014',
+  title: 'LeX vs evil',
+  entrant1_id: '50fcdf189c68d90f07000002',
+  entrant2_id: '5116163383cf2f2534000002',
+  entrant1_points: 3,
+  entrant2_points: 4,
+  date: ''
+  round_id: '51142b464242d3110c000025'
   map_type: 'Комарин'
   description: 'Короткое описание основного текста, для того'
 ]

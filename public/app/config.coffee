@@ -11,8 +11,10 @@ define ['jquery'], ->
     api:
 #      host: '//virtus-pro.herokuapp.com'
 #      host: 'http://virtuspro.local:8001'
-#      host: 'http://v3.virtuspro.org'
+#      host: 'http://develop.virtus.pro'
+#      host: 'http://virtus.pro'
       namespace: 'api'
+    remote: authUrl: '/auth'
     languages: ['ru', 'en', 'de']
     currentLanguage: null
   if window.grid?.config

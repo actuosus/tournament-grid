@@ -18,7 +18,7 @@ define ->
         classNames: ['btn-clean', 'remove-btn', 'remove']
         attributeBindings: ['title']
         title: '_remove'.loc()
-        template: Em.Handlebars.compile '×'
+        render: (_)-> _.push '×'
 
         click: -> @set('parentView.textFieldView.value', '')
 
@@ -41,5 +41,6 @@ define ->
     contentView: Em.CollectionView.extend
       contentBinding: 'parentView.content'
       itemViewClass: Em.View.extend({
-        template: Em.Handlebars.compile '{{view.content.team.name}}'
+        nameChanged: (-> @rerender() ).observes('content.team.name')
+        render: (_)-> _.push @get 'content.team.name'
       })

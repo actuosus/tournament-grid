@@ -6,6 +6,7 @@
 ###
 
 define [
+  'ehbs!linkedName'
   'cs!../../core'
   'cs!../remove_button'
 ],->
@@ -26,16 +27,18 @@ define [
         teamRef.set 'captain', null
       else
         teamRef.set 'captain', @get 'content'
-      teamRef.store.commit()
+      teamRef.save()
+      teamRef.store.flushPendingSave()
 
     teamRefBinding: 'parentView.teamRef'
 
     countryFlagView: App.CountryFlagView.extend
       contentBinding: 'parentView.content.country'
-      click: ->
-        @popup = App.PopupView.create target: @
-        @popup.pushObject App.CountryGridView.create content: App.Country.all()
-        @popup.appendTo App.get 'rootElement'
+      doubleClick: ->
+        if App.get('isEditingMode')
+            @popup = App.PopupView.create target: @, parentView: @, container: @container
+            @popup.pushObject App.CountryGridView.create content: App.countries
+            @popup.appendTo App.get 'rootElement'
 
     raceFlagView: Em.View.extend
       tagName: 'i'
@@ -54,10 +57,11 @@ define [
       classNames: ['lineup-grid-item-name']
       attributeBindings: ['title']
       href: Em.computed.alias 'content.link'
+      name: Em.computed.alias 'content.nickname'
       title: (->
         @get('content.id') if App.get('isEditingMode')
       ).property('App.isEditingMode')
-      template: Em.Handlebars.compile '<a target="_blank" {{bindAttr href="view.href"}}>{{view.content.nickname}}</a>'
+      templateName: 'linkedName'
 
     realNameView: Em.View.extend
       contentBinding: 'parentView.content'
@@ -67,7 +71,10 @@ define [
         shortName = @get('content.shortName')
         yes if shortName and shortName isnt ''
       ).property('content.shortName')
-      template: Em.Handlebars.compile '({{view.content.shortName}})'
+      render: (_)->
+        strings = if @get('hasShortName') then @get('content.shortName') else ''
+        _.push strings
+      hasShortNameChanged: (-> @rerender() ).observes('hasShortName')
 
     captianMarkerView: Em.View.extend
       contentBinding: 'parentView.content'
@@ -78,7 +85,7 @@ define [
       ).property('teamRef.captain')
       attributeBindings: ['title']
       title: '_captain'.loc()
-      template: Em.Handlebars.compile 'К'
+      render: (_)-> _.push 'К'
 
     deleteRecord: ->
       report = App.get('report')
@@ -92,7 +99,7 @@ define [
       players.removeObject player
       player.set 'team', teamRef.get('team')
       player.set 'report', report
-      player.store.commit()
+      player.save()
 
     removeButtonView: App.RemoveButtonView.extend
       title: '_remove_player'.loc()

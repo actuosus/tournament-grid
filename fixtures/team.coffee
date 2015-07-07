@@ -22,10 +22,12 @@ teams = [
   _id: '50fcdf189c68d90f07000003',
   name: 'Stephano',
   country_id: '50fcdaf969f206c106000007'
+  players: ['5107d4cd351fb19719000007']
 ,
   _id: '50fcdf189c68d90f07000004',
   name: 'Bly',
   country_id: '50fcdaf969f206c106000006'
+  players: ['5107d4cd351fb19719000006']
 ,
   _id: '5116163383cf2f2534000002'
   name: 'Very long team name for testing purpose'

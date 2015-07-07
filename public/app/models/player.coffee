@@ -6,31 +6,31 @@
  * Time: 07:29
 ###
 
-define ['cs!../core', 'cs!./entrant'],->
+define ['cs!../core', 'cs!./entrant'], ->
   App.Player = App.Entrant.extend
-    primaryKey: '_id'
+#    primaryKey: '_id'
     nickname: DS.attr 'string'
     firstName: DS.attr 'string'
-    middleName: DS.attr 'string'
+#    middleName: DS.attr 'string'
     lastName: DS.attr 'string'
 
     name: Em.computed.alias 'nickname'
 
-    team: DS.belongsTo 'App.Team'
-    teamRef: DS.belongsTo('App.TeamRef', {inverse: 'players'})
+    team: DS.belongsTo 'team'
+    teamRef: DS.belongsTo('teamRef', {inverse: 'players'})
 
 #    matches: DS.hasMany 'App.Match'
 
-    # TODO Should add race functionality
+  # TODO Should add race functionality
 #    race: DS.belongsTo 'App.Race'
 
     shortName: (->
-      [@get('firstName'), @get('lastName')].compact().join(' ')
+      [@get('firstName'), @get('lastName')].compact().join(' ').trim()
     ).property('firstName', 'lastName')
 
-    # TODO Do we actualy need full name. Observers!
-#    fullName: (->
-#      [@get('firstName'), @get('middleName'), @get('lastName')].compact().join(' ')
-#    ).property('firstName', 'middleName', 'lastName')
+  # TODO Do we actualy need full name. Observers!
+  #    fullName: (->
+  #      [@get('firstName'), @get('middleName'), @get('lastName')].compact().join(' ')
+  #    ).property('firstName', 'middleName', 'lastName')
 
   App.Player.toString = -> 'Player'

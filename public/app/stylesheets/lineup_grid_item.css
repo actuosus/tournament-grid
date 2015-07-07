@@ -115,6 +115,8 @@
     -webkit-transition-duration: 0.3s;
     -webkit-transition-property: color;
     text-overflow: ellipsis;
+    max-width: 200px;
+    overflow: hidden;
 }
 
 .lineup-grid-item-real-name:hover {
@@ -124,6 +126,11 @@
 .lineup-grid-item-player-row .remove-btn {
     right: 6px;
     margin-top: -6px;
+    display: none;
+}
+
+.lineup-grid-item-player-row:hover .remove-btn {
+    display: block;
 }
 
 .lineup-grid-item-name-container {
@@ -189,16 +196,19 @@
 
 .lineup-grid-item-player-row .autocomplete-text-field .text-field {
     border: 0;
+    width: 100%;
 }
 
 .lineup-grid-item-name-container .country-flag-icon {
     margin: 9px 4px 0 8px;
+    padding-left: 0;
 }
 
 .lineup-grid-item-player-row .country-flag-icon {
     margin-top: 6px;
     margin-left: 8px;
     margin-right: 8px;
+    padding-left: 0;
 }
 
 .lineup-grid-item-name-container .count-btn {
@@ -209,6 +219,11 @@
 
 .lineup-grid-item-name-container .remove-btn {
     margin-top: -5px;
+    display: none;
+}
+
+.lineup-grid-item-name-container:hover .remove-btn {
+    display: block;
 }
 
 .lineup-grid-item-player-row.is-saving {
