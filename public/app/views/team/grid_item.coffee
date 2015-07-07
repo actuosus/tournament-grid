@@ -76,7 +76,9 @@ define [
     activateEditing: ->
       if @get('_isEditing')
         @set('autocompleteView.isVisible', yes)
-        @get('autocompleteView').trigger('focus')
+        setTimeout =>
+          @get('autocompleteView').trigger('focus')
+        , 300
 
     nameView: Em.View.extend
       classNames: ['team-name']
@@ -85,12 +87,16 @@ define [
 #      ).property('content')
       name: (->
         content = @get 'parentView.content'
+        if content?.get('content')
+          content = content.get('content')
         if App.Team.detectInstance(content)
           return content.get 'name'
         if App.Player.detectInstance(content)
           return content.get 'nickname'
       ).property('parentView.content.isLoaded')
-      template: Em.Handlebars.compile '{{view.name}}'#<a {{bindAttr href="view.href"}} target="_blank">
+#      template: Em.Handlebars.compile '{{view.name}}'#<a {{bind-attr href="view.href"}} target="_blank">
+      nameChanged: (-> @rerender() ).observes('name')
+      render: (_)-> _.push @get('name') if @get('name')
 
       click: -> @get('parentView')?.activateEditing()
 
@@ -156,7 +162,7 @@ define [
       classNames: ['btn-clean', 'remove-btn', 'team-reset-btn']
       attributeBindings: ['title']
       title: '_reset'.loc()
-      template: Em.Handlebars.compile('&times;')
+      render: (_)-> '&times;'
       isVisible: no
 
       contentChanged: (->

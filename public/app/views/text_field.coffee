@@ -56,6 +56,10 @@ define [
             event.preventDefault()
             event.stopPropagation()
             @get('parentView').autocompleteMenuselectPrevious()
+          when 13 # enter
+            event.preventDefault()
+            event.stopPropagation()
+            @insertNewline event
 
       keyUp: (event)->
         switch event.keyCode
@@ -71,6 +75,10 @@ define [
 
     focus: (event)-> @get('textFieldView').$().focus()
 
+    focusIn: ->
+      if @_autocompleteMenu and !@_autocompleteMenu.isDestroyed
+        @_autocompleteMenu.show()
+
     insertNewline: Em.K
 
     loaderView: App.LoaderView.extend
@@ -84,7 +92,7 @@ define [
       isVisible: (->
         @get 'parentView.isLoading'
       ).property('parentView.isLoading')
-      template: Em.Handlebars.compile '✖'
+      render: (_)-> _.push '✖'
       click: ->
         @get('parentView').cancelFetchingOfAutocompleteResults()
 
@@ -112,17 +120,20 @@ define [
         @_closeAutocompleteMenu()
         return
       if not @_autocompleteMenu or @_autocompleteMenu.isDestroyed
-        menuItemViewClass = @get('autocompleteDelegate.menuItemViewClass')
-        menuViewOptions =
-          minWidth: @$().width()
-          target: @
-          content: results
-          selectionBinding: 'target.selection'
-        menuViewOptions.itemViewClass = menuItemViewClass if menuItemViewClass
-        @_autocompleteMenu = App.MenuView.create menuViewOptions
-        @_autocompleteMenu.appendTo App.get('rootElement')
+        @_createAutocompleteMenu(results)
       else if not @_autocompleteMenu?.isDestroyed
         @_autocompleteMenu.set 'content', results
+
+    _createAutocompleteMenu: (results)->
+      menuItemViewClass = @get('autocompleteDelegate.menuItemViewClass')
+      menuViewOptions =
+        minWidth: @$().width()
+        target: @
+        content: results
+        selectionBinding: 'target.selection'
+      menuViewOptions.itemViewClass = menuItemViewClass if menuItemViewClass
+      @_autocompleteMenu = App.MenuView.create menuViewOptions
+      @_autocompleteMenu.appendTo App.get('rootElement')
 
     selectMenuItem: Em.K
 
@@ -135,10 +146,10 @@ define [
         @_autocompleteMenu = null
 
     autocompleteMenuSelectNext: ->
-      unless @_autocompleteMenu?.isDestroyed
+      if @_autocompleteMenu and !@_autocompleteMenu.isDestroyed
         @_autocompleteMenu.selectNext()
 
     autocompleteMenuselectPrevious: ->
-      unless @_autocompleteMenu?.isDestroyed
+      if @_autocompleteMenu and !@_autocompleteMenu.isDestroyed
         @_autocompleteMenu.selectPrevious()
 

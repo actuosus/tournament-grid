@@ -108,4 +108,8 @@ define {
   _save_all_results: 'Сохранить все результаты'
   _winner_bracket: 'Winner bracket'
   _loser_bracket: 'Loser bracket'
+  _nickname: 'Ник'
+  _first_name: 'Имя'
+  _middle_name: 'Отчество'
+  _last_name: 'Фамилия'
 }

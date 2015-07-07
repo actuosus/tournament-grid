@@ -14,7 +14,8 @@ http = require 'http'
 #redis.debug_mode = yes
 #spdy = require 'spdy'
 express = require 'express'
-#RedisStore = require('connect-redis')(express)
+session = require('express-session')
+RedisStore = require('connect-redis')(session)
 
 #vp = redis.createClient()
 #vp.select 1
@@ -119,17 +120,17 @@ app.configure ->
   app.use express.methodOverride()
 
   # Session support
-  console.log 'Redis', conf._redis
-#  app.use express.session(
-#    secret: 'Is it secure?'
-#    store: new RedisStore(
-#      host: conf._redis.host
-#      port: conf._redis.port
-#      pass: conf._redis.password
-#      db: conf._redis.db
-#    )
-#  )
-  app.use express.session secret: 'Is it secure?'
+#  console.log 'Redis', conf._redis
+  app.use express.session(
+    secret: 'Is it secure?'
+    store: new RedisStore(
+      host: conf._redis.host
+      port: conf._redis.port
+      pass: conf._redis.password
+      db: conf._redis.db
+    )
+  )
+#  app.use express.session secret: 'Is it secure?'
   app.use passport.initialize()
   app.use passport.session()
 
@@ -139,7 +140,7 @@ app.configure ->
     app.locals.user = req.user
     res.locals.language = req.language
     if req.language and req.language in languages
-      moment.lang req.language
+      moment.locale req.language
     res.locals.__ = res.__ = ->
       i18n.__.apply req, arguments
     res.locals.__n = res.__n = ->
@@ -318,6 +319,12 @@ app.get '/', passport.authenticate('basic'), (req, res)->
   res.redirect '/reports'
 #  res.render 'index.ect'
 
+app.get '/auth', (req, res)->
+  if app.locals.user
+    res.send {authorized: yes}
+  else
+    res.send {authorized: no}
+
 app.get '/unauthorized', (req, res)->
   res.statusCode = 401
   res.render 'unauthorized.ect'
@@ -334,11 +341,14 @@ app.get '/logs/:_id', ensureAuthenticated, routes.logs.item
 app.get '/authors', ensureAuthenticated, routes.authors.list
 app.get '/authors/:_id', ensureAuthenticated, routes.authors.item
 
+app.get '/users/:_id', ensureAuthenticated, routes.users.profile
+
 app.get '/reports', ensureAuthenticated, routes.reports.list
 app.get '/reports/create', ensureAuthenticated, routes.reports.createForm
 app.post '/reports/create', ensureAuthenticated, routes.reports.create
 app.get '/reports/:_id', ensureAuthenticated, routes.reports.item
 
+app.get '/matches', ensureAuthenticated, routes.matches.list
 app.get '/matches/:_id', ensureAuthenticated, routes.matches.item
 app.get '/games/:_id', ensureAuthenticated, routes.games.item
 

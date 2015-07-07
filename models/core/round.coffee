@@ -9,6 +9,7 @@
 mongoose = require 'mongoose'
 Schema = mongoose.Schema
 ObjectId = Schema.ObjectId
+deepPopulate = require('mongoose-deep-populate')
 
 RoundSchema = new Schema
   sort_index: type: Number
@@ -25,5 +26,7 @@ RoundSchema = new Schema
   team_refs: [type: ObjectId, ref: 'TeamRef']
 
   result_sets: [type: ObjectId, ref: 'ResultSet']
+
+RoundSchema.plugin deepPopulate
 
 module.exports = RoundSchema

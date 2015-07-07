@@ -29,7 +29,14 @@ define ->
       content = @get('content')
       content.close() if content
 
-    save: -> @get('content.store').commit()
+    save: ->
+        content = @get 'content'
+        if not App.Match.detectInstance content
+            @set 'content', @createRecord(content)
+            @get('content').save().then => @get('content.round').save()
+        else
+            @get('content').save()
+
     edit: ->
       popup = App.PopupView.create target: @
       popup.pushObject(
@@ -45,26 +52,24 @@ define ->
 
     deleteRecord: -> @get('content').deleteRecord()
 
-    createRecord: ->
-      record = App.Match.createRecord
-        sortIndex: @sortIndex
-        status: 'opened'
+    createRecord: (data)->
+      record = App.store.createRecord 'match', data
       round = @get 'round.content'
       unless round
-        round = @get('round').createRecord()
+        round = @get('round')?.createRecord()
       record.set 'round', round
       round.get('matches').addObject record
       record
 
-    setUnknownProperty: (key, value)->
-      content = @get 'content'
-      console.debug 'Setting property for match proxy', key, content
-      unless content
-        content = @createRecord()
-        @set 'content', content
-      content.set key, value
+#     setUnknownProperty: (key, value)->
+#       content = @get 'content'
+#       console.debug 'Setting property for match proxy', key, content
+#       unless content
+#         content = @createRecord()
+#         @set 'content', content
+#       content.set key, value
 
-    content: (->
+    contentIsLoaded: (->
       Em.run.later =>
         match = @get('round.content.matches')?.find (_)=>_.get('sortIndex') is @get('sortIndex')
         if match
@@ -80,13 +85,26 @@ define ->
           @trigger 'didLoad'
           @onLoaded()
       ,200
-      null
-    ).property('some', 'round.content.matches.@each.isLoaded')
+    ).observes('round.content.matches.@each.isLoaded').on('init')
+
+    content: (->
+        __ref = @
+        Em.Object.createWithMixins(Ember.Copyable, 
+            copy: ->
+                obj = {}
+                console.log __ref
+                Em.keys(@).forEach (key)=> obj[key] = @get key
+                Em.keys(__ref).forEach (key)=>
+                    return if key is 'round'
+                    obj[key] = __ref.get key
+                return obj
+        )
+    ).property()
 
     onLoaded: Em.K
 
-    some: null
+#     some: null
 
-    roundContentIsLoaded: (->
-      @set 'some', @get 'round.index'
-    ).observes('round.content.isLoaded')
+#     roundContentIsLoaded: (->
+#       @set 'some', @get 'round.index'
+#     ).observes('round.content.isLoaded')

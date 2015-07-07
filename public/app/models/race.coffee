@@ -5,9 +5,9 @@
  * Time: 22:23
 ###
 
-define ['cs!../core'],->
+define ['cs!../core'], ->
   App.Race = DS.Model.extend
-    primaryKey: '_id'
+#    primaryKey: '_id'
     identifier: DS.attr 'string'
     icon_url: DS.attr 'string'
     title: DS.attr 'string'

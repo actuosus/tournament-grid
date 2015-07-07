@@ -17,4 +17,4 @@ define ->
       str = Em.get window, value
     else
       str = this.get "_#{value}.#{App.currentLanguage}"
-    new Handlebars.SafeString (str || '').loc('')
+    new Em.Handlebars.SafeString (str || '').loc('')

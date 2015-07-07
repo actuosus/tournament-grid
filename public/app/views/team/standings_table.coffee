@@ -6,15 +6,15 @@
 ###
 
 define [
-  'text!../../templates/team/standings_table.hbs'
+  'ehbs!team/standings_table'
   'cs!../../core'
   'cs!./standings_table_item'
   'cs!../match/table_popup'
 ], (template)->
-  Em.TEMPLATES.teamStandingsTable = Em.Handlebars.compile template
+#  Em.TEMPLATES.teamStandingsTable = Em.Handlebars.compile template
   App.TeamStandingsTableView = Em.View.extend App.ContextMenuSupport,
     tagName: 'table'
-    templateName: 'teamStandingsTable'
+    templateName: 'team/standings_table'
     classNames: ['team-standings-table', 'table']
 
     shouldShowContextMenuBinding: 'App.isEditingMode'

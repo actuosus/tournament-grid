@@ -6,13 +6,11 @@
  * Time: 03:06
 ###
 
-define ['cs!../core'],->
+define ['cs!../core'], ->
   App.Stage = DS.Model.extend
-    primaryKey: '_id'
-
     title: DS.attr('string', {loc: {keyPath: '_title', defaultLanguage: 'ru'}})
 
-    # TODO Translation.
+  # TODO Translation.
 #    __title: ((a,b,c,d)->
 #      nameHash = @get '_name'
 #      currentLanguage = App.get('currentLanguage')
@@ -40,10 +38,10 @@ define ['cs!../core'],->
     left: null
     right: null
 
-    report: DS.belongsTo('App.Report', {key: 'stages'})
+    report: DS.belongsTo('report', {key: 'stages'})
 
-    rounds: DS.hasMany 'App.Round'
-    brackets: DS.hasMany 'App.Bracket'
+    rounds: DS.hasMany('round', {async: true})
+    brackets: DS.hasMany 'bracket'
 
     rating: DS.attr 'number'
 
@@ -60,7 +58,6 @@ define ['cs!../core'],->
         itemIndex: -1
       Em.ArrayController.create content: rounds
     ).property('rounds')
-
 
     getDescendant: (child, idx)-> child.get('children').objectAt idx if child
 

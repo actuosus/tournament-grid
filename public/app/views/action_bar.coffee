@@ -13,7 +13,8 @@ define ->
       tagName: 'button'
       classNames: ['action-bar-item', 'btn', 'btn-mini']
       classNameBindings: ['content.isDisabled', 'content.isHidden']
-      template: Em.Handlebars.compile '{{view.content.title}}'
+      titleChanged: (-> @rerender() ).observes('content.title')
+      render: (_)-> _.push @get 'content.title'
 
       target: (->
         target = @get 'content.target'

@@ -1,12 +1,12 @@
 ###
- * collapsable
+ * collapsible
  * @author: actuosus
  * Date: 25/03/2013
  * Time: 01:20
 ###
 
 define ['cs!../core'], ->
-  App.Collapsable = Ember.Mixin.create
+  App.Collapsible = Ember.Mixin.create
     classNames: ['collapsible']
     classNameBindings: ['collapsed']
     childViews: ['toggleButtonView']
@@ -78,9 +78,9 @@ define ['cs!../core'], ->
     collapse: ->
       contentView = @
       if contentView
-        contentView.$().slideUp 300, => @set 'collapsed', yes
+        contentView.$().slideUp 200, => @set 'collapsed', yes
 
     expand: ->
       contentView = @
       if contentView
-        contentView.$().slideDown 300, => @set 'collapsed', no
+        contentView.$().slideDown 200, => @set 'collapsed', no

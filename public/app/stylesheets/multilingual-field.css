@@ -11,6 +11,11 @@
     position: relative;
 }
 
+.multilingual-text-field input {
+    min-height: 26px !important;
+}
+
+
 .language-selector {
     display: inline-block;
     position: absolute;

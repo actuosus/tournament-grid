@@ -107,4 +107,8 @@ define {
   _save_all_results: 'Save all results'
   _winner_bracket: 'Winner bracket'
   _loser_bracket: 'Loser bracket'
+  _nickname: 'Nickname'
+  _first_name: 'First name'
+  _middle_name: 'Middle name'
+  _last_name: 'Last name'
 }

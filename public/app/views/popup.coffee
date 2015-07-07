@@ -27,7 +27,7 @@ define ['cs!../core'],->
     closeButtonView: Em.View.extend
       tagName: 'button'
       classNames: ['btn-clean', 'popup-close-button']
-      template: Em.Handlebars.compile '×'
+      render: (_)-> _.push '×'
       isVisibleBinding: 'parentView.showCloseButton'
       click: -> @get('parentView').hide()
 

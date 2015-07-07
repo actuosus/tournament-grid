@@ -7,12 +7,12 @@
 ###
 
 define [
-  'text!../../templates/match/filter_form.hbs'
+  'ehbs!match/filter_form'
   'cs!../../core'
 ], (template)->
-  Em.TEMPLATES.matchFilterForm = Em.Handlebars.compile template
+#  Em.TEMPLATES.matchFilterForm = Em.Handlebars.compile template
   App.MatchFilterFormView = Em.View.extend
-    templateName: 'matchFilterForm'
+    templateName: 'match/filter_form'
     classNames: ['match-filter-form']
 
     entrant: null

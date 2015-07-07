@@ -8,4 +8,4 @@
 define ->
   App.EmptyView = Em.View.extend
     classNames: ['empty-view']
-    template: Em.Handlebars.compile '{{loc "_waiting_to_be_filled"}}'
+    render: (_)-> _.push '_waiting_to_be_filled'.loc()

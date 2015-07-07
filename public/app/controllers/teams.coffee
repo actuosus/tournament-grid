@@ -32,7 +32,11 @@ define [
 
     fetchAutocompleteResults: (value, target)->
       @set 'lastQuery', {name: value}
-      @set 'content', App.Team.find {name: value}
+#       @set 'content', App.Team.find {name: value}
+      App.store.find('team', {name: value}).then (data)=>
+        @set 'content', data
+        @set 'content.isLoaded', yes
+        @contentLoaded()
       @set 'autocompleteTarget', target
       @get('content').addObserver 'isLoaded', @, 'contentLoaded'
 

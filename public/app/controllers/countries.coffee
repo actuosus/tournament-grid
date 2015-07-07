@@ -6,10 +6,11 @@
 ###
 
 define [
+  'ehbs!countrySelectCurrentValue'
   'cs!../core'
 ],->
   App.CountriesController = Em.ArrayController.extend
-    content: []
+    model: []
     searchResults: []
     labelValue: 'name'
     sort: (result, options)->
@@ -66,9 +67,7 @@ define [
     menuItemViewClass: Em.View.extend
       classNames: ['menu-item', 'country-menu-item']
       classNameBindings: ['isSelected']
-      template: Em.Handlebars.compile(
-        '<i {{bindAttr class=":country-flag-icon view.content.flagClassName"}}></i>'+
-        '{{view.content.name}}')
+      templateName: 'countrySelectCurrentValue'
 
       mouseDown: (event)-> event.stopPropagation()
 

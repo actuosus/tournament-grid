@@ -8,7 +8,7 @@
 define [
   'cs!./table'
   'cs!./filter_form'
-  'cs!../../mixins/collapsable'
+  'cs!../../mixins/collapsible'
 ], ()->
   App.MatchesTableContainerView = Em.ContainerView.extend
     classNames: ['matches-table-container']
@@ -43,7 +43,7 @@ define [
 
       titleView: Em.View.extend
         classNames: ['matches-table-title']
-        template: Em.Handlebars.compile('{{loc "_matches"}}')
+        render: (_)-> _.push '_matches'.loc()
 
       filterFormView: App.MatchFilterFormView.extend
         isVisibleBinding: 'parentView.showFilterForm'
@@ -69,7 +69,9 @@ define [
           else
             '_automatic_counting_enabled'.loc()
         ).property('automaticCountingDisabled')
-        template: Em.Handlebars.compile '{{view.label}}'
+
+        labelChanged: (-> @rerender() ).observes('label')
+        render: (_)-> _.push @get 'label'
 
         click: -> @toggleProperty 'automaticCountingDisabled'
 
@@ -79,13 +81,11 @@ define [
         classNames: ['btn-clean', 'add-btn', 'add']
         attributeBindings: ['title']
         title: '_add'.loc()
-        template: Em.Handlebars.compile '+'
-
-        click: ->
-          @get('parentView').add()
+        render: (_)-> _.push '+'
+        click: -> @get('parentView').add()
     })
 
-    tableContainerView: Em.ContainerView.extend(App.Collapsable,
+    tableContainerView: Em.ContainerView.extend(App.Collapsible,
       classNames: ['matches-table-container-inner']
       childViews: ['tableView']
       contentBinding: 'parentView.content'

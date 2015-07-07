@@ -5,7 +5,7 @@
  * Time: 14:23
 ###
 
-define ->
+define ['ehbs!linkedName'], ->
   App.TeamLineupPopupView = App.PopupView.extend
     classNames: ['small-popup', 'team-lineup-popup']
     childViews: ['teamNameView', 'playersView']
@@ -28,11 +28,12 @@ define ->
         href: (->
           '/teams/%@'.fmt @get 'content.id'
         ).property('content')
+        name: Em.computed.alias 'content.name'
         attributeBindings: ['title']
         title: (->
           @get('content.id') if App.get('isEditingMode')
         ).property('App.isEditingMode')
-        template: Em.Handlebars.compile '<a target="_blank" {{bindAttr href="view.href"}}>{{view.content.name}}</a>'
+        templateName: 'linkedName'
 
         valueChanged: (->
           report = App.get('report')
@@ -53,4 +54,5 @@ define ->
           tagName: 'span'
           classNames: ['team-lineup-popup-players-item-name']
           contentBinding: 'parentView.content'
-          template: Em.Handlebars.compile '{{view.content.nickname}}'
+          nicknameChanged: (-> @rerender() ).observes('content.nickname')
+          render: (_)-> _.push @get 'content.nickname'

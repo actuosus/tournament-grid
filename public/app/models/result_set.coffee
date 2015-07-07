@@ -7,18 +7,17 @@
 
 define ->
   App.ResultSet = DS.Model.extend
-    primaryKey: '_id'
     sortIndex: DS.attr 'number'
     isSelected: DS.attr 'boolean'
 
-    # Relations
-    entrant: DS.belongsTo('App.Entrant',{polymorphic: yes})
-    round: DS.belongsTo('App.Round', {inverse: 'resultSets'})
+  # Relations
+    entrant: DS.belongsTo('entrant', {polymorphic: yes, async: yes})
+    round: DS.belongsTo('round', {inverse: 'resultSets'})
 
-    results: DS.hasMany('App.Result', {inverse: 'resultSet'})
-    matches: DS.hasMany 'App.Match'
+    results: DS.hasMany('result', {inverse: 'resultSet'})
+    matches: DS.hasMany 'match'
 
-    # TODO Resolve storage.
+  # TODO Resolve storage.
     position: DS.attr 'number'
     matchesPlayed: DS.attr 'number'
     wins: DS.attr 'number'

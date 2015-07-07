@@ -25,9 +25,20 @@ exports.list = (req, res)->
     res.send team_refs: docs
 
 exports.item = (req, res)->
-  TeamRef.where('_id', req.params._id).findOne().exec (err, doc)->
+  TeamRef.where('_id', req.params._id)
+  .findOne()
+  .deepPopulate('players team_id.players')
+  .exec (err, doc)->
     if doc
-      res.send team_ref: doc
+      Team.where('_id', doc.team_id._id)
+      .deepPopulate('players').findOne().exec (err, t)->
+        if doc
+          doc = doc.toObject(virtuals: yes)
+          doc.team_id = t
+          doc.team = t
+          res.send team_ref: doc
+        else
+          res.send 404
     else
       res.send 404
 
@@ -38,18 +49,49 @@ exports.create = (req, res) ->
     await t.save defer err, doc
     Round.findByIdAndUpdate(teamRef.round_id, {$push: {team_refs: t._id}}, ->) if teamRef.round_id
     Report.findByIdAndUpdate(teamRef.report_id, {$push: {team_refs: t._id}}, ->) if teamRef.report_id
-    res.send team_ref: doc
+    TeamRef.where('_id', t._id)
+    .findOne()
+    .deepPopulate('players team_id.players')
+    .exec (err, doc)->
+      if doc
+        Team.where('_id', doc.team_id._id)
+        .deepPopulate('players').findOne().exec (err, t)->
+          if doc
+            doc = doc.toObject(virtuals: yes)
+            doc.team_id = t
+            doc.team = t
+            res.send team_ref: doc
+          else
+            res.send 404
+      else
+        res.send 404
   else
     res.send 400, errors: "server error"
 
 
 exports.update = (req, res)->
   if req.body?.team_ref
+    id = req.params._id
     teamRef = req.body.team_ref
     teamRef.captain_id = null unless teamRef.captain_id
+    if teamRef.players and teamRef.players.length
+      teamRef.players = teamRef.players.map (_)-> _._id
+#    delete teamRef.players
 
-    await TeamRef.findByIdAndUpdate req.params._id, { $set: teamRef }, defer err, doc
-    res.send team_ref: doc
+    TeamRef.findByIdAndUpdate id, { $set: teamRef }, (err, doc)-> console.log err, doc
+    TeamRef.where('_id', id)
+    .findOne()
+    .deepPopulate('players team_id.players')
+    .exec (err, doc)->
+      Team.where('_id', doc.team_id._id)
+      .deepPopulate('players').findOne().exec (err, t)->
+        if doc
+          doc = doc.toObject(virtuals: yes)
+          doc.team_id = t
+          doc.team = t
+          res.send team_ref: doc
+        else
+          res.send 404
   else
     res.send 400, errors: "server error"
 

@@ -8,9 +8,11 @@
 mongoose = require 'mongoose'
 Schema = mongoose.Schema
 ObjectId = Schema.ObjectId
+fieldsAliasPlugin = require('mongoose-aliasfield')
+deepPopulate = require('mongoose-deep-populate')
 
 TeamRefSchema = new Schema
-  team_id: type: ObjectId, ref: 'Team', required: yes
+  team_id: type: ObjectId, ref: 'Team', required: yes, alias: 'team'
 
   report_id: type: ObjectId, ref: 'Report'
   round_id: type: ObjectId, ref: 'Round'
@@ -19,5 +21,8 @@ TeamRefSchema = new Schema
   captain_id: type: ObjectId, ref: 'Player'
 
   players: [type: ObjectId, ref: 'Player']
+
+TeamRefSchema.plugin fieldsAliasPlugin
+TeamRefSchema.plugin deepPopulate
 
 module.exports = TeamRefSchema

@@ -6,9 +6,8 @@
  * Time: 07:29
 ###
 
-define ['cs!../core', 'cs!./entrant'],->
+define ['cs!../core', 'cs!./entrant'], ->
   App.Team = App.Entrant.extend #Ember.History,
-    primaryKey: '_id'
 #    _trackProperties: [
 #      'name'
 #      'players'
@@ -17,12 +16,9 @@ define ['cs!../core', 'cs!./entrant'],->
 
     isSelected: no
 
-    teamRef: (->
-      teamRefs = App.get 'report.teamRefs'
-      teamRefs?.find (_)=> Em.isEqual _.get('team'), @
-    ).property()
-
-    players: DS.hasMany('App.Player', {inverse: 'team'})
+  # Relations
+    teamRef: DS.hasMany('teamRef', {async: true})
+    players: DS.hasMany('player', {inverse: 'team', embedded: 'always'})
 
     hasCaptain: (->
       !!@get('players').findProperty 'is_captain', yes

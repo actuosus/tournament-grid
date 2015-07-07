@@ -59,17 +59,20 @@
 
 .period-selector, .date-selector {
     float: left;
+}
 
+.period-selector input {
+    min-height: 26px;
 }
 
 .date-selector .date {
-    min-height: 26px;
+    min-height: 28px !important;
     margin-left: 9px;
 }
 
 .period-selector .start-date, .period-selector .end-date {
     float: left;
-    min-height: 26px;
+    min-height: 28px !important;
     margin-left: 9px;
 }
 

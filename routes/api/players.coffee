@@ -111,7 +111,10 @@ exports.update = (req, res)->
             teamRef.players.push req.params._id
             teamRef.save()
     # TODO Hacky
-    res.send player: player
+    Player.where('_id', req.params._id).findOne().exec (err, doc)->
+      data = doc.toJSON()
+      data.team_ref_id = player.team_ref_id
+      res.send player: data
   else
     res.send 400, errors: "server error"
 

@@ -16,7 +16,7 @@ define ->
         value = value.replace re, (substring, position, string)->
           "<span class=\"highlight\">#{substring}</span>"
       else
-        value = Handlebars.Utils.escapeExpression value
+        value = Em.Handlebars.Utils.escapeExpression value
     else
-      value = Handlebars.Utils.escapeExpression value
-    new Handlebars.SafeString value
+      value = Em.Handlebars.Utils.escapeExpression value
+    new Em.Handlebars.SafeString value

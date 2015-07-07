@@ -35,3 +35,7 @@
     right: -12px;
     top: 0px;
 }
+
+.match-item .time {
+    color: black;
+}

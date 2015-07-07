@@ -12,11 +12,12 @@ define [
     childViews: ['titleView', 'descriptionView', 'buttonsView']
 
     titleView: Em.View.extend
-      template: Em.Handlebars.compile "<h2>{{loc '_are_you_sure_to_move'}}</h2>"
+      render: (_)-> _.push "<h2>#{'_are_you_sure_to_move'.loc()}</h2>"
 
     descriptionView: Em.View.extend
       descriptionBinding: 'parentView.description'
-      template: Em.Handlebars.compile "<p>{{view.description}}</p>"
+      render: (_)-> _.push "<p>#{@get('description')}</p>"
+      descriptionChanged: (->).observes('description')
 
     buttonsView: Em.ContainerView.extend
       classNames: ['buttons']
@@ -24,11 +25,11 @@ define [
       yesButton: Em.View.extend
         classNames: ['btn', 'btn-primary']
         tagName: 'button'
-        template: Em.Handlebars.compile "{{loc '_yes'}}"
+        render: (_)-> _.push '_yes'.loc()
         click: -> @get('parentView.parentView').trigger('yes')
       noButton: Em.View.extend
         classNames: ['btn']
         tagName: 'button'
-        template: Em.Handlebars.compile "{{loc '_no'}}"
+        render: (_)-> _.push '_no'.loc()
         click: -> @get('parentView.parentView').trigger('no')
 

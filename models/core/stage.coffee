@@ -9,6 +9,7 @@
 mongoose = require 'mongoose'
 Schema = mongoose.Schema
 ObjectId = Schema.ObjectId
+deepPopulate = require('mongoose-deep-populate')
 
 StageSchema = new Schema
   title: type: String, required: yes
@@ -26,5 +27,7 @@ StageSchema = new Schema
   report_id: type: ObjectId, ref: 'Report', required: yes
   brackets: [type: ObjectId, ref: 'Bracket']
   rounds: [type: ObjectId, ref: 'Round']
+
+StageSchema.plugin deepPopulate
 
 module.exports = StageSchema

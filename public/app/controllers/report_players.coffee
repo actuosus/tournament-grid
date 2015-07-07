@@ -74,7 +74,8 @@ define ['cs!../views/country_flag'],->
 
       nameView: Em.View.extend
         classNames: ['lineup-grid-item-name']
-        template: Em.Handlebars.compile '{{view.parentView.team.name}}'
+        render: (_)-> _.push @get 'parentView.team.name'
+        teamNameChanged: (-> @rerender() ).observes('parentView.team.name')
 
       showAddingNotify: ->
         modalView = App.ModalView.create
@@ -82,14 +83,14 @@ define ['cs!../views/country_flag'],->
         modalView.on 'ok', -> @hide()
         modalView.pushObject Em.ContainerView.create(
           childViews: ['contentView', 'buttonsView']
-          contentView: Em.View.create(template: Em.Handlebars.compile('Команда уже добавлена'))
+          contentView: Em.View.create( render: (_)-> _.push('Команда уже добавлена') )
           buttonsView: Em.ContainerView.create
             classNames: ['buttons']
             childViews: ['okButton']
             okButton: Em.View.create
               classNames: ['btn', 'btn-primary']
               tagName: 'button'
-              template: Em.Handlebars.compile "{{loc '_ok'}}"
+              render: (_)-> _.push '_ok'.loc()
               click: -> @get('parentView.parentView.parentView').trigger('ok')
         )
         modalView.appendTo App.get 'rootElement'

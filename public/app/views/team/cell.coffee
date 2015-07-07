@@ -29,9 +29,10 @@ define [
     teamUndefined: (-> !@get('content')).property('content')
 
     countryFlagView: App.CountryFlagView.extend
-#      contentBinding: 'parentView.content'
       content: (->
         content = @get 'parentView.content'
+        if content.get('content')
+          content = content.get('content')
         if content
           if App.TeamRef.detectInstance content
             content.get 'team.country'
@@ -82,46 +83,54 @@ define [
       classNames: ['team-name']
       attributeBindings: ['href', 'target']
       target: '_blank'
-      href: (-> @get 'content.url').property('content.isLoaded')
+      href: Ember.computed.oneWay 'parentView.content.link'
       name: (->
-        content = @get 'content'
+        content = @get 'parentView.content'
+        if content.get('content')
+          content = content.get('content')
         if content
           if App.TeamRef.detectInstance content
             return content.get 'team.name'
           if App.Player.detectInstance content
-            return content.get 'nickname'
+            return content.get('_data.nickname') or content.get('nickname')
           else
             return content.get 'name'
-      ).property('content.isLoaded')
+      ).property().volatile()
 
-      contentBinding: 'parentView.content'
-      template: Em.Handlebars.compile '{{view.name}}'
+      nameChanged: (->
+        if @get('parentView.content.isLoaded')
+          name = @get('name')
+          @rerender()
+      ).observes('parentView.content.isLoaded').on('init')
+      render: (_)-> _.push @get('name') if @get('name')
 
       click: ->
         autocompleteView = @get 'parentView.autocompleteView'
         if autocompleteView and not autocompleteView.isClass
           autocompleteView.set 'isVisible', yes
-          autocompleteView.focus()
+          setTimeout ->
+            autocompleteView.focus()
+          , 300
 
       mouseEnter: ->
         @set 'shouldShowPopup', yes
-        if @get 'content'
-          @set 'content.hasPlayersPopupShown', yes
+#         if @get 'content'
+#           @set 'content.hasPlayersPopupShown', yes
         Em.run.later =>
           if @get('shouldShowPopup') and @get('content.teamRef')
             @lineupPopup = App.TeamLineupPopupView.create
               target: @
+              container: @get('container')
               content: @get 'content.teamRef'
               origin: 'top'
-#            console.log 'setting hasPlayersPopupShown to', @get 'content'
             @lineupPopup.appendTo App.get 'rootElement'
             @set 'shouldShowPopup', no
         , 1000
 
       mouseLeave: ->
         @set 'shouldShowPopup', no
-        if @get 'content'
-          @set 'content.hasPlayersPopupShown', no
+#         if @get 'content'
+#           @set 'content.hasPlayersPopupShown', no
         @lineupPopup?.hide()
 
     points: (->
@@ -157,7 +166,7 @@ define [
       classNames: ['btn-clean', 'remove-btn', 'team-reset-btn']
       attributeBindings: ['title']
       title: '_reset'.loc()
-      template: Em.Handlebars.compile('&times;')
+      render: (_)-> _.push '&times;'
       isVisible: no
 
       contentChanged: (->

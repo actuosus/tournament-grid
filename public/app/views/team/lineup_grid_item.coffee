@@ -6,6 +6,7 @@
 ###
 
 define [
+  'ehbs!linkedName'
   'cs!../../mixins/moving_highlight'
   'cs!../autocomplete_text_field'
   'cs!../entrant_text_field'
@@ -34,11 +35,9 @@ define [
 #
 #      @_super event
 
-    willInsertElement: ->
-      $(@get 'element').css scale: 0
+    willInsertElement: -> $(@get 'element').css scale: 0
 
-    didInsertElement: ->
-      @$().transition scale: 1
+    didInsertElement: -> @$().transition scale: 1
 
     teamNameView: Em.ContainerView.extend(App.MovingHightlight, App.Editing,
       teamRefsBinding: 'parentView.parentView.content'
@@ -58,28 +57,36 @@ define [
         contentBinding: 'parentView.content'
         classNames: ['lineup-grid-item-name']
         href: Em.computed.alias 'content.link'
+        name: Em.computed.alias 'content.name'
         attributeBindings: ['title']
         title: (->
-          @get('content.id') if App.get('isEditingMode')
+          if App.get('isEditingMode')
+            @get('content.id')
+          else
+            @get('content.name')
         ).property('App.isEditingMode')
-        template: Em.Handlebars.compile '<a target="_blank" {{bindAttr href="view.href"}}>{{view.content.name}}</a>'
+
+#        templateName: 'linkedName'
+
+        render: (_)-> _.push ('<a target="_blank" href="' + @get('href') + '">' + @get('name') + '</a>')
+        nameChanged: (-> @rerender() ).observes('name')
 
         valueChanged: (->
           report = App.get('report')
           @set 'parentView.content', App.TeamRef.createRecord({team: @get('value'), report: report})
         ).observes('value')
 
-      mouseEnter: ->
-        @set 'publicMenuButtonView.isVisible', true
-
-      mouseLeave: ->
-        @set 'publicMenuButtonView.isVisible', no
-
-      publicMenuButtonView: Em.View.extend
-        tagName: 'button'
-        isVisible: no
-        classNames: ['btn-clean', 'public-menu-btn']
-        template: Em.Handlebars.compile '⌄'
+#      mouseEnter: ->
+#        @set 'publicMenuButtonView.isVisible', true
+#
+#      mouseLeave: ->
+#        @set 'publicMenuButtonView.isVisible', no
+#
+#      publicMenuButtonView: Em.View.extend
+#        tagName: 'button'
+#        isVisible: no
+#        classNames: ['btn-clean', 'public-menu-btn']
+#        render: (_)-> _.push '⌄'
 
       editButtonView: Em.View.extend
         tagName: 'button'
@@ -88,10 +95,10 @@ define [
         classNames: ['btn-clean', 'edit-btn', 'edit']
         attributeBindings: ['title']
         title: '_edit'.loc()
-        template: Em.Handlebars.compile '✎'
+        render: (_)-> _.push '✎'
 
         click: ->
-          popup = App.PopupView.create target: @
+          popup = App.PopupView.create target: @, parentView: @, container: @container
           popup.get('childViews').push(
             App.TeamForm.create
               popupView: popup
@@ -138,9 +145,11 @@ define [
 
         insertNewline: ->
           player = @get 'selection'
+          return unless player
           player.set 'teamRef', @get('teamRef')
           player.set 'report', App.get('report')
-          player.store.commit()
+          player.save()
+          player.store.flushPendingSave()
 
           if not @_autocompleteMenu.isDestroyed
             @_autocompleteMenu.hide()
@@ -148,4 +157,5 @@ define [
         selectMenuItem: (player)->
           player.set 'teamRef', @get('teamRef')
           player.set 'report', App.get('report')
-          player.store.commit()
+          player.save()
+          player.store.flushPendingSave()

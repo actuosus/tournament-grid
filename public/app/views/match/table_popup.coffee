@@ -33,7 +33,7 @@ define [
       childViews: ['titleView', 'contentView']
       titleView: Em.View.extend
         classNames: ['section-header']
-        template: Em.Handlebars.compile '{{loc _past_matches}}'
+        render: (_)-> _.push '_past_matches'.loc()
       contentView: App.MatchesTableView.extend
         controllerBinding: 'parentView.controller'
         entrantBinding: 'parentView.entrant'
@@ -49,7 +49,7 @@ define [
       childViews: ['titleView', 'contentView']
       titleView: Em.View.extend
         classNames: ['section-header']
-        template: Em.Handlebars.compile '{{loc _future_matches}}'
+        render: (_)-> _.push '_future_matches'.loc()
       contentView: App.MatchesTableView.extend
         controllerBinding: 'parentView.controller'
         entrantBinding: 'parentView.entrant'

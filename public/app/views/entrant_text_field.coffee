@@ -14,11 +14,11 @@ define ['cs!./text_field'], ->
       classNames: ['add-btn', 'non-selectable']
       attributeBindings: ['title']
       title: '_add_entrant'.loc()
-      template: Em.Handlebars.compile '+'
+      render: (_)-> _.push '+'
       click: -> @get('parentView').showAddForm(@)
 
     showAddForm: (target)->
-      popup = App.PopupView.create target: target
+      popup = App.PopupView.create target: target, parentView: @, container: @container
       formView = @get 'autocompleteDelegate.formView'
       form = formView.create
         value: @get('textFieldView').$().val()

@@ -7,4 +7,4 @@
 
 define ->
   Ember.Handlebars.registerBoundHelper 'moment', (value, options)->
-    new Handlebars.SafeString moment(value).format(options.hash.format)
+    new Em.Handlebars.SafeString moment(value).format(options.hash.format)

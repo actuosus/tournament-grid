@@ -15,8 +15,11 @@ exports.item = (req, res)->
   Report.findById(req.params._id)
   .populate('author')
   .exec (err, doc)->
-    res.render 'reports/item.ect', title: 'Report', doc: doc
-#    res.render 'reports/app.ect', title: 'Report', doc: doc
+    unless err
+#      res.render 'reports/item.ect', title: 'Report', doc: doc
+      res.render 'reports/app.ect', title: 'Report', doc: doc
+    else
+      res.send 404, errors: err
 
 exports.createForm = (req, res)->
   res.render 'reports/form.ect', title: 'Report', doc: {}

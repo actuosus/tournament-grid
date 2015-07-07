@@ -7,14 +7,14 @@
 ###
 
 define [
-  'text!../../templates/player/form.hbs'
+  'ehbs!player/form'
   'cs!../../core'
   'cs!../form'
 ], (template)->
-  Em.TEMPLATES.playerForm = Em.Handlebars.compile template
+#  Em.TEMPLATES.playerForm = Em.Handlebars.compile template
   App.PlayerForm = App.FormView.extend
     classNames: ['player-form']
-    templateName: 'playerForm'
+    templateName: 'player/form'
     countrySelectViewBinding: 'childViews.firstObject'
 
     nicknameBinding: 'value'
@@ -50,20 +50,20 @@ define [
 
 #      country = @get 'country'
       country = @get('countrySelectView.autocompleteTextFieldView.selection')
+      entrant = @get 'entrant'
       team = @get 'entrant.team'
       players = @get 'entrant.players'
       report = App.get('report')
-      transaction = App.store.transaction()
-      player = transaction.createRecord(App.Player)
-      player.set 'country', country
-      player.set 'nickname', @$('.nickname').val()
-      player.set 'firstName', @$('.first-name').val()
-      player.set 'middleName', @$('.middle-name').val()
-      player.set 'lastName', @$('.last-name').val()
-      player.set 'isCaptain', @get 'isCaptain'
-
-      player.set 'report', report
-      player.set 'team', team
+      player = App.store.createRecord('player', {
+        country: country,
+        nickname: @$('.nickname').val(),
+        firstName: @$('.first-name').val(),
+        middleName: @$('.middle-name').val(),
+        lastName: @$('.last-name').val(),
+        isCaptain: @get 'isCaptain',
+        report: report,
+        team: team
+      })
 
       players.addObject player if players
 
@@ -71,10 +71,11 @@ define [
       player.on 'becameError', =>
         @$('.save-btn').removeAttr('disabled')
         player.destroy()
-      transaction.commit()
+      player.save()
+      # TODO Save the captain!
 
     submit: (event)->
-      event.preventDefault()
+      # event.preventDefault()
       @createRecord()if @get 'isValid'
 
     click: (event)->

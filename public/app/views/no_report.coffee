@@ -9,4 +9,4 @@ define ['cs!./named_container'], ->
   App.NoReportView = App.NamedContainerView.extend
     title: 'No report'
     contentView: Em.View.extend
-      template: Em.Handlebars.compile 'Cannot find report.'
+      render: (_)-> _.push 'Cannot find report.'

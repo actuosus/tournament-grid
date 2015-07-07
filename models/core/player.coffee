@@ -35,4 +35,8 @@ PlayerSchema.virtual('fullName').get ->
 
 PlayerSchema.plugin socketNotifyPlugin
 
+PlayerSchema.virtual('id').get -> @_id.toHexString()
+PlayerSchema.virtual('type').get -> 'team'
+PlayerSchema.set 'toJSON', virtuals: yes
+
 module.exports = PlayerSchema

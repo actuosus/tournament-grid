@@ -43,6 +43,7 @@ require([
   //  'fabric',
   'moment',
   'spin',
+  //'ember-template-compiler',
   'ember',
   'ember-data',
   //  'ember-history',

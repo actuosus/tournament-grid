@@ -30,7 +30,10 @@ define [
 
     fetchAutocompleteResults: (value, target)->
       @set 'lastQuery', {nickname: value}
-      @set 'content', App.Player.find {nickname: value}
+      App.store.find('player', {nickname: value}).then (data)=>
+        @set 'content', data
+        @set 'content.isLoaded', yes
+        @contentLoaded()
       @set 'autocompleteTarget', target
       @get('content').addObserver 'isLoaded', @, 'contentLoaded'
 
@@ -62,7 +65,8 @@ define [
       nameView: Em.View.extend
         contentBinding: 'parentView.content'
         classNames: ['lineup-grid-item-name']
-        template: Em.Handlebars.compile '{{view.content.nickname}}'
+        render: (_)-> _.push @get 'content.nickname'
+        nicknameChanged: (-> @rerender() ).observes('content.nickname')
 
       realNameView: Em.View.extend
         contentBinding: 'parentView.content'
@@ -70,9 +74,12 @@ define [
         isVisibleBinding: 'hasShortName'
         hasShortName: (->
           shortName = @get('content.shortName')
-          yes if shortName and shortName isnt ' '
+          yes if shortName and shortName isnt ''
         ).property('content.shortName')
-        template: Em.Handlebars.compile '({{view.content.shortName}})'
+        render: (_)->
+          strings = if @get('hasShortName') then @get('content.shortName') else ''
+          _.push strings
+        hasShortNameChanged: (-> @rerender() ).observes('hasShortName')
 
       click: (event)->
         event.preventDefault()
@@ -87,7 +94,7 @@ define [
 #      classNames: ['menu-item']
 #      classNameBindings: ['isSelected']
 #      template: Em.Handlebars.compile(
-#        '<i {{bindAttr class=":country-flag-icon :team-country-flag-icon view.content.country.flagClassName"}}></i>'+
+#        '<i {{bind-attr class=":country-flag-icon :team-country-flag-icon view.content.country.flagClassName"}}></i>'+
 #        '{{view.content.nickname}}'+
 #        '{{view.content.shortName}}'
 #      )

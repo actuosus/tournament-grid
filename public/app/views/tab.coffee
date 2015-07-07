@@ -63,11 +63,13 @@ define ->
           ).property('selection')
 
           titleView: Em.View.extend
-            template: Em.Handlebars.compile '{{view.parentView.content.id}}'
+            idChanged: (-> @rerender() ).observes('parentView.content.id')
+            render: (_)-> _.push @get 'parentView.content.id'
 
     selectionChanged: (->
       if @get 'selection'
-        Em.View.create template: Em.Handlebars.compile @get('selection.content.id')
+        id = @get('selection.content.id')
+        Em.View.create render: (_)-> _.push id
       else
         Em.View.create()
     ).observes('selection')

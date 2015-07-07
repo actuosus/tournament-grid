@@ -89,6 +89,11 @@
     color: white;
     background-color: #979797;
     margin-left: 3px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: 0;
+    padding: 0;
 }
 
 

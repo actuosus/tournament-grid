@@ -5,7 +5,7 @@
  * Time: 17:20
 ###
 
-define ['cs!./combobox'], ->
+define ['ehbs!countrySelectCurrentValue', 'cs!./combobox'], ->
   App.CountrySelectView = App.ComboBoxView.extend
     classNames: ['country-select']
     classNameBindings: ['hasValue']
@@ -19,10 +19,7 @@ define ['cs!./combobox'], ->
       classNames: ['current-value']
       contentBinding: 'parentView.value'
       isVisibleBinding: 'parentView.hasValue'
-      template: Em.Handlebars.compile(
-        '<i {{bindAttr class=":country-flag-icon view.content.flagClassName"}}></i>'+
-        '{{view.content.name}}'
-      )
+      templateName: 'countrySelectCurrentValue'
     hasValue: (->
       !!@get 'autocompleteTextFieldView.selection'
     ).property('autocompleteTextFieldView.selection')
@@ -36,6 +33,14 @@ define ['cs!./combobox'], ->
       autocompleteDelegate: (->
         @get('parentView.controller')
       ).property()
+
+      selectionChanged: (->
+        selection = @get 'selection'
+        if selection
+            @get('textFieldView').$().removeAttr 'placeholder'
+        else
+            @get('textFieldView').$().attr 'placeholder', @get 'placeholder'
+      ).observes('selection')
 
       insertNewline: ->
         @set 'parentView.selection', @get 'selection'

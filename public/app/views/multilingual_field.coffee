@@ -97,8 +97,9 @@ define ['cs!../mixins/translatable', 'cs!./language_menu'], ->
       ).observes('selection')
       currentValueView: Em.View.extend
         classNames: 'current-value'
-        template: Em.Handlebars.compile '{{view.value}}'
         valueBinding: 'parentView.selection'
+        valueChanged: (-> @rerender() ).observes('value')
+        render: (_)-> _.push @get 'value'
         mouseEnter: ->
           menu = App.LanguageMenuView.create
             target: @

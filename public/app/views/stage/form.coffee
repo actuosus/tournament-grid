@@ -7,17 +7,17 @@
 ###
 
 define [
-  'text!../../templates/stage/form.hbs'
+  'ehbs!stage/form'
   'cs!../../core'
   'cs!../form'
 
   'cs!../multilingual_text_field'
   'cs!../multilingual_text_area'
 ], (template)->
-  Em.TEMPLATES.stageForm = Em.Handlebars.compile template
+#  Em.TEMPLATES.stageForm = Em.Handlebars.compile template
   App.StageForm = App.FormView.extend
     classNames: ['stage-form', 'form-vertical']
-    templateName: 'stageForm'
+    templateName: 'stage/form'
 
     visualType: 'grid'
 

@@ -15,6 +15,7 @@ exports.games = require './games'
 exports.players = require './players'
 exports.reports = require './reports'
 exports.authors = require './authors'
+exports.users = require './users'
 exports.matches = require './matches'
 exports.teams = require './teams'
 

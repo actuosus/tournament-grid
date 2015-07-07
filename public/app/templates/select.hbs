@@ -1,0 +1,7 @@
+<div class="current-value">{{view.currentLabel}}</div>
+<div class="disclosure-button"><i class="disclosure-icon">▾</i></div>
+{{view Em.Select
+optionLabelPath="content.name"
+optionValuePath="content.id"
+contentBinding="view.content"
+promptBinding="view.prompt"}}

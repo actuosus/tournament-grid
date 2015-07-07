@@ -7,8 +7,10 @@
       <w>cssmin</w>
       <w>datepicker</w>
       <w>deps</w>
+      <w>ehbs</w>
       <w>github</w>
       <w>lodash</w>
+      <w>mixins</w>
       <w>modernizr</w>
       <w>mousewheel</w>
       <w>requirejs</w>

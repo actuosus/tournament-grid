@@ -23,43 +23,52 @@ define [
   App.StageTabsView = App.TabView.extend
     classNames: ['stage-view']
 
+    selectionBinding: 'controller.selection'
+
     selectionChanged: ((stage)->
       stage = @get 'selection.content'
-#      console.log 'Selection changed', stage
       return Em.View.create() unless stage
       switch stage.get 'visualType'
         when 'single', 'grid'
-          stage.get('matches')
-#          contentView = App.NewTournamentGridView.create
+          contentView = App.NewTournamentGridView.create
 #          contentView = App.CanvasTournamentGridView.create
 #          contentView = App.FlatTournamentGridView.create
-          contentView = App.OtherFlatTournamentGridView.create
+#          contentView = App.OtherFlatTournamentGridView.create
 #          contentView = App.SVGTournamentGridView.create
             container: @get 'container'
+            parentView: @
             stage: stage
             entrantsNumber: stage.get('entrantsNumber')
-
         when 'double'
           contentView = App.NewDoubleTournamentGridView.create
             container: @get 'container'
+            parentView: @
             stage: stage
             entrantsNumber: stage.get('entrantsNumber')
         when 'group'
+          console.log stage.get 'rounds'
           contentView = App.GroupGridView.create
             container: @get 'container'
+            parentView: @
             content: stage.get 'rounds'
             entrants: stage.get 'entrants'
             showFilterForm: no
             tableItemViewClass: 'App.MatchGroupTableItemView'
         when 'matrix'
+          console.log stage.get('rounds')
+          console.log stage.get('rounds.firstObject')
           matchesController = App.MatchesController.create
             stage: stage
+            roundBinding: 'stage.rounds.firstObject'
             contentBinding: 'stage.rounds.firstObject.matches'
           contentView = App.MatchGridContainer.create
             container: @get 'container'
+            parentView: @
             stage: stage
             content: matchesController
         when 'team'
+          console.log stage.get('rounds')
+          console.log stage.get('rounds.firstObject')
           matchType = App.get 'report.match_type'
           matchesController = App.MatchesController.create
             stage: stage
@@ -72,6 +81,7 @@ define [
             entrantsController.set 'searchPath', 'name'
           contentView = App.StandingTableView.create
             container: @get 'container'
+            parentView: @
             classNames: ['for-team']
             entrants: entrantsController
             matches: matchesController
@@ -79,8 +89,10 @@ define [
             tableItemViewClass: 'App.MatchTableItemView'
         else
           contentView = Em.View.create
+            container: @get 'container'
             classNames: ['padded']
-            template: Em.Handlebars.compile 'Unknown visual type'
+            parentView: @
+            render: (_)-> _.push 'Unknown visual type'
 
 #      @height = @$().height()
 #      console.log @height
@@ -112,7 +124,7 @@ define [
       addItemView: Em.View.extend
         tagName: 'button'
         classNames: ['btn-clean', 'add-btn', 'add']
-        template: Em.Handlebars.compile '+'
+        render: (_)-> _.push '+'
         click: -> @get('parentView').addItem()
 
       tabsView: Em.CollectionView.extend
@@ -126,9 +138,9 @@ define [
         fixSorting: (->
           if @get 'isSortable'
             console.debug('Will fix sorting')
-            @get('content').forEach (item, index)->
+            @get('content')?.forEach (item, index)->
               item.set 'sortIndex', index
-            App.store.commit()
+#            App.store.commit()
         ).observes('isSortable')
 
         itemViewClass: Em.ContainerView.extend( App.ContextMenuSupport, App.Editing, App.Sortable, {
@@ -161,7 +173,7 @@ define [
           titleBinding: 'content.description'
 
           edit: ->
-            @popup = App.PopupView.create target: @
+            @popup = App.PopupView.create target: @, parentView: @, container: @container
             form = App.StageForm.create
               content: @get 'content'
               didUpdate: -> @popupView.hide()
@@ -170,13 +182,15 @@ define [
             @popup.appendTo App.get 'rootElement'
 
           save: ->
-            @get('content.store').commit()
+            @get('content').save()
 
           deleteRecord: ->
             content = @get('content')
             if content
 #              content.on 'didDelete', -> App.get('report.stages').removeObject(content)
               content.deleteRecord()
+              content.save()
+              App.store.flushPendingSave()
 
           currentWhen: 'stage'
 
@@ -184,7 +198,7 @@ define [
             selection = @get 'selection'
             router = @get 'router'
             content = @get 'content'
-            return unless router
+            return unless router or content
             currentWithIndex = @currentWhen + '.index'
             router.isActive.apply(router, [@currentWhen].concat(content)) or
               router.isActive.apply(router, [currentWithIndex].concat(content)) or
@@ -200,13 +214,14 @@ define [
           ).property('controller')
 
           titleView: Em.View.extend
-            template: Em.Handlebars.compile '{{view.parentView.content.title}}'
+            titleChanged: (-> @rerender() ).observes('parentView.content.title')
+            render: (_)-> _.push @get 'parentView.content.title'
 
           removeButtonView: App.RemoveButtonView.extend
             title: '_remove_stage'.loc()
             deleteRecord: ->
               @get('parentView').deleteRecord()
-              App.store.commit()
+              App.store.flushPendingSave()
             click: (event)->
               event.stopPropagation()
               if @get 'shouldShowConfirmation'
@@ -215,9 +230,9 @@ define [
                 @set 'shouldShowConfirmation', yes
 
           click: ->
-            @set 'selection', @
+            # @set 'selection', @
             router = @get 'router'
-            router.transitionTo @currentWhen, @get 'content' if router
+            router.transitionTo(@currentWhen, @get 'content') if router
         })
 
       shouldShowContextMenuBinding: 'App.isEditingMode'

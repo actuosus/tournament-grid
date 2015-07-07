@@ -6,14 +6,15 @@
 ###
 
 define [
-  'text!../../templates/game/form.hbs'
+  'ehbs!game/form'
   'cs!../../models/game'
   'cs!../form'
 ], (template)->
-  Em.TEMPLATES.gameForm = Em.Handlebars.compile template
+#  Em.TEMPLATES.gameForm = Em.Handlebars.compile template
+
   App.GameForm = App.FormView.extend
     classNames: ['game-form']
-    templateName: 'gameForm'
+    templateName: 'game/form'
     countrySelectViewBinding: 'childViews.firstObject'
 
     title: null

@@ -45,6 +45,4 @@ define 'cs!app/views/index', [
   'cs!./application'
 
   'cs!./no_report'
-
-  'cs!./server_debug'
 ]

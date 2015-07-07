@@ -28,6 +28,9 @@
     -webkit-font-smoothing: antialiased;
     background: -webkit-linear-gradient(top, #3f3f3f, #232424);
 }
+.b-listsTabs .item.active.is-dirty {
+    background: -webkit-linear-gradient(top, #575001, #302C02);
+}
 .b-listsTabs .item:last-child {
     border-right: 0;
 }
@@ -686,6 +689,9 @@
 .menu-item.is-team-ref,
 .menu-item.is-team-ref .lineup-grid-item-name {
     font-weight: normal;
+}
+.menu-item .b-flag {
+    padding-left: 0;
 }
 .action-bar {
     background-color: #E1E2E2;
@@ -1990,6 +1996,11 @@ body .ui-tooltip {
     color: white;
     background-color: #979797;
     margin-left: 3px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: 0;
+    padding: 0;
 }
 .games-info-bar .games-create-button button {
     padding: 0;
@@ -2055,6 +2066,7 @@ body .ui-tooltip {
     right: 0;
     min-height: 19px;
     border: 0;
+    width: 100%;
 }
 .autocomplete-text-field .loader {
     right: -9px;
@@ -2239,6 +2251,9 @@ body .ui-tooltip {
     height: 11px;
     padding: 0;
 }
+.ember-application .country-flag-icon {
+    padding: 0 !important;
+} 
 .country-flag-icon:hover {
     box-shadow: 0 0 5px rgba(0, 0, 0, .3);
 }
@@ -2584,6 +2599,9 @@ body .ui-tooltip {
     font-size: 16px;
     margin-bottom: 10px;
 }
+.flat-tournament-bracket-name {
+    position: absolute;
+}
 .csscolumns .team-lineup-grid .lineup-grid {
     -webkit-column-gap: 29px;
     -moz-column-gap: 29px;
@@ -2605,9 +2623,7 @@ body .ui-tooltip {
     padding: 10px;
     border-radius: 4px;
 }
-.lineup-grid-item:hover {
-    background-color: rgba(0,0,0,0.05);
-}
+    
 .csscolumns .lineup-grid {
     -webkit-column-gap: 29px;
     -moz-column-gap: 29px;
@@ -2691,6 +2707,8 @@ body .ui-tooltip {
     -webkit-transition-duration: 0.3s;
     -webkit-transition-property: color;
     text-overflow: ellipsis;
+    max-width: 200px;
+    overflow: hidden;
 }
 .lineup-grid-item-real-name:hover {
     color: #474747;
@@ -2698,6 +2716,10 @@ body .ui-tooltip {
 .lineup-grid-item-player-row .remove-btn {
     right: 6px;
     margin-top: -6px;
+    display: none;
+}
+.lineup-grid-item-player-row:hover .remove-btn {
+    display: block;
 }
 .lineup-grid-item-name-container {
     background-color: #e1e2e2;
@@ -2750,14 +2772,17 @@ body .ui-tooltip {
 }
 .lineup-grid-item-player-row .autocomplete-text-field .text-field {
     border: 0;
+    width: 100%;
 }
 .lineup-grid-item-name-container .country-flag-icon {
     margin: 9px 4px 0 8px;
+    padding-left: 0;
 }
 .lineup-grid-item-player-row .country-flag-icon {
     margin-top: 6px;
     margin-left: 8px;
     margin-right: 8px;
+    padding-left: 0;
 }
 .lineup-grid-item-name-container .count-btn {
     position: absolute;
@@ -2766,6 +2791,10 @@ body .ui-tooltip {
 }
 .lineup-grid-item-name-container .remove-btn {
     margin-top: -5px;
+    display: none;
+}
+.lineup-grid-item-name-container:hover .remove-btn {
+    display: block;
 }
 .lineup-grid-item-player-row.is-saving {
     opacity: 0.5;
@@ -2809,7 +2838,20 @@ body .ui-tooltip {
 .bx-firefox.csscolumns .group-lineup-grid {
     overflow: hidden;
 }
-.csscolumns .group-lineup-grid .lineup-grid-item {
+.flexbox .lineup-grid-item,
+.bx-flexwrap .lineup-grid-item {
+    flex-basis: 258px;
+    margin: 0;
+}
+.flexbox .lineup-grid,
+.bx-flexwrap .lineup-grid {
+    display: flex;
+    max-width: 925px;
+    flex-flow: row wrap;
+}
+.flexbox .group-lineup-grid .lineup-grid-item,
+.bx-flexwrap .group-lineup-grid .lineup-grid-item {
+    flex-basis: 426px;
 }
 .lineup-grid-item-name-container .autocomplete-text-field {
     position: absolute;
@@ -2844,6 +2886,9 @@ body .ui-tooltip {
     position: absolute;
     right: -12px;
     top: 0px;
+}
+.match-item .time {
+    color: black;
 }
 .match-grid {
     overflow: hidden;
@@ -2941,6 +2986,7 @@ body .ui-tooltip {
     background-color: rgba(255,127,0,0.2);
 }
 .matches-table-item .team-name {
+    float: none;
 }
 .matches-table-item .remove-btn {
     right: 0;
@@ -3018,6 +3064,9 @@ body .ui-tooltip {
 .multilingual-text-field {
     display: inline-block;
     position: relative;
+}
+.multilingual-text-field input {
+    min-height: 26px !important;
 }
 .language-selector {
     display: inline-block;
@@ -3148,13 +3197,16 @@ body .ui-tooltip {
 .period-selector, .date-selector {
     float: left;
 }
-.date-selector .date {
+.period-selector input {
     min-height: 26px;
+}
+.date-selector .date {
+    min-height: 28px !important;
     margin-left: 9px;
 }
 .period-selector .start-date, .period-selector .end-date {
     float: left;
-    min-height: 26px;
+    min-height: 28px !important;
     margin-left: 9px;
 }
 .match-filter-form .search-btn {
@@ -3327,6 +3379,9 @@ body .ui-tooltip {
     font-size: 10px;
     color: #838383;
     width: 50px;
+}
+.matches-table-date .time {
+    color: black;
 }
 .matches-table-points {
     color: #7a7a7a;

@@ -12,10 +12,17 @@ define ->
 
     open: -> @get('content').open()
     close: -> @get('content').close()
-    save: -> @get('content')?.save()
+    save: ->
+      console.log('Will save match', @get('content'))
+      content = @get 'content'
+      if App.TeamRef.detectInstance(content.get('entrant1.content'))
+        @get('content').set('entrant1', content.get('entrant1.content.team'))
+      if App.TeamRef.detectInstance(content.get('entrant2.content'))
+        @get('content').set('entrant2', content.get('entrant2.content.team'))
+      @get('content')?.save()
 
     edit: ->
-      popup = App.PopupView.create target: @
+      popup = App.PopupView.create target: @, parentView: @, container: @container
       popup.pushObject(
         App.MatchForm.create
           popupView: popup

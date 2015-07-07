@@ -37,7 +37,9 @@ module.exports = (grunt)->
         }
       }
     }
-    requirejs: compile: options: mainConfigFile: 'public/app.build.js'
+    requirejs:
+      dev: options: mainConfigFile: 'public/app.build.dev.js' # Will rewrite app.js
+      prod: options: mainConfigFile: 'public/app.build.site.js'
     handlebars:
       options:
         namespace: 'Em.TEMPLATES'
@@ -57,6 +59,8 @@ module.exports = (grunt)->
       copy_to_bundle_extras:
         cmd: ->
           'mkdir -p ./public/bundle/vendor/styles/images && cp -R ./public/vendor/styles/images ./public/bundle/vendor/styles/images/.'
+      webserver:
+        cmd: -> 'node server'
     coffeelint:
       options:
         argv:
@@ -81,25 +85,68 @@ module.exports = (grunt)->
           port: 2200,
           authKey: 'v3'
         },
-        src: '/Users/actuosus/Projects/Virtus.pro/Site/public/bundle',
-        dest: '/home/v3virtuspro/v3.virtuspro.org/html/bitrix/components/VIRTUS.PRO/reports.app/templates/.default/bundle',
+        src: '/Users/actuosus/Projects/virtus-pro/Site/public/bundle',
+        dest: '/home/v3virtuspro/v3.virtus.pro/html/bitrix/components/VIRTUS.PRO/reports.app/templates/.default/bundle',
 #        exclusions: ['/path/to/source/folder/**/.DS_Store', '/path/to/source/folder/**/Thumbs.db', 'dist/tmp'],
+        server_sep: '/'
+      },
+      dev: {
+        auth: {
+          host: 'virtus.pro',
+          port: 2200,
+          authKey: 'v3'
+        },
+        src: '/Users/actuosus/Projects/virtus-pro/public/bundle',
+        dest: '/home/v3virtuspro/develop.virtus.pro/html/bitrix/components/VIRTUS.PRO/reports.app/templates/.default/bundle',
         server_sep: '/'
       }
     }
 
-  grunt.registerTask 'bundle', 'Create project bundle', ['clean', 'requirejs', 'exec:minify_css', 'exec:copy_to_bundle']
+    watch:
+      server:
+        files: ['Gruntfile.coffee', 'app.coffee', 'routes/**/*.coffee', 'models/**/*.coffee']
+        tasks: ['exec:webserver']
+        options: atBegin: yes
+      app:
+        files: ['./public/app/**/*.coffee']
+        options: livereload: yes, spawn: no
+        tasks: ['deploy:dev']
+
+    emberTemplates:
+      compile:
+        options:
+          amd: true
+          templateBasePath: /public\/app\/templates\//
+          templateCompilerPath: 'public/vendor/scripts/ember/ember-template-compiler.js'
+          handlebarsPath: 'public/vendor/scripts/handlebars/handlebars.js'
+        files:
+          'public/bundle/templates.js': ['public/app/templates/**/*.hbs']
+
+  grunt.registerTask 'bundle', 'Create project bundle', ['clean', 'requirejs:prod', 'exec:minify_css', 'exec:copy_to_bundle']
   grunt.registerTask 'deploy', 'Deploys bundled app', ['bundle', 'sftp-deploy']
+
+  grunt.registerTask 'deploy:dev', 'Deploys dev bundled app', ['clean', 'requirejs:dev', 'exec:copy_to_bundle', 'sftp-deploy:dev']
+
+  grunt.registerTask 'test-precompile', '', ->
+    fs = require('fs');
+    compiler = require('./public/vendor/scripts/ember/ember-template-compiler');
+    input = fs.readFileSync('./public/app/templates/application.hbs', { encoding: 'utf8' });
+    template = compiler.precompile(input, false);
+    output = '(function (Ember) { Ember.HTMLBars.template(' + template + '); })(Ember)';
+
+    fs.writeFileSync('application.hbs.js', output, { encoding: 'utf8' });
 
 
   grunt.loadNpmTasks 'grunt-contrib-clean'
   grunt.loadNpmTasks 'grunt-contrib-copy'
   grunt.loadNpmTasks 'grunt-contrib-requirejs'
   grunt.loadNpmTasks 'grunt-exec'
+  grunt.loadNpmTasks 'grunt-contrib-watch'
 #  grunt.loadNpmTasks 'grunt-contrib-cssmin'
 #  grunt.loadNpmTasks 'grunt-recess'
   grunt.loadNpmTasks 'grunt-contrib-coffee'
   grunt.loadNpmTasks 'grunt-coffeelint'
 #  grunt.loadNpmTasks 'grunt-contrib-handlebars'
   grunt.loadNpmTasks 'grunt-ember-handlebars'
+  grunt.loadNpmTasks 'grunt-ember-templates'
   grunt.loadNpmTasks 'grunt-sftp-deploy'

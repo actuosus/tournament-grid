@@ -23,6 +23,7 @@ define [
     ]
     attributeBindings: ['title']
     titleBinding: 'content.description'
+    dateFormat: 'DD.MM.YY'
 
     isEditable: (->
       App.get('isEditingMode') and (@get('content.status') is 'opened')
@@ -50,7 +51,7 @@ define [
     dateView: App.DateWithPopupView.extend
       classNames: ['match-start-date']
       contentBinding: 'parentView.content.date'
-      format: 'DD.MM.YY'
+      formatBinding: 'parentView.dateFormat'
       showPopupBinding: 'parentView._isEditing'
 
     lockView: Em.View.extend

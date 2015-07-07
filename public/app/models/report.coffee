@@ -6,28 +6,28 @@
  * Time: 02:48
 ###
 
-define ['cs!../core'],->
+define ['cs!../core'], ->
   App.Report = DS.Model.extend
-    primaryKey: '_id'
+#    primaryKey: '_id'
     title: DS.attr 'string'
 
-    # TODO Make localization
+  # TODO Make localization
 #    _title: DS.attr 'object'
 
-    description: DS.attr 'string'
+#    description: DS.attr 'string'
     start_date: DS.attr 'date'
     end_date: DS.attr 'date'
-    date: DS.attr 'date'
-    place: DS.attr 'string'
+#    date: DS.attr 'date'
+#    place: DS.attr 'string'
 
 #   TODO Make localization
 #    _place: DS.attr 'object'
 
     match_type: DS.attr 'string'
 
-    stages: DS.hasMany('App.Stage', {inverse: 'report', key: 'stages'})
+    stages: DS.hasMany('stage', {inverse: 'report', key: 'stages', async: yes})
 
-    teamRefs: DS.hasMany('App.TeamRef', {inverse: 'report', key: 'team_refs'})
+    teamRefs: DS.hasMany('teamRef', {inverse: 'report', key: 'team_refs', embedded: 'always'})
 
     players: (->
       teamRefs = @get 'teamRefs'
@@ -41,10 +41,10 @@ define ['cs!../core'],->
       result
     ).property().volatile()
 
-    races: DS.hasMany 'App.Race'
+#    races: DS.hasMany 'race'
 
     createStageByEntrants: (entrantsNumber)->
-      @createStage Math.log(entrantsNumber) / Math.log(2)-1
+      @createStage Math.log(entrantsNumber) / Math.log(2) - 1
 
     createStageByRoundsNumber: (roundsNumber)->
       stage = App.Stage.createRecord()
@@ -62,4 +62,5 @@ define ['cs!../core'],->
         matches.createRecord date: new Date()
       stage
 
+  App.Report.name = 'Report'
   App.Report.toString = -> 'Report'

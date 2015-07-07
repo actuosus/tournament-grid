@@ -17,10 +17,81 @@ define ['cs!../views/country_flag'],->
     searchQuery: ''
     searchByPlayer: no
 
+    trans: {
+      'А': 'A',
+      'а': 'a',
+      'Б': 'B',
+      'б': 'b',
+      'В': 'V',
+      'в': 'v',
+      'Г': 'G',
+      'г': 'g',
+      'Д': 'D',
+      'д': 'd',
+      'Е': 'E',
+      'е': 'e',
+      'Ё': 'E',
+      'ё': 'e',
+      'Ж': 'Zh',
+      'ж': 'zh',
+      'З': 'Z',
+      'з': 'z',
+      'И': 'I',
+      'и': 'i',
+      'Й': 'Y',
+      'й': 'y',
+      'К': 'K',
+      'к': 'k',
+      'Л': 'L',
+      'л': 'l',
+      'М': 'M',
+      'м': 'm',
+      'Н': 'N',
+      'н': 'n',
+      'О': 'O',
+      'о': 'o',
+      'П': 'P',
+      'п': 'p',
+      'Р': 'R',
+      'р': 'r',
+      'С': 'S',
+      'с': 's',
+      'Т': 'T',
+      'т': 't',
+      'У': 'U',
+      'у': 'u',
+      'Ф': 'F',
+      'ф': 'f',
+      'Х': 'Kh',
+      'х': 'kh',
+      'Ц': 'Ts',
+      'ц': 'ts',
+      'Ч': 'Ch',
+      'ч': 'ch',
+      'Ш': 'Sh',
+      'ш': 'sh',
+      'Щ': 'Sch',
+      'щ': 'sch',
+      'ь': '',
+      'Ы': 'Y',
+      'ы': 'y',
+      'ъ': '',
+      'Э': 'E',
+      'э': 'e',
+      'Ю': 'Yu',
+      'ю': 'yu',
+      'Я': 'Ya',
+      'я': 'ya'
+    }
+
     filterWithQuery: (query)->
       content = @get 'content'
+      console.log content
       searchPath = @get 'searchPath'
       if query
+#         map = @get 'trans'
+#         for _ of map
+#           query = query.replace _, map[_]
         reg = new RegExp query, 'gi'
         result = content.filter (item)->
           name = item?.get searchPath
@@ -74,7 +145,8 @@ define ['cs!../views/country_flag'],->
 
       nameView: Em.View.extend
         classNames: ['lineup-grid-item-name']
-        template: Em.Handlebars.compile '{{view.parentView.entrant.name}}'
+        render: (_)-> _.push @get 'parentView.entrant.name'
+        entrantNameChanged: (-> @rerender() ).observes('parentView.entrant.name')
 
       showAddingNotify: ->
         modalView = App.ModalView.create
@@ -82,14 +154,14 @@ define ['cs!../views/country_flag'],->
         modalView.on 'ok', -> @hide()
         modalView.pushObject Em.ContainerView.create(
           childViews: ['contentView', 'buttonsView']
-          contentView: Em.View.create(template: Em.Handlebars.compile('Команда уже добавлена'))
+          contentView: Em.View.create( render: (_)-> _.push('Команда уже добавлена') )
           buttonsView: Em.ContainerView.create
             classNames: ['buttons']
             childViews: ['okButton']
             okButton: Em.View.create
               classNames: ['btn', 'btn-primary']
               tagName: 'button'
-              template: Em.Handlebars.compile "{{loc '_ok'}}"
+              render: (_)-> _.push '_ok'.loc()
               click: -> @get('parentView.parentView.parentView').trigger('ok')
         )
         modalView.appendTo App.get 'rootElement'

@@ -12,6 +12,10 @@
     padding: 0;
 }
 
+.ember-application .country-flag-icon {
+    padding: 0 !important;
+} 
+
 .country-flag-icon:hover {
     box-shadow: 0 0 5px rgba(0, 0, 0, .3);
 }

@@ -7,14 +7,13 @@
 ###
 
 define [
-  'text!../../templates/team/form.hbs'
+  'ehbs!/team/form'
   'cs!../../core'
   'cs!../form'
-], (template)->
-  Em.TEMPLATES.teamForm = Em.Handlebars.compile template
+], ->
   App.TeamForm = App.FormView.extend
     classNames: ['team-form']
-    templateName: 'teamForm'
+    templateName: 'team/form'
     countrySelectViewBinding: 'childViews.firstObject'
 
     nameBinding: 'value'
@@ -32,15 +31,15 @@ define [
       @$('.save-btn').attr('disabled', 'disabled')
 
       country = @get 'countrySelectView.value'
-      transaction = App.store.transaction()
       report = App.get('report')
-      team = transaction.createRecord(App.Team)
-      team.set 'country', country
-      team.set 'name', @$('.name').val()
-      team.set 'report', report
+      team = App.store.createRecord('team', {
+        country: country,
+        name: @$('.name').val(),
+        report: report
+      })
       team.on 'didCreate', => @didCreate team
       team.on 'becameError', => @$('.save-btn').removeAttr('disabled')
-      transaction.commit()
+      team.save()
 
     submit: (event)->
       event.preventDefault()

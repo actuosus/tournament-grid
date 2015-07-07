@@ -12,26 +12,33 @@ define [
   'cs!./views/index'
 ], ->
   App.Router.map ->
-    @route 'index', path: ''
-    @route 'index', path: '*.'
     @resource 'stages', ->
       @route 'new'
       @resource 'stage', path: '/:stage_id'
 
+  App.ErrorRoute = Em.Route.extend
+    renderTemplate: (controller, model)->
+      @render 'NoReport',
+        into: 'application'
+
   App.ApplicationRoute = Em.Route.extend
-    setupController: (controller, model)->
-      # Preloading countries
-      console.debug 'Preloading countries…' if window.DEBUG
-      App.countries = App.Country.find()
+    model: (params)-> @store.find 'report', window.grid.reportId
 
-      App.set 'countriesController.content', App.countries
-
+    afterModel: (model)->
+      console.debug 'App.ApplicationRoute:afterModel'
+      @store.findAll('country').then (countries)-> 
+        App.set 'countriesController.model', countries
+        App.set 'countries', countries
+      App.set 'store', @store
       App.set 'router', @router
       App.set 'report', model
       App.overrideAdapterAjax model
 
-      @controllerFor('stages').set 'model', App.get 'report.stages'
+    setupController: (controller, model)->
+#      @controllerFor('stages').set 'model', App.get 'report.stages'
 #      @transitionTo 'stage', App.get 'report.stages.firstObject'
+      reportEntrants = @controllerFor 'reportEntrants'
+      reportEntrants.set 'content', model.get('teamRefs')
 
     renderTemplate: (controller, model)->
       $(App.get('rootElement')).empty()
@@ -39,33 +46,33 @@ define [
       @render()
 
       @render 'StagesContainer',
-        outlet: 'stages',
+        outlet: 'stages'
         into: 'application'
         controller: 'stages'
+        model: model.get('stages')
 
-      reportEntrants = @controllerFor 'reportEntrants'
-      reportEntrants.set 'content', model.get('teamRefs')
       if model.get('match_type') is 'team'
         @render 'LineupContainer',
           outlet: 'lineup',
           into: 'application'
           controller: 'reportEntrants'
 
-    model: (params)->
-      App.store.findById App.Report, window.grid.reportId
-
-    events: error: (error, transition)-> @transitionTo 'error'
+    actions:
+      error: (error, transition)->
+        @transitionTo 'error'
+        throw error
 
   App.IndexRoute = Em.Route.extend
-    enter: -> @transitionTo 'stage', App.get 'report.stages.firstObject'
+   afterModel: -> @transitionTo 'stage', App.get 'report.stages.firstObject'
 
-  App.ErrorRoute = Em.Route.extend
-    renderTemplate: (controller, model)->
-      @render 'NoReport',
-        into: 'application'
+  App.StagesRoute = Em.Route.extend
+    model: (params)-> App.report.get('stages')
 
-  App.StageRoute = Ember.Route.extend
+  App.StagesIndexRoute = Em.Route.extend
+    model: (params)-> App.report.get('stages')
+
+  App.StageRoute = Em.Route.extend
     setupController: (controller, model)->
-      console.debug 'Setting up stage route'
-
-    model: (params)-> App.Stage.find params.stage_id
+      @controllerFor('stages').set('selection', Em.Controller.create({content: model}))
+      # @container.lookup('view:stage_tabs').set 'selection', Em.Controller.create({content: model})
+    model: (params)-> @store.find 'stage', params.stage_id

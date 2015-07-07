@@ -6,14 +6,13 @@
  * Time: 03:06
 ###
 
-define ['cs!../core'],->
+define ['cs!../core'], ->
   App.Bracket = DS.Model.extend
-    primaryKey: '_id'
     name: DS.attr 'string'
 
-    # Relations
-    stage: DS.belongsTo 'App.Stage'
-    rounds: DS.hasMany 'App.Round'
+  # Relations
+    stage: DS.belongsTo 'stage'
+    rounds: DS.hasMany 'round'
 
     parent: (-> @get 'stage').property('stage')
     children: (-> @get 'rounds').property('rounds')
