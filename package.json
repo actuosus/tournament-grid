@@ -25,6 +25,7 @@
     }
   ],
   "dependencies": {
+    "bson": "^0.4.11",
     "connect-redis": "^2.2.0",
     "ect": "latest",
     "express": "3.x",
@@ -42,9 +43,14 @@
     "redis": "latest"
   },
   "devDependencies": {
-    "async": "latest",
-    "chai": "latest",
     "ember-template-compiler": "^1.9.0-alpha",
+    "handlebars": ">= 2.0.0",
+    "async": "latest",
+    "mocha": "latest",
+    "chai": "latest",
+    "should": "latest",
+    "superagent": "latest",
+    "supervisor": "latest",
     "grunt": "latest",
     "grunt-coffeelint": "latest",
     "grunt-contrib-clean": "latest",
@@ -58,12 +64,7 @@
     "grunt-ember-templates": "^0.5.0",
     "grunt-exec": "~0.4.0",
     "grunt-recess": "~0.3.1",
-    "grunt-sftp-deploy": "0.0.9",
-    "handlebars": ">= 2.0.0",
-    "mocha": "latest",
-    "should": "latest",
-    "superagent": "latest",
-    "supervisor": "latest"
+    "grunt-sftp-deploy": "0.0.9"
   },
   "engines": {
     "node": "0.10.x",
