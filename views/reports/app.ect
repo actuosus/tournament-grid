@@ -45,17 +45,9 @@
                             }
                         };
                     </script>
-                    <% if @node_env is 'production': %>
                     <link rel="stylesheet" href="<%- @staticDomain %>/bundle/stylesheets/app.css" />
-                    <% else: %>
-                    <link rel="stylesheet" href="/app/stylesheets/main.css" />
-                    <% end %>
                     <link rel="stylesheet" href="/vendor/styles/flags.css" />
-                    <% if @node_env is 'production': %>
-                    <script data-main="/bundle/app.js" src="/vendor/scripts/require.min.js"></script>
-                    <% else: %>
-                    <script data-main="/app.main.js" src="/vendor/scripts/require.min.js"></script>
-                    <% end %>
+                    <script data-main="/bundle/app.local.js" src="/vendor/scripts/require.min.js"></script>
                 </div>
             </div>
         </div>
