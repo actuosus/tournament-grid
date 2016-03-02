@@ -28,3 +28,23 @@ exports.item = (req, res)->
       res.send report: doc.toObject(virtuals: yes)
     else
       res.send 404, errors: 'not found'
+
+exports.getDump = (req, res)->
+  Report
+  .where('_id', req.params._id)
+  .findOne()
+  .exec (err, doc)->
+    if doc
+      res.send dump: doc.dump
+    else
+      res.send 404, errors: 'not found'
+
+exports.dump = (req, res)->
+  if req.body.html
+    Report.findByIdAndUpdate req.params._id, {dump: req.body.html}, (err, doc)->
+      if doc
+        res.send dump: doc.dump
+      else
+        res.send 404, errors: 'not found'
+  else
+    res.send 400, error: 'html parameter required.'
