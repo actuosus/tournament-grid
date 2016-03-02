@@ -26,7 +26,7 @@ define [
 
     afterModel: (model)->
       console.debug 'App.ApplicationRoute:afterModel'
-      @store.findAll('country').then (countries)-> 
+      @store.findAll('country').then (countries)->
         App.set 'countriesController.model', countries
         App.set 'countries', countries
       App.set 'store', @store
@@ -63,7 +63,29 @@ define [
         throw error
 
   App.IndexRoute = Em.Route.extend
-   afterModel: -> @transitionTo 'stage', App.get 'report.stages.firstObject'
+    afterModel: -> @transitionTo 'stage', App.get 'report.stages.firstObject'
+
+#  App.ApplicationRoute = Em.Route.extend
+#    renderTemplate: (controller, model)->
+#      $(App.get('rootElement')).empty()
+#      @render()
+#
+#  App.IndexRoute = Em.Route.extend
+#    model: (params)->
+#      url = "#{App.config.local.api.host}/#{App.config.local.api.namespace}/reports/#{window.grid.reportId}/dump"
+#      Em.$.getJSON url
+#
+#    renderTemplate: (controller, model)->
+#      if model and model.dump
+#        @render 'Dump',
+#          outlet: 'stages'
+#          into: 'application'
+#          model: model.dump
+#
+#    actions:
+#      error: (error, transition)->
+#        @transitionTo 'error'
+#        throw error
 
   App.StagesRoute = Em.Route.extend
     model: (params)-> App.report.get('stages')
