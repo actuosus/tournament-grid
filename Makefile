@@ -3,6 +3,13 @@ REPORTER = spec
 
 install:
 	brew install mongo
+	npm install
+
+run:
+	node server.js
+
+run-container:
+	docker run -p 49160:3000 -d actuosus/centos-tournament-grid
 
 test:
 	NODE_ENV=test ./node_modules/.bin/mocha --bail \
@@ -24,5 +31,8 @@ gen-cov:
 
 test-cov: gen-cov
 	@EXPRESS_COV=1 $(MAKE) test REPORTER=html-cov > docs/report/coverage.html
+
+clean:
+	rm -fr node_modules
 
 .PHONY: test test-w
