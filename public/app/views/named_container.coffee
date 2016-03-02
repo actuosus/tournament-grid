@@ -11,7 +11,7 @@ define [
   'cs!../mixins/editing'
 ], (Spinner)->
   App.NamedContainerView = Em.ContainerView.extend App.Editing,
-    classNames: ['block-container', 'named-container']
+    classNames: ['block-container', 'named-container', 'panel', 'panel-default']
     classNameBindings: ['collapsed']
     childViews: [
       'titleView', 'toolbarView', 'toggleButtonView', 'contentView'
@@ -24,7 +24,7 @@ define [
 
     titleView: Em.View.extend
       tagName: 'p'
-      classNames: ['b-profileBlock__title']
+      classNames: ['b-profileBlock__title', 'panel-heading']
       classNameBindings: ['collapsed:close']
       attributeBindings: ['title']
       titleBinding: 'parentView.description'
@@ -69,6 +69,7 @@ define [
 #        template: Em.Handlebars.compile '{{view.value}}'
 
     contentView: Em.View.extend
+      classNames: 'panel-body'
       templateBinding: 'parentView.template'
 
     helpButtonView: Em.View.extend
