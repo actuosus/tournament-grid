@@ -25,14 +25,14 @@ define [
         tagName: 'button'
         classNames: ['btn-clean']
         mapViewBinding: 'parentView.mapView'
-        render: (_)-> _.push '+'
+        render: (_)-> _.push '<span class="glyphicon glyphicon-plus">+</span>'
         click: -> @get('mapView').zoomIn(animated = yes)
 
       zoomOutButtonView: Em.View.extend
         tagName: 'button'
         classNames: ['btn-clean']
         mapViewBinding: 'parentView.mapView'
-        render: (_)-> _.push '-'
+        render: (_)-> _.push '<span class="glyphicon glyphicon-minus">-</span>'
         click: -> @get('mapView').zoomOut(animated = yes)
 
       resetButtonView: Em.View.extend
