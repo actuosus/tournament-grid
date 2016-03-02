@@ -88,3 +88,9 @@
     text-decoration: none;
     color: #383838;
 }
+
+.b-listsTabs .item input[type="radio"] {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+}
