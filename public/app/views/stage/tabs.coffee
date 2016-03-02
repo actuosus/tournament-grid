@@ -129,7 +129,7 @@ define [
 
       tabsView: Em.CollectionView.extend
         tagName: 'ul'
-        classNames: 'b-listsTabs'
+        classNames: ['b-listsTabs', 'nav', 'nav-tabs']
         contentBinding: 'parentView.content'
         selectionBinding: 'parentView.selection'
 
@@ -148,9 +148,11 @@ define [
           classNames: ['item', 'stage-tab-item']
           classNameBindings: ['active', 'isFocused', 'content.isDirty', 'content.isSaving', 'content.isUpdating', 'content.isError']
           childViews: ['titleView']
-          attributeBindings: ['title']
+          attributeBindings: ['title', 'data-toggle']
           _isEditingBinding: 'App.isEditingMode'
           editingChildViews: ['removeButtonView']
+
+          'data-toggle': 'tab'
 
           selectionBinding: 'parentView.selection'
 
@@ -214,6 +216,9 @@ define [
           ).property('controller')
 
           titleView: Em.View.extend
+            tagName: 'a'
+            attributeBindings: ['href']
+            href: (-> '#' + (@get 'parentView.content.id')).property()
             titleChanged: (-> @rerender() ).observes('parentView.content.title')
             render: (_)-> _.push @get 'parentView.content.title'
 
@@ -229,7 +234,8 @@ define [
               else
                 @set 'shouldShowConfirmation', yes
 
-          click: ->
+          click: (event)->
+            event.preventDefault()
             # @set 'selection', @
             router = @get 'router'
             router.transitionTo(@currentWhen, @get 'content') if router
