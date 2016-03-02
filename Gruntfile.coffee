@@ -1,4 +1,5 @@
 module.exports = (grunt)->
+  config = grunt.file.readJSON 'config.json'
   grunt.initConfig
     pkg: grunt.file.readJSON 'package.json'
     copy:
@@ -40,6 +41,7 @@ module.exports = (grunt)->
     requirejs:
       dev: options: mainConfigFile: 'public/app.build.dev.js' # Will rewrite app.js
       prod: options: mainConfigFile: 'public/app.build.site.js'
+      full: options: mainConfigFile: 'public/app.build.js'
     handlebars:
       options:
         namespace: 'Em.TEMPLATES'
@@ -85,8 +87,8 @@ module.exports = (grunt)->
           port: 2200,
           authKey: 'v3'
         },
-        src: '/Users/actuosus/Projects/virtus-pro/Site/public/bundle',
-        dest: '/home/v3virtuspro/v3.virtus.pro/html/bitrix/components/VIRTUS.PRO/reports.app/templates/.default/bundle',
+        src: config.app.deploy.dev.src,
+        dest: config.app.deploy.dev.dest
 #        exclusions: ['/path/to/source/folder/**/.DS_Store', '/path/to/source/folder/**/Thumbs.db', 'dist/tmp'],
         server_sep: '/'
       },
@@ -96,8 +98,8 @@ module.exports = (grunt)->
           port: 2200,
           authKey: 'v3'
         },
-        src: '/Users/actuosus/Projects/virtus-pro/public/bundle',
-        dest: '/home/v3virtuspro/develop.virtus.pro/html/bitrix/components/VIRTUS.PRO/reports.app/templates/.default/bundle',
+        src: config.app.deploy.prod.src,
+        dest: config.app.deploy.prod.dest
         server_sep: '/'
       }
     }
@@ -123,9 +125,10 @@ module.exports = (grunt)->
           'public/bundle/templates.js': ['public/app/templates/**/*.hbs']
 
   grunt.registerTask 'bundle', 'Create project bundle', ['clean', 'requirejs:prod', 'exec:minify_css', 'exec:copy_to_bundle']
+  grunt.registerTask 'bundle:full', 'Create full project bundle', ['clean', 'requirejs:full', 'exec:minify_css', 'exec:copy_to_bundle']
   grunt.registerTask 'deploy', 'Deploys bundled app', ['bundle', 'sftp-deploy']
 
-  grunt.registerTask 'deploy:dev', 'Deploys dev bundled app', ['clean', 'requirejs:dev', 'exec:copy_to_bundle', 'sftp-deploy:dev']
+  grunt.registerTask 'deploy:dev', 'Deploys dev bundled app', ['clean', 'requirejs:dev', 'exec:minify_css', 'exec:copy_to_bundle', 'sftp-deploy:dev']
 
   grunt.registerTask 'test-precompile', '', ->
     fs = require('fs');
