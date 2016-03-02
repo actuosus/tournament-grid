@@ -243,6 +243,8 @@ app.post '/hidden/players', routes.api.players.create
 #app.delete '/api/players/:_id', routes.api.players.delete
 
 app.get '/api/reports', routes.api.reports.list
+app.get '/api/reports/:_id/dump', routes.api.reports.getDump
+app.post '/api/reports/:_id/dump', routes.api.reports.dump
 app.get '/api/reports/:_id', routes.api.reports.item
 
 app.post '/hidden/reports', routes.hidden.reports.create
