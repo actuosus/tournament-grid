@@ -49,6 +49,8 @@ ReportSchema = new Schema
 
   noRating: type: Boolean
 
+  dump: type: String
+
 #ReportSchema.virtual('teams').get ->
 #  @team_refs.map (ref)-> ref.team_id
 
