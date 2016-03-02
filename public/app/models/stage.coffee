@@ -38,6 +38,7 @@ define ['cs!../core'], ->
     left: null
     right: null
 
+# Relations
     report: DS.belongsTo('report', {key: 'stages'})
 
     rounds: DS.hasMany('round', {async: true})
